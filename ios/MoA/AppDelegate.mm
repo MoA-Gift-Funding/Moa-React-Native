@@ -1,7 +1,7 @@
 #import "AppDelegate.h"
 #import <RNKakaoLogins.h>
 #import <React/RCTBundleURLProvider.h>
-
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -14,13 +14,15 @@
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
-- (BOOL)application:(UIApplication *)app
+- (BOOL)application:(UIApplication *)application
      openURL:(NSURL *)url
      options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
- if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
+  if ([url.scheme isEqualToString:@"com.runko.MoA"]) {
+    return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
+  }
+  if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {
     return [RNKakaoLogins handleOpenUrl: url];
  }
-
  return NO;
 }
 

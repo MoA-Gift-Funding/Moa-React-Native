@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">MoA</string>
-    <string name="kakao_app_key">f418f4b1224109335b844a5de746436e</string>
+    <string name="kakao_app_key">@string/KAKAO_APP_KEY</string>
 </resources>

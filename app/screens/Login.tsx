@@ -2,13 +2,11 @@ import React from 'react';
 import {Pressable, View} from 'react-native';
 import TextSemiBold from '../components/text/TextSemiBold';
 import TextRegular from '../components/text/TextRegular';
-import {loginKakao} from '../apis/User';
-import Config from 'react-native-config';
+import {loginKakao, loginNaver} from '../apis/user/User';
 
 export default function Login() {
   const textStyle = 'text-Gray-09 text-Heading-3';
   const buttonStyle = 'w-[312px] h-[56px] rounded-md flex justify-center';
-  console.log(Config.BASE_URL);
 
   return (
     <View className="px-6 py-10 bg-white h-[100vh]">
@@ -17,7 +15,9 @@ export default function Login() {
         <TextSemiBold style={textStyle} title="모아로 마음을 모아볼까요?" />
       </View>
       <View className="flex flex-col gap-[12px]">
-        <Pressable className={`bg-[#27D34A] ${buttonStyle}`} disabled>
+        <Pressable
+          className={`bg-[#27D34A] ${buttonStyle}`}
+          onPress={loginNaver}>
           <TextRegular
             style="text-white text-Body-1 ml-[14px]"
             title="네이버로 계속하기"
