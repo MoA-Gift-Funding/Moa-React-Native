@@ -8,7 +8,5 @@ export default function TextSemiBold({
   style: string;
   title: string;
 }) {
-  console.log(style);
-
   return <Text className={`font-pretendard-semibold ${style}`}>{title}</Text>;
 }

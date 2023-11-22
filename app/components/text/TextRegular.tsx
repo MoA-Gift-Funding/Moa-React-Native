@@ -8,7 +8,5 @@ export default function TextRegular({
   style: string;
   title: string;
 }) {
-  console.log(style);
-
   return <Text className={`font-pretendard-regular ${style}`}>{title}</Text>;
 }

@@ -8,7 +8,5 @@ export default function TextBold({
   style: string;
   title: string;
 }) {
-  console.log(style);
-
   return <Text className={`font-pretendard-bold ${style}`}>{title}</Text>;
 }
