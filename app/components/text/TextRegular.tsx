@@ -6,7 +6,7 @@ export default function TextRegular({
   title,
 }: {
   style: string;
-  title: string;
+  title?: string;
 }) {
   return <Text className={`font-pretendard-regular ${style}`}>{title}</Text>;
 }

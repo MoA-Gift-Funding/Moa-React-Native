@@ -6,7 +6,8 @@ export default function TextSemiBold({
   title,
 }: {
   style: string;
-  title: string;
+  title?: string;
+  ariaLabel?: string;
 }) {
   return <Text className={`font-pretendard-semibold ${style}`}>{title}</Text>;
 }

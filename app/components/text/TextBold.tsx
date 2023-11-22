@@ -6,7 +6,7 @@ export default function TextBold({
   title,
 }: {
   style: string;
-  title: string;
+  title?: string;
 }) {
   return <Text className={`font-pretendard-bold ${style}`}>{title}</Text>;
 }
