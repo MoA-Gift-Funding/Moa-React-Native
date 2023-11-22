@@ -15,19 +15,24 @@ export const loginKakao = async (): Promise<User> => {
   }
 };
 
-export const loginNaver = () => {
-  return NaverLogin.login({
-    appName: 'com.runko.moa',
-    consumerKey: 'tgVYPuyq9UBfLdGH8pIs',
-    consumerSecret: '8lz3sPz4kv',
-    serviceUrlScheme: Config.NAVER_URL_SCHEME,
-  })
-    .then(res => {
-      return loginMoA(res.successResponse.accessToken, 'naver');
-    })
-    .catch(error => {
-      console.log(error);
-    });
+export const loginNaver = async (): Promise<User> => {
+  try {
+    const {isSuccess, successResponse, failureResponse} =
+      await NaverLogin.login({
+        appName: 'MoA',
+        consumerKey: Config.NAVER_CLIENT_KEY,
+        consumerSecret: Config.NAVER_SECERT_KEY,
+        serviceUrlScheme: Config.NAVER_URL_SCHEME,
+      });
+    if (!isSuccess) {
+      throw new Error(failureResponse?.message);
+    }
+    const user = loginMoA(successResponse.accessToken, 'naver');
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error('[ERROR] Network Error');
+  }
 };
 
 const loginMoA = (accessToken: string, platform: string): Promise<User> => {
