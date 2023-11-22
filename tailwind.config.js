@@ -26,7 +26,7 @@ module.exports = {
       fontSize: {
         'Heading-1': '34px',
         'Heading-2': '28px',
-        'Heading-3': '21px',
+        'Heading-3': '22px',
         'Heading-4': '18px',
         'Body-1': '16px',
         'Body-2': '14px',
@@ -40,6 +40,11 @@ module.exports = {
         'Body-1': '24px',
         'Body-2': '22px',
         'Detail-1': '18px',
+      },
+      fontFamily: {
+        'pretendard-regular': ['Pretendard-Regular'],
+        'pretendard-semibold': ['Pretendard-SemiBold'],
+        'pretendard-bold': ['Pretendard-Bold'],
       },
     },
   },

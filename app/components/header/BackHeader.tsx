@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronLeft} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from '@react-navigation/native';
 
-export default function Header() {
+export default function BackHeader() {
   const navigationRef = useNavigation();
   return (
     <TouchableOpacity
