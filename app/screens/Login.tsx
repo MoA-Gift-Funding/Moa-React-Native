@@ -3,10 +3,13 @@ import {Pressable, View} from 'react-native';
 import TextSemiBold from '../components/text/TextSemiBold';
 import TextRegular from '../components/text/TextRegular';
 import {loginKakao} from '../apis/User';
+import Config from 'react-native-config';
 
 export default function Login() {
   const textStyle = 'text-Gray-09 text-Heading-3';
   const buttonStyle = 'w-[312px] h-[56px] rounded-md flex justify-center';
+  console.log(Config.BASE_URL);
+
   return (
     <View className="px-6 py-10 bg-white h-[100vh]">
       <View className="flex flex-col mb-10">

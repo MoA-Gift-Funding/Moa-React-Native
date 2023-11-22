@@ -59,6 +59,7 @@
 		86C605CCD1C849D4A2412AF7 /* Pretendard-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.otf"; path = "../app/assets/fonts/Pretendard-Black.otf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-MoA-MoATests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoA-MoATests.release.xcconfig"; path = "Target Support Files/Pods-MoA-MoATests/Pods-MoA-MoATests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F87E94B12B0DCEB3006043C2 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		F9B72F9F20E64B5E9937B733 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.otf"; path = "../app/assets/fonts/Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		FAFED671C2F145128C95C213 /* Pretendard-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.otf"; path = "../app/assets/fonts/Pretendard-Light.otf"; sourceTree = "<group>"; };
 		FDC641ECDA444B4083C9C3E2 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.otf"; path = "../app/assets/fonts/Pretendard-Thin.otf"; sourceTree = "<group>"; };
@@ -134,6 +135,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F87E94B12B0DCEB3006043C2 /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* MoA */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MoATests */,
@@ -581,6 +583,7 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F87E94B12B0DCEB3006043C2 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -660,6 +663,7 @@
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F87E94B12B0DCEB3006043C2 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
