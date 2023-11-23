@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
-import {User} from '../../types/User';
+import {useUserContext} from '../../contexts/UserContext';
 
 export default function Login({navigation}) {
-  const [user, setUser] = useState<User>();
+  const {dispatch} = useUserContext();
   const textStyle = 'text-Gray-09 text-Heading-3';
   const handleKakaoLogin = async () => {
-    await loginKakao().then(res => setUser(res));
+    await loginKakao().then(res => dispatch({type: 'LOGIN', payload: res}));
     navigation.navigate('Join');
   };
   return (

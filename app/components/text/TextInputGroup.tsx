@@ -30,7 +30,7 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            className="w-[312px] h-[56px] bg-Gray-02 rounded-md indent-[14px] text-body-2"
+            className="w-[312px] h-[56px] bg-Gray-02 rounded-md px-3 text-body-2"
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}

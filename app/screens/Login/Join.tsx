@@ -4,8 +4,14 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
+import {useUserContext} from '../../contexts/UserContext';
 
 export default function Join() {
+  const {
+    userState: {user},
+  } = useUserContext();
+  console.log(user);
+
   const [nickName, setNickName] = useState('이수진');
   const [bDay, setBDay] = useState('0520');
   const [bYear, setBYear] = useState('1993');

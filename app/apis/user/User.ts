@@ -40,7 +40,6 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
     const user = Axios.get(
       `/users/login/oauth2/${platform}/app/${accessToken}`,
     ).then(res => {
-      console.log(JSON.stringify(res.data));
       return res.data.data;
     });
     return user;

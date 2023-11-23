@@ -5,35 +5,42 @@ import Home from './app/screens/Home';
 import Login from './app/screens/Login/Login';
 import BackHeader from './app/components/header/BackHeader';
 import Join from './app/screens/Login/Join';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {UserContextProvider} from './app/contexts/UserContext';
 
 const Stack = createNativeStackNavigator();
 
 export const App = () => {
+  const queryClient = new QueryClient();
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            header: () => <BackHeader />,
-          }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            header: () => <BackHeader />,
-          }}
-        />
-        <Stack.Screen
-          name="Join"
-          component={Join}
-          options={{
-            header: () => <BackHeader />,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <UserContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                header: () => <BackHeader />,
+              }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                header: () => <BackHeader />,
+              }}
+            />
+            <Stack.Screen
+              name="Join"
+              component={Join}
+              options={{
+                header: () => <BackHeader />,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 };

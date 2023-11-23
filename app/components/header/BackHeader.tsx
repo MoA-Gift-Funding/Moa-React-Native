@@ -9,7 +9,7 @@ export default function BackHeader() {
   return (
     <SafeAreaView>
       <View className="h-[48px] flex justify-center items-start bg-white">
-        <TouchableOpacity className="ml-4" onPress={navigate.goBack}>
+        <TouchableOpacity className="p-4" onPress={navigate.goBack}>
           <FontAwesomeIcon icon={faChevronLeft} size={21} />
         </TouchableOpacity>
       </View>
