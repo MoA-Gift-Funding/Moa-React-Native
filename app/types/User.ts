@@ -8,3 +8,9 @@ export interface User {
   phoneNumber: string;
   level: 'ASSOCICATE_MEMBER' | 'REGULAR_MEMBER';
 }
+export type UserFormData = {
+  nickname: string;
+  phoneNumber: number;
+  birthday: string;
+  birthyear: string;
+};

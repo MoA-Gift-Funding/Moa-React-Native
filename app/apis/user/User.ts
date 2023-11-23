@@ -2,7 +2,7 @@ import * as KaKaoLogin from '@react-native-seoul/kakao-login';
 import NaverLogin from '@react-native-seoul/naver-login';
 import {Axios} from '../axios.config';
 import Config from 'react-native-config';
-import {User} from '../../types/User';
+import {User, UserFormData} from '../../types/User';
 
 export const loginKakao = async (): Promise<User> => {
   try {
@@ -43,6 +43,16 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
       return res.data.data;
     });
     return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error('[ERROR] Network Error');
+  }
+};
+
+export const updateUser = async (formData: UserFormData): Promise<void> => {
+  try {
+    // api 호출 await
+    console.log('activated');
   } catch (error) {
     console.error(error);
     throw new Error('[ERROR] Network Error');

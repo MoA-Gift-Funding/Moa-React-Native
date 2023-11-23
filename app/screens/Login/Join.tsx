@@ -5,21 +5,21 @@ import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import {autoDash, autoHyphen} from '../../zod/schema';
+import {autoSlashPhoneNumber, autoHyphenBirthday} from '../../utils/regex';
+import {UserFormData} from '../../types/User';
+import useUser from '../../hooks/useUser';
 
-export default function Join() {
+export default function Join({navigation}) {
   const {
     userState: {user},
   } = useUserContext();
+  const {updateUserQuery} = useUser();
   const {nickname, phoneNumber, birthday, birthyear} = user;
-  type FormData = {
-    nickname: string;
-    phoneNumber: number;
-    birthday: string;
-    birthyear: string;
+  const onSubmit = async (data: UserFormData) => {
+    console.log(data);
+    await updateUserQuery.mutate({...data});
+    navigation.navigate('PhoneValidation');
   };
-  const onSubmit = (data: FormData) => console.log(data);
-
   const {
     control,
     handleSubmit,
@@ -27,9 +27,10 @@ export default function Join() {
   } = useForm({
     defaultValues: {
       nickname,
-      birthday: `${birthyear || ''}${birthday || ''}`,
+      birthday,
       phoneNumber,
       birthyear,
+      fullBirthday: autoHyphenBirthday(`${birthyear}${birthday}`),
     },
   });
 
@@ -67,7 +68,7 @@ export default function Join() {
               label="전화번호"
               error={errors.phoneNumber}
               control={control}
-              regex={autoHyphen}
+              regex={autoSlashPhoneNumber}
               rules={{
                 required: '전화번호는 필수 입력 사항입니다.',
                 maxLength: {
@@ -83,11 +84,11 @@ export default function Join() {
           </View>
           <View>
             <TextInputGroup
-              name="birthday"
+              name="fullBirthday"
               label="생년월일"
-              error={errors.birthday}
+              error={errors.fullBirthday}
               control={control}
-              regex={autoDash}
+              regex={autoHyphenBirthday}
               rules={{
                 required: '생년월일은 필수 입력 사항입니다.',
                 maxLength: {
