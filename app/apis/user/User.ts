@@ -20,8 +20,8 @@ export const loginNaver = async (): Promise<User> => {
     const {isSuccess, successResponse, failureResponse} =
       await NaverLogin.login({
         appName: 'MoA',
-        consumerKey: Config.NAVER_CLIENT_KEY,
-        consumerSecret: Config.NAVER_SECERT_KEY,
+        consumerKey: Config.NAVER_CLIENT_KEY!,
+        consumerSecret: Config.NAVER_SECERT_KEY!,
         serviceUrlScheme: Config.NAVER_URL_SCHEME,
       });
     if (!isSuccess) {
