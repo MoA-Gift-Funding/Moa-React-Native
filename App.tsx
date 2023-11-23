@@ -7,6 +7,7 @@ import BackHeader from './app/components/header/BackHeader';
 import Join from './app/screens/Login/Join';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {UserContextProvider} from './app/contexts/UserContext';
+import PhoneValidation from './app/screens/Login/PhoneValidation';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,13 @@ export const App = () => {
             <Stack.Screen
               name="Join"
               component={Join}
+              options={{
+                header: () => <BackHeader />,
+              }}
+            />
+            <Stack.Screen
+              name="PhoneValidation"
+              component={PhoneValidation}
               options={{
                 header: () => <BackHeader />,
               }}

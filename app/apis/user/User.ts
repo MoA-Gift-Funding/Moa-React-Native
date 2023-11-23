@@ -49,10 +49,22 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
   }
 };
 
-export const updateUser = async (formData: UserFormData): Promise<void> => {
+export const updateUser = async (formData: UserFormData): Promise<User> => {
   try {
     // api 호출 await
     console.log('activated');
+    return {
+      accessToken:
+        'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMyIsImlhdCI6MTcwMDc4MDc1MiwiZXhwIjoxNzAwNzg3OTUyfQ.cDq-or_sFVK2vQo2qGEdaen6THBhbLeG-LRe50Zyy8EmY3h6va7MuD1vwrzWKpLPODOPFipDJPBRn0PY0HaClg',
+      birthday: '0520',
+      birthyear: '1993',
+      email: 'sue930520@naver.com',
+      level: 'ASSOCICATE_MEMBER',
+      nickname: '진',
+      phoneNumber: '010-4558-9598',
+      profileImage:
+        'http://k.kakaocdn.net/dn/baMsiI/btsyXW46JXQ/205Yun5FFlqLWmOIB7NqT0/img_640x640.jpg',
+    };
   } catch (error) {
     console.error(error);
     throw new Error('[ERROR] Network Error');

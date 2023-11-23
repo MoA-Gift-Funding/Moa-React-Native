@@ -10,11 +10,12 @@ export default function useUser() {
       user: {email},
     },
   } = useUserContext();
+
   const queryClient = useQueryClient();
-  const updateUserQuery = useMutation({
+  const {mutate: updateUserQuery, data: updatedQueryUser} = useMutation({
     mutationFn: (formData: UserFormData) => updateUser(formData),
     onSuccess: () => queryClient.invalidateQueries({queryKey: ['user', email]}),
   });
 
-  return {updateUserQuery};
+  return {updateUserQuery, updatedQueryUser};
 }

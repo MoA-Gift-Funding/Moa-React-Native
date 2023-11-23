@@ -7,17 +7,17 @@ import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
 import {autoSlashPhoneNumber, autoHyphenBirthday} from '../../utils/regex';
 import {UserFormData} from '../../types/User';
-import useUser from '../../hooks/useUser';
+import {updateUser} from '../../apis/user/User';
 
 export default function Join({navigation}) {
   const {
     userState: {user},
+    dispatch,
   } = useUserContext();
-  const {updateUserQuery} = useUser();
   const {nickname, phoneNumber, birthday, birthyear} = user;
   const onSubmit = async (data: UserFormData) => {
-    console.log(data);
-    await updateUserQuery.mutate({...data});
+    const updated = await updateUser({...data});
+    dispatch({type: 'LOGIN', payload: updated});
     navigation.navigate('PhoneValidation');
   };
   const {
@@ -93,11 +93,11 @@ export default function Join({navigation}) {
                 required: '생년월일은 필수 입력 사항입니다.',
                 maxLength: {
                   value: 10,
-                  message: '2000/01/11와 같은 형식으로 입력해주세요',
+                  message: '1월은 01과 같은 형식으로 입력해주세요.',
                 },
                 minLength: {
                   value: 10,
-                  message: '2000/01/11와 같은 형식으로 입력해주세요',
+                  message: '1월은 01과 같은 형식으로 입력해주세요.',
                 },
               }}
             />
