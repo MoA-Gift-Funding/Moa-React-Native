@@ -1,4 +1,4 @@
-export const autoSlashPhoneNumber = (text: string) => {
+export const autoHyphenPhoneNumber = (text: string) => {
   const reformed = text
     .replace(/[^0-9]/g, '')
     .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
@@ -6,7 +6,7 @@ export const autoSlashPhoneNumber = (text: string) => {
   return reformed;
 };
 
-export const autoHyphenBirthday = (text: string) => {
+export const autoSlashBirthday = (text: string) => {
   const reformed = text
     .replace(/[^0-9]/g, '')
     .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, '$1/$2/$3')

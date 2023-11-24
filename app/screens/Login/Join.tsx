@@ -5,7 +5,7 @@ import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import {autoSlashPhoneNumber, autoHyphenBirthday} from '../../utils/regex';
+import {autoHyphenPhoneNumber, autoSlashBirthday} from '../../utils/regex';
 import {UserFormData} from '../../types/User';
 import {updateUser} from '../../apis/user/User';
 
@@ -35,7 +35,7 @@ export default function Join({navigation}) {
       birthday,
       phoneNumber,
       birthyear,
-      fullBirthday: autoHyphenBirthday(`${birthyear}${birthday}`),
+      fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
     },
   });
 
@@ -73,7 +73,7 @@ export default function Join({navigation}) {
               label="전화번호"
               error={errors.phoneNumber}
               control={control}
-              regex={autoSlashPhoneNumber}
+              regex={autoHyphenPhoneNumber}
               rules={{
                 required: '전화번호는 필수 입력 사항입니다.',
                 maxLength: {
@@ -94,16 +94,21 @@ export default function Join({navigation}) {
               label="생년월일"
               error={errors.fullBirthday}
               control={control}
-              regex={autoHyphenBirthday}
+              regex={autoSlashBirthday}
               rules={{
                 required: '생년월일은 필수 입력 사항입니다.',
                 maxLength: {
                   value: 10,
-                  message: '1월은 01과 같은 형식으로 입력해주세요.',
+                  message: '생년월일은 8자만 입력가능합니다.',
                 },
                 minLength: {
                   value: 10,
                   message: '1월은 01과 같은 형식으로 입력해주세요.',
+                },
+                pattern: {
+                  value:
+                    /(19\d\d|20[01]\d|202[0-2])[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])/,
+                  message: '올바른 생년월일을 입력해주세요.',
                 },
               }}
               keyboardType={'number-pad'}
