@@ -13,4 +13,5 @@ export type UserFormData = {
   phoneNumber: number;
   birthday: string;
   birthyear: string;
+  fullBirthday: string;
 };

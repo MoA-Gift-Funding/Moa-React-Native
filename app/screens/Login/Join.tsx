@@ -16,7 +16,12 @@ export default function Join({navigation}) {
   } = useUserContext();
   const {nickname, phoneNumber, birthday, birthyear} = user;
   const onSubmit = async (data: UserFormData) => {
-    const updated = await updateUser({...data});
+    const bdayList = data.fullBirthday.split('/');
+    const updated = await updateUser({
+      ...data,
+      birthyear: bdayList[0],
+      birthday: `${bdayList[1]}${bdayList[2]}`,
+    });
     dispatch({type: 'LOGIN', payload: updated});
     navigation.navigate('PhoneValidation');
   };

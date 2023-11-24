@@ -49,10 +49,15 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
   }
 };
 
-export const updateUser = async (formData: UserFormData): Promise<User> => {
+export const updateUser = async ({
+  birthday,
+  birthyear,
+  nickname,
+  phoneNumber,
+}: UserFormData): Promise<User> => {
   try {
     // api 호출 await
-    console.log('activated');
+    console.log(birthday, birthyear, nickname, phoneNumber);
     return {
       accessToken:
         'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMyIsImlhdCI6MTcwMDc4MDc1MiwiZXhwIjoxNzAwNzg3OTUyfQ.cDq-or_sFVK2vQo2qGEdaen6THBhbLeG-LRe50Zyy8EmY3h6va7MuD1vwrzWKpLPODOPFipDJPBRn0PY0HaClg',
