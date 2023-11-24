@@ -10,7 +10,7 @@ export default function Login({navigation}) {
   const textStyle = 'text-Gray-09 text-Heading-3';
   const handleKakaoLogin = async () => {
     await loginKakao().then(res => dispatch({type: 'LOGIN', payload: res}));
-    navigation.navigate('Profile');
+    navigation.navigate('Join');
   };
   return (
     <View className="px-6 py-10 bg-white h-[100vh]">

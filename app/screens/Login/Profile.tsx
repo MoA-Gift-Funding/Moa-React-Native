@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-import {Image, Pressable, View} from 'react-native';
+import {Alert, Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCamera} from '@fortawesome/free-solid-svg-icons';
 import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
-import {AdvancedImage, upload} from 'cloudinary-react-native';
-import {Cloudinary} from '@cloudinary/url-gen';
 import {useUserContext} from '../../contexts/UserContext';
+import {uploadImage} from '../../apis/image/Image';
 
 const Profile = () => {
   const {
@@ -18,36 +17,25 @@ const Profile = () => {
   const [imageURI, setImageURI] = useState(
     user?.profileImage || Config.DEFAULT_IMAGE,
   );
-  console.log(user);
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: Config.CLOUDINARY_NAME,
-    },
-    url: {
-      secure: true,
-    },
-  });
   const onPress = async () => {
     const {assets} = await launchImageLibrary({mediaType: 'photo'});
     if (assets) {
-      const uri = assets[0].uri;
-
-      const options = {
-        upload_preset: Config.CLOUDINARY_UPLOAD_PRESET,
-        tag: 'profile',
-        unsigned: true,
+      const file = assets[0];
+      const uri = file.uri;
+      const type = file.type;
+      const name = file.fileName;
+      const source = {
+        uri,
+        type,
+        name,
       };
-
-      await upload(cld, {
-        file: uri,
-        options,
-        callback: (error: any, res: any) => {
-          //.. handle response
-          console.log(res);
-          console.log(error);
-        },
-      });
+      const {secure_url, message} = await uploadImage(source);
+      if (message) {
+        return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
+      }
+      setImageURI(secure_url);
+      // profile URL 바꾸는 api 호출
     }
   };
   return (
@@ -63,7 +51,7 @@ const Profile = () => {
           <Image
             className="w-[200px] h-[200px] rounded-full"
             source={{
-              uri: `https://${imageURI?.substring(7)}`,
+              uri: imageURI,
             }}
           />
           <Pressable
