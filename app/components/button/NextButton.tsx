@@ -19,10 +19,7 @@ const NextButton: React.FC<NextButtonProps> = ({
 }) => {
   return (
     <Pressable
-      className={cls(
-        'h-[56px] w-[312px] bg-Main-01 rounded-lg flex items-center justify-center',
-        {...style},
-      )}
+      className={`h-[56px] w-[312px] bg-Main-01 rounded-lg flex items-center justify-center ${style}`}
       onPress={handleSubmit(onSubmit)}>
       <TextSemiBold style="text-white text-Body-1 ml-[14px]" title={title} />
     </Pressable>

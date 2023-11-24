@@ -9,15 +9,16 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
 import {uploadImage} from '../../apis/image/Image';
+import {useForm} from 'react-hook-form';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
   const [imageURI, setImageURI] = useState(
     user?.profileImage || Config.DEFAULT_IMAGE,
   );
-
+  const {handleSubmit} = useForm();
   const onPress = async () => {
     const {assets} = await launchImageLibrary({mediaType: 'photo'});
     if (assets) {
@@ -62,11 +63,18 @@ const Profile = () => {
         </View>
       </View>
       <View className="mb-4 flex flex-col items-center">
-        <TextRegular
-          style="mb-2 text-Body-2 text-Gray-06 underline"
-          title="건너뛰기"
+        <Pressable onPress={() => navigation.navigate('Contacts')}>
+          <TextRegular
+            style="mb-20 text-Body-2 text-Gray-06 underline"
+            title="건너뛰기"
+          />
+        </Pressable>
+        <NextButton
+          style="mb-2"
+          title="다음"
+          handleSubmit={handleSubmit}
+          onSubmit={() => navigation.navigate('Contacts')}
         />
-        {/* <NextButton title="다음" /> */}
       </View>
     </View>
   );

@@ -12,12 +12,17 @@ export const uploadImage = async file => {
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${Config.CLOUDINARY_NAME}/image/upload`,
       data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     response.secure_url = res.data.secure_url;
     return response;
-  } catch (error) {
-    console.log(error.response.data);
-    response.message = '다시 시도해주세요.';
+  } catch (error: any) {
+    console.log(error.request);
+    response.message = '업로드에 실패했습니다. 다시 시도해주세요.';
     return response;
   }
 };
