@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
@@ -40,6 +40,7 @@ const PhoneValidation = () => {
             label="휴대폰 번호"
             control={control}
             error={errors.phoneNumber}
+            editable={false}
           />
           {sent && (
             <TextInputGroup

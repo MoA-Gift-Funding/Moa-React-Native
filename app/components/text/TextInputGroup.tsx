@@ -1,6 +1,6 @@
 import React from 'react';
 import TextRegular from './TextRegular';
-import {TextInput} from 'react-native';
+import {KeyboardTypeOptions, TextInput} from 'react-native';
 import {
   Control,
   Controller,
@@ -17,6 +17,8 @@ interface TextInputGroupProps {
   control: Control<any>;
   rules?: any;
   regex?: any;
+  editable?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 const TextInputGroup: React.FC<TextInputGroupProps> = ({
@@ -27,6 +29,8 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
   control,
   rules,
   regex,
+  editable,
+  keyboardType,
 }) => {
   return (
     <>
@@ -38,7 +42,8 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
-            className="w-[312px] h-[56px] bg-Gray-02 rounded-md px-3 text-body-2"
+            editable={editable}
+            className="w-[312px] h-[56px] bg-Gray-02 rounded-md px-3 text-body-2 text-black"
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={text => {
@@ -52,6 +57,7 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
               onChange(formattedText);
             }}
             value={value}
+            keyboardType={keyboardType}
           />
         )}
         name={name}

@@ -85,6 +85,7 @@ export default function Join({navigation}) {
                   message: '전화번호 형식에 맞지않습니다.',
                 },
               }}
+              keyboardType={'number-pad'}
             />
           </View>
           <View>
@@ -105,6 +106,7 @@ export default function Join({navigation}) {
                   message: '1월은 01과 같은 형식으로 입력해주세요.',
                 },
               }}
+              keyboardType={'number-pad'}
             />
           </View>
         </View>
