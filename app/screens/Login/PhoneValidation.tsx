@@ -79,6 +79,7 @@ const PhoneValidation = ({navigation}) => {
                 placeholder="인증번호 6자리 입력"
                 error={errors.verificationNumber}
                 keyboardType="number-pad"
+                rules={{required: '인증번호를 입력해주세요.'}}
               />
             </View>
           )}
