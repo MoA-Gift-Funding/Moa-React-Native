@@ -48,7 +48,7 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
             onBlur={onBlur}
             onChangeText={text => {
               let formattedText = text;
-              if (rules.maxLength && text.length > rules.maxLength.value) {
+              if (rules?.maxLength && text.length > rules.maxLength.value) {
                 return;
               }
               if (regex) {

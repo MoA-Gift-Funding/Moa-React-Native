@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {KeyboardAvoidingView, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
 import NextButton from '../../components/button/NextButton';
+import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
 
-const PhoneValidation = () => {
+const PhoneValidation = ({navigation}) => {
   const [sent, setSent] = useState(false);
   const {
     userState: {user},
@@ -17,16 +18,37 @@ const PhoneValidation = () => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      phoneNumber: user?.phoneNumber,
-      validationNumber: '',
+      recipientNo: user?.phoneNumber,
+      verificationNumber: '',
     },
   });
-  const onSubmit = async data => {
-    console.log(data);
+
+  const onSubmit = async (data: {
+    recipientNo: string;
+    verificationNumber: string;
+  }) => {
+    const verified = await verifyPhoneNumber({...data});
+    if (verified) {
+      navigation.navigate('Profile');
+    }
   };
+
+  const handleMSGButton = async ({
+    recipientNo,
+  }: {
+    recipientNo: string;
+    verificationNumber: string;
+  }) => {
+    if (sent) {
+      return;
+    }
+    setSent(true);
+    await requestVerifyMSG(recipientNo);
+  };
+
   return (
-    <View className="px-6 bg-white h-full flex flex-col justify-between">
-      <View>
+    <KeyboardAvoidingView className="px-6 bg-white h-full flex flex-col justify-between">
+      <ScrollView>
         <View className="my-10 text-[22px] font-semibold">
           <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
           <TextSemiBold
@@ -35,28 +57,33 @@ const PhoneValidation = () => {
           />
         </View>
         <View className="flex flex-col gap-2">
-          <TextInputGroup
-            name="phoneNumber"
-            label="휴대폰 번호"
-            control={control}
-            error={errors.phoneNumber}
-            editable={false}
-          />
-          {sent && (
+          <View>
             <TextInputGroup
-              name="validationNumber"
-              label="인증번호"
+              name="recipientNo"
+              label="휴대폰 번호"
               control={control}
-              placeholder="인증번호 6자리 입력"
-              error={errors.phoneNumber}
+              error={errors.recipientNo}
+              editable={false}
             />
+          </View>
+          {sent && (
+            <View>
+              <TextInputGroup
+                name="verificationNumber"
+                label="인증번호"
+                control={control}
+                placeholder="인증번호 6자리 입력"
+                error={errors.verificationNumber}
+                keyboardType="number-pad"
+              />
+            </View>
           )}
         </View>
-      </View>
+      </ScrollView>
       <View className="mb-10">
         {sent && (
           <NextButton
-            title="4:55"
+            title="인증하기"
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
           />
@@ -65,11 +92,11 @@ const PhoneValidation = () => {
           <NextButton
             title="인증문자 받기"
             handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
+            onSubmit={handleMSGButton}
           />
         )}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
