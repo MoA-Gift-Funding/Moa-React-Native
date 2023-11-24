@@ -7,13 +7,48 @@ import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
+import {AdvancedImage, upload} from 'cloudinary-react-native';
+import {Cloudinary} from '@cloudinary/url-gen';
+import {useUserContext} from '../../contexts/UserContext';
 
 const Profile = () => {
-  //   const result = launchImageLibrary({mediaType: 'photo'});
-  const [imageURI, setImageURI] = useState(Config.DEFAULT_IMAGE);
+  const {
+    userState: {user},
+  } = useUserContext();
+  const [imageURI, setImageURI] = useState(
+    user?.profileImage || Config.DEFAULT_IMAGE,
+  );
+  console.log(user);
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: Config.CLOUDINARY_NAME,
+    },
+    url: {
+      secure: true,
+    },
+  });
   const onPress = async () => {
     const {assets} = await launchImageLibrary({mediaType: 'photo'});
-    console.log(assets);
+    if (assets) {
+      const uri = assets[0].uri;
+
+      const options = {
+        upload_preset: Config.CLOUDINARY_UPLOAD_PRESET,
+        tag: 'profile',
+        unsigned: true,
+      };
+
+      await upload(cld, {
+        file: uri,
+        options,
+        callback: (error: any, res: any) => {
+          //.. handle response
+          console.log(res);
+          console.log(error);
+        },
+      });
+    }
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
@@ -26,9 +61,9 @@ const Profile = () => {
         </View>
         <View className="flex flex-col gap-2 items-center relative">
           <Image
-            className="w-[200px] h-[200px]"
+            className="w-[200px] h-[200px] rounded-full"
             source={{
-              uri: imageURI,
+              uri: `https://${imageURI?.substring(7)}`,
             }}
           />
           <Pressable
