@@ -1,12 +1,15 @@
 import {Axios} from '../axios.config';
 
 export const requestVerifyMSG = async (recipientNo: string) => {
+  let sent = false;
   try {
     await Axios.post('/users/send-verification-number', {recipientNo}).then(
-      res => console.log(res.data),
+      res => (sent = true),
     );
-  } catch (error) {
-    console.error(error);
+    return sent;
+  } catch (error: any) {
+    console.error(error.response.data);
+    return sent;
   }
 };
 
@@ -17,19 +20,31 @@ export const verifyPhoneNumber = async ({
   recipientNo: string;
   verificationNumber: string;
 }) => {
+  const verified = {isVerified: false, message: ''};
   try {
-    let verified = false;
     await Axios.post('/users/verify-verification-number', {
       recipientNo,
       verificationNumber,
     }).then(res => {
       if (res.data.message === 'Verified VerificationNumber') {
-        verified = true;
+        verified.isVerified = true;
       }
     });
     return verified;
-  } catch (error) {
-    console.error(error);
-    throw new Error('[ERROR] Unknown Error');
+  } catch (error: any) {
+    const {
+      response: {
+        data: {message},
+      },
+    } = error;
+    switch (message) {
+      case 'Incorrect certification code':
+        verified.message = '잘못된 인증번호입니다.';
+        break;
+      default:
+        verified.message = '시간이 초과되었습니다.';
+        break;
+    }
+    return verified;
   }
 };

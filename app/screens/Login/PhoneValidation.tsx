@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, ScrollView, View} from 'react-native';
+import {Alert, KeyboardAvoidingView, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
@@ -27,10 +27,11 @@ const PhoneValidation = ({navigation}) => {
     recipientNo: string;
     verificationNumber: string;
   }) => {
-    const verified = await verifyPhoneNumber({...data});
-    if (verified) {
-      navigation.navigate('Profile');
+    const {isVerified, message} = await verifyPhoneNumber({...data});
+    if (isVerified) {
+      return navigation.navigate('Profile');
     }
+    Alert.alert('인증 번호 오류', message, [{text: '확인'}]);
   };
 
   const handleMSGButton = async ({
@@ -43,7 +44,10 @@ const PhoneValidation = ({navigation}) => {
       return;
     }
     setSent(true);
-    await requestVerifyMSG(recipientNo);
+    const msgSent = await requestVerifyMSG(recipientNo);
+    if (!msgSent) {
+      Alert.alert('네트워크 오류', '다시 시도해주세요.', [{text: '확인'}]);
+    }
   };
 
   return (
