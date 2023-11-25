@@ -10,6 +10,7 @@ import {UserContextProvider} from './app/contexts/UserContext';
 import PhoneValidation from './app/screens/Login/PhoneValidation';
 import Profile from './app/screens/Login/Profile';
 import Contact from './app/screens/Login/Contact';
+import JoinCompleted from './app/screens/Login/JoinCompleted';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,6 +62,11 @@ export const App = () => {
               options={{
                 header: () => <BackHeader />,
               }}
+            />
+            <Stack.Screen
+              name="JoinCompleted"
+              component={JoinCompleted}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>

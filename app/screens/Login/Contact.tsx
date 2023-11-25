@@ -58,7 +58,7 @@ const Contact = ({navigation}) => {
         });
     }
     // 친구 저장 API 호출
-    navigation.navigate('Birthday');
+    navigation.navigate('JoinCompleted');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
