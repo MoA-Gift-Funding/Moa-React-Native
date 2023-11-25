@@ -13,3 +13,5 @@
 -keep public class com.nhn.android.naverlogin.** {
        public protected *;
 }
+-keep class com.rt2zz.reactnativecontacts.** {*;}
+-keepclassmembers class com.rt2zz.reactnativecontacts.** {*;}

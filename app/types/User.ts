@@ -15,3 +15,8 @@ export type UserFormData = {
   birthyear: string;
   fullBirthday: string;
 };
+
+export type UserContact = {
+  name: string | undefined;
+  phoneNumber: string | undefined;
+};

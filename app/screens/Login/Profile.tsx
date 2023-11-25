@@ -63,7 +63,7 @@ const Profile = ({navigation}) => {
         </View>
       </View>
       <View className="mb-8 flex flex-col items-center">
-        <Pressable onPress={() => navigation.navigate('Contacts')}>
+        <Pressable onPress={() => navigation.navigate('Contact')}>
           <TextRegular
             style="mb-12 text-Body-2 text-Gray-06 underline"
             title="건너뛰기"
@@ -72,7 +72,7 @@ const Profile = ({navigation}) => {
         <NextButton
           title="저장하기"
           handleSubmit={handleSubmit}
-          onSubmit={() => navigation.navigate('Contacts')}
+          onSubmit={() => navigation.navigate('Contact')}
         />
       </View>
     </View>

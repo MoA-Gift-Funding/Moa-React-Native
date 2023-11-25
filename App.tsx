@@ -9,7 +9,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {UserContextProvider} from './app/contexts/UserContext';
 import PhoneValidation from './app/screens/Login/PhoneValidation';
 import Profile from './app/screens/Login/Profile';
-import Contacts from './app/screens/Login/Contacts';
+import Contact from './app/screens/Login/Contact';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,8 +56,8 @@ export const App = () => {
               }}
             />
             <Stack.Screen
-              name="Contacts"
-              component={Contacts}
+              name="Contact"
+              component={Contact}
               options={{
                 header: () => <BackHeader />,
               }}
