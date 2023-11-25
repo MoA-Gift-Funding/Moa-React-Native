@@ -52,7 +52,10 @@ const Profile = ({navigation}) => {
           <Image
             className="w-[200px] h-[200px] rounded-full"
             source={{
-              uri: imageURI,
+              uri:
+                imageURI[4] !== 's'
+                  ? `https://${imageURI?.substring(7)}`
+                  : imageURI,
             }}
           />
           <Pressable

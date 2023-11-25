@@ -60,13 +60,13 @@
 		</dict>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>find friends within the app</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>NSMicrophoneUsageDescription</string>
+	<string>to upload a profile picture</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>NSCameraUsageDescription</string>
+	<string>to upload a profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Pretendard-Black.otf</string>
