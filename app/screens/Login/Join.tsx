@@ -116,7 +116,7 @@ export default function Join({navigation}) {
           </View>
         </View>
       </ScrollView>
-      <KeyboardAvoidingView className="flex justify-end mb-10">
+      <KeyboardAvoidingView className="flex items-center justify-end mb-8">
         <NextButton
           title="다음"
           handleSubmit={handleSubmit}

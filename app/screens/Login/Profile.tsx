@@ -48,7 +48,7 @@ const Profile = ({navigation}) => {
             title="프로필 사진을 등록해주세요."
           />
         </View>
-        <View className="flex flex-col gap-2 items-center relative">
+        <View className="flex flex-col gap-2 items-center relative mt-16">
           <Image
             className="w-[200px] h-[200px] rounded-full"
             source={{
@@ -62,16 +62,15 @@ const Profile = ({navigation}) => {
           </Pressable>
         </View>
       </View>
-      <View className="mb-4 flex flex-col items-center">
+      <View className="mb-8 flex flex-col items-center">
         <Pressable onPress={() => navigation.navigate('Contacts')}>
           <TextRegular
-            style="mb-20 text-Body-2 text-Gray-06 underline"
+            style="mb-12 text-Body-2 text-Gray-06 underline"
             title="건너뛰기"
           />
         </Pressable>
         <NextButton
-          style="mb-2"
-          title="다음"
+          title="저장하기"
           handleSubmit={handleSubmit}
           onSubmit={() => navigation.navigate('Contacts')}
         />

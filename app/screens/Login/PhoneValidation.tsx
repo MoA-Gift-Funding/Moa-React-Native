@@ -85,7 +85,7 @@ const PhoneValidation = ({navigation}) => {
           )}
         </View>
       </ScrollView>
-      <View className="mb-10">
+      <View className="mb-8 items-center">
         {sent && (
           <NextButton
             title="인증하기"
