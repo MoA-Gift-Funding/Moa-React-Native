@@ -12,6 +12,7 @@ const PhoneValidation = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
+
   const {
     control,
     handleSubmit,

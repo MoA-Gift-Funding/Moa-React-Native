@@ -3,6 +3,7 @@ import NaverLogin from '@react-native-seoul/naver-login';
 import {Axios} from '../axios.config';
 import Config from 'react-native-config';
 import {User, UserFormData} from '../../types/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginKakao = async (): Promise<User> => {
   try {
@@ -56,22 +57,28 @@ export const updateUser = async ({
   phoneNumber,
 }: UserFormData): Promise<User> => {
   try {
-    // api 호출 await
-    console.log(birthday, birthyear, nickname, phoneNumber);
-    const accessToken =
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMyIsImlhdCI6MTcwMDc4MDc1MiwiZXhwIjoxNzAwNzg3OTUyfQ.cDq-or_sFVK2vQo2qGEdaen6THBhbLeG-LRe50Zyy8EmY3h6va7MuD1vwrzWKpLPODOPFipDJPBRn0PY0HaClg';
+    const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    return {
-      accessToken,
-      birthday: '0520',
-      birthyear: '1993',
-      email: 'sue930520@naver.com',
-      level: 'ASSOCICATE_MEMBER',
-      nickname: '진',
-      phoneNumber: '010-4558-9598',
-      profileImage:
-        'http://k.kakaocdn.net/dn/baMsiI/btsyXW46JXQ/205Yun5FFlqLWmOIB7NqT0/img_640x640.jpg',
-    };
+    const user = await Axios.post('/users/update-new-user-info', {
+      nickname,
+      phoneNumber,
+      birthday,
+      birthyear,
+    })
+      .then(async res => {
+        console.log(res.data);
+        // 추후 데이터 받아서 그냥 진행하는 것으로 변경
+        const user = await Axios.get('/users/get-user-info')
+          .then(res => res.data.data)
+          .catch(error => {
+            console.log(error);
+          });
+        return user;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    return user;
   } catch (error) {
     console.error(error);
     throw new Error('[ERROR] Network Error');

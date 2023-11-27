@@ -4,12 +4,16 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import {loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
   const textStyle = 'text-Gray-09 text-Heading-3';
   const handleKakaoLogin = async () => {
-    await loginKakao().then(res => dispatch({type: 'LOGIN', payload: res}));
+    await loginKakao().then(async res => {
+      dispatch({type: 'LOGIN', payload: res});
+      await AsyncStorage.setItem('accessToken', res.accessToken);
+    });
     navigation.navigate('Join');
   };
   return (
