@@ -41,12 +41,7 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
     const user = Axios.get(
       `/users/login/oauth2/${platform}/app/${accessToken}`,
     ).then(async res => {
-      const [cookie] = res.headers['set-cookie'];
-      console.log(cookie);
-      await AsyncStorage.setItem(
-        'refresh',
-        JSON.stringify(cookie).substring(8),
-      );
+      await saveCookie(res);
       await AsyncStorage.setItem('accessToken', res.data.data.accessToken);
       return res.data.data;
     });
@@ -113,20 +108,48 @@ const getUser = async () => {
   }
 };
 
+const saveCookie = async res => {
+  const [cookie] = res.headers['set-cookie'];
+  const refresh = JSON.stringify(cookie).substring(8);
+  await AsyncStorage.setItem('refresh', refresh);
+  return refresh;
+};
+
 const refreshAccessToken = async () => {
   try {
     const refreshToken = await AsyncStorage.getItem('refresh');
     const {accessToken} = await Axios.post('/tokens/reissue-access-token', {
       refreshToken,
     })
-      .then(res => res.data.data)
+      .then(async res => {
+        await AsyncStorage.setItem('accessToken', res.data.data.accessToken);
+        return res.data.data;
+      })
       .catch(error => console.error);
     return accessToken;
   } catch (error) {
     console.error(error);
     const message = error.response.data.message;
     if (message === 'Unauthorized') {
-      return;
+      return 'Refresh Token Expired';
+    }
+  }
+};
+
+const refreshRefreshToken = async () => {
+  try {
+    const refreshToken = await AsyncStorage.getItem('refresh');
+    const {accessToken} = await Axios.post('/tokens/reissue-access-token', {
+      refreshToken,
+    })
+      .then(async res => await saveCookie(res))
+      .catch(error => console.error);
+    return accessToken;
+  } catch (error) {
+    console.error(error);
+    const message = error.response.data.message;
+    if (message === 'Unauthorized') {
+      return '로그인 필요';
     }
   }
 };
