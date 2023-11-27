@@ -10,6 +10,7 @@ import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
 import {uploadImage} from '../../apis/image/Image';
 import {useForm} from 'react-hook-form';
+import {updateProfileImage} from '../../apis/user/User';
 
 const Profile = ({navigation}) => {
   const {
@@ -36,8 +37,14 @@ const Profile = ({navigation}) => {
         return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
       }
       setImageURI(secure_url);
-      // profile URL 바꾸는 api 호출
     }
+  };
+  const handleButton = async () => {
+    const res = await updateProfileImage(imageURI!);
+    if (res) {
+      return Alert.alert('네트워크 오류 오류', res, [{text: '확인'}]);
+    }
+    navigation.navigate('Contact');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
@@ -75,7 +82,7 @@ const Profile = ({navigation}) => {
         <NextButton
           title="저장하기"
           handleSubmit={handleSubmit}
-          onSubmit={() => navigation.navigate('Contact')}
+          onSubmit={handleButton}
         />
       </View>
     </View>

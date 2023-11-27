@@ -143,7 +143,7 @@ const refreshRefreshToken = async () => {
       refreshToken,
     })
       .then(async res => await saveCookie(res))
-      .catch(error => console.error);
+      .catch(console.error);
     return accessToken;
   } catch (error) {
     console.error(error);
@@ -151,5 +151,18 @@ const refreshRefreshToken = async () => {
     if (message === 'Unauthorized') {
       return '로그인 필요';
     }
+  }
+};
+
+export const updateProfileImage = async (profileImage: string) => {
+  try {
+    await Axios.post('/users/update-profile-image', {profileImage})
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(console.error);
+  } catch (error) {
+    console.log(error);
+    return '다시 시도해주세요.';
   }
 };
