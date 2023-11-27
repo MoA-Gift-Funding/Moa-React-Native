@@ -31,7 +31,7 @@ const JoinCompleted = ({navigation}) => {
             />
           </View>
         </View>
-        <View className="mb-8 flex flex-col items-center">
+        <View className=" flex flex-col items-center">
           <NextButton
             title="확인"
             handleSubmit={handleSubmit}

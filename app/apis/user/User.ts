@@ -83,16 +83,16 @@ export const updateUser = async ({
   }
 };
 
-const getUser = async () => {
+export const getUser = async () => {
   const found = {user: null, message: ''};
   const accessToken = await AsyncStorage.getItem('accessToken');
   try {
     await Axios.get('/users/get-user-info', {
-      headers: {Authorization: accessToken},
+      headers: {Authorization: `Bearer ${accessToken}`},
     })
       .then(res => (found.user = res.data.data))
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
         const message = error.response.data.message;
         switch (message) {
           case 'Unauthorized':

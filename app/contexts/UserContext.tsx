@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {Dispatch, createContext, useEffect, useReducer} from 'react';
 import {User} from '../types/User';
+import {getUser} from '../apis/user/User';
 
 interface State {
   authenticated: boolean;
@@ -55,8 +56,8 @@ export const UserContextProvider = ({
   useEffect(() => {
     async function loadUser() {
       try {
-        // const res = await 사용자 정보 호출, accessToken으로
-        // dispatch('LOGIN', res.data);
+        const {user} = await getUser();
+        dispatch({type: 'LOGIN', payload: user});
       } catch (error) {
         console.error(error);
       } finally {
