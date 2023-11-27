@@ -67,12 +67,8 @@ export const updateUser = async ({
     })
       .then(async res => {
         console.log(res.data);
-        // 추후 데이터 받아서 그냥 진행하는 것으로 변경
-        const user = await Axios.get('/users/get-user-info')
-          .then(res => res.data.data)
-          .catch(error => {
-            console.log(error);
-          });
+        // 추후 데이터 받아서 바로 리턴하는 것으로 변경
+        const {user} = await getUser();
         return user;
       })
       .catch(error => {
@@ -82,5 +78,30 @@ export const updateUser = async ({
   } catch (error) {
     console.error(error);
     throw new Error('[ERROR] Network Error');
+  }
+};
+
+const getUser = async () => {
+  const found = {user: null, message: ''};
+  const accessToken = await AsyncStorage.getItem('accessToken');
+  try {
+    await Axios.get('/users/get-user-info', {
+      headers: {Authorization: accessToken},
+    })
+      .then(res => (found.user = res.data.data))
+      .catch(error => {
+        console.log(error);
+        const message = error.response.data.message;
+        switch (message) {
+          case 'Unauthorized':
+            // accessToken 재발급 로직
+            break;
+          default:
+            found.message = '로그인이 만료되었습니다. 재로그인해주세요.';
+        }
+      });
+    return found;
+  } catch (error) {
+    console.error(error);
   }
 };
