@@ -11,7 +11,7 @@ import {UserContact} from '../../types/User';
 const Contact = ({navigation}) => {
   const {handleSubmit} = useForm();
   const getContacts = async () => {
-    const organized: UserContact[] = [];
+    const organized: UserContact = {contactList: []};
     if (Platform.OS === 'android') {
       await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
@@ -28,7 +28,7 @@ const Contact = ({navigation}) => {
               contacts.forEach(contact => {
                 const name = contact.displayName;
                 const phoneNumber = contact.phoneNumbers[0].number;
-                organized.push({name, phoneNumber});
+                organized.contactList.push({name, phoneNumber});
               });
               return organized;
             })
@@ -48,7 +48,7 @@ const Contact = ({navigation}) => {
             if (contact.phoneNumbers[0]) {
               const name = `${contact.familyName}${contact.givenName}`;
               const phoneNumber = contact.phoneNumbers[0].number;
-              organized.push({name, phoneNumber});
+              organized.contactList.push({name, phoneNumber});
             }
           });
         })

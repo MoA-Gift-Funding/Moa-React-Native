@@ -17,6 +17,10 @@ export type UserFormData = {
 };
 
 export type UserContact = {
+  contactList: Contact[];
+};
+
+export type Contact = {
   name: string | undefined;
   phoneNumber: string | undefined;
 };
