@@ -12,7 +12,6 @@ export default function Login({navigation}) {
   const handleKakaoLogin = async () => {
     await loginKakao().then(async res => {
       dispatch({type: 'LOGIN', payload: res});
-      await AsyncStorage.setItem('accessToken', res.accessToken);
     });
     navigation.navigate('Join');
   };
