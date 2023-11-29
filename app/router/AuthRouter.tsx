@@ -17,7 +17,7 @@ const AuthRouter = () => {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator>
-      {user ? (
+      {user?.level === 'REGULAR_MEMBER' ? (
         <Stack.Screen
           name="Home"
           component={Home}

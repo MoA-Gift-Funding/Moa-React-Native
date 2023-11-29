@@ -13,24 +13,25 @@ Axios.interceptors.response.use(
   },
   async error => {
     console.log(error);
-    if (error.response.status === 401) {
-      let accessToken;
-      try {
-        accessToken = await refreshAccessToken();
-      } catch (err) {
-        if (err.response.status === 401) {
-          await refreshRefreshToken().catch(async lastErr => {
-            return await AsyncStorage.clear();
-          });
-        }
-      }
-      error.config.headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      };
-      const response = await axios.request(error.config);
-      return response;
-    }
+    console.log(error.response);
+    // if (error.response.status === 401) {
+    //   let accessToken;
+    //   try {
+    //     accessToken = await refreshAccessToken();
+    //   } catch (err) {
+    //     if (err.response.status === 401) {
+    //       await refreshRefreshToken().catch(async lastErr => {
+    //         return await AsyncStorage.clear();
+    //       });
+    //     }
+    //   }
+    //   error.config.headers = {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${accessToken}`,
+    //   };
+    //   const response = await Axios.request(error.config);
+    //   return response;
+    // }
     return Promise.reject(error);
   },
 );

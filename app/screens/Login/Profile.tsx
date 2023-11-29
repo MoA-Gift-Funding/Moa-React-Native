@@ -11,6 +11,8 @@ import {useUserContext} from '../../contexts/UserContext';
 import {uploadImage} from '../../apis/image/Image';
 import {useForm} from 'react-hook-form';
 import {updateProfileImage} from '../../apis/user/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProgressBar from '../../components/bar/ProgressBar';
 
 const Profile = ({navigation}) => {
   const {
@@ -44,11 +46,13 @@ const Profile = ({navigation}) => {
     if (res) {
       return Alert.alert('네트워크 오류 오류', res, [{text: '확인'}]);
     }
+    await AsyncStorage.setItem('process', 'Contact');
     navigation.navigate('Contact');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
       <View>
+        <ProgressBar progress={'w-3/5'} />
         <View className="my-10 font-semibold">
           <TextSemiBold
             style="text-Heading-3"

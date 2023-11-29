@@ -5,6 +5,7 @@ import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
 import Config from 'react-native-config';
+import ProgressBar from '../../components/bar/ProgressBar';
 
 const JoinCompleted = ({navigation}) => {
   const {handleSubmit} = useForm();
@@ -15,6 +16,7 @@ const JoinCompleted = ({navigation}) => {
     <SafeAreaView className="bg-white">
       <View className="h-full px-6 flex flex-col justify-between">
         <View>
+          <ProgressBar progress={'w-full'} />
           <View className="my-8 font-semibold">
             <TextSemiBold
               style="text-Heading-3"

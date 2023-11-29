@@ -6,7 +6,6 @@ import AuthRouter from './app/router/AuthRouter';
 
 export const App = () => {
   const queryClient = new QueryClient();
-
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>

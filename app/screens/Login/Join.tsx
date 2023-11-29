@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
@@ -8,6 +8,8 @@ import {useUserContext} from '../../contexts/UserContext';
 import {autoHyphenPhoneNumber, autoSlashBirthday} from '../../utils/regex';
 import {UserFormData} from '../../types/User';
 import {updateUser} from '../../apis/user/User';
+import ProgressBar from '../../components/bar/ProgressBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Join({navigation}) {
   const {
@@ -15,6 +17,7 @@ export default function Join({navigation}) {
     dispatch,
   } = useUserContext();
   const {nickname, phoneNumber, birthday, birthyear} = user;
+
   const onSubmit = async (data: UserFormData) => {
     const bdayList = data.fullBirthday.split('/');
     const updated = await updateUser({
@@ -23,6 +26,7 @@ export default function Join({navigation}) {
       birthday: `${bdayList[1]}${bdayList[2]}`,
     });
     dispatch({type: 'LOGIN', payload: updated});
+    await AsyncStorage.setItem('process', 'PhoneValidation');
     navigation.navigate('PhoneValidation');
   };
   const {
@@ -38,12 +42,22 @@ export default function Join({navigation}) {
       fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
     },
   });
+  // useEffect(() => {
+  //   async function getProcess() {
+  //     const process = await AsyncStorage.getItem('process');
+  //     if (process) {
+  //       return navigation.navigate(process);
+  //     }
+  //   }
+  //   getProcess();
+  // }, []);
 
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
+        <ProgressBar progress={'w-1/5'} />
         <View className="my-10">
           <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
           <TextSemiBold

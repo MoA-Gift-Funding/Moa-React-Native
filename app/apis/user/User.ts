@@ -11,7 +11,7 @@ export const loginKakao = async (): Promise<User> => {
     const user = await loginMoA(accessToken, 'kakao');
     return user;
   } catch (error) {
-    console.error(error);
+    console.log(error.response);
     throw new Error('[ERROR] Network Error');
   }
 };
@@ -36,9 +36,12 @@ export const loginNaver = async (): Promise<User> => {
   }
 };
 
-const loginMoA = (accessToken: string, platform: string): Promise<User> => {
+const loginMoA = async (
+  accessToken: string,
+  platform: string,
+): Promise<User> => {
   try {
-    const user = Axios.get(
+    const user = await Axios.get(
       `/users/login/oauth2/${platform}/app/${accessToken}`,
     ).then(async res => {
       await saveCookie(res);
@@ -49,6 +52,8 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
     return user;
   } catch (error) {
     console.error(error);
+    console.log(error.response);
+
     throw new Error('[ERROR] Network Error');
   }
 };
@@ -59,6 +64,7 @@ export const updateUser = async ({
   nickname,
   phoneNumber,
 }: UserFormData): Promise<User> => {
+  console.log(nickname, birthday, phoneNumber, birthyear);
   try {
     const user = await Axios.post('/users/update-new-user-info', {
       nickname,
@@ -66,10 +72,8 @@ export const updateUser = async ({
       birthday,
       birthyear,
     })
-      .then(async res => {
-        console.log(res.data);
-        // 추후 데이터 받아서 바로 리턴하는 것으로 변경
-        const {user} = await getUser();
+      .then(res => {
+        const user = res.data.data;
         return user;
       })
       .catch(error => {
@@ -88,13 +92,17 @@ export const getUser = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     await Axios.get('/users/get-user-info')
-      .then(res => (found.user = res.data.data))
+      .then(res => {
+        found.user = res.data.data;
+        return;
+      })
       .catch(error => {
         console.log(error.response);
       });
     return found;
   } catch (error) {
     console.error(error);
+    console.log(error.response);
   }
 };
 
@@ -104,8 +112,6 @@ const saveCookie = async res => {
   await AsyncStorage.setItem('refresh', refresh);
   return refresh;
 };
-
-export const whichTokenExpired = () => {};
 
 export const refreshAccessToken = async () => {
   try {

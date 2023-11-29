@@ -1,27 +1,28 @@
-import React from 'react';
-import {Alert, View} from 'react-native';
+import React, {useState} from 'react';
+import {View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
-import {
-  loginKakao,
-  loginNaver,
-  refreshAccessToken,
-  refreshRefreshToken,
-} from '../../apis/user/User';
+import {loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
+import LoadingBar from '../../components/bar/LoadingBar';
+import ProgressBar from '../../components/bar/ProgressBar';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
   const textStyle = 'text-Gray-09 text-Heading-3';
+  const [isLoading, setIsLoding] = useState(false);
   const handleKakaoLogin = async () => {
+    setIsLoding(true);
     await loginKakao().then(async res => {
       dispatch({type: 'LOGIN', payload: res});
+      setIsLoding(false);
     });
     navigation.navigate('Join');
   };
-
   return (
-    <View className="px-6 py-10 bg-white h-[100vh]">
+    <View className="px-6 py-10 bg-white h-full">
+      {isLoading && <LoadingBar />}
+
       <View className="flex flex-col mb-10">
         <TextSemiBold style={textStyle} title="설레이는 새로운 선물 경험," />
         <TextSemiBold style={textStyle} title="모아로 마음을 모아볼까요?" />

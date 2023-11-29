@@ -7,6 +7,8 @@ import {useForm} from 'react-hook-form';
 import {PermissionsAndroid} from 'react-native';
 import Contacts from 'react-native-contacts';
 import {UserContact} from '../../types/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProgressBar from '../../components/bar/ProgressBar';
 
 const Contact = ({navigation}) => {
   const {handleSubmit} = useForm();
@@ -58,11 +60,13 @@ const Contact = ({navigation}) => {
         });
     }
     // 친구 저장 API 호출
+    await AsyncStorage.removeItem('process');
     navigation.navigate('JoinCompleted');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
       <View>
+        <ProgressBar progress={'w-4/5'} />
         <View className="my-8 font-semibold">
           <TextSemiBold style="text-Heading-3" title="연락처를 연결하면" />
           <TextSemiBold

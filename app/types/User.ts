@@ -7,6 +7,7 @@ export interface User {
   birthyear?: string;
   phoneNumber: string;
   level: 'ASSOCICATE_MEMBER' | 'REGULAR_MEMBER';
+  joinProcess?: string;
 }
 export type UserFormData = {
   nickname: string;

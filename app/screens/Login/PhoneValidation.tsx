@@ -6,6 +6,8 @@ import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
 import NextButton from '../../components/button/NextButton';
 import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
+import ProgressBar from '../../components/bar/ProgressBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PhoneValidation = ({navigation}) => {
   const [sent, setSent] = useState(false);
@@ -30,6 +32,7 @@ const PhoneValidation = ({navigation}) => {
   }) => {
     const {isVerified, message} = await verifyPhoneNumber({...data});
     if (isVerified) {
+      await AsyncStorage.setItem('process', 'Profile');
       return navigation.navigate('Profile');
     }
     Alert.alert('인증 번호 오류', message, [{text: '확인'}]);
@@ -54,6 +57,7 @@ const PhoneValidation = ({navigation}) => {
   return (
     <KeyboardAvoidingView className="px-6 bg-white h-full flex flex-col justify-between">
       <ScrollView>
+        <ProgressBar progress={'w-2/5'} />
         <View className="my-10 text-[22px] font-semibold">
           <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
           <TextSemiBold

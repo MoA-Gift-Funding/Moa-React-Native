@@ -7,14 +7,15 @@ import {updateUser} from '../apis/user/User';
 export default function useUser() {
   const {
     userState: {
-      user: {email},
+      user: {phoneNumber},
     },
   } = useUserContext();
 
   const queryClient = useQueryClient();
   const {mutate: updateUserQuery, data: updatedQueryUser} = useMutation({
     mutationFn: (formData: UserFormData) => updateUser(formData),
-    onSuccess: () => queryClient.invalidateQueries({queryKey: ['user', email]}),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: ['user', phoneNumber]}),
   });
 
   return {updateUserQuery, updatedQueryUser};

@@ -46,6 +46,12 @@ module.exports = {
         'pretendard-semibold': ['Pretendard-SemiBold'],
         'pretendard-bold': ['Pretendard-Bold'],
       },
+      keyframes: {
+        spins: {
+          '0%': {transform: 'rotate(0deg)'},
+          '50%': {transform: 'rotate(360deg)'},
+        },
+      },
     },
   },
   plugins: [],

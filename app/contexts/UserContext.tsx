@@ -33,6 +33,7 @@ const userReducer = (state: State, {type, payload}: Action) => {
     case 'LOGIN':
       return {...state, authenticated: true, user: payload};
     case 'LOGOUT':
+      AsyncStorage.clear(); // Logout 컴포넌트 생성시 해당부분 삭제
       return {...state, authenticated: false, user: undefined};
     case 'STOP_LOADING':
       return {...state, isLoading: false};
@@ -61,7 +62,6 @@ export const UserContextProvider = ({
         if (accessToken) {
           const {user} = await getUser();
           dispatch({type: 'LOGIN', payload: user});
-          console.log(user);
         }
       } catch (error) {
         console.error(error);
