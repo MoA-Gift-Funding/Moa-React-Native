@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 import {refreshAccessToken, refreshRefreshToken} from './user/User';
-import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Axios = axios.create({
@@ -15,9 +14,16 @@ Axios.interceptors.response.use(
   async error => {
     console.log(error);
     if (error.response.status === 401) {
-      console.log('intercepted');
-      const accessToken = await refreshAccessToken();
-      console.log(accessToken);
+      let accessToken;
+      try {
+        accessToken = await refreshAccessToken();
+      } catch (err) {
+        if (err.response.status === 401) {
+          await refreshRefreshToken().catch(async lastErr => {
+            return await AsyncStorage.clear();
+          });
+        }
+      }
       error.config.headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
