@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Alert, Image, Platform, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
@@ -9,8 +9,10 @@ import Contacts from 'react-native-contacts';
 import {UserContact} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from '../../components/bar/ProgressBar';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 const Contact = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {handleSubmit} = useForm();
   const getContacts = async () => {
     const organized: UserContact = {contactList: []};
@@ -59,7 +61,9 @@ const Contact = ({navigation}) => {
           Alert.alert('권한 에러', '연락처 권한이 필요합니다.');
         });
     }
+    setIsLoading(true);
     // 친구 저장 API 호출
+    setIsLoading(false);
     await AsyncStorage.removeItem('process');
     navigation.navigate('JoinCompleted');
   };
@@ -67,6 +71,7 @@ const Contact = ({navigation}) => {
     <View className="px-6 bg-white h-full flex flex-col justify-between">
       <View>
         <ProgressBar progress={'w-4/5'} />
+        {isLoading && <LoadingBar />}
         <View className="my-8 font-semibold">
           <TextSemiBold style="text-Heading-3" title="연락처를 연결하면" />
           <TextSemiBold

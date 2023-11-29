@@ -42,8 +42,7 @@ export const verifyPhoneNumber = async ({
         verified.message = '잘못된 인증번호입니다.';
         break;
       default:
-        verified.message = '시간이 초과되었습니다.';
-        break;
+        verified.message = '시간이 초과되었습니다. 다시 시도해주세요.';
     }
     return verified;
   }

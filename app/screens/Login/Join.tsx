@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
@@ -10,8 +10,10 @@ import {UserFormData} from '../../types/User';
 import {updateUser} from '../../apis/user/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 export default function Join({navigation}) {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
     dispatch,
@@ -19,6 +21,7 @@ export default function Join({navigation}) {
   const {nickname, phoneNumber, birthday, birthyear} = user;
 
   const onSubmit = async (data: UserFormData) => {
+    setIsLoading(true);
     const bdayList = data.fullBirthday.split('/');
     const updated = await updateUser({
       ...data,
@@ -27,6 +30,7 @@ export default function Join({navigation}) {
     });
     dispatch({type: 'LOGIN', payload: updated});
     await AsyncStorage.setItem('process', 'PhoneValidation');
+    setIsLoading(false);
     navigation.navigate('PhoneValidation');
   };
   const {
@@ -42,15 +46,15 @@ export default function Join({navigation}) {
       fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
     },
   });
-  // useEffect(() => {
-  //   async function getProcess() {
-  //     const process = await AsyncStorage.getItem('process');
-  //     if (process) {
-  //       return navigation.navigate(process);
-  //     }
-  //   }
-  //   getProcess();
-  // }, []);
+  useEffect(() => {
+    async function getProcess() {
+      const process = await AsyncStorage.getItem('process');
+      if (process) {
+        return navigation.navigate(process);
+      }
+    }
+    getProcess();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -58,6 +62,7 @@ export default function Join({navigation}) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <ProgressBar progress={'w-1/5'} />
+        {isLoading && <LoadingBar />}
         <View className="my-10">
           <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
           <TextSemiBold

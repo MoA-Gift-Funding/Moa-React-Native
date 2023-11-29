@@ -8,9 +8,11 @@ import NextButton from '../../components/button/NextButton';
 import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
 import ProgressBar from '../../components/bar/ProgressBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 const PhoneValidation = ({navigation}) => {
   const [sent, setSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
   } = useUserContext();
@@ -30,12 +32,17 @@ const PhoneValidation = ({navigation}) => {
     recipientNo: string;
     verificationNumber: string;
   }) => {
+    setIsLoading(true);
     const {isVerified, message} = await verifyPhoneNumber({...data});
+    setIsLoading(false);
     if (isVerified) {
       await AsyncStorage.setItem('process', 'Profile');
       return navigation.navigate('Profile');
     }
     Alert.alert('인증 번호 오류', message, [{text: '확인'}]);
+    if (message === '시간이 초과되었습니다. 다시 시도해주세요.') {
+      setSent(false);
+    }
   };
 
   const handleMSGButton = async ({
@@ -44,6 +51,7 @@ const PhoneValidation = ({navigation}) => {
     recipientNo: string;
     verificationNumber: string;
   }) => {
+    setIsLoading(true);
     if (sent) {
       return;
     }
@@ -52,12 +60,14 @@ const PhoneValidation = ({navigation}) => {
     if (!msgSent) {
       Alert.alert('네트워크 오류', '다시 시도해주세요.', [{text: '확인'}]);
     }
+    setIsLoading(false);
   };
 
   return (
     <KeyboardAvoidingView className="px-6 bg-white h-full flex flex-col justify-between">
       <ScrollView>
         <ProgressBar progress={'w-2/5'} />
+        {isLoading && <LoadingBar />}
         <View className="my-10 text-[22px] font-semibold">
           <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
           <TextSemiBold

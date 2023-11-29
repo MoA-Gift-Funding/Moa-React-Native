@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/Home';
@@ -9,22 +9,35 @@ import Profile from '../screens/Login/Profile';
 import Contact from '../screens/Login/Contact';
 import JoinCompleted from '../screens/Login/JoinCompleted';
 import Join from '../screens/Login/Join';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import BlankHeader from '../components/header/BlankHeader';
 
 const AuthRouter = () => {
   const {
     userState: {user},
   } = useUserContext();
   const Stack = createNativeStackNavigator();
+  const [process, setProcess] = useState<string | null>(null);
+  useEffect(() => {
+    const getProcess = async () => {
+      const now = await AsyncStorage.getItem('process');
+      setProcess(now);
+    };
+    getProcess();
+  }, []);
+
   return (
     <Stack.Navigator>
-      {user?.level === 'REGULAR_MEMBER' ? (
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            header: () => <BackHeader />,
-          }}
-        />
+      {user?.level === 'REGULAR_MEMBER' && !process ? (
+        <>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              header: () => <BackHeader />,
+            }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen
@@ -65,7 +78,9 @@ const AuthRouter = () => {
           <Stack.Screen
             name="JoinCompleted"
             component={JoinCompleted}
-            options={{headerShown: false}}
+            options={{
+              header: () => <BlankHeader />,
+            }}
           />
         </>
       )}

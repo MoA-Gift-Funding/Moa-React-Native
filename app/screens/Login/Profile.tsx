@@ -13,8 +13,10 @@ import {useForm} from 'react-hook-form';
 import {updateProfileImage} from '../../apis/user/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from '../../components/bar/ProgressBar';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 const Profile = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
   } = useUserContext();
@@ -23,6 +25,7 @@ const Profile = ({navigation}) => {
   );
   const {handleSubmit} = useForm();
   const onPress = async () => {
+    setIsLoading(true);
     const {assets} = await launchImageLibrary({mediaType: 'photo'});
     if (assets) {
       const file = assets[0];
@@ -35,6 +38,7 @@ const Profile = ({navigation}) => {
         name,
       };
       const {secure_url, message} = await uploadImage(source);
+      setIsLoading(false);
       if (message) {
         return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
       }
@@ -42,10 +46,12 @@ const Profile = ({navigation}) => {
     }
   };
   const handleButton = async () => {
+    setIsLoading(true);
     const res = await updateProfileImage(imageURI!);
     if (res) {
       return Alert.alert('네트워크 오류 오류', res, [{text: '확인'}]);
     }
+    setIsLoading(false);
     await AsyncStorage.setItem('process', 'Contact');
     navigation.navigate('Contact');
   };
@@ -53,6 +59,7 @@ const Profile = ({navigation}) => {
     <View className="px-6 bg-white h-full flex flex-col justify-between">
       <View>
         <ProgressBar progress={'w-3/5'} />
+        {isLoading && <LoadingBar />}
         <View className="my-10 font-semibold">
           <TextSemiBold
             style="text-Heading-3"
@@ -77,12 +84,6 @@ const Profile = ({navigation}) => {
         </View>
       </View>
       <View className="mb-8 flex flex-col items-center">
-        <Pressable onPress={() => navigation.navigate('Contact')}>
-          <TextRegular
-            style="mb-12 text-Body-2 text-Gray-06 underline"
-            title="건너뛰기"
-          />
-        </Pressable>
         <NextButton
           title="저장하기"
           handleSubmit={handleSubmit}

@@ -64,7 +64,6 @@ export const updateUser = async ({
   nickname,
   phoneNumber,
 }: UserFormData): Promise<User> => {
-  console.log(nickname, birthday, phoneNumber, birthyear);
   try {
     const user = await Axios.post('/users/update-new-user-info', {
       nickname,
