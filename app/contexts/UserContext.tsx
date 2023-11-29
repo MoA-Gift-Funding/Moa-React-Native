@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {Dispatch, createContext, useEffect, useReducer} from 'react';
 import {User} from '../types/User';
 import {getUser} from '../apis/user/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface State {
   authenticated: boolean;
@@ -55,9 +56,13 @@ export const UserContextProvider = ({
   };
   useEffect(() => {
     async function loadUser() {
+      const accessToken = await AsyncStorage.getItem('accessToken');
       try {
-        const {user} = await getUser();
-        dispatch({type: 'LOGIN', payload: user});
+        if (accessToken) {
+          const {user} = await getUser();
+          dispatch({type: 'LOGIN', payload: user});
+          console.log(user);
+        }
       } catch (error) {
         console.error(error);
       } finally {

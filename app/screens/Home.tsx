@@ -12,7 +12,7 @@ export default function Home({navigation}) {
     <View>
       {user && (
         <TextBold
-          title={`${user?.nickname}은 로그인된 상태입니다.`}
+          title={`${user?.nickname}님은 로그인된 상태입니다.`}
           style="text-Body-2"
         />
       )}

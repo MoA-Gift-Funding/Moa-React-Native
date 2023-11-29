@@ -43,6 +43,7 @@ const loginMoA = (accessToken: string, platform: string): Promise<User> => {
     ).then(async res => {
       await saveCookie(res);
       await AsyncStorage.setItem('accessToken', res.data.data.accessToken);
+      Axios.defaults.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
       return res.data.data;
     });
     return user;
@@ -59,8 +60,6 @@ export const updateUser = async ({
   phoneNumber,
 }: UserFormData): Promise<User> => {
   try {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     const user = await Axios.post('/users/update-new-user-info', {
       nickname,
       phoneNumber,
@@ -85,22 +84,13 @@ export const updateUser = async ({
 
 export const getUser = async () => {
   const found = {user: null, message: ''};
-  const accessToken = await AsyncStorage.getItem('accessToken');
   try {
-    await Axios.get('/users/get-user-info', {
-      headers: {Authorization: `Bearer ${accessToken}`},
-    })
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
+    await Axios.get('/users/get-user-info')
       .then(res => (found.user = res.data.data))
       .catch(error => {
         console.log(error.response);
-        const message = error.response.data.message;
-        switch (message) {
-          case 'Unauthorized':
-            found.message = '로그인이 만료되었습니다. 재로그인해주세요.';
-            break;
-          default:
-            found.message = '로그인이 만료되었습니다. 재로그인해주세요.';
-        }
       });
     return found;
   } catch (error) {
@@ -115,17 +105,16 @@ const saveCookie = async res => {
   return refresh;
 };
 
-const refreshAccessToken = async () => {
+export const whichTokenExpired = () => {};
+
+export const refreshAccessToken = async () => {
   try {
     const refreshToken = await AsyncStorage.getItem('refresh');
-    const {accessToken} = await Axios.post('/tokens/reissue-access-token', {
+    const res = await Axios.post('/tokens/reissue-access-token', {
       refreshToken,
-    })
-      .then(async res => {
-        await AsyncStorage.setItem('accessToken', res.data.data.accessToken);
-        return res.data.data;
-      })
-      .catch(error => console.error);
+    });
+    const accessToken = res.data.data.accessToken;
+    await AsyncStorage.setItem('accessToken', accessToken);
     return accessToken;
   } catch (error) {
     console.error(error);
@@ -136,20 +125,19 @@ const refreshAccessToken = async () => {
   }
 };
 
-const refreshRefreshToken = async () => {
+export const refreshRefreshToken = async () => {
   try {
     const refreshToken = await AsyncStorage.getItem('refresh');
-    const {accessToken} = await Axios.post('/tokens/reissue-access-token', {
+    await Axios.post('/tokens/reissue-access-token', {
       refreshToken,
     })
       .then(async res => await saveCookie(res))
       .catch(console.error);
-    return accessToken;
   } catch (error) {
     console.error(error);
     const message = error.response.data.message;
     if (message === 'Unauthorized') {
-      return '로그인 필요';
+      return '[ERROR] 재로그인 필요';
     }
   }
 };

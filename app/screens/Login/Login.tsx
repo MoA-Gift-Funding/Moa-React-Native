@@ -1,10 +1,14 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
-import {loginKakao, loginNaver} from '../../apis/user/User';
+import {
+  loginKakao,
+  loginNaver,
+  refreshAccessToken,
+  refreshRefreshToken,
+} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
@@ -15,6 +19,7 @@ export default function Login({navigation}) {
     });
     navigation.navigate('Join');
   };
+
   return (
     <View className="px-6 py-10 bg-white h-[100vh]">
       <View className="flex flex-col mb-10">

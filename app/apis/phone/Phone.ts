@@ -1,4 +1,3 @@
-import {UserContact} from '../../types/User';
 import {Axios} from '../axios.config';
 
 export const requestVerifyMSG = async (recipientNo: string) => {
@@ -49,9 +48,3 @@ export const verifyPhoneNumber = async ({
     return verified;
   }
 };
-
-// export const sendContacts = async (contacts: UserContact) => {
-//   try {
-//     await Axios.post('')
-//   } catch (error) {}
-// };
