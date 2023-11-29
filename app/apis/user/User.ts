@@ -28,7 +28,9 @@ export const loginNaver = async (): Promise<User> => {
     if (!isSuccess) {
       throw new Error(failureResponse?.message);
     }
-    const user = loginMoA(successResponse.accessToken, 'naver');
+    console.log(successResponse);
+
+    const user = await loginMoA(successResponse.accessToken, 'naver');
     return user;
   } catch (error) {
     console.error(error);
@@ -53,6 +55,7 @@ const loginMoA = async (
   } catch (error) {
     console.error(error);
     console.log(error.response);
+    console.log('여기서나는건가??/');
 
     throw new Error('[ERROR] Network Error');
   }

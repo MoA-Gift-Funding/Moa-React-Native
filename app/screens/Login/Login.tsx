@@ -5,7 +5,7 @@ import {loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
 import LoadingBar from '../../components/bar/LoadingBar';
-import ProgressBar from '../../components/bar/ProgressBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
@@ -13,10 +13,26 @@ export default function Login({navigation}) {
   const [isLoading, setIsLoding] = useState(false);
   const handleKakaoLogin = async () => {
     setIsLoding(true);
-    await loginKakao().then(async res => {
-      dispatch({type: 'LOGIN', payload: res});
-      setIsLoding(false);
-    });
+    const process = await AsyncStorage.getItem('process');
+    await loginKakao()
+      .then(async user => {
+        dispatch({type: 'LOGIN', payload: user});
+        if (user.level === 'ASSOCICATE_MEMBER' || process) {
+          navigation.navigate('Join');
+        }
+      })
+      .finally(() => setIsLoding(false));
+  };
+  const handleNaverLogin = async () => {
+    setIsLoding(true);
+    await loginNaver()
+      .then(async user => {
+        dispatch({type: 'LOGIN', payload: user});
+        if (user.level === 'ASSOCICATE_MEMBER' || process) {
+          navigation.navigate('Join');
+        }
+      })
+      .finally(() => setIsLoding(false));
     navigation.navigate('Join');
   };
   return (
@@ -33,7 +49,7 @@ export default function Login({navigation}) {
             buttonStyle="bg-[#27D34A]"
             textStyle="text-white"
             title="네이버로 계속하기"
-            onPressFn={loginNaver}
+            onPressFn={handleNaverLogin}
           />
         </View>
         <View>

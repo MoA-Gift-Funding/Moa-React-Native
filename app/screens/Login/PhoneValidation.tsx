@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Alert, KeyboardAvoidingView, ScrollView, View} from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  View,
+} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
@@ -9,9 +16,12 @@ import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
 import ProgressBar from '../../components/bar/ProgressBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingBar from '../../components/bar/LoadingBar';
+import Countdown from 'react-countdown';
+import cls from 'classnames';
 
 const PhoneValidation = ({navigation}) => {
   const [sent, setSent] = useState(false);
+  const [date, setDate] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
@@ -20,10 +30,11 @@ const PhoneValidation = ({navigation}) => {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    setValue,
+    formState: {errors, touchedFields},
   } = useForm({
     defaultValues: {
-      recipientNo: user?.phoneNumber,
+      recipientNo: user?.phoneNumber || '',
       verificationNumber: '',
     },
   });
@@ -42,6 +53,7 @@ const PhoneValidation = ({navigation}) => {
     Alert.alert('인증 번호 오류', message, [{text: '확인'}]);
     if (message === '시간이 초과되었습니다. 다시 시도해주세요.') {
       setSent(false);
+      setValue('verificationNumber', '');
     }
   };
 
@@ -52,6 +64,7 @@ const PhoneValidation = ({navigation}) => {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
+    setDate(Date.now());
     if (sent) {
       return;
     }
@@ -62,9 +75,10 @@ const PhoneValidation = ({navigation}) => {
     }
     setIsLoading(false);
   };
-
   return (
-    <KeyboardAvoidingView className="px-6 bg-white h-full flex flex-col justify-between">
+    <KeyboardAvoidingView
+      className="px-6 bg-white h-full flex flex-col justify-between"
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <ProgressBar progress={'w-2/5'} />
         {isLoading && <LoadingBar />}
@@ -100,12 +114,38 @@ const PhoneValidation = ({navigation}) => {
           )}
         </View>
       </ScrollView>
-      <View className="mb-8 items-center">
+      <KeyboardAvoidingView className="mb-8 items-center">
         {sent && (
-          <NextButton
-            title="인증하기"
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
+          <Countdown
+            date={date + 1000 * 60 * 3 - 1000}
+            renderer={({minutes, seconds, completed}) => {
+              if (completed) {
+                return (
+                  <NextButton
+                    title="인증하기"
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                  />
+                );
+              } else {
+                return (
+                  <Pressable
+                    className={cls(
+                      'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+                      {
+                        'bg-Gray-08': Object.keys(touchedFields).length === 0,
+                        'bg-Main-01': Object.keys(touchedFields).length !== 0,
+                      },
+                    )}
+                    onPress={handleSubmit(onSubmit)}>
+                    <TextSemiBold
+                      style="text-white text-Body-1 ml-[14px]"
+                      title={`${minutes}:${seconds}`}
+                    />
+                  </Pressable>
+                );
+              }
+            }}
           />
         )}
         {!sent && (
@@ -115,7 +155,7 @@ const PhoneValidation = ({navigation}) => {
             onSubmit={handleMSGButton}
           />
         )}
-      </View>
+      </KeyboardAvoidingView>
     </KeyboardAvoidingView>
   );
 };

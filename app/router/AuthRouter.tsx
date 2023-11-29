@@ -24,7 +24,7 @@ const AuthRouter = () => {
       setProcess(now);
     };
     getProcess();
-  }, []);
+  }, [user?.joinProcess]);
 
   return (
     <Stack.Navigator>

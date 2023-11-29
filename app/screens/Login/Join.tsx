@@ -28,7 +28,10 @@ export default function Join({navigation}) {
       birthyear: bdayList[0],
       birthday: `${bdayList[1]}${bdayList[2]}`,
     });
-    dispatch({type: 'LOGIN', payload: updated});
+    dispatch({
+      type: 'LOGIN',
+      payload: {...updated, joinProcess: 'inProcess'},
+    });
     await AsyncStorage.setItem('process', 'PhoneValidation');
     setIsLoading(false);
     navigation.navigate('PhoneValidation');

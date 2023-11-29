@@ -7,7 +7,6 @@ import {useForm} from 'react-hook-form';
 import {PermissionsAndroid} from 'react-native';
 import Contacts from 'react-native-contacts';
 import {UserContact} from '../../types/User';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 
@@ -64,7 +63,6 @@ const Contact = ({navigation}) => {
     setIsLoading(true);
     // 친구 저장 API 호출
     setIsLoading(false);
-    await AsyncStorage.removeItem('process');
     navigation.navigate('JoinCompleted');
   };
   return (
