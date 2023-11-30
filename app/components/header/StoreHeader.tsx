@@ -5,7 +5,7 @@ import {Circle, Path, Rect, Svg} from 'react-native-svg';
 const StoreHeader = ({navigation}) => {
   return (
     <SafeAreaView>
-      <View className="flex flex-row justify-between h-14 items-center">
+      <View className="flex flex-row justify-between h-14 items-center bg-white mx-1">
         <View className="ml-6">
           <Svg width={35} height={35} viewBox="0 0 35 35" fill={'none'}>
             <Path
