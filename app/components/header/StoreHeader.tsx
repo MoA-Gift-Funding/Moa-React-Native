@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, SafeAreaView, View} from 'react-native';
+import {Image, Pressable, SafeAreaView, View} from 'react-native';
 import {Circle, Path, Rect, Svg} from 'react-native-svg';
 
 const StoreHeader = ({navigation}) => {
@@ -26,48 +26,22 @@ const StoreHeader = ({navigation}) => {
             />
           </Svg>
         </View>
-        <View className="flex flex-row mr-4">
+        <View className="flex flex-row mr-6 items-center justify-center gap-4">
           <Pressable onPress={() => {}}>
-            <Svg width="40" height="41" viewBox="0 0 40 41" fill="none">
-              <Rect x="10" y="10.7703" width="20" height="20" fill="white" />
-              <Circle
-                cx="18"
-                cy="18.7703"
-                r="7"
-                transform="rotate(90 18 18.7703)"
-                stroke="#212121"
-                stroke-width="2"
-              />
-              <Path
-                d="M23 23.7703L29 29.7703"
-                stroke="#212121"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </Svg>
+            <Image
+              className="w-[24px] h-[24px]"
+              source={{
+                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701328794/moa-search_cerljn.png',
+              }}
+            />
           </Pressable>
           <Pressable onPress={() => navigation.navigate('MyPage')}>
-            <Svg width="40" height="41" viewBox="0 0 40 41" fill="none">
-              <Path
-                d="M12.5 14.1038H27.5"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <Path
-                d="M12.5 20.7703H27.5"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-              <Path
-                d="M12.5 27.437H27.5"
-                stroke="black"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </Svg>
+            <Image
+              className="w-[17px] h-[17px]"
+              source={{
+                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701328794/moa-menu_iucqpk.png',
+              }}
+            />
           </Pressable>
         </View>
       </View>

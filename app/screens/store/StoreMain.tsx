@@ -22,8 +22,8 @@ const StoreMain = () => {
       </View>
       <View className="flex my-8">
         <TextBold title="오늘의 인기 선물" style="text-Heading-4 ml-7" />
-        <View className="flex mx-auto items-center">
-          <View className="flex flex-row flex-wrap gap-2 mt-4 w-[330px]">
+        <View className="flex items-center justify-center">
+          <View className="w-[320px] flex flex-row flex-wrap gap-2 mt-4">
             <View>
               <Item
                 brand="Apple"
@@ -62,6 +62,14 @@ const StoreMain = () => {
                 productName="딥티크 플레르 드 뽀 오드 퍼퓸 75ml"
                 price="135,300"
                 uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701324744/moa-diptyque_zhucyv.png"
+              />
+            </View>
+            <View>
+              <Item
+                brand="The North Face"
+                productName="노스페이스 1996 에코 눕시 자켓 블랙"
+                price="339,000"
+                uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701324748/moa-northface_naukkm.png"
               />
             </View>
             <View>

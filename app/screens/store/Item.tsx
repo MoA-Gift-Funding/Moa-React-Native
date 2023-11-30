@@ -25,7 +25,7 @@ const Item = ({
       <View className="flex flex-col mt-2">
         <TextRegular
           title={brand}
-          style="text-Detail-1 text-Gray-04 leading-Detail-1"
+          style="text-Detail-1 text-Gray-06 leading-Detail-1"
         />
         <TextRegular
           title={productName}
