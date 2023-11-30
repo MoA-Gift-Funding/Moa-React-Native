@@ -20,8 +20,10 @@ const LoadingBar = () => {
   return (
     <View className="absolute top-1/4 w-full z-10">
       <Animated.View
-        style={{transform: [{rotate: interpolateRotating}]}}
-        className="w-24 h-24 border-Gray-01 border-b-Main-01 border-[14px] bg-transparent rounded-full mx-auto"
+        style={{
+          transform: [{rotate: interpolateRotating}],
+        }}
+        className="w-24 h-24 border-Gray-02 border-t-Main-01 border-[14px] bg-transparent rounded-full mx-auto"
       />
     </View>
   );

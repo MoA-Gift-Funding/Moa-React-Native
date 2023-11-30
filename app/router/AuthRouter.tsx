@@ -11,6 +11,8 @@ import JoinCompleted from '../screens/Login/JoinCompleted';
 import Join from '../screens/Login/Join';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BlankHeader from '../components/header/BlankHeader';
+import StoreMain from '../screens/store/StoreMain';
+import StoreHeader from '../components/header/StoreHeader';
 
 const AuthRouter = () => {
   const {
@@ -30,6 +32,11 @@ const AuthRouter = () => {
     <Stack.Navigator>
       {user?.level === 'REGULAR_MEMBER' && !process ? (
         <>
+          <Stack.Screen
+            name="StoreMain"
+            component={StoreMain}
+            options={{header: () => <StoreHeader />}}
+          />
           <Stack.Screen
             name="Home"
             component={Home}
