@@ -79,7 +79,7 @@ const PhoneValidation = ({navigation}) => {
     <KeyboardAvoidingView
       className="px-6 bg-white h-full flex flex-col justify-between"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <ProgressBar progress={'w-2/5'} />
         {isLoading && <LoadingBar />}
         <View className="my-10 text-[22px] font-semibold">
