@@ -27,7 +27,7 @@ const StoreMain = () => {
             <View>
               <Item
                 brand="Apple"
-                productName="에아팟 맥스 실버"
+                productName="에어팟 맥스 실버"
                 price="769,000"
                 uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701324743/moa-airpodmax_atdbl3.png"
               />
@@ -47,6 +47,7 @@ const StoreMain = () => {
                 productName="애플 아이폰 15 프로 256기가 내츄럴 티타늄"
                 price="1,615,000"
                 uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701328200/moa-iphone15_tkoejy.png"
+                sale="5"
               />
             </View>
             <View>
@@ -79,6 +80,7 @@ const StoreMain = () => {
                 productName="노스페이스 1996 에코 눕시 자켓 블랙"
                 price="339,000"
                 uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701324748/moa-northface_naukkm.png"
+                sale="10"
               />
             </View>
           </View>

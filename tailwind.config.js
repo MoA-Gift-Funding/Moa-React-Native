@@ -20,7 +20,7 @@ module.exports = {
         'Gray-09': '#424242',
         'Gray-10': '#212121',
         'Main-01': '#FF5414',
-        'Sub-01': '#FF6B33',
+        'Sub-01': '#FFF3EB',
         'Sub-02': '#F7F7EF',
       },
       fontSize: {

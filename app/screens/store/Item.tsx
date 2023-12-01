@@ -21,7 +21,15 @@ const Item = ({
   return (
     <Pressable
       className="flex w-[152px] mb-7"
-      onPress={() => navigation.navigate('ItemDetail')}>
+      onPress={() =>
+        navigation.navigate('ItemDetail', {
+          uri,
+          brand,
+          productName,
+          price,
+          sale,
+        })
+      }>
       <Image
         className="w-[152px] h-[152px]"
         source={{

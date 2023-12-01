@@ -12,8 +12,9 @@ Axios.interceptors.response.use(
     return response;
   },
   async error => {
-    // console.log(error);
-    // console.log(error.response);
+    console.log('인터셉터 진입');
+    console.log('인터셉터 에러: ', error.response);
+
     // if (error.response.status === 401) {
     //   let accessToken;
     //   try {
