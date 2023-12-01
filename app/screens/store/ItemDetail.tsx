@@ -14,6 +14,14 @@ const ItemDetail = ({route, navigation}) => {
   const [productInfo, setProductInfo] = useState(true);
   const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
+  const [imgHeight, setImgHeight] = useState(0);
+  const size = Image.getSize(
+    'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=1000',
+    (width, height) => {
+      setImgHeight(height);
+    },
+  );
+
   const handleSelection = () => {
     setProductInfo(!productInfo);
     setInstruction(!instruction);
@@ -61,15 +69,13 @@ const ItemDetail = ({route, navigation}) => {
                 }
                 style="text-Gray-06 text-Body-2 leading-Body-2"
               />
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <Image
-                  source={{
-                    uri: 'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=1000',
-                  }}
-                  className="w-[312px] h-[2000px]"
-                  resizeMode="cover"
-                />
-              </ScrollView>
+              <Image
+                source={{
+                  uri: 'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=1000',
+                }}
+                className={'w-[312px] h-[2000px]'}
+                resizeMode="cover"
+              />
             </>
           )}
           {instruction && (
