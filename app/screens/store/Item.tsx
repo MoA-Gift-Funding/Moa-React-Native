@@ -1,21 +1,27 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
+import {useNavigation} from '@react-navigation/native';
 
 const Item = ({
   uri,
   brand,
   productName,
   price,
+  sale,
 }: {
   uri: string;
   brand: string;
   productName: string;
   price: string;
+  sale?: string;
 }) => {
+  const navigation = useNavigation();
   return (
-    <View className="flex w-[152px] mb-7">
+    <Pressable
+      className="flex w-[152px] mb-7"
+      onPress={() => navigation.navigate('ItemDetail')}>
       <Image
         className="w-[152px] h-[152px]"
         source={{
@@ -31,12 +37,20 @@ const Item = ({
           title={productName}
           style="text-Body-2 text-Gray-10 leading-Body-2 break-word"
         />
-        <TextSemiBold
-          title={`${price}원`}
-          style="text-Body-2 text-Gray-10 leading-Body-2"
-        />
+        <View className="flex flex-row">
+          {sale && (
+            <TextSemiBold
+              title={`${sale}%`}
+              style="text-Body-2 text-Main-01 leading-Body-2"
+            />
+          )}
+          <TextSemiBold
+            title={`${price}원`}
+            style="ml-1 text-Body-2 text-Gray-10 leading-Body-2"
+          />
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

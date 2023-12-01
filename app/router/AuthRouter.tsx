@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import BlankHeader from '../components/header/BlankHeader';
 import StoreMain from '../screens/store/StoreMain';
 import StoreHeader from '../components/header/StoreHeader';
+import ItemDetail from '../screens/store/ItemDetail';
 
 const AuthRouter = () => {
   const {
@@ -36,6 +37,11 @@ const AuthRouter = () => {
             name="StoreMain"
             component={StoreMain}
             options={{header: () => <StoreHeader />}}
+          />
+          <Stack.Screen
+            name="ItemDetail"
+            component={ItemDetail}
+            options={{header: () => <BackHeader />}}
           />
           <Stack.Screen
             name="Home"

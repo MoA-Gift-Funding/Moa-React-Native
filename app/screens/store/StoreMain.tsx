@@ -38,6 +38,7 @@ const StoreMain = () => {
                 productName="어그 디스케트 슬리퍼 체스트넛"
                 price="121,000"
                 uri="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701324751/moa-ugg_iwe8n0.png"
+                sale="10"
               />
             </View>
             <View>

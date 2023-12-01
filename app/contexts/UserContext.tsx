@@ -64,6 +64,7 @@ export const UserContextProvider = ({
           dispatch({type: 'LOGIN', payload: user});
         }
       } catch (error) {
+        // 여기에 Storage.clear 시켜버리기.
         console.error(error);
       } finally {
         dispatch({type: 'STOP_LOADING'});

@@ -12,8 +12,8 @@ Axios.interceptors.response.use(
     return response;
   },
   async error => {
-    console.log(error);
-    console.log(error.response);
+    // console.log(error);
+    // console.log(error.response);
     // if (error.response.status === 401) {
     //   let accessToken;
     //   try {

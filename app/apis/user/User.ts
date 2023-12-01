@@ -28,8 +28,6 @@ export const loginNaver = async (): Promise<User> => {
     if (!isSuccess) {
       throw new Error(failureResponse?.message);
     }
-    console.log(successResponse);
-
     const user = await loginMoA(successResponse.accessToken, 'naver');
     return user;
   } catch (error) {
@@ -110,7 +108,8 @@ export const getUser = async () => {
 
 const saveCookie = async res => {
   const [cookie] = res.headers['set-cookie'];
-  const refresh = JSON.stringify(cookie).substring(8);
+  const jwt = JSON.stringify(cookie);
+  const refresh = jwt.substring(9, jwt.indexOf(';'));
   await AsyncStorage.setItem('refresh', refresh);
   return refresh;
 };
