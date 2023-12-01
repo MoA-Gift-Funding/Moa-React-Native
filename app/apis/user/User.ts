@@ -4,6 +4,7 @@ import {Axios} from '../axios.config';
 import Config from 'react-native-config';
 import {User, UserFormData} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Alert} from 'react-native';
 
 export const loginKakao = async (): Promise<User> => {
   try {
@@ -52,9 +53,21 @@ const loginMoA = async (
     return user;
   } catch (error) {
     console.error(error);
-    console.log(error.response);
-    console.log('여기서나는건가??/');
-
+    console.log(error.response.data);
+    const {message} = error.response.data;
+    switch (message) {
+      case 'Member that already exists':
+        Alert.alert(
+          '',
+          '이미 가입 정보가 있는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.',
+        );
+        break;
+      case 'Member deleted':
+        Alert.alert('', '탈퇴한 회원은 가입이 불가합니다.');
+        break;
+      default:
+        Alert.alert('', '에러가 발생했습니다. 고객 센터로 문의해주세요.');
+    }
     throw new Error('[ERROR] Network Error');
   }
 };
