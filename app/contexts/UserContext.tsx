@@ -60,11 +60,11 @@ export const UserContextProvider = ({
       const accessToken = await AsyncStorage.getItem('accessToken');
       try {
         if (accessToken) {
-          const {user} = await getUser();
+          const user = await getUser();
           dispatch({type: 'LOGIN', payload: user});
         }
       } catch (error) {
-        // 여기에 Storage.clear 시켜버리기.
+        await AsyncStorage.clear();
         console.error(error);
       } finally {
         dispatch({type: 'STOP_LOADING'});

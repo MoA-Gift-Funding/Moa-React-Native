@@ -14,6 +14,8 @@ import BlankHeader from '../components/header/BlankHeader';
 import StoreMain from '../screens/store/StoreMain';
 import StoreHeader from '../components/header/StoreHeader';
 import ItemDetail from '../screens/store/ItemDetail';
+import ItemList from '../screens/store/ItemList';
+import TitleHeader from '../components/header/TitleHeader';
 
 const AuthRouter = () => {
   const {
@@ -42,6 +44,11 @@ const AuthRouter = () => {
             name="ItemDetail"
             component={ItemDetail}
             options={{header: () => <BackHeader />}}
+          />
+          <Stack.Screen
+            name="ItemList"
+            component={ItemList}
+            options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
             name="Home"

@@ -100,19 +100,12 @@ export const updateUser = async ({
 };
 
 export const getUser = async () => {
-  const found = {user: null, message: ''};
   try {
     const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    await Axios.get('/users/get-user-info')
-      .then(res => {
-        found.user = res.data.data;
-        return;
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
-    return found;
+    const res = await Axios.get('/users/get-user-info');
+    const user = res.data.data;
+    return user;
   } catch (error) {
     console.error(error);
     console.log(error.response);

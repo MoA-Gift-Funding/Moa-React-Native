@@ -23,7 +23,7 @@ const LoadingBar = () => {
         style={{
           transform: [{rotate: interpolateRotating}],
         }}
-        className="w-24 h-24 border-Gray-02 border-t-Main-01 border-[14px] bg-transparent rounded-full mx-auto"
+        className="w-24 h-24 border-Gray-02 border-b-Main-01 border-[14px] bg-transparent rounded-full mx-auto"
       />
     </View>
   );

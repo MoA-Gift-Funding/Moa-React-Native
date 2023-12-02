@@ -1,10 +1,14 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, Pressable} from 'react-native';
 import TextRegular from '../text/TextRegular';
+import {useNavigation} from '@react-navigation/native';
 
 const CategoryIcon = ({uri, title}: {uri: string; title: string}) => {
+  const navigation = useNavigation();
   return (
-    <View className="flex flex-col justify-center items-center">
+    <Pressable
+      className="flex flex-col justify-center items-center"
+      onPress={() => navigation.navigate('ItemList', {title})}>
       <Image
         className="w-[72px] h-[72px]"
         source={{
@@ -12,7 +16,7 @@ const CategoryIcon = ({uri, title}: {uri: string; title: string}) => {
         }}
       />
       <TextRegular title={title} style="text-Detail-1" />
-    </View>
+    </Pressable>
   );
 };
 
