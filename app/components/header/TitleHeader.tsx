@@ -15,7 +15,7 @@ const TitleHeader = () => {
         <TouchableOpacity className="p-4" onPress={navigate.goBack}>
           <FontAwesomeIcon icon={faChevronLeft} size={21} />
         </TouchableOpacity>
-        <TextBold title={title} style="text-Heading-4" />
+        <TextBold title={title} style="text-Heading-4 leading-Heading-4" />
         <TouchableOpacity className="p-4" onPress={() => {}}>
           <FontAwesomeIcon icon={faSearch} size={21} />
         </TouchableOpacity>

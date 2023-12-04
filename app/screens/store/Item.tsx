@@ -20,7 +20,7 @@ const Item = ({
   const navigation = useNavigation();
   return (
     <Pressable
-      className="flex w-[152px] mb-7"
+      className="flex w-[152px] mb-[30px]"
       onPress={() =>
         navigation.navigate('ItemDetail', {
           uri,
