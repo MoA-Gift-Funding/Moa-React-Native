@@ -4,10 +4,10 @@ import {Path, Svg} from 'react-native-svg';
 import TextRegular from '../text/TextRegular';
 import {useNavigation} from '@react-navigation/native';
 
-const StoreFooter = ({screen}: {screen: string}) => {
+const Footer = ({screen}: {screen: string}) => {
   const navigation = useNavigation();
   return (
-    <View className="absolute bottom-0 bg-white w-full h-[70px] flex flex-row items-center justify-around">
+    <View className="sticky bottom-0 bg-white w-full h-[70px] flex flex-row items-center justify-around">
       <Pressable
         className="flex flex-col items-center w-[72px]"
         onPress={() => navigation.navigate('Home')}>
@@ -57,4 +57,4 @@ const StoreFooter = ({screen}: {screen: string}) => {
   );
 };
 
-export default StoreFooter;
+export default Footer;
