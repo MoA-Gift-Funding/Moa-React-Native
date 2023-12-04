@@ -54,7 +54,7 @@ const AuthRouter = () => {
             name="Home"
             component={Home}
             options={{
-              header: () => <BackHeader />,
+              headerShown: false,
             }}
           />
         </>
