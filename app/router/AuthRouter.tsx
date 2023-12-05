@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from '../screens/Home';
+import Home from '../screens/home/Home';
 import Login from '../screens/Login/Login';
 import BackHeader from '../components/header/BackHeader';
 import PhoneValidation from '../screens/Login/PhoneValidation';

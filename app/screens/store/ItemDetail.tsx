@@ -17,7 +17,7 @@ const ItemDetail = ({route, navigation}) => {
   const [caution, setCaution] = useState(true);
   const [imgHeight, setImgHeight] = useState(0);
   const size = Image.getSize(
-    'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=1000',
+    'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=312',
     (width, height) => {
       setImgHeight(height);
     },

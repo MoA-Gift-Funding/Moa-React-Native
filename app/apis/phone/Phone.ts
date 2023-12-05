@@ -1,3 +1,4 @@
+import {Contact} from '../../types/User';
 import {Axios} from '../axios.config';
 
 export const requestVerifyMSG = async (recipientNo: string) => {
@@ -45,5 +46,22 @@ export const verifyPhoneNumber = async ({
         verified.message = '시간이 초과되었습니다. 다시 시도해주세요.';
     }
     return verified;
+  }
+};
+
+export const connectContacts = async ({
+  contactList,
+}: {
+  contactList: Contact[];
+}) => {
+  try {
+    const res = await Axios.post('/sync-contact', {contactList});
+    console.log(res);
+    console.log(res.data);
+    return res.data;
+  } catch (error: any) {
+    console.log(error);
+    console.log(error.request);
+    console.log(error.response);
   }
 };

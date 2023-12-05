@@ -64,7 +64,6 @@ export const UserContextProvider = ({
           dispatch({type: 'LOGIN', payload: user});
         }
       } catch (error) {
-        await AsyncStorage.clear();
         console.error(error);
       } finally {
         dispatch({type: 'STOP_LOADING'});

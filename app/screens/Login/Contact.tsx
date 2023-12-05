@@ -9,6 +9,7 @@ import Contacts from 'react-native-contacts';
 import {UserContact} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
+import {connectContacts} from '../../apis/phone/Phone';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +62,7 @@ const Contact = ({navigation}) => {
         });
     }
     setIsLoading(true);
-    // 친구 저장 API 호출
+    await connectContacts(organized);
     setIsLoading(false);
     navigation.navigate('JoinCompleted');
   };

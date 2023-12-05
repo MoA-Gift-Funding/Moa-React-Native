@@ -110,7 +110,7 @@ export const getUser = async () => {
     console.error(error);
     console.log(error.response);
     // 추후 삭제
-    await AsyncStorage.clear();
+    // await AsyncStorage.clear();
   }
 };
 
