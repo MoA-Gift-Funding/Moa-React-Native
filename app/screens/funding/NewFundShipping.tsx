@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Modal,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
+  TextInput,
   View,
 } from 'react-native';
 import TextBold from '../../components/text/TextBold';
@@ -16,9 +17,18 @@ import Postcode from '@actbase/react-daum-postcode';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 import NextButton from '../../components/button/NextButton';
+import TextRegular from '../../components/text/TextRegular';
+import TextSemiBold from '../../components/text/TextSemiBold';
+import LoadingBar from '../../components/bar/LoadingBar';
 
-const NewFundShipping = () => {
+const NewFundShipping = ({navigation}) => {
   const [onPostModal, setOnPostModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [address, setAddress] = useState({
+    zonecode: 0,
+    roadAddr: '',
+    detailedAddr: '',
+  });
   const {
     control,
     handleSubmit,
@@ -37,6 +47,7 @@ const NewFundShipping = () => {
       className="px-6 bg-white h-full"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        {isLoading && <LoadingBar />}
         <View className="mt-8">
           <TextBold
             title="펀딩 상품 수령인의 정보를"
@@ -91,38 +102,73 @@ const NewFundShipping = () => {
             />
           </View>
           <View className="mt-4">
-            <NextButton
-              title="주소 검색하기"
-              onSubmit={() => {
-                setOnPostModal(!onPostModal);
-              }}
-              handleSubmit={handleSubmit}
+            <TextRegular
+              style="text-Body-1 text-black leading-Body-1 mb-1"
+              title="배송지 주소"
             />
-            <TextInputGroupWhite
-              name="roadAddr"
-              label="배송지 주소"
-              control={control}
-              error={errors.recipientName}
-              placeholder="배송지 주소를 입력해주세요."
-              rules={{
-                required: '배송지 주소를 입력해주세요.',
-              }}
-            />
+            {address.roadAddr && (
+              <>
+                <TextInput
+                  editable={false}
+                  value={address.roadAddr}
+                  className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+                  onPressIn={() => setOnPostModal(true)}
+                />
+                <TextInputGroupWhite
+                  name="detailedAddr"
+                  label=""
+                  control={control}
+                  error={errors.detailedAddr}
+                  placeholder="상세 주소를 입력해주세요."
+                  rules={{
+                    required: '상세 주소를 입력해주세요.',
+                  }}
+                />
+              </>
+            )}
+            {!address.roadAddr && (
+              <Pressable
+                className={
+                  'h-[56px] w-[312px] bg-Gray-08 rounded-lg flex items-center justify-center mt-1'
+                }
+                onPress={() => {
+                  setIsLoading(true);
+                  setOnPostModal(true);
+                }}>
+                <TextSemiBold
+                  style="text-white text-Body-1 ml-[14px]"
+                  title="주소 검색하기"
+                />
+              </Pressable>
+            )}
             {onPostModal && (
               <Modal
                 className="flex flex-col justify-center items-center"
                 animationType="fade">
                 <SafeAreaView />
                 <View className="w-full flex items-end">
-                  <View className="p-2">
+                  <Pressable
+                    className="p-2"
+                    onPress={() => {
+                      setOnPostModal(false);
+                      setIsLoading(false);
+                    }}>
                     <FontAwesomeIcon icon={faClose} size={24} />
-                  </View>
+                  </Pressable>
                 </View>
                 <View className="h-full w-full flex items-center mt-8">
                   <Postcode
                     style={{width: 320, height: 470}}
                     jsOptions={{animation: true}}
-                    onSelected={data => Alert.alert(JSON.stringify(data))}
+                    onSelected={data => {
+                      setAddress({
+                        ...address,
+                        roadAddr: data.roadAddress,
+                        zonecode: data.zonecode,
+                      });
+                      setOnPostModal(false);
+                      setIsLoading(false);
+                    }}
                     onError={err => console.log(err)}
                   />
                 </View>
@@ -131,6 +177,13 @@ const NewFundShipping = () => {
           </View>
         </View>
       </ScrollView>
+      <KeyboardAvoidingView className="mb-8">
+        <NextButton
+          title="펀딩 개설하기"
+          onSubmit={() => navigation.navigate('FundCompleted')}
+          handleSubmit={handleSubmit}
+        />
+      </KeyboardAvoidingView>
     </KeyboardAvoidingView>
   );
 };
