@@ -44,7 +44,7 @@ const NewFundShipping = ({navigation}) => {
   });
   return (
     <KeyboardAvoidingView
-      className="px-6 bg-white h-full"
+      className="px-6 bg-white h-full flex flex-col justify-between"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {isLoading && <LoadingBar />}
@@ -106,14 +106,15 @@ const NewFundShipping = ({navigation}) => {
               style="text-Body-1 text-black leading-Body-1 mb-1"
               title="배송지 주소"
             />
+            <TextInput
+              placeholder="주소 검색하기"
+              editable={false}
+              value={address.roadAddr}
+              className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+              onPressIn={() => setOnPostModal(true)}
+            />
             {address.roadAddr && (
               <>
-                <TextInput
-                  editable={false}
-                  value={address.roadAddr}
-                  className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
-                  onPressIn={() => setOnPostModal(true)}
-                />
                 <TextInputGroupWhite
                   name="detailedAddr"
                   label=""
@@ -125,21 +126,6 @@ const NewFundShipping = ({navigation}) => {
                   }}
                 />
               </>
-            )}
-            {!address.roadAddr && (
-              <Pressable
-                className={
-                  'h-[56px] w-[312px] bg-Gray-08 rounded-lg flex items-center justify-center mt-1'
-                }
-                onPress={() => {
-                  setIsLoading(true);
-                  setOnPostModal(true);
-                }}>
-                <TextSemiBold
-                  style="text-white text-Body-1 ml-[14px]"
-                  title="주소 검색하기"
-                />
-              </Pressable>
             )}
             {onPostModal && (
               <Modal
