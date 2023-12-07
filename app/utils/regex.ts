@@ -13,3 +13,10 @@ export const autoSlashBirthday = (text: string) => {
     .replace(/(\/{1,2})$/g, '');
   return reformed;
 };
+
+export const autoCurrency = (money: string) => {
+  const reformed = money
+    .replace(/[^0-9]/g, '')
+    .replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+  return reformed;
+};
