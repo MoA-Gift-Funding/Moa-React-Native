@@ -50,7 +50,7 @@ const NewFund = ({navigation}) => {
               rules={{
                 required: '펀딩 제목은 필수 입력 사항이예요.',
                 minLength: {
-                  value: 6,
+                  value: 5,
                   message: '최소 5자 이상 입력 해야해요.',
                 },
                 maxLength: {
@@ -65,10 +65,11 @@ const NewFund = ({navigation}) => {
               name="description"
               label="펀딩 소개"
               control={control}
-              error={errors.title}
+              error={errors.description}
               placeholder="메세지 입력(최소 10자, 최대 500자)"
               desc="개설하고자하는 펀딩에 대해 소개해주세요.(최대 500자)"
               custom="h-[200px]"
+              textAlignVertical="top"
               multiline={true}
               rules={{
                 required: '펀딩 소개는 필수 입력 사항이예요.',
@@ -88,13 +89,13 @@ const NewFund = ({navigation}) => {
               name="priceLimit"
               label="1인당 펀딩 최대 가능 금액"
               control={control}
-              error={errors.title}
+              error={errors.priceLimit}
               desc="펀딩에 참여할 친구의 1인당 최대 펀딩 가능 금액을 설정할 수 있어요. 입력 칸을 비워두면 금액 제한 없이 펀딩이 가능해요."
               keyboardType={'number-pad'}
               regex={autoCurrency}
               rules={{
                 minLength: {
-                  value: 5,
+                  value: 6,
                   message: '최소 1만원부터 설정 가능해요.',
                 },
                 maxLength: {
@@ -130,7 +131,9 @@ const NewFund = ({navigation}) => {
         <KeyboardAvoidingView className="py-8">
           <NextButton
             title="다음"
-            onSubmit={() => navigation.navigate('NewFundShipping')}
+            onSubmit={() =>
+              navigation.navigate('NewFundShipping', {title: '펀딩개설하기'})
+            }
             handleSubmit={handleSubmit}
           />
         </KeyboardAvoidingView>

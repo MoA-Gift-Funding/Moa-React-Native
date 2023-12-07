@@ -81,10 +81,10 @@ export default function Join({navigation}) {
               error={errors.nickname}
               control={control}
               rules={{
-                required: '닉네임은 필수 입력 사항입니다.',
+                required: '닉네임은 필수 입력 사항이예요.',
                 maxLength: {
                   value: 20,
-                  message: '최대 20자까지 입력가능합니다.',
+                  message: '최대 20자까지 입력 가능해요.',
                 },
               }}
             />
@@ -97,14 +97,14 @@ export default function Join({navigation}) {
               control={control}
               regex={autoHyphenPhoneNumber}
               rules={{
-                required: '전화번호는 필수 입력 사항입니다.',
+                required: '전화번호는 필수 입력 사항이예요.',
                 maxLength: {
                   value: 13,
-                  mesaage: '13자리 이상 입력이 불가합니다.',
+                  mesaage: '13자리 이상 입력이 불가해요.',
                 },
                 pattern: {
                   value: /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
-                  message: '전화번호 형식에 맞지않습니다.',
+                  message: '전화번호 형식에 맞지 않아요.',
                 },
               }}
               keyboardType={'number-pad'}
@@ -118,10 +118,10 @@ export default function Join({navigation}) {
               control={control}
               regex={autoSlashBirthday}
               rules={{
-                required: '생년월일은 필수 입력 사항입니다.',
+                required: '생년월일은 필수 입력 사항이예요.',
                 maxLength: {
                   value: 10,
-                  message: '생년월일은 8자만 입력가능합니다.',
+                  message: '생년월일은 8자만 입력 가능해요.',
                 },
                 minLength: {
                   value: 10,
