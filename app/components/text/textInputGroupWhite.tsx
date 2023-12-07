@@ -19,9 +19,12 @@ interface TextInputGroupProps {
   regex?: any;
   editable?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  custom?: string;
+  multiline?: boolean;
+  desc?: string;
 }
 
-const TextInputGroup: React.FC<TextInputGroupProps> = ({
+const TextInputGroupWhite: React.FC<TextInputGroupProps> = ({
   name,
   label,
   placeholder,
@@ -31,10 +34,19 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
   regex,
   editable,
   keyboardType,
+  custom,
+  multiline,
+  desc,
 }) => {
   return (
     <>
-      <TextRegular style="text-Body-2 text-Gray-06" title={label} />
+      <TextRegular
+        style="text-Body-1 text-black leading-Body-1 mb-1"
+        title={label}
+      />
+      {desc && (
+        <TextRegular title={desc} style="text-Detail-1 text-Gray-06 mb-2" />
+      )}
       <Controller
         control={control}
         rules={{
@@ -43,9 +55,10 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             editable={editable}
-            className="w-[312px] h-[56px] rounded-md px-3 text-Body-1 text-black placeholder:text-[#858585] bg-Gray-02"
+            className={`w-[312px] h-[56px] placeholder:text-[#858585] bg-white border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1 ${custom}`}
             placeholder={placeholder}
             onBlur={onBlur}
+            multiline={multiline}
             onChangeText={text => {
               let formattedText = text;
               if (rules?.maxLength && text.length > rules.maxLength.value) {
@@ -67,4 +80,4 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
   );
 };
 
-export default TextInputGroup;
+export default TextInputGroupWhite;

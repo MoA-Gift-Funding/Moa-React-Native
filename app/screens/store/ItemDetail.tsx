@@ -119,7 +119,12 @@ const ItemDetail = ({route, navigation}) => {
           <NextButton
             title="펀딩 개설하기"
             handleSubmit={handleSubmit}
-            onSubmit={() => navigation.navigate('Funding')}
+            onSubmit={() =>
+              navigation.navigate('NewFund', {
+                title: '펀딩개설하기',
+                search: false,
+              })
+            }
           />
         </View>
       </ScrollView>

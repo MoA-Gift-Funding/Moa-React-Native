@@ -16,6 +16,7 @@ import StoreHeader from '../components/header/StoreHeader';
 import ItemDetail from '../screens/store/ItemDetail';
 import ItemList from '../screens/store/ItemList';
 import TitleHeader from '../components/header/TitleHeader';
+import NewFund from '../screens/funding/NewFund';
 
 const AuthRouter = () => {
   const {
@@ -56,6 +57,11 @@ const AuthRouter = () => {
             options={{
               headerShown: false,
             }}
+          />
+          <Stack.Screen
+            name="NewFund"
+            component={NewFund}
+            options={{header: () => <TitleHeader />}}
           />
         </>
       ) : (

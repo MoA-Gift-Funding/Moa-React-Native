@@ -104,9 +104,12 @@ export const getUser = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     const res = await Axios.get('/users/get-user-info');
+    console.log('response: ', res);
     const user = res.data.data;
     return user;
   } catch (error) {
+    console.log('에러 들어옴');
+    console.log('error: ', error);
     console.error(error);
     console.log(error.response);
     // 추후 삭제

@@ -8,7 +8,7 @@ import TextBold from '../text/TextBold';
 const TitleHeader = () => {
   const navigate = useNavigation();
   const route = useRoute();
-  const {title} = route.params;
+  const {title, search} = route.params;
   return (
     <SafeAreaView>
       <View className="h-[48px] flex flex-row justify-between items-center bg-white">
@@ -16,9 +16,13 @@ const TitleHeader = () => {
           <FontAwesomeIcon icon={faChevronLeft} size={21} />
         </TouchableOpacity>
         <TextBold title={title} style="text-Heading-4 leading-Heading-4" />
-        <TouchableOpacity className="p-4" onPress={() => {}}>
-          <FontAwesomeIcon icon={faSearch} size={21} />
-        </TouchableOpacity>
+        <View className="p-4">
+          {search && (
+            <TouchableOpacity onPress={() => {}}>
+              <FontAwesomeIcon icon={faSearch} size={21} />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );

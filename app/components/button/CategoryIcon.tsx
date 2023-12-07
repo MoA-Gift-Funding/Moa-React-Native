@@ -8,7 +8,7 @@ const CategoryIcon = ({uri, title}: {uri: string; title: string}) => {
   return (
     <Pressable
       className="flex flex-col justify-center items-center"
-      onPress={() => navigation.navigate('ItemList', {title})}>
+      onPress={() => navigation.navigate('ItemList', {title, search: true})}>
       <Image
         className="w-[72px] h-[72px]"
         source={{
