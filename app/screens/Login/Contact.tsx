@@ -36,6 +36,11 @@ const Contact = ({navigation}) => {
               });
               return organized;
             })
+            .then(async contactList => {
+              console.log(contactList);
+
+              await connectContacts(contactList);
+            })
             .catch(e => {
               console.log(e);
             });
@@ -56,13 +61,18 @@ const Contact = ({navigation}) => {
             }
           });
         })
+        .then(async contactList => {
+          console.log(contactList);
+
+          await connectContacts(contactList);
+        })
         .catch(error => {
           console.error('Permission error: ', error);
           Alert.alert('권한 에러', '연락처 권한이 필요합니다.');
         });
     }
     setIsLoading(true);
-    await connectContacts(organized);
+
     setIsLoading(false);
     navigation.navigate('JoinCompleted');
   };

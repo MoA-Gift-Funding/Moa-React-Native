@@ -12,6 +12,8 @@ export const loginKakao = async (): Promise<User> => {
     const user = await loginMoA(accessToken, 'kakao');
     return user;
   } catch (error) {
+    console.log(error);
+
     console.log(error.response);
     throw new Error('[ERROR] Network Error');
   }
@@ -104,7 +106,6 @@ export const getUser = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     const res = await Axios.get('/users/get-user-info');
-    console.log('response: ', res);
     const user = res.data.data;
     return user;
   } catch (error) {
