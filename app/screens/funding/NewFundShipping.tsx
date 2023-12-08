@@ -24,14 +24,11 @@ const NewFundShipping = ({navigation, route}) => {
   const params = route.params;
   const [onPostModal, setOnPostModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [address, setAddress] = useState({
-    zonecode: 0,
-    roadAddr: '',
-    detailedAddr: '',
-  });
   const {
     control,
     handleSubmit,
+    setValue,
+    getValues,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -39,7 +36,7 @@ const NewFundShipping = ({navigation, route}) => {
       roadAddr: '',
       detailedAddr: '',
       recipientMobile: '',
-      zonecode: '',
+      zonecode: 0,
     },
   });
   return (
@@ -106,18 +103,20 @@ const NewFundShipping = ({navigation, route}) => {
               style="text-Body-1 text-black leading-Body-1 mb-1"
               title="배송지 주소"
             />
-            <TextInput
-              placeholder="주소 검색하기"
-              editable={false}
-              value={address.roadAddr}
-              className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
-              onPressIn={() => setOnPostModal(true)}
-            />
-            {address.roadAddr && (
+            <Pressable onPress={() => setOnPostModal(true)}>
+              <TextInput
+                placeholder="주소 검색하기"
+                editable={false}
+                value={getValues().roadAddr}
+                className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+              />
+            </Pressable>
+            {getValues().roadAddr && (
               <>
                 <TextInputGroupWhite
                   name="detailedAddr"
                   label=""
+                  custom="-mt-4"
                   control={control}
                   error={errors.detailedAddr}
                   placeholder="상세 주소를 입력해주세요."
@@ -147,11 +146,8 @@ const NewFundShipping = ({navigation, route}) => {
                     style={{width: 320, height: 470}}
                     jsOptions={{animation: true}}
                     onSelected={data => {
-                      setAddress({
-                        ...address,
-                        roadAddr: data.roadAddress,
-                        zonecode: data.zonecode,
-                      });
+                      setValue('roadAddr', data.roadAddress);
+                      setValue('zonecode', data.zonecode);
                       setOnPostModal(false);
                       setIsLoading(false);
                     }}
