@@ -121,7 +121,7 @@ const ItemDetail = ({route, navigation}) => {
             handleSubmit={handleSubmit}
             onSubmit={() =>
               navigation.navigate('NewFund', {
-                title: '펀딩개설하기',
+                headerTitle: '펀딩개설하기',
                 search: false,
               })
             }

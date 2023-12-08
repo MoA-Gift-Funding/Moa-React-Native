@@ -20,7 +20,8 @@ import NextButton from '../../components/button/NextButton';
 import TextRegular from '../../components/text/TextRegular';
 import LoadingBar from '../../components/bar/LoadingBar';
 
-const NewFundShipping = ({navigation}) => {
+const NewFundShipping = ({navigation, route}) => {
+  const params = route.params;
   const [onPostModal, setOnPostModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [address, setAddress] = useState({

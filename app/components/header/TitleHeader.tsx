@@ -8,14 +8,17 @@ import TextSemiBold from '../text/TextSemiBold';
 const TitleHeader = () => {
   const navigate = useNavigation();
   const route = useRoute();
-  const {title, search} = route.params;
+  const {headerTitle, search} = route.params;
   return (
     <SafeAreaView>
       <View className="h-[48px] flex flex-row justify-between items-center bg-white">
         <TouchableOpacity className="p-4" onPress={navigate.goBack}>
           <FontAwesomeIcon icon={faChevronLeft} size={21} />
         </TouchableOpacity>
-        <TextSemiBold title={title} style="text-Heading-4 leading-Heading-4" />
+        <TextSemiBold
+          title={headerTitle}
+          style="text-Heading-4 leading-Heading-4"
+        />
         <View className="p-4">
           {search && (
             <TouchableOpacity onPress={() => {}}>

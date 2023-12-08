@@ -32,9 +32,10 @@ const NewFund = ({navigation}) => {
       return setDateError(true);
     }
     const userInputs = getValues();
-    console.log(userInputs);
-
-    // navigation.navigate('NewFundShipping', {title: '펀딩개설하기'})
+    navigation.navigate('NewFundShipping', {
+      headerTitle: '펀딩개설하기',
+      ...userInputs,
+    });
   };
 
   return (
