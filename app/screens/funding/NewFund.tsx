@@ -11,10 +11,13 @@ import {autoCurrency} from '../../utils/regex';
 import NextButton from '../../components/button/NextButton';
 
 const NewFund = ({navigation}) => {
-  const [value, setValue] = useState(dayjs());
+  const [deadline, setDeadline] = useState(dayjs());
+  const [dateError, setDateError] = useState(false);
   const {
     control,
     handleSubmit,
+    getValues,
+    setValue,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -24,6 +27,16 @@ const NewFund = ({navigation}) => {
       deadline: '',
     },
   });
+  const onSubmit = () => {
+    if (deadline.day === dayjs().day) {
+      return setDateError(true);
+    }
+    const userInputs = getValues();
+    console.log(userInputs);
+
+    // navigation.navigate('NewFundShipping', {title: '펀딩개설하기'})
+  };
+
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full"
@@ -116,8 +129,13 @@ const NewFund = ({navigation}) => {
             />
             <View className="bg-Gray-01 rounded-lg p-2">
               <DateTimePicker
-                value={value}
-                onValueChange={date => setValue(date)}
+                value={deadline}
+                onValueChange={date => {
+                  const cleaned = date?.substring(0, 10);
+                  setDeadline(cleaned);
+                  setValue('deadline', cleaned);
+                  setDateError(false);
+                }}
                 locale="ko"
                 mode="date"
                 selectedItemColor={'#FF5414'}
@@ -126,14 +144,18 @@ const NewFund = ({navigation}) => {
                 maximumDate={dayjs().add(28, 'day')}
               />
             </View>
+            {dateError && (
+              <TextRegular
+                title="펀딩 종료일을 선택해주세요."
+                style="text-Detail-1 text-red-500 mt-1"
+              />
+            )}
           </View>
         </View>
         <KeyboardAvoidingView className="py-8">
           <NextButton
             title="다음"
-            onSubmit={() =>
-              navigation.navigate('NewFundShipping', {title: '펀딩개설하기'})
-            }
+            onSubmit={onSubmit}
             handleSubmit={handleSubmit}
           />
         </KeyboardAvoidingView>

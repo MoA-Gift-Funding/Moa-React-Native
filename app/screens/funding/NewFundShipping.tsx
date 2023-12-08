@@ -18,7 +18,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 import NextButton from '../../components/button/NextButton';
 import TextRegular from '../../components/text/TextRegular';
-import TextSemiBold from '../../components/text/TextSemiBold';
 import LoadingBar from '../../components/bar/LoadingBar';
 
 const NewFundShipping = ({navigation}) => {
