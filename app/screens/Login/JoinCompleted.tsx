@@ -29,16 +29,20 @@ const JoinCompleted = ({navigation}) => {
           <ProgressBar progress={'w-full'} />
           <View className="my-8 font-semibold">
             <TextSemiBold
-              style="text-Heading-3"
-              title={`${user?.nickname}님`}
+              style="text-Heading-3 leading-Heading-3"
+              title={`${user?.nickname}님, 환영해요!`}
             />
-            <TextSemiBold style="text-Heading-3" title="반갑습니다!" />
+            <TextSemiBold
+              style="text-Detail-1 text-Gray-06 leading-Detail-1 mt-1"
+              title="모아에서 자유롭게 펀딩하며 즐겨주세요!"
+            />
           </View>
           <View className="flex flex-col items-center relative mt-10">
             <Image
-              className="w-[200px] h-[200px] mt-2"
+              className="w-[310px] h-[220px] mt-4"
+              resizeMode={'contain'}
               source={{
-                uri: Config.DEFAULT_IMAGE,
+                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1702535846/moa-done_wbzuoz.png',
               }}
             />
           </View>

@@ -7,6 +7,11 @@ export const Axios = axios.create({
   baseURL: Config.BASE_URL,
 });
 
+// Axios.interceptors.request.use(request => {
+//   console.log('Starting Request', JSON.stringify(request, null, 2));
+//   return request;
+// });
+
 Axios.interceptors.response.use(
   function (response) {
     return response;

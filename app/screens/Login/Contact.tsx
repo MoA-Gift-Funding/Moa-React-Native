@@ -62,9 +62,7 @@ const Contact = ({navigation}) => {
           });
         })
         .then(async contactList => {
-          console.log(contactList);
-
-          await connectContacts(contactList);
+          await connectContacts(organized);
         })
         .catch(error => {
           console.error('Permission error: ', error);

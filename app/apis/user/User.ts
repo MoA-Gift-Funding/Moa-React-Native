@@ -13,7 +13,6 @@ export const loginKakao = async (): Promise<User> => {
     return user;
   } catch (error) {
     console.log(error);
-
     console.log(error.response);
     throw new Error('[ERROR] Network Error');
   }
@@ -55,6 +54,7 @@ const loginMoA = async (
     return user;
   } catch (error) {
     console.error(error);
+    console.log(error.request);
     console.log(error.response.data);
     const {message} = error.response.data;
     switch (message) {
