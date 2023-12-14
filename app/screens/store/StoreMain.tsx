@@ -51,7 +51,6 @@ const StoreMain = () => {
                   description,
                   notes,
                   directions,
-                  categoryType,
                 } = product;
                 return (
                   <View key={id}>
@@ -64,7 +63,6 @@ const StoreMain = () => {
                       description={description}
                       notes={notes}
                       directions={directions}
-                      categoryType={categoryType}
                     />
                   </View>
                 );

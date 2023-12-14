@@ -1,6 +1,8 @@
 export interface Category {
+  id?: number;
   name: string;
   image: string;
+  categoryType: string;
 }
 
 export interface Product {
@@ -13,5 +15,5 @@ export interface Product {
   description: string;
   notes: string;
   directions: string;
-  categoryType: string;
+  categoryType?: string;
 }

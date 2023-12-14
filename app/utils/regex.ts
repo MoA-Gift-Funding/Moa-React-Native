@@ -14,7 +14,7 @@ export const autoSlashBirthday = (text: string) => {
   return reformed;
 };
 
-export const autoCurrency = (money: string) => {
+export const autoCurrency = (money: string | number) => {
   const reformed = Number(money).toLocaleString();
   return reformed;
 };

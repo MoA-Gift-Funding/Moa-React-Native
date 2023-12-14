@@ -14,7 +14,6 @@ const Item = ({
   description,
   notes,
   directions,
-  categoryType,
 }: Product) => {
   const navigation = useNavigation();
   return (
@@ -30,7 +29,6 @@ const Item = ({
           description,
           notes,
           directions,
-          categoryType,
         })
       }>
       <Image
