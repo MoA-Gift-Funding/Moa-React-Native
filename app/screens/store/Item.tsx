@@ -3,20 +3,19 @@ import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
+import {Product} from '../../types/Store';
 
 const Item = ({
   uri,
   brand,
   productName,
   price,
-  sale,
-}: {
-  uri: string;
-  brand: string;
-  productName: string;
-  price: string;
-  sale?: string;
-}) => {
+  salesNumber,
+  description,
+  notes,
+  directions,
+  categoryType,
+}: Product) => {
   const navigation = useNavigation();
   return (
     <Pressable
@@ -27,7 +26,11 @@ const Item = ({
           brand,
           productName,
           price,
-          sale,
+          salesNumber,
+          description,
+          notes,
+          directions,
+          categoryType,
         })
       }>
       <Image
@@ -46,9 +49,9 @@ const Item = ({
           style="text-Body-2 text-Gray-10 leading-Body-2 break-word"
         />
         <View className="flex flex-row">
-          {sale && (
+          {salesNumber && (
             <TextSemiBold
-              title={`${sale}%`}
+              title={`${salesNumber}%`}
               style="text-Body-2 text-Main-01 leading-Body-2"
             />
           )}

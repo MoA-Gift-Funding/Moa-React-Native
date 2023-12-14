@@ -6,13 +6,13 @@ import TextBold from '../../components/text/TextBold';
 const ItemDesc = ({
   brand,
   productName,
-  sale,
+  salesNumber,
   price,
 }: {
   brand: string;
   productName: string;
   price: string;
-  sale?: string;
+  salesNumber?: string;
 }) => {
   return (
     <View className="flex items-center bg-white">
@@ -27,9 +27,9 @@ const ItemDesc = ({
             style="text-Gray-10 text-Body-1 leading-Body-1"
           />
           <View className="flex flex-row mt-2">
-            {sale && (
+            {salesNumber && (
               <TextBold
-                title={`${sale}%`}
+                title={`${salesNumber}%`}
                 style="text-Main-01 text-Heading-4 leading-Heading-4 mr-2"
               />
             )}

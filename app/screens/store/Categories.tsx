@@ -9,14 +9,13 @@ const Categories = () => {
     queryKey: ['categories'],
     queryFn: getCategories,
     staleTime: 1000 * 60 * 60 * 24,
-    cacheTime: 1000 * 60 * 5,
   });
 
   return (
     <>
       <View className="flex flex-row flex-wrap justify-center gap-2">
-        {categories?.map(category => (
-          <View>
+        {categories?.map((category, index) => (
+          <View key={index}>
             <CategoryIcon title={category.name} uri={category.image} />
           </View>
         ))}
