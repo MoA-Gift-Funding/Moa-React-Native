@@ -9,9 +9,8 @@ import cls from 'classnames';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
-import {useMutation} from '@tanstack/react-query';
-import {getProduct} from '../../apis/store/Store';
 import LoadingBar from '../../components/bar/LoadingBar';
+import useProducts from '../../hooks/useProducts';
 
 const ItemDetail = ({route, navigation}) => {
   const {id, image, brand, name, price, salesNumber} = route.params;
@@ -26,15 +25,9 @@ const ItemDetail = ({route, navigation}) => {
   };
   const {handleSubmit} = useForm();
 
-  const {data: product, mutate} = useMutation({
-    mutationFn: (productId: number) => getProduct(productId),
-    onSuccess: () => {
-      setLoading(false);
-    },
-    onError: () => {
-      setLoading(false);
-    },
-  });
+  const {
+    productDetailQuery: {data: product, mutate},
+  } = useProducts(() => setLoading(false));
   useEffect(() => {
     mutate(id);
   }, [mutate, id]);

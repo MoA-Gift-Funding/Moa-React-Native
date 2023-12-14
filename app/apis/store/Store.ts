@@ -34,12 +34,12 @@ export const getProducts = async (page: number = 0): Promise<Product[]> => {
 };
 
 export const getCategoryProducts = async (
-  category: string,
+  categoryType: string,
   page: number,
 ): Promise<Product[]> => {
   try {
     const products = await Axios.get(
-      `/products/get-category-product-list/${category}/popular?page=${page}&size=6`,
+      `/products/get-category-product-list/${categoryType}/popular?page=${page}&size=6`,
     )
       .then(res => {
         console.log(res.data);

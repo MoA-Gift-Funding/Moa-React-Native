@@ -4,17 +4,13 @@ import Categories from './Categories';
 import TextBold from '../../components/text/TextBold';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
-import {useMutation} from '@tanstack/react-query';
-import {getProducts} from '../../apis/store/Store';
 import {autoCurrency} from '../../utils/regex';
+import useProducts from '../../hooks/useProducts';
 
 const StoreMain = () => {
-  const {data: products, mutate} = useMutation({
-    mutationFn: (page: number) => getProducts(page),
-    onSuccess: () => {
-      // console.log(products);
-    },
-  });
+  const {
+    productsQuery: {data: products, mutate},
+  } = useProducts();
   useEffect(() => {
     mutate(0);
   }, [mutate]);

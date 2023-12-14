@@ -1,15 +1,12 @@
 import React from 'react';
 import CategoryIcon from '../../components/button/CategoryIcon';
 import {View} from 'react-native';
-import {useQuery} from '@tanstack/react-query';
-import {getCategories} from '../../apis/store/Store';
+import useProducts from '../../hooks/useProducts';
 
 const Categories = () => {
-  const {data: categories} = useQuery({
-    queryKey: ['categories'],
-    queryFn: getCategories,
-    staleTime: 1000 * 60 * 60 * 24,
-  });
+  const {
+    categoriesQuery: {data: categories},
+  } = useProducts();
 
   const cgTyper = (name: string) => {
     let type;
@@ -48,7 +45,7 @@ const Categories = () => {
     <>
       <View className="flex flex-row flex-wrap justify-center gap-2">
         {categories?.map(category => (
-          <View key={category.id}>
+          <View key={category.id + category.name}>
             <CategoryIcon
               title={category.name}
               uri={category.image}

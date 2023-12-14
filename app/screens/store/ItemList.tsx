@@ -3,25 +3,17 @@ import {Pressable, ScrollView, View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
-import {useMutation} from '@tanstack/react-query';
-import {getProducts} from '../../apis/store/Store';
 import {autoCurrency} from '../../utils/regex';
 import LoadingBar from '../../components/bar/LoadingBar';
+import useProducts from '../../hooks/useProducts';
 const ItemList = ({route}) => {
   const {categoryType} = route.params;
   const [loading, setLoading] = useState(true);
-  const {data: products, mutate} = useMutation({
-    mutationFn: ({category, page}: {category: string; page: number}) =>
-      getProducts(category, page),
-    onSuccess: () => {
-      setLoading(false);
-    },
-    onError: () => {
-      setLoading(false);
-    },
-  });
+  const {
+    categoryProductsQuery: {data: products, mutate},
+  } = useProducts(() => setLoading(false));
   useEffect(() => {
-    mutate({category: categoryType, page: 0});
+    mutate({categoryType, page: 0});
   }, [mutate, categoryType]);
   return (
     <>
@@ -51,30 +43,18 @@ const ItemList = ({route}) => {
         <View className="flex items-center mt-3">
           <View className="w-[320px] flex flex-row flex-wrap gap-2">
             {products?.map(product => {
-              const {
-                id,
-                image,
-                brand,
-                name,
-                price,
-                salesNumber,
-                description,
-                notes,
-                directions,
-              } = product;
+              const {id, image, brand, name, price, salesNumber} = product;
               console.log(product);
 
               return (
                 <View key={id}>
                   <Item
+                    id={id}
                     image={image}
                     brand={brand}
                     name={name}
                     price={autoCurrency(price)}
                     salesNumber={salesNumber}
-                    description={description}
-                    notes={notes}
-                    directions={directions}
                   />
                 </View>
               );
