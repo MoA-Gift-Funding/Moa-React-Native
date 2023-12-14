@@ -8,7 +8,7 @@ import NextButton from '../../components/button/NextButton';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
-import {uploadImage} from '../../apis/image/Image';
+import {uploadImage} from '../../apis/cloudinary/Image';
 import {useForm} from 'react-hook-form';
 import {updateProfileImage} from '../../apis/user/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';

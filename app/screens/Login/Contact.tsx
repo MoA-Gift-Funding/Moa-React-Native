@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Image, Platform, Pressable, View} from 'react-native';
+import {Alert, Platform, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
@@ -34,12 +34,9 @@ const Contact = ({navigation}) => {
                 const phoneNumber = contact.phoneNumbers[0].number;
                 organized.contactList.push({name, phoneNumber});
               });
-              return organized;
             })
-            .then(async contactList => {
-              console.log(contactList);
-
-              await connectContacts(contactList);
+            .then(async () => {
+              await connectContacts(organized);
             })
             .catch(e => {
               console.log(e);
@@ -61,7 +58,7 @@ const Contact = ({navigation}) => {
             }
           });
         })
-        .then(async contactList => {
+        .then(async () => {
           await connectContacts(organized);
         })
         .catch(error => {
