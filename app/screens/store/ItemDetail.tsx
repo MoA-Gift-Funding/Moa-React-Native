@@ -12,9 +12,9 @@ import Footer from '../../components/footer/Footer';
 
 const ItemDetail = ({route, navigation}) => {
   const {
-    uri,
+    image,
     brand,
-    productName,
+    name,
     price,
     salesNumber,
     description,
@@ -39,12 +39,12 @@ const ItemDetail = ({route, navigation}) => {
         <Image
           className="w-[360px] h-[360px]"
           source={{
-            uri,
+            uri: image,
           }}
         />
         <ItemDesc
           brand={brand}
-          productName={productName}
+          name={name}
           price={price}
           salesNumber={salesNumber}
         />

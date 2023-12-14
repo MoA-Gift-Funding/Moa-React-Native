@@ -15,8 +15,6 @@ export const autoSlashBirthday = (text: string) => {
 };
 
 export const autoCurrency = (money: string) => {
-  const reformed = money
-    .replace(/[^0-9]/g, '')
-    .replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+  const reformed = Number(money).toLocaleString();
   return reformed;
 };

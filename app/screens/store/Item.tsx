@@ -6,9 +6,9 @@ import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../types/Store';
 
 const Item = ({
-  uri,
+  image,
   brand,
-  productName,
+  name,
   price,
   salesNumber,
   description,
@@ -22,9 +22,9 @@ const Item = ({
       className="flex w-[152px] mb-[30px]"
       onPress={() =>
         navigation.navigate('ItemDetail', {
-          uri,
+          image,
           brand,
-          productName,
+          name,
           price,
           salesNumber,
           description,
@@ -36,7 +36,7 @@ const Item = ({
       <Image
         className="w-[152px] h-[152px]"
         source={{
-          uri,
+          uri: image,
         }}
       />
       <View className="flex flex-col mt-2">
@@ -45,7 +45,7 @@ const Item = ({
           style="text-Detail-1 text-Gray-06 leading-Detail-1"
         />
         <TextRegular
-          title={productName}
+          title={name}
           style="text-Body-2 text-Gray-10 leading-Body-2 break-word"
         />
         <View className="flex flex-row">
@@ -57,7 +57,7 @@ const Item = ({
           )}
           <TextSemiBold
             title={`${price}원`}
-            style="ml-1 text-Body-2 text-Gray-10 leading-Body-2"
+            style="text-Body-2 text-Gray-10 leading-Body-2"
           />
         </View>
       </View>

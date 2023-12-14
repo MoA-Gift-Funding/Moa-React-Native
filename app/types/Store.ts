@@ -4,9 +4,10 @@ export interface Category {
 }
 
 export interface Product {
-  uri: string;
+  id?: number;
+  image: string;
   brand: string;
-  productName: string;
+  name: string;
   price: string;
   salesNumber?: string;
   description: string;

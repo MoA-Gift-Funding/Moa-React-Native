@@ -5,12 +5,12 @@ import TextBold from '../../components/text/TextBold';
 
 const ItemDesc = ({
   brand,
-  productName,
+  name,
   salesNumber,
   price,
 }: {
   brand: string;
-  productName: string;
+  name: string;
   price: string;
   salesNumber?: string;
 }) => {
@@ -23,7 +23,7 @@ const ItemDesc = ({
             style="text-Gray-06 text-Body-2 leading-Body-2"
           />
           <TextRegular
-            title={productName}
+            title={name}
             style="text-Gray-10 text-Body-1 leading-Body-1"
           />
           <View className="flex flex-row mt-2">
