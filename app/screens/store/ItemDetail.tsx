@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, View} from 'react-native';
 import ItemDesc from './ItemDesc';
 import TextSemiBold from '../../components/text/TextSemiBold';
@@ -9,23 +9,41 @@ import cls from 'classnames';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
+import {useMutation} from '@tanstack/react-query';
+import {getProduct} from '../../apis/store/Store';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 const ItemDetail = ({route, navigation}) => {
   const {id, image, brand, name, price, salesNumber} = route.params;
   const [productInfo, setProductInfo] = useState(true);
   const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleSelection = () => {
     setProductInfo(!productInfo);
     setInstruction(!instruction);
   };
   const {handleSubmit} = useForm();
+
+  const {data: product, mutate} = useMutation({
+    mutationFn: (productId: number) => getProduct(productId),
+    onSuccess: () => {
+      setLoading(false);
+    },
+    onError: () => {
+      setLoading(false);
+    },
+  });
+  useEffect(() => {
+    mutate(id);
+  }, [mutate, id]);
   return (
     <>
       <ScrollView
         className="flex flex-col"
         showsVerticalScrollIndicator={false}>
+        {loading && <LoadingBar />}
         <Image
           className="w-[360px] h-[360px]"
           source={{
@@ -61,7 +79,7 @@ const ItemDetail = ({route, navigation}) => {
             {productInfo && (
               <>
                 <TextRegular
-                  title={description}
+                  title={product?.description}
                   style="text-Gray-06 text-Body-2 leading-Body-2"
                 />
                 <Image
@@ -75,7 +93,7 @@ const ItemDetail = ({route, navigation}) => {
             )}
             {instruction && (
               <TextRegular
-                title={directions}
+                title={product?.directions}
                 style="text-Gray-06 text-Body-2 leading-Body-2"
               />
             )}
@@ -93,7 +111,7 @@ const ItemDetail = ({route, navigation}) => {
             {caution && (
               <View className="w-full bg-Gray-02 flex items-center py-4">
                 <TextRegular
-                  title={notes}
+                  title={product?.notes}
                   style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                 />
               </View>

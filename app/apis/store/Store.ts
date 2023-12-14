@@ -57,13 +57,13 @@ export const getCategoryProducts = async (
 
 export const getProduct = async (productId: number): Promise<ProductDetail> => {
   try {
-    const products = await Axios.get(`/products/get-product/${productId}`)
+    const product = await Axios.get(`/products/get-product/${productId}`)
       .then(res => {
         console.log(res.data);
-        return res.data;
+        return res.data.data;
       })
-      .catch(err => console.log(err));
-    return products;
+      .catch(err => console.log(err.response));
+    return product;
   } catch (error: any) {
     console.log(error.response);
     throw new Error('[ERROR] Product를 가져오지 못함');

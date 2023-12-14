@@ -12,7 +12,7 @@ const StoreMain = () => {
   const {data: products, mutate} = useMutation({
     mutationFn: (page: number) => getProducts(page),
     onSuccess: () => {
-      console.log(products);
+      // console.log(products);
     },
   });
   useEffect(() => {
