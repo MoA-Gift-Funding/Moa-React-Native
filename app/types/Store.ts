@@ -6,6 +6,16 @@ export interface Category {
 }
 
 export interface Product {
+  id: number;
+  image: string;
+  brand: string;
+  name: string;
+  price: string;
+  salesNumber?: string;
+  categoryType?: string;
+}
+
+export interface ProductDetail {
   id?: number;
   image: string;
   brand: string;

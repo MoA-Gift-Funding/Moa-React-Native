@@ -1,4 +1,4 @@
-import {Category, Product} from '../../types/Store';
+import {Category, Product, ProductDetail} from '../../types/Store';
 import {Axios} from '../axios.config';
 
 export const getCategories = async (): Promise<Category[]> => {
@@ -16,7 +16,24 @@ export const getCategories = async (): Promise<Category[]> => {
   }
 };
 
-export const getProducts = async (
+export const getProducts = async (page: number = 0): Promise<Product[]> => {
+  try {
+    const products = await Axios.get(
+      `/products/get-product-list?page=${page}&size=6`,
+    )
+      .then(res => {
+        return res.data;
+      })
+      .then(res => res.data.products)
+      .catch(err => console.log(err));
+    return products;
+  } catch (error: any) {
+    console.log(error.response);
+    throw new Error('[ERROR] Products 리스트를 가져오지 못함');
+  }
+};
+
+export const getCategoryProducts = async (
   category: string,
   page: number,
 ): Promise<Product[]> => {
@@ -35,5 +52,20 @@ export const getProducts = async (
   } catch (error: any) {
     console.log(error.response);
     throw new Error('[ERROR] Products를 가져오지 못함');
+  }
+};
+
+export const getProduct = async (productId: number): Promise<ProductDetail> => {
+  try {
+    const products = await Axios.get(`/products/get-product/${productId}`)
+      .then(res => {
+        console.log(res.data);
+        return res.data;
+      })
+      .catch(err => console.log(err));
+    return products;
+  } catch (error: any) {
+    console.log(error.response);
+    throw new Error('[ERROR] Product를 가져오지 못함');
   }
 };

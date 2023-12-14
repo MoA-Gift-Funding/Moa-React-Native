@@ -10,14 +10,13 @@ import {autoCurrency} from '../../utils/regex';
 
 const StoreMain = () => {
   const {data: products, mutate} = useMutation({
-    mutationFn: ({category, page}: {category: string; page: number}) =>
-      getProducts(category, page),
+    mutationFn: (page: number) => getProducts(page),
     onSuccess: () => {
       console.log(products);
     },
   });
   useEffect(() => {
-    mutate({category: 'TECH', page: 0});
+    mutate(0);
   }, [mutate]);
 
   return (
@@ -41,28 +40,16 @@ const StoreMain = () => {
           <View className="flex items-center justify-center">
             <View className="w-[320px] flex flex-row flex-wrap gap-2 mt-4">
               {products?.map(product => {
-                const {
-                  id,
-                  image,
-                  brand,
-                  name,
-                  price,
-                  salesNumber,
-                  description,
-                  notes,
-                  directions,
-                } = product;
+                const {id, image, brand, name, price, salesNumber} = product;
                 return (
                   <View key={id}>
                     <Item
+                      id={id}
                       image={image}
                       brand={brand}
                       name={name}
                       price={autoCurrency(price)}
                       salesNumber={salesNumber}
-                      description={description}
-                      notes={notes}
-                      directions={directions}
                     />
                   </View>
                 );

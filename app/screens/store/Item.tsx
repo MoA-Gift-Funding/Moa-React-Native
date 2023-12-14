@@ -5,30 +5,19 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../types/Store';
 
-const Item = ({
-  image,
-  brand,
-  name,
-  price,
-  salesNumber,
-  description,
-  notes,
-  directions,
-}: Product) => {
+const Item = ({id, image, brand, name, price, salesNumber}: Product) => {
   const navigation = useNavigation();
   return (
     <Pressable
       className="flex w-[152px] mb-[30px]"
       onPress={() =>
         navigation.navigate('ItemDetail', {
+          id,
           image,
           brand,
           name,
           price,
           salesNumber,
-          description,
-          notes,
-          directions,
         })
       }>
       <Image

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, ScrollView, View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import Item from './Item';
@@ -6,14 +6,18 @@ import Footer from '../../components/footer/Footer';
 import {useMutation} from '@tanstack/react-query';
 import {getProducts} from '../../apis/store/Store';
 import {autoCurrency} from '../../utils/regex';
+import LoadingBar from '../../components/bar/LoadingBar';
 const ItemList = ({route}) => {
   const {categoryType} = route.params;
-
+  const [loading, setLoading] = useState(true);
   const {data: products, mutate} = useMutation({
     mutationFn: ({category, page}: {category: string; page: number}) =>
       getProducts(category, page),
     onSuccess: () => {
-      console.log(products);
+      setLoading(false);
+    },
+    onError: () => {
+      setLoading(false);
     },
   });
   useEffect(() => {
@@ -22,6 +26,7 @@ const ItemList = ({route}) => {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} className="bg-white">
+        {loading && <LoadingBar />}
         <View className="flex flex-row justify-center mt-6">
           <View className="flex flex-row justify-between w-[312px]">
             <TextRegular
@@ -57,6 +62,8 @@ const ItemList = ({route}) => {
                 notes,
                 directions,
               } = product;
+              console.log(product);
+
               return (
                 <View key={id}>
                   <Item

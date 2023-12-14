@@ -11,17 +11,7 @@ import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
 
 const ItemDetail = ({route, navigation}) => {
-  const {
-    image,
-    brand,
-    name,
-    price,
-    salesNumber,
-    description,
-    notes,
-    directions,
-    categoryType,
-  } = route.params;
+  const {id, image, brand, name, price, salesNumber} = route.params;
   const [productInfo, setProductInfo] = useState(true);
   const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
