@@ -12,7 +12,7 @@ export default function Home({navigation}) {
   return (
     <>
       <ScrollView className="h-full">
-        <HomeBanner />
+        <HomeBanner navigation={navigation} />
         <View className="flex flex-row h-[40px] bg-white justify-evenly border-b-2 border-Gray-02">
           <View className="w-[60px] h-[40px] border-b-2 border-Main-01">
             <TextBold title="진행중" style=" text-center" />

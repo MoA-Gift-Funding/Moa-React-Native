@@ -4,7 +4,7 @@ import TextBold from '../../components/text/TextBold';
 import TextRegular from '../../components/text/TextRegular';
 import {useUserContext} from '../../contexts/UserContext';
 
-const HomeBanner = () => {
+const HomeBanner = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
@@ -29,14 +29,16 @@ const HomeBanner = () => {
           style="text-Heading-3 leading-Heading-3 text-white ml-2"
         />
         <TextBold
-          title="직접 펀딩을 개설해"
+          title="스토어에서 원하는 선물을 골라"
           style="text-Heading-3 leading-Heading-3 text-white ml-2"
         />
         <TextBold
-          title="선물을 전달해보세요."
+          title="펀딩을 생성해보세요!"
           style="text-Heading-3 leading-Heading-3 text-white ml-2"
         />
-        <Pressable className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2">
+        <Pressable
+          className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
+          onPress={() => navigation.navigate('StoreMain')}>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
       </View>

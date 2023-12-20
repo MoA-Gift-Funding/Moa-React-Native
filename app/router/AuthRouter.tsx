@@ -39,6 +39,13 @@ const AuthRouter = () => {
       {user?.level === 'REGULAR_MEMBER' && !process ? (
         <>
           <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="StoreMain"
             component={StoreMain}
             options={{header: () => <StoreHeader />}}
@@ -52,13 +59,6 @@ const AuthRouter = () => {
             name="ItemList"
             component={ItemList}
             options={{header: () => <TitleHeader />}}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              headerShown: false,
-            }}
           />
           <Stack.Screen
             name="NewFund"
