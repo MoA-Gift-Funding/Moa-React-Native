@@ -9,8 +9,10 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import {autoCurrency} from '../../utils/regex';
 import NextButton from '../../components/button/NextButton';
+// import TextEditor from '../../components/text/TextEditor';
 
-const NewFund = ({navigation}) => {
+const NewFund = ({navigation, route}) => {
+  const {id} = route.params;
   const [deadline, setDeadline] = useState(dayjs());
   const [dateError, setDateError] = useState(false);
   const {
@@ -23,7 +25,7 @@ const NewFund = ({navigation}) => {
     defaultValues: {
       title: '',
       description: '',
-      priceLimit: '',
+      upperPriceLimit: '',
       deadline: '',
     },
   });
@@ -34,6 +36,7 @@ const NewFund = ({navigation}) => {
     const userInputs = getValues();
     navigation.navigate('NewFundShipping', {
       headerTitle: '펀딩개설하기',
+      id,
       ...userInputs,
     });
   };
@@ -100,16 +103,16 @@ const NewFund = ({navigation}) => {
           </View>
           <View className="mt-2">
             <TextInputGroupWhite
-              name="priceLimit"
+              name="upperPriceLimit"
               label="1인당 펀딩 최대 가능 금액"
               control={control}
-              error={errors.priceLimit}
+              error={errors.upperPriceLimit}
               desc="펀딩에 참여할 친구의 1인당 최대 펀딩 가능 금액을 설정할 수 있어요. 입력 칸을 비워두면 금액 제한 없이 펀딩이 가능해요."
               keyboardType={'number-pad'}
-              regex={autoCurrency}
+              // regex={autoCurrency}
               rules={{
                 minLength: {
-                  value: 6,
+                  value: 5,
                   message: '최소 1만원부터 설정 가능해요.',
                 },
                 maxLength: {

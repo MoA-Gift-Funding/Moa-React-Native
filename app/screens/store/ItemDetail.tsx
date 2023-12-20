@@ -119,6 +119,7 @@ const ItemDetail = ({route, navigation}) => {
               navigation.navigate('NewFund', {
                 headerTitle: '펀딩개설하기',
                 search: false,
+                id,
               })
             }
           />

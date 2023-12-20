@@ -19,9 +19,10 @@ import {faClose} from '@fortawesome/free-solid-svg-icons';
 import NextButton from '../../components/button/NextButton';
 import TextRegular from '../../components/text/TextRegular';
 import LoadingBar from '../../components/bar/LoadingBar';
+import {createFund} from '../../apis/fund/fund';
 
 const NewFundShipping = ({navigation, route}) => {
-  const params = route.params;
+  const {deadline, description, upperPriceLimit, title, id} = route.params;
   const [onPostModal, setOnPostModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -33,12 +34,42 @@ const NewFundShipping = ({navigation, route}) => {
   } = useForm({
     defaultValues: {
       recipientName: '',
-      roadAddr: '',
-      detailedAddr: '',
-      recipientMobile: '',
+      roadAddress: '',
+      detailedAddress: '',
+      phoneNumber: '',
       zonecode: 0,
     },
   });
+  const {recipientName, roadAddress, detailedAddress, phoneNumber, zonecode} =
+    getValues();
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const result = await createFund({
+        deadline,
+        description,
+        upperPriceLimit,
+        title,
+        productId: id,
+        recipientName,
+        roadAddress,
+        detailedAddress,
+        phoneNumber,
+        zonecode,
+        agreement: 'Y',
+        userId: 2,
+      });
+      if (result.status === 'OK') {
+        return navigation.navigate('FundCompleted');
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+    // navigation.navigate('FundCompleted');
+  };
+
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full flex flex-col justify-between"
@@ -78,10 +109,10 @@ const NewFundShipping = ({navigation, route}) => {
           </View>
           <View className="mt-4">
             <TextInputGroupWhite
-              name="recipientMobile"
+              name="phoneNumber"
               label="연락처"
               control={control}
-              error={errors.recipientMobile}
+              error={errors.phoneNumber}
               placeholder="받는 사람 연락처를 입력해주세요."
               regex={autoHyphenPhoneNumber}
               rules={{
@@ -103,22 +134,25 @@ const NewFundShipping = ({navigation, route}) => {
               style="text-Body-1 text-black leading-Body-1 mb-1"
               title="배송지 주소"
             />
-            <Pressable onPress={() => setOnPostModal(true)}>
+            <Pressable
+              className="w-[312px] h-[56px] justify-center placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+              onPress={() => setOnPostModal(true)}>
               <TextInput
                 placeholder="주소 검색하기"
                 editable={false}
-                value={getValues().roadAddr}
-                className="w-[312px] h-[56px] placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+                value={roadAddress}
+                className="placeholder:text-[#858585] text-Body-1"
+                pointerEvents="none"
               />
             </Pressable>
-            {getValues().roadAddr && (
+            {roadAddress && (
               <>
                 <TextInputGroupWhite
-                  name="detailedAddr"
+                  name="detailedAddress"
                   label=""
                   custom="-mt-4"
                   control={control}
-                  error={errors.detailedAddr}
+                  error={errors.detailedAddress}
                   placeholder="상세 주소를 입력해주세요."
                   rules={{
                     required: '상세 주소를 입력해주세요.',
@@ -146,7 +180,7 @@ const NewFundShipping = ({navigation, route}) => {
                     style={{width: 320, height: 470}}
                     jsOptions={{animation: true}}
                     onSelected={data => {
-                      setValue('roadAddr', data.roadAddress);
+                      setValue('roadAddress', data.roadAddress);
                       setValue('zonecode', data.zonecode);
                       setOnPostModal(false);
                       setIsLoading(false);
@@ -162,7 +196,7 @@ const NewFundShipping = ({navigation, route}) => {
       <KeyboardAvoidingView className="mb-8">
         <NextButton
           title="펀딩 개설하기"
-          onSubmit={() => navigation.navigate('FundCompleted')}
+          onSubmit={onSubmit}
           handleSubmit={handleSubmit}
         />
       </KeyboardAvoidingView>
