@@ -5,8 +5,6 @@ export const createFund = async (params: Fund) => {
   try {
     const result = await Axios.post('/funding/create-funding', params)
       .then(res => {
-        console.log('hi');
-
         console.log(res.data);
         return res.data;
       })
