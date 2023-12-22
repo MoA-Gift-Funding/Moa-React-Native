@@ -1,35 +1,13 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import ProgressBar from '../../components/bar/ProgressBar';
-dayjs.extend(duration);
+import Countdown from 'react-countdown';
+import {twoDP} from '../../utils/regex';
 
 const FundDesc = () => {
-  const [time, setTime] = useState<string>();
-  const endTime = dayjs('2023-12-31T00:00:00');
-
-  useMemo(() => {
-    let currentTime = dayjs();
-    let diffTime = endTime.unix() - currentTime.unix();
-
-    let duration = dayjs.duration(diffTime * 1000, 'milliseconds');
-    let interval = 1000;
-    const twoDP = (n: number) => (n > 9 ? n : '0' + n);
-
-    setInterval(function () {
-      duration = dayjs.duration(
-        duration.asMilliseconds() - interval,
-        'milliseconds',
-      );
-      let timestamp = `${duration.days() && duration.days() + '일 '}${twoDP(
-        duration.hours(),
-      )}:${twoDP(duration.minutes())}:${twoDP(duration.seconds())}`;
-      setTime(timestamp);
-    }, interval);
-  }, [endTime]);
+  const endTime = '2023-12-31T00:00:00';
   return (
     <View className="flex items-center bg-white">
       <View className="w-[312px]">
@@ -50,9 +28,27 @@ const FundDesc = () => {
               title="남은 시간"
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
-            <TextBold
-              title={time}
-              style="text-Gray-10 text-Heading-3 leading-Heading-3"
+            <Countdown
+              date={endTime}
+              renderer={({days, hours, minutes, seconds, completed}) => {
+                if (completed) {
+                  return (
+                    <TextBold
+                      title={'00:00:00'}
+                      style="text-Gray-10 text-Heading-3 leading-Heading-3"
+                    />
+                  );
+                } else {
+                  return (
+                    <TextBold
+                      title={`${days}일 ${twoDP(hours)}:${minutes}:${twoDP(
+                        seconds,
+                      )}`}
+                      style="text-Gray-10 text-Heading-3 leading-Heading-3"
+                    />
+                  );
+                }
+              }}
             />
           </View>
           <View className="mt-4">

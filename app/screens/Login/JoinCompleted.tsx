@@ -1,11 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Image, SafeAreaView, View} from 'react-native';
-import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import Config from 'react-native-config';
-import ProgressBar from '../../components/bar/ProgressBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUser} from '../../apis/user/User';
 import TextBold from '../../components/text/TextBold';

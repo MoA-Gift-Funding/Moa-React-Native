@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {Image, Pressable, ScrollView, View} from 'react-native';
 import LoadingBar from '../../components/bar/LoadingBar';
-import ItemDesc from '../store/ItemDesc';
 import cls from 'classnames';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import TextRegular from '../../components/text/TextRegular';
-import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import FundDesc from './FundDesc';
 
@@ -50,7 +48,7 @@ const FundDetail = ({navigation}) => {
             <TextSemiBold title="메세지" style="text-Gray-10" />
           </Pressable>
         </View>
-        <View className="w-full py-6 mx-6">
+        <View className="w-full py-6">
           {description && (
             <>
               <TextRegular
@@ -60,7 +58,7 @@ const FundDetail = ({navigation}) => {
               <Pressable
                 className="w-full border-y-[1px] border-Gray-02 flex items-center"
                 onPress={() => setCaution(!caution)}>
-                <View className="w-full h-[60px] flex flex-row justify-between items-center">
+                <View className="w-[312px] h-[60px] flex flex-row justify-between items-center">
                   <TextSemiBold
                     title="주의 사항"
                     style="text-Body-2 text-Gray-10"
@@ -73,7 +71,7 @@ const FundDetail = ({navigation}) => {
                   <View className="w-full bg-Gray-02 flex items-center py-4">
                     <TextRegular
                       title="어쩌저저쩌저"
-                      style="text-Body-2 text-Gray-06 leading-Body-2"
+                      style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                     />
                   </View>
                 )}

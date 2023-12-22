@@ -18,3 +18,5 @@ export const autoCurrency = (money: string | number) => {
   const reformed = Number(money).toLocaleString();
   return reformed;
 };
+
+export const twoDP = (n: number) => (n > 9 ? n : '0' + n);

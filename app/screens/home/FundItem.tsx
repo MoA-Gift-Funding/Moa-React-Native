@@ -1,34 +1,13 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 import {Image, View} from 'react-native';
 import {Circle, Path, Svg} from 'react-native-svg';
 import TextRegular from '../../components/text/TextRegular';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-dayjs.extend(duration);
+import Countdown from 'react-countdown';
+import {twoDP} from '../../utils/regex';
 
 const FundItem = () => {
-  const [time, setTime] = useState<string>();
-  const endTime = dayjs('2023-12-31T00:00:00');
+  const endTime = '2023-12-31T00:00:00';
 
-  useMemo(() => {
-    let currentTime = dayjs();
-    let diffTime = endTime.unix() - currentTime.unix();
-
-    let duration = dayjs.duration(diffTime * 1000, 'milliseconds');
-    let interval = 1000;
-    const twoDP = (n: number) => (n > 9 ? n : '0' + n);
-
-    setInterval(function () {
-      duration = dayjs.duration(
-        duration.asMilliseconds() - interval,
-        'milliseconds',
-      );
-      let timestamp = `${duration.days() && duration.days() + '일 '}${twoDP(
-        duration.hours(),
-      )}:${twoDP(duration.minutes())}:${twoDP(duration.seconds())}`;
-      setTime(timestamp);
-    }, interval);
-  }, [endTime]);
   return (
     <View className="flex flex-col">
       <View className="relative rounded-lg mr-2">
@@ -53,7 +32,28 @@ const FundItem = () => {
             title="마감 시간"
             style="text-white mr-1 text-Detail-1"
           />
-          <TextRegular title={time} style="text-white mr-1 text-Detail-1" />
+          <Countdown
+            date={endTime}
+            renderer={({days, hours, minutes, seconds, completed}) => {
+              if (completed) {
+                return (
+                  <TextRegular
+                    title={'00:00:00'}
+                    style="text-white mr-1 text-Detail-1"
+                  />
+                );
+              } else {
+                return (
+                  <TextRegular
+                    title={`${days}일 ${twoDP(hours)}:${minutes}:${twoDP(
+                      seconds,
+                    )}`}
+                    style="text-white mr-1 text-Detail-1"
+                  />
+                );
+              }
+            }}
+          />
         </View>
       </View>
       <View className="w-[170px]">

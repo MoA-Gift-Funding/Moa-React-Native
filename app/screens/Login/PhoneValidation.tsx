@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
+import {twoDP} from '../../utils/regex';
 
 const PhoneValidation = ({navigation}) => {
   const [sent, setSent] = useState(false);
@@ -140,7 +141,7 @@ const PhoneValidation = ({navigation}) => {
                     onPress={handleSubmit(onSubmit)}>
                     <TextSemiBold
                       style="text-white text-Body-1 ml-[14px]"
-                      title={`${minutes}:${seconds}`}
+                      title={`${twoDP(minutes)}:${twoDP(seconds)}`}
                     />
                   </Pressable>
                 );
