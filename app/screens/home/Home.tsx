@@ -7,8 +7,8 @@ import HomeBanner from './HomeBanner';
 import cls from 'classnames';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
-import ProgressBar from '../../components/bar/ProgressBar';
 import MyFund from './MyFund';
+import FundItem from './FundItem';
 
 export default function Home({navigation}) {
   const {
@@ -24,6 +24,7 @@ export default function Home({navigation}) {
     setInProcess(false);
     setCompleted(true);
   };
+
   return (
     <>
       <ScrollView className="h-full">
@@ -74,11 +75,50 @@ export default function Home({navigation}) {
           <ScrollView
             className="py-4 pl-6 flex flex-row"
             horizontal={true}
-            showsHorizontalScrollIndicator={false}>
+            showsHorizontalScrollIndicator={true}>
             <MyFund />
             <MyFund />
             <MyFund />
           </ScrollView>
+        </View>
+        <View className="bg-white my-4 py-10 flex flex-col">
+          <View className="ml-6">
+            <View className="flex flex-row">
+              <TextSemiBold title="현재 " style="text-Heading-4" />
+              <TextSemiBold
+                title="진행중"
+                style="text-Heading-4 text-Main-01"
+              />
+              <TextSemiBold title="인 펀딩" style="text-Heading-4" />
+            </View>
+            <View className="flex flex-row gap-1 mt-6">
+              <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="전체" style="text-white" />
+              </Pressable>
+              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="생일" style="text-Main-01" />
+              </Pressable>
+              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="집들이" style="text-Main-01" />
+              </Pressable>
+            </View>
+            <ScrollView
+              className="flex flex-row py-6"
+              horizontal={true}
+              showsHorizontalScrollIndicator={true}>
+              <FundItem />
+              <FundItem />
+              <FundItem />
+            </ScrollView>
+          </View>
+          <View className="mt-10 bg-white rounded-xl">
+            <Image
+              className="w-full h-[136px] rounded-xl"
+              source={{
+                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703226051/moa-banner2_atc4su.png',
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
       <Footer screen="Home" />
