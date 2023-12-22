@@ -23,11 +23,9 @@ const FundItem = () => {
         duration.asMilliseconds() - interval,
         'milliseconds',
       );
-      let timestamp = `${
-        duration.days() && duration.days() + '일 '
-      }${duration.hours()}:${twoDP(duration.minutes())}:${twoDP(
-        duration.seconds(),
-      )}`;
+      let timestamp = `${duration.days() && duration.days() + '일 '}${twoDP(
+        duration.hours(),
+      )}:${twoDP(duration.minutes())}:${twoDP(duration.seconds())}`;
       setTime(timestamp);
     }, interval);
   }, [endTime]);

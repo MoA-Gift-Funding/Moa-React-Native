@@ -3,12 +3,15 @@ import {Image, Pressable, View} from 'react-native';
 import TextBold from '../../components/text/TextBold';
 import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
+import {useNavigation} from '@react-navigation/native';
 
 const MyFund = () => {
+  const navigation = useNavigation();
   return (
     <Pressable
       className="w-[285px] rounded-2xl mr-4 mb-2"
-      style={{elevation: 3, backgroundColor: 'transparent'}}>
+      style={{elevation: 3, backgroundColor: 'transparent'}}
+      onPress={() => navigation.navigate('FundDetail')}>
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <TextBold title="D-8" style="text-Body-1" />

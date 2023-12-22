@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Pressable, SafeAreaView, View} from 'react-native';
-import {Circle, Path, Rect, Svg} from 'react-native-svg';
+import {Path, Svg} from 'react-native-svg';
 
 const StoreHeader = ({navigation}) => {
   return (

@@ -19,6 +19,7 @@ import TitleHeader from '../components/header/TitleHeader';
 import NewFund from '../screens/funding/NewFund';
 import NewFundShipping from '../screens/funding/NewFundShipping';
 import FundCompleted from '../screens/funding/FundCompleted';
+import FundDetail from '../screens/funding/FundDetail';
 
 const AuthRouter = () => {
   const {
@@ -74,6 +75,11 @@ const AuthRouter = () => {
             name="FundCompleted"
             component={FundCompleted}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FundDetail"
+            component={FundDetail}
+            options={{header: () => <StoreHeader />}}
           />
         </>
       ) : (
