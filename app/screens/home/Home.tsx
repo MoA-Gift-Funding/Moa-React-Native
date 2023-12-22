@@ -82,35 +82,30 @@ export default function Home({navigation}) {
           </ScrollView>
         </View>
         <View className="bg-white my-4 py-10 flex flex-col">
-          <View className="ml-6">
-            <View className="flex flex-row">
-              <TextSemiBold title="현재 " style="text-Heading-4" />
-              <TextSemiBold
-                title="진행중"
-                style="text-Heading-4 text-Main-01"
-              />
-              <TextSemiBold title="인 펀딩" style="text-Heading-4" />
-            </View>
-            <View className="flex flex-row gap-1 mt-6">
-              <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-                <TextRegular title="전체" style="text-white" />
-              </Pressable>
-              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-                <TextRegular title="생일" style="text-Main-01" />
-              </Pressable>
-              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-                <TextRegular title="집들이" style="text-Main-01" />
-              </Pressable>
-            </View>
-            <ScrollView
-              className="flex flex-row py-6"
-              horizontal={true}
-              showsHorizontalScrollIndicator={true}>
-              <FundItem />
-              <FundItem />
-              <FundItem />
-            </ScrollView>
+          <View className="flex flex-row ml-6">
+            <TextSemiBold title="현재 " style="text-Heading-4" />
+            <TextSemiBold title="진행중" style="text-Heading-4 text-Main-01" />
+            <TextSemiBold title="인 펀딩" style="text-Heading-4" />
           </View>
+          <View className="flex flex-row gap-1 mt-6 ml-6">
+            <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+              <TextRegular title="전체" style="text-white" />
+            </Pressable>
+            <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+              <TextRegular title="생일" style="text-Main-01" />
+            </Pressable>
+            <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+              <TextRegular title="집들이" style="text-Main-01" />
+            </Pressable>
+          </View>
+          <ScrollView
+            className="flex flex-row py-6 px-6"
+            horizontal={true}
+            showsHorizontalScrollIndicator={true}>
+            <FundItem />
+            <FundItem />
+            <FundItem />
+          </ScrollView>
           <View className="mt-10 bg-white rounded-xl">
             <Image
               className="w-full h-[136px] rounded-xl"

@@ -64,7 +64,7 @@ export default function Login({navigation}) {
           <LoginButton
             buttonStyle="bg-white border-Gray-03 border-2"
             textStyle="text-Gray-08"
-            title="구글로 계속하기"
+            title="애플로 계속하기"
           />
         </View>
       </View>
