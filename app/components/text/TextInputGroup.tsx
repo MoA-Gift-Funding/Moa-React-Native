@@ -19,6 +19,9 @@ interface TextInputGroupProps {
   regex?: any;
   editable?: boolean;
   keyboardType?: KeyboardTypeOptions;
+  multiline?: boolean;
+  custom?: string;
+  textAlignVertical?: 'top' | 'auto' | 'bottom' | 'center';
 }
 
 const TextInputGroup: React.FC<TextInputGroupProps> = ({
@@ -31,6 +34,9 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
   regex,
   editable,
   keyboardType,
+  multiline,
+  custom,
+  textAlignVertical,
 }) => {
   return (
     <>
@@ -43,9 +49,11 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
             editable={editable}
-            className="w-[312px] h-[56px] rounded-md px-3 text-Body-1 text-black placeholder:text-[#858585] bg-Gray-02"
+            className={`w-[312px] h-[56px] rounded-md px-3 text-Body-1 text-black placeholder:text-[#858585] bg-Gray-02 ${custom}`}
             placeholder={placeholder}
             onBlur={onBlur}
+            textAlignVertical={textAlignVertical}
+            multiline={multiline}
             onChangeText={text => {
               let formattedText = text;
               if (rules?.maxLength && text.length > rules.maxLength.value) {

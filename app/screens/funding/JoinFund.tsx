@@ -11,7 +11,7 @@ import TextRegular from '../../components/text/TextRegular';
 import {Controller, useForm} from 'react-hook-form';
 import NextButton from '../../components/button/NextButton';
 
-const JoinFund = () => {
+const JoinFund = ({navigation}) => {
   const {
     control,
     handleSubmit,
@@ -73,21 +73,21 @@ const JoinFund = () => {
           <Pressable
             className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
             onPress={() =>
-              setValue('price', String(Number(getValues().price) + 5000))
+              setValue('price', String(Number(getValues().price || 0) + 5000))
             }>
             <TextRegular title="+5천원" style="text-Gray-06 text-Body-2" />
           </Pressable>
           <Pressable
             className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
             onPress={() =>
-              setValue('price', String(Number(getValues().price) + 10000))
+              setValue('price', String(Number(getValues().price || 0) + 10000))
             }>
             <TextRegular title="+1만원" style="text-Gray-06 text-Body-2" />
           </Pressable>
           <Pressable
             className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
             onPress={() =>
-              setValue('price', String(Number(getValues().price) + 50000))
+              setValue('price', String(Number(getValues().price || 0) + 50000))
             }>
             <TextRegular title="+5만원" style="text-Gray-06 text-Body-2" />
           </Pressable>
@@ -105,7 +105,9 @@ const JoinFund = () => {
         <NextButton
           title="다음"
           handleSubmit={handleSubmit}
-          onSubmit={() => {}}
+          onSubmit={() =>
+            navigation.navigate('JoinFundMSG', {price: getValues().price})
+          }
         />
       </KeyboardAvoidingView>
     </KeyboardAvoidingView>

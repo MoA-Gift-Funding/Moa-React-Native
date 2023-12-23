@@ -21,6 +21,7 @@ import NewFundShipping from '../screens/funding/NewFundShipping';
 import FundCompleted from '../screens/funding/FundCompleted';
 import FundDetail from '../screens/funding/FundDetail';
 import JoinFund from '../screens/funding/JoinFund';
+import JoinFundMSG from '../screens/funding/JoinFundMSG';
 
 const AuthRouter = () => {
   const {
@@ -85,6 +86,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="JoinFund"
             component={JoinFund}
+            options={{header: () => <BackHeader />}}
+          />
+          <Stack.Screen
+            name="JoinFundMSG"
+            component={JoinFundMSG}
             options={{header: () => <BackHeader />}}
           />
         </>

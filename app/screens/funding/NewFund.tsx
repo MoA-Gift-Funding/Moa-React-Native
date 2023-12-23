@@ -7,7 +7,6 @@ import TextRegular from '../../components/text/TextRegular';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import {autoCurrency} from '../../utils/regex';
 import NextButton from '../../components/button/NextButton';
 // import TextEditor from '../../components/text/TextEditor';
 
