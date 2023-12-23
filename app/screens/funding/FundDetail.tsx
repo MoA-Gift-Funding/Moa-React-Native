@@ -8,7 +8,7 @@ import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import TextRegular from '../../components/text/TextRegular';
 import {useForm} from 'react-hook-form';
 import FundDesc from './FundDesc';
-import FundComment from './FundComment';
+import FundMessage from './FundMessage';
 
 const FundDetail = ({navigation}) => {
   const [loading, setLoading] = useState(false);
@@ -93,9 +93,9 @@ const FundDetail = ({navigation}) => {
           )}
           {message && (
             <View>
-              <FundComment />
-              <FundComment />
-              <FundComment />
+              <FundMessage />
+              <FundMessage />
+              <FundMessage />
             </View>
           )}
         </View>
@@ -107,7 +107,8 @@ const FundDetail = ({navigation}) => {
         <Pressable
           className={
             'h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center'
-          }>
+          }
+          onPress={() => navigation.navigate('JoinFund')}>
           <TextSemiBold
             style="text-white text-Body-1 ml-[14px]"
             title="선물 펀딩하기"

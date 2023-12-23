@@ -20,6 +20,7 @@ import NewFund from '../screens/funding/NewFund';
 import NewFundShipping from '../screens/funding/NewFundShipping';
 import FundCompleted from '../screens/funding/FundCompleted';
 import FundDetail from '../screens/funding/FundDetail';
+import JoinFund from '../screens/funding/JoinFund';
 
 const AuthRouter = () => {
   const {
@@ -80,6 +81,11 @@ const AuthRouter = () => {
             name="FundDetail"
             component={FundDetail}
             options={{header: () => <StoreHeader />}}
+          />
+          <Stack.Screen
+            name="JoinFund"
+            component={JoinFund}
+            options={{header: () => <BackHeader />}}
           />
         </>
       ) : (

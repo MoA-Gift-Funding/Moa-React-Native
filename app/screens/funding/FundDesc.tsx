@@ -41,9 +41,9 @@ const FundDesc = () => {
                 } else {
                   return (
                     <TextBold
-                      title={`${days}일 ${twoDP(hours)}:${minutes}:${twoDP(
-                        seconds,
-                      )}`}
+                      title={`${days}일 ${twoDP(hours)}:${twoDP(
+                        minutes,
+                      )}:${twoDP(seconds)}`}
                       style="text-Gray-10 text-Heading-3 leading-Heading-3"
                     />
                   );

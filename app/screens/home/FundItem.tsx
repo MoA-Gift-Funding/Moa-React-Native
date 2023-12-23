@@ -45,7 +45,7 @@ const FundItem = () => {
               } else {
                 return (
                   <TextRegular
-                    title={`${days}일 ${twoDP(hours)}:${minutes}:${twoDP(
+                    title={`${days}일 ${twoDP(hours)}:${twoDP(minutes)}:${twoDP(
                       seconds,
                     )}`}
                     style="text-white mr-1 text-Detail-1"

@@ -3,7 +3,7 @@ import {Image, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 
-const FundComment = () => {
+const FundMessage = () => {
   return (
     <View className="flex flex-col border-b-2 border-Gray-01 py-4 px-6">
       <View className="flex flex-row items-center">
@@ -27,4 +27,4 @@ const FundComment = () => {
   );
 };
 
-export default FundComment;
+export default FundMessage;
