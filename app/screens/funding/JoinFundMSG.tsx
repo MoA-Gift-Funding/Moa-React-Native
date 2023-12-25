@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {KeyboardAvoidingView, Platform, Pressable, View} from 'react-native';
 import TextBold from '../../components/text/TextBold';
 import TextRegular from '../../components/text/TextRegular';
-import TextInputGroupWhite from '../../components/text/textInputGroupWhite';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import TextInputGroup from '../../components/text/TextInputGroup';
