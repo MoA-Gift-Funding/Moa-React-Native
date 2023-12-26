@@ -13,7 +13,7 @@ import TextRegular from '../../components/text/TextRegular';
 import {Controller, useForm} from 'react-hook-form';
 import NextButton from '../../components/button/NextButton';
 
-const JoinFund = ({navigation}) => {
+const JoinFund = ({navigation, route}) => {
   const {
     control,
     handleSubmit,
@@ -41,6 +41,10 @@ const JoinFund = ({navigation}) => {
           <TextBold
             title="얼마를 더하시겠어요?"
             style="text-Heading-3 leading-Heading-3"
+          />
+          <TextRegular
+            title="펀딩 완료까지 남은 금액안에서 펀딩을 할 수 있어요."
+            style="text-Detail-1 leading-Detail-1 text-Gray-06 mt-3"
           />
           <View className="mt-16">
             <View>
@@ -79,7 +83,7 @@ const JoinFund = ({navigation}) => {
                 />
               )}
             </View>
-            <View className="flex flex-row justify-around mt-2">
+            <View className="flex flex-row justify-around mt-2 w-[312px]">
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
                 onPress={() =>
@@ -126,7 +130,10 @@ const JoinFund = ({navigation}) => {
             title="다음"
             handleSubmit={handleSubmit}
             onSubmit={() =>
-              navigation.navigate('JoinFundMSG', {price: getValues().price})
+              navigation.navigate('JoinFundMSG', {
+                price: getValues().price,
+                ...route.params,
+              })
             }
           />
         </View>
