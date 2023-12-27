@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, Pressable, ScrollView, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  Share,
+  View,
+} from 'react-native';
 import LoadingBar from '../../components/bar/LoadingBar';
 import cls from 'classnames';
 import TextSemiBold from '../../components/text/TextSemiBold';
@@ -101,7 +108,19 @@ const FundDetail = ({navigation}) => {
         </View>
       </View>
       <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
-        <Pressable className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg">
+        <Pressable
+          className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
+          onPress={async () => {
+            Platform.OS === 'ios'
+              ? Share.share({
+                  url: 'https://www.giftmoa.co.kr/',
+                  message: '이 상품 어때요?',
+                })
+              : Share.share({
+                  title: '이 상품 어때요?',
+                  message: 'https://www.giftmoa.co.kr/',
+                });
+          }}>
           <TextSemiBold title="공유" style="text-white text-Body-1" />
         </Pressable>
         <Pressable
