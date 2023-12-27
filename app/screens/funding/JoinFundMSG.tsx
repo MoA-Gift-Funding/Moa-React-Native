@@ -86,7 +86,7 @@ const JoinFundMSG = ({navigation, route}) => {
             </View>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView className="py-8">
+        <KeyboardAvoidingView className="py-8 flex justify-center items-center">
           <NextButton
             title="다음"
             onSubmit={() =>

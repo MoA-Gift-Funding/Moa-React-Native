@@ -125,7 +125,7 @@ const JoinFund = ({navigation, route}) => {
             </View>
           </View>
         </View>
-        <View className="mb-8">
+        <View className="mb-8 flex justify-center items-center">
           <NextButton
             title="다음"
             handleSubmit={handleSubmit}
