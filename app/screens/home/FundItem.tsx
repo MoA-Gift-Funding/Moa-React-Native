@@ -1,19 +1,36 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import {Circle, Path, Svg} from 'react-native-svg';
 import TextRegular from '../../components/text/TextRegular';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../utils/regex';
+import {useNavigation} from '@react-navigation/native';
+import {FundingItem} from '../../types/Funding';
 
-const FundItem = () => {
+const FundItem = ({item}: {item: FundingItem}) => {
+  const {
+    title,
+    deadline,
+    fundRate,
+    remainingAmount,
+    terminated,
+    userId,
+    profileImage,
+    userName,
+    productId,
+    productImage,
+  } = item;
+  const navigation = useNavigation();
   const endTime = '2023-12-31T00:00:00';
 
   return (
-    <View className="flex flex-col">
+    <Pressable
+      className="flex flex-col"
+      onPress={() => navigation.navigate('FundDetail')}>
       <View className="relative rounded-lg mr-2">
         <Image
           source={{
-            uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
+            uri: productImage,
           }}
           className="w-[170px] h-[170px] rounded-lg"
         />
@@ -33,7 +50,7 @@ const FundItem = () => {
             style="text-white mr-1 text-Detail-1"
           />
           <Countdown
-            date={endTime}
+            date={deadline}
             renderer={({days, hours, minutes, seconds, completed}) => {
               if (completed) {
                 return (
@@ -60,19 +77,19 @@ const FundItem = () => {
         <View className="flex flex-row items-center mt-3">
           <Image
             source={{
-              uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
+              uri: profileImage,
             }}
             className="w-[25px] h-[25px] rounded-full"
           />
-          <TextRegular title="배수지" style="text-Body-1 ml-2" />
+          <TextRegular title={userName} style="text-Body-1 ml-2" />
         </View>
         <TextRegular
-          title="내 30번째 생일 선물은 안녕핫메요이ㅓ댜ㅐㅓ"
+          title={title}
           numberOfLines={1}
           style="text-Body-2 mt-1 text-ellipsis "
         />
       </View>
-    </View>
+    </Pressable>
   );
 };
 

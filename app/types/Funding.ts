@@ -27,3 +27,33 @@ export interface Fund {
   deadline: string;
   agreement: 'Y';
 }
+
+export interface FundingItem {
+  id: number;
+  title: string;
+  deadline: string;
+
+  fundRate: number;
+  remainingAmount: string;
+  terminated: string;
+
+  userId: number;
+  profileImage: string;
+  userName: string;
+
+  productId: number;
+  productImage: string;
+}
+
+export const defaultFundingItem = {
+  title: '',
+  deadline: '',
+  fundRate: '',
+  remainingAmount: '',
+  terminated: '',
+  userId: '',
+  profileImage: '',
+  userName: '',
+  productId: '',
+  productImage: '',
+};

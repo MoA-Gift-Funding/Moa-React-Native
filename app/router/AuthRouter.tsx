@@ -44,11 +44,6 @@ const AuthRouter = () => {
       {user?.level === 'REGULAR_MEMBER' && !process ? (
         <>
           <Stack.Screen
-            name="JoinFundCompleted"
-            component={JoinFundCompleted}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
             name="Home"
             component={Home}
             options={{
@@ -104,6 +99,11 @@ const AuthRouter = () => {
             name="JoinFundPay"
             component={JoinFundPay}
             options={{header: () => <BackHeader />}}
+          />
+          <Stack.Screen
+            name="JoinFundCompleted"
+            component={JoinFundCompleted}
+            options={{headerShown: false}}
           />
         </>
       ) : (

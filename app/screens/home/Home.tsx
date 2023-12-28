@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  Share,
+  View,
+} from 'react-native';
 import {useUserContext} from '../../contexts/UserContext';
 import TextBold from '../../components/text/TextBold';
 import Footer from '../../components/footer/Footer';
@@ -102,18 +109,79 @@ export default function Home({navigation}) {
             className="flex flex-row py-6 px-6"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
-            <FundItem />
-            <FundItem />
-            <FundItem />
+            <FundItem
+              item={{
+                id: 1,
+                title: '내 30번째 생일은 에어팟으로 할래',
+                deadline: '2023-12-31T00:00:00',
+                fundRate: 80,
+                remainingAmount: '145000',
+                terminated: 'N',
+                userId: 1,
+                profileImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
+                userName: '배수지',
+                productId: 1,
+                productImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img2_dnu8xk.png',
+              }}
+            />
+
+            <FundItem
+              item={{
+                id: 1,
+                title: '졸업식 선물은 이걸루',
+                deadline: '2024-01-14T00:00:00',
+                fundRate: 60,
+                remainingAmount: '30000',
+                terminated: 'N',
+                userId: 1,
+                profileImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png',
+                userName: '루피',
+                productId: 1,
+                productImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
+              }}
+            />
+            <FundItem
+              item={{
+                id: 1,
+                title: '경민이 집들이 선물',
+                deadline: '2024-01-31T00:00:00',
+                fundRate: 20,
+                remainingAmount: '450000',
+                terminated: 'N',
+                userId: 1,
+                profileImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
+                userName: '주먹왕 랄프',
+                productId: 1,
+                productImage:
+                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1691491069/Cloudinary-React/h23ilj5zs2wveoeembqm.jpg',
+              }}
+            />
           </ScrollView>
-          <View className="mt-10 bg-white rounded-xl">
+          <Pressable
+            className="mt-10 bg-white rounded-xl"
+            onPress={async () => {
+              Platform.OS === 'ios'
+                ? Share.share({
+                    url: 'https://www.giftmoa.co.kr/',
+                    message: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                  })
+                : Share.share({
+                    title: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                    message: 'https://www.giftmoa.co.kr/',
+                  });
+            }}>
             <Image
               className="w-full h-[136px] rounded-xl"
               source={{
                 uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703226051/moa-banner2_atc4su.png',
               }}
             />
-          </View>
+          </Pressable>
         </View>
       </ScrollView>
       <Footer screen="Home" />
