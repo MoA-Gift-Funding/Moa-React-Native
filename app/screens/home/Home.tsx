@@ -83,9 +83,26 @@ export default function Home({navigation}) {
             className="py-4 pl-6 flex flex-row"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
-            <MyFund />
-            <MyFund />
-            <MyFund />
+            <MyFund
+              item={{
+                id: 1,
+                title: '내 30번째 생일은 에어팟으로 할래',
+                deadline: '2023-12-31T00:00:00',
+                fundRate: 80,
+                terminated: 'N',
+                fundedCount: 14,
+              }}
+            />
+            <MyFund
+              item={{
+                id: 1,
+                title: '경민이 결혼 집들이 선물',
+                deadline: '2024-01-31T00:00:00',
+                fundRate: 22,
+                terminated: 'N',
+                fundedCount: 2,
+              }}
+            />
           </ScrollView>
         </View>
         <View className="bg-white my-4 py-10 flex flex-col">
@@ -114,8 +131,6 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '내 30번째 생일은 에어팟으로 할래',
                 deadline: '2023-12-31T00:00:00',
-                fundRate: 80,
-                remainingAmount: '145000',
                 terminated: 'N',
                 userId: 1,
                 profileImage:
@@ -132,8 +147,6 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '졸업식 선물은 이걸루',
                 deadline: '2024-01-14T00:00:00',
-                fundRate: 60,
-                remainingAmount: '30000',
                 terminated: 'N',
                 userId: 1,
                 profileImage:
@@ -149,8 +162,6 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '경민이 집들이 선물',
                 deadline: '2024-01-31T00:00:00',
-                fundRate: 20,
-                remainingAmount: '450000',
                 terminated: 'N',
                 userId: 1,
                 profileImage:

@@ -11,8 +11,6 @@ const FundItem = ({item}: {item: FundingItem}) => {
   const {
     title,
     deadline,
-    fundRate,
-    remainingAmount,
     terminated,
     userId,
     profileImage,

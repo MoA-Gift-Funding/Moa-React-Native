@@ -33,8 +33,6 @@ export interface FundingItem {
   title: string;
   deadline: string;
 
-  fundRate: number;
-  remainingAmount: string;
   terminated: string;
 
   userId: number;
@@ -43,6 +41,17 @@ export interface FundingItem {
 
   productId: number;
   productImage: string;
+}
+
+export interface MyFundingItem {
+  id: number;
+  title: string;
+  deadline: string;
+
+  fundRate: number;
+  terminated: string;
+
+  fundedCount: number;
 }
 
 export const defaultFundingItem = {
