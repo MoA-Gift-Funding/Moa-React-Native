@@ -6,20 +6,29 @@ import ProgressBar from '../../components/bar/ProgressBar';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../utils/regex';
 
-const FundDesc = () => {
-  const endTime = '2023-12-31T00:00:00';
+const FundDesc = ({
+  userName,
+  title,
+  deadline,
+  fundRate,
+}: {
+  userName: string;
+  title: string;
+  deadline: string;
+  fundRate: number;
+}) => {
   return (
     <View className="flex items-center bg-white">
       <View className="w-[312px]">
         <View className="flex flex-col py-4 border-b-[1px] border-b-Gray-02 mt-2">
           <View>
             <TextRegular
-              title="그리니야님의 펀딩"
+              title={`${userName}님의 펀딩`}
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <TextBold
               numberOfLines={1}
-              title="경민이 집들이 선물 펀딩"
+              title={title}
               style="text-Gray-10 text-Heading-3 leading-Heading-3"
             />
           </View>
@@ -29,7 +38,7 @@ const FundDesc = () => {
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <Countdown
-              date={endTime}
+              date={deadline}
               renderer={({days, hours, minutes, seconds, completed}) => {
                 if (completed) {
                   return (
@@ -57,10 +66,15 @@ const FundDesc = () => {
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <TextBold
-              title="80%"
+              title={`${fundRate}%`}
               style="text-Gray-10 text-Heading-3 leading-Heading-3"
             />
-            <ProgressBar progress={'w-4/5'} />
+            <View className="w-full bg-Sub-01 rounded-full h-3 mt-2">
+              <View
+                className={'bg-Main-01 h-3 rounded-full'}
+                style={{width: `${fundRate}%`}}
+              />
+            </View>
           </View>
         </View>
       </View>

@@ -27,16 +27,47 @@ const FundDetail = ({navigation}) => {
     setMessage(!message);
   };
   const {handleSubmit} = useForm();
+  const data = {
+    id: 1,
+    title: '내 30번째 생일은 에어팟으로 할래',
+    deadline: '2023-12-31T00:00:00',
+    terminated: 'N',
+    userId: 1,
+    profileImage:
+      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
+    userName: '배수지',
+    productId: 1,
+    productImage:
+      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
+    fundRate: 24,
+    fundedCount: 14,
+  };
+  const {
+    title,
+    deadline,
+    terminated,
+    userId,
+    profileImage,
+    userName,
+    productId,
+    fundRate,
+    productImage,
+  } = data;
   return (
     <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
       {loading && <LoadingBar />}
       <Image
         className="w-[360px] h-[360px]"
         source={{
-          uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
+          uri: productImage,
         }}
       />
-      <FundDesc />
+      <FundDesc
+        userName={userName}
+        title={title}
+        deadline={deadline}
+        fundRate={fundRate}
+      />
       <View className="mt-4 bg-white flex flex-col items-center">
         <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
           <Pressable

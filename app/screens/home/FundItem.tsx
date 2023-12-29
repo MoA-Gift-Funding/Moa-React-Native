@@ -19,7 +19,6 @@ const FundItem = ({item}: {item: FundingItem}) => {
     productImage,
   } = item;
   const navigation = useNavigation();
-  const endTime = '2023-12-31T00:00:00';
 
   return (
     <Pressable

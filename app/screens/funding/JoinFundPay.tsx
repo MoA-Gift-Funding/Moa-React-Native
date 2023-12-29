@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Button, Pressable, ScrollView, View} from 'react-native';
+import {Alert, ScrollView, View} from 'react-native';
 import TextBold from '../../components/text/TextBold';
 import {
   AgreementWidget,

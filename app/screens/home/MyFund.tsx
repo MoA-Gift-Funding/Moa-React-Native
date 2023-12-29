@@ -55,7 +55,10 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
           />
         </View>
         <View className="w-full bg-Sub-01 rounded-full h-3 mt-2">
-          <View className={`bg-Main-01 h-3 rounded-full w-[${fundRate}%]`} />
+          <View
+            className={'bg-Main-01 h-3 rounded-full'}
+            style={{width: `${fundRate}%`}}
+          />
         </View>
       </View>
     </Pressable>
