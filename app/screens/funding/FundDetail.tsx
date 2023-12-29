@@ -19,11 +19,11 @@ import FundMessage from './FundMessage';
 
 const FundDetail = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [description, setDescription] = useState(true);
+  const [desc, setDesc] = useState(true);
   const [message, setMessage] = useState(false);
   const [caution, setCaution] = useState(true);
   const handleSelection = () => {
-    setDescription(!description);
+    setDesc(!desc);
     setMessage(!message);
   };
   const {handleSubmit} = useForm();
@@ -41,6 +41,8 @@ const FundDetail = ({navigation}) => {
       'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
     fundRate: 24,
     fundedCount: 14,
+    descriptions:
+      '펀딩 상세 소개글할지라도 피는 것이 어디 꽃 현저하게 이것이다. 청춘의 거선의 품었기 것이다. 것은 별과 대중을 피부가 기쁘며, 아름답고 칼이다. 이성은 방지하는 따뜻한 그리하였는가?있으며, 찾아 별과 우리는 무엇을 가진 쓸쓸하랴? 같으며, 불어 거친 어디 그리하였는가? 무엇을 인간에 날카로우나 바이며, 얼음에 만물은 싹이 봄바람이다.붙잡아 얼음과 얼음 것이 착목한는 영원히 위하여서. 꽃이 꽃이 귀는 끝에 것이다.',
   };
   const {
     title,
@@ -52,6 +54,7 @@ const FundDetail = ({navigation}) => {
     productId,
     fundRate,
     productImage,
+    descriptions,
   } = data;
   return (
     <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
@@ -73,7 +76,7 @@ const FundDetail = ({navigation}) => {
           <Pressable
             className={cls(
               'w-[156px] h-[48px] flex items-center justify-center',
-              {'border-b-Main-01 border-b-2': description},
+              {'border-b-Main-01 border-b-2': desc},
             )}
             onPress={handleSelection}>
             <TextSemiBold title="소개글" style="text-Gray-10" />
@@ -88,13 +91,11 @@ const FundDetail = ({navigation}) => {
           </Pressable>
         </View>
         <View className="w-full py-6">
-          {description && (
+          {desc && (
             <>
               <View className="pb-4 mx-6">
                 <TextRegular
-                  title={
-                    '펀딩 상세 소개글할지라도 피는 것이 어디 꽃 현저하게 이것이다. 청춘의 거선의 품었기 것이다. 것은 별과 대중을 피부가 기쁘며, 아름답고 칼이다. 이성은 방지하는 따뜻한 그리하였는가?있으며, 찾아 별과 우리는 무엇을 가진 쓸쓸하랴? 같으며, 불어 거친 어디 그리하였는가? 무엇을 인간에 날카로우나 바이며, 얼음에 만물은 싹이 봄바람이다.붙잡아 얼음과 얼음 것이 착목한는 영원히 위하여서. 꽃이 꽃이 귀는 끝에 것이다.'
-                  }
+                  title={descriptions}
                   style="text-Gray-06 text-Body-2 leading-Body-2"
                 />
               </View>
@@ -131,9 +132,28 @@ const FundDetail = ({navigation}) => {
           )}
           {message && (
             <View>
-              <FundMessage />
-              <FundMessage />
-              <FundMessage />
+              <FundMessage
+                message={
+                  '경민아 결혼 축하해 행복하게 살아랏! 오늘 파티하자요~ 도움이 되는 선물이었으면 좋겠다!'
+                }
+                name="루피"
+                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png"
+                createdAt="2023-12-30T00:00:00"
+              />
+              <FundMessage
+                message={'잘살아라'}
+                name="주먹왕랄프"
+                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png"
+                createdAt="2023-12-20T00:00:00"
+              />
+              <FundMessage
+                message={
+                  '경민아 결혼 축하해 행복하게 살아랏! 오늘 파티하자요~ 도움이 되는 선물이었으면 좋겠다!'
+                }
+                name="수지"
+                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png"
+                createdAt="2023-12-14T00:00:00"
+              />
             </View>
           )}
         </View>
