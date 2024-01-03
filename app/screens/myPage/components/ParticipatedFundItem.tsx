@@ -1,13 +1,13 @@
 import React from 'react';
 import {Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
+import {ParticipatedFund} from '../../../types/Funding';
 import TextRegular from '../../../components/text/TextRegular';
-import {CreatedFund} from '../../../types/Funding';
+import {autoCurrency} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 
-const CreatedFundItem = ({item}: {item: CreatedFund}) => {
-  const {id, title, deadline, fundRate, activated, productImage, fundedCount} =
-    item;
+const ParticipatedFundItem = ({item}: {item: ParticipatedFund}) => {
+  const {id, title, activated, productImage, paidDate, price, name} = item;
   const navigation = useNavigation();
   return (
     <Pressable
@@ -16,7 +16,10 @@ const CreatedFundItem = ({item}: {item: CreatedFund}) => {
         activated === 'Y' && navigation.navigate('FundDetail', {id});
       }}>
       <View className="flex flex-row justify-between items-center">
-        <TextSemiBold title={deadline} style="text-Body-2" />
+        <View className="flex flex-row">
+          <TextRegular title="[결제 일자]" style="text-Body-2" />
+          <TextSemiBold title={paidDate} style="text-Body-2 ml-2" />
+        </View>
         {activated === 'Y' ? (
           <View className="bg-Sub-01 rounded-xl px-2 h-[22px] flex flex-col justify-center items-center">
             <TextRegular title="펀딩중" style="text-Body-2 text-Main-01" />
@@ -39,13 +42,19 @@ const CreatedFundItem = ({item}: {item: CreatedFund}) => {
         <View className="ml-3">
           <TextRegular title={title} style="text-Detail-1" />
           <View className="flex flex-row mt-2 items-center">
+            <Image
+              source={{
+                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704288414/moa-gift-icon_r9mnc2.png',
+              }}
+              className="rounded-md w-[12px] h-[12px]"
+            />
+            <TextRegular title={name} style="text-Detail-1 ml-1" />
+            <TextRegular title="에게 " style="text-Detail-1" />
             <TextSemiBold
-              title={`${fundRate}%`}
+              title={`${autoCurrency(price)}원`}
               style="text-Main-01 text-Detail-1"
             />
-            <TextRegular title=" · " style="text-Detail-1" />
-            <TextSemiBold title={`${fundedCount}명`} style="text-Detail-1" />
-            <TextRegular title=" 참여" style="text-Detail-1" />
+            <TextRegular title=" 펀딩했어요" style="text-Detail-1" />
           </View>
         </View>
       </View>
@@ -53,4 +62,4 @@ const CreatedFundItem = ({item}: {item: CreatedFund}) => {
   );
 };
 
-export default CreatedFundItem;
+export default ParticipatedFundItem;

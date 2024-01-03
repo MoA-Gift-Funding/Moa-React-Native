@@ -67,17 +67,14 @@ export interface CreatedFund {
   fundedCount: number;
 }
 
-export interface ParticipatedFundItem {
+export interface ParticipatedFund {
   id: number;
   title: string;
-  deadline: string;
-
-  fundRate: number;
   activated: string;
 
   productImage: string;
 
-  fundedCount: number;
+  name: string;
 
   paidDate: string;
   price: string;

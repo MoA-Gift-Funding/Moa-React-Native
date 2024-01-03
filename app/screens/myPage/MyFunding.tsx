@@ -9,6 +9,7 @@ import {
 import TextSemiBold from '../../components/text/TextSemiBold';
 import cls from 'classnames';
 import CreatedFundItem from './components/CreatedFundItem';
+import ParticipatedFundItem from './components/ParticipatedFundItem';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
@@ -51,7 +52,7 @@ const MyFunding = () => {
                 item={{
                   id: 1,
                   title: '수지 생일 맞이 아디다스 삼발',
-                  deadline: '23.10.10',
+                  deadline: '24.01.10',
                   fundRate: 75,
                   activated: 'Y',
                   productImage:
@@ -62,12 +63,12 @@ const MyFunding = () => {
               <CreatedFundItem
                 item={{
                   id: 1,
-                  title: '수지 생일 맞이 아디다스 삼발',
-                  deadline: '23.10.10',
+                  title: '경민이 집들이 선물',
+                  deadline: '23.09.13',
                   fundRate: 75,
-                  activated: 'Y',
+                  activated: 'N',
                   productImage:
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
+                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1691491069/Cloudinary-React/h23ilj5zs2wveoeembqm.jpg',
                   fundedCount: 17,
                 }}
               />
@@ -75,28 +76,28 @@ const MyFunding = () => {
           )}
           {participatedFunds && (
             <>
-              <CreatedFundItem
+              <ParticipatedFundItem
                 item={{
                   id: 1,
-                  title: '수지 생일 맞이 아디다스 삼발',
-                  deadline: '23.10.10',
-                  fundRate: 75,
+                  title: 'HAPPY BIRTHDAY!!🎁',
                   activated: 'Y',
                   productImage:
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
-                  fundedCount: 17,
+                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img2_dnu8xk.png',
+                  paidDate: '23.10.10',
+                  price: '20000',
+                  name: '몽글이',
                 }}
               />
-              <CreatedFundItem
+              <ParticipatedFundItem
                 item={{
                   id: 1,
-                  title: '수지 생일 맞이 아디다스 삼발',
-                  deadline: '23.10.10',
-                  fundRate: 75,
-                  activated: 'Y',
+                  title: '올해 선물은 이걸로 부탁할게 친구들아!',
+                  activated: 'N',
                   productImage:
                     'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
-                  fundedCount: 17,
+                  paidDate: '23.10.10',
+                  price: '50000',
+                  name: '바보',
                 }}
               />
             </>
