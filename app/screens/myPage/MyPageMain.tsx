@@ -4,13 +4,14 @@ import {useUserContext} from '../../contexts/UserContext';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
-import MenuCategory from './MenuCategory';
-import MenuCategoryTop from './MenuCategoryTop';
+import MenuCategory from './components/MenuCategory';
+import MenuCategoryTop from './components/MenuCategoryTop';
 
-const MyPage = () => {
+const MyPageMain = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
+
   return (
     <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
       <SafeAreaView className="bg-white">
@@ -35,7 +36,11 @@ const MyPage = () => {
               className="w-[56px] h-[56px] rounded-full"
             />
             <View className="flex flex-col ml-3 justify-center">
-              <Pressable className="flex flex-row items-center">
+              <Pressable
+                className="flex flex-row items-center"
+                onPress={() =>
+                  navigation.navigate('MyPageDetail', {headerTitle: '내 정보'})
+                }>
                 <View className="w-[17px] h-[17px] bg-Kakao flex items-center justify-center rounded-sm">
                   <TextBold title="K" style="text-center text-Detail-1" />
                 </View>
@@ -79,4 +84,4 @@ const MyPage = () => {
     </ScrollView>
   );
 };
-export default MyPage;
+export default MyPageMain;

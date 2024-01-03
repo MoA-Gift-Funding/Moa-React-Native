@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
-import TextRegular from '../../components/text/TextRegular';
-import TextBold from '../../components/text/TextBold';
+import TextRegular from '../../../components/text/TextRegular';
+import TextBold from '../../../components/text/TextBold';
 
 const MenuCategoryTop = ({
   dataLength,
