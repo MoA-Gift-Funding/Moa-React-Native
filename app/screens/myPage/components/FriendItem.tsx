@@ -20,7 +20,7 @@ const FriendItem = ({
         <TextRegular title={name} style="text-Body-2" />
         <TextRegular
           title={`${birthday.substring(0, 2)}월 ${birthday.substring(2)}일`}
-          style="text-Body-1 text-Gray-06 mt-1"
+          style="text-Body-2 text-Gray-06 mt-1"
         />
       </View>
     </View>
