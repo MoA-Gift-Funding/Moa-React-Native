@@ -11,7 +11,7 @@ const FundItem = ({item}: {item: FundingItem}) => {
   const {
     title,
     deadline,
-    terminated,
+    activated,
     userId,
     profileImage,
     userName,

@@ -9,7 +9,7 @@ import {MyFundingItem} from '../../types/Funding';
 import {useUserContext} from '../../contexts/UserContext';
 
 const MyFund = ({item}: {item: MyFundingItem}) => {
-  const {title, deadline, fundRate, terminated, fundedCount} = item;
+  const {title, deadline, fundRate, activated, fundedCount} = item;
   const {
     userState: {user},
   } = useUserContext();

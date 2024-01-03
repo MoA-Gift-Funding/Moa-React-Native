@@ -26,6 +26,7 @@ import JoinFundPay from '../screens/funding/JoinFundPay';
 import JoinFundCompleted from '../screens/funding/JoinFundCompleted';
 import MyPageMain from '../screens/myPage/MyPageMain';
 import MyPageDetail from '../screens/myPage/MyPageDetail';
+import MyFunding from '../screens/myPage/MyFunding';
 
 const AuthRouter = () => {
   const {
@@ -115,6 +116,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="MyPageDetail"
             component={MyPageDetail}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="MyFunding"
+            component={MyFunding}
             options={{header: () => <TitleHeader />}}
           />
         </>

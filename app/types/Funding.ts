@@ -33,7 +33,7 @@ export interface FundingItem {
   title: string;
   deadline: string;
 
-  terminated: string;
+  activated: string;
 
   userId: number;
   profileImage: string;
@@ -49,9 +49,38 @@ export interface MyFundingItem {
   deadline: string;
 
   fundRate: number;
-  terminated: string;
+  activated: string;
 
   fundedCount: number;
+}
+
+export interface CreatedFund {
+  id: number;
+  title: string;
+  deadline: string;
+
+  fundRate: number;
+  activated: string;
+
+  productImage: string;
+
+  fundedCount: number;
+}
+
+export interface ParticipatedFundItem {
+  id: number;
+  title: string;
+  deadline: string;
+
+  fundRate: number;
+  activated: string;
+
+  productImage: string;
+
+  fundedCount: number;
+
+  paidDate: string;
+  price: string;
 }
 
 export const defaultFundingItem = {
