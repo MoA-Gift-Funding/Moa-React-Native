@@ -101,6 +101,35 @@ export const updateUser = async ({
   }
 };
 
+export const updateUserProfile = async ({
+  birthday,
+  birthyear,
+  nickname,
+}: {
+  birthday: string;
+  birthyear: string;
+  nickname: string;
+}) => {
+  try {
+    const user = await Axios.post('/users/update-user-info/1', {
+      nickname,
+      birthday,
+      birthyear,
+    })
+      .then(res => {
+        const user = res.data.data;
+        return user;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    return user;
+  } catch (error) {
+    console.error(error);
+    throw new Error('[ERROR] Network Error');
+  }
+};
+
 export const getUser = async () => {
   try {
     const accessToken = await AsyncStorage.getItem('accessToken');

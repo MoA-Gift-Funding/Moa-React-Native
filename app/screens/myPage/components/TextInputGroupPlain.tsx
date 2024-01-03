@@ -1,5 +1,5 @@
 import React from 'react';
-import TextRegular from './TextRegular';
+import TextRegular from '../../../components/text/TextRegular';
 import {KeyboardTypeOptions, TextInput, View} from 'react-native';
 import {
   Control,
@@ -8,7 +8,7 @@ import {
   FieldErrorsImpl,
   Merge,
 } from 'react-hook-form';
-import TextBold from './TextBold';
+import TextBold from '../../../components/text/TextBold';
 
 interface TextInputGroupProps {
   name: string;
@@ -42,7 +42,7 @@ const TextInputGroupPlain: React.FC<TextInputGroupProps> = ({
   client,
 }) => {
   return (
-    <View className="h-[58px] mb-2">
+    <View className="mb-4">
       <TextRegular style="text-Detail-1 text-Gray-06" title={label} />
       <Controller
         control={control}
@@ -50,7 +50,7 @@ const TextInputGroupPlain: React.FC<TextInputGroupProps> = ({
           ...rules,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <View className="flex flex-row items-center border-b-2 border-Gray-01 ">
+          <View className="flex flex-row items-center border-b-2 border-Gray-01 h-[40px]">
             {client && (
               <View className="w-[17px] h-[17px] bg-Kakao flex items-center justify-center rounded-sm mr-2">
                 <TextBold title="K" style="text-center text-Detail-1" />
