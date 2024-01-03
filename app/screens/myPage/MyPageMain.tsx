@@ -60,11 +60,17 @@ const MyPageMain = ({navigation}) => {
             <MenuCategoryTop
               dataLength={2}
               title="펀딩"
-              onPress={() => {
-                navigation.navigate('MyFunding', {headerTitle: '펀딩'});
-              }}
+              onPress={() =>
+                navigation.navigate('MyFunding', {headerTitle: '펀딩'})
+              }
             />
-            <MenuCategoryTop dataLength={102} title="친구" onPress={() => {}} />
+            <MenuCategoryTop
+              dataLength={102}
+              title="친구"
+              onPress={() =>
+                navigation.navigate('MyFriends', {headerTitle: '친구'})
+              }
+            />
             <MenuCategoryTop
               dataLength={53}
               title="메세지"

@@ -16,10 +16,7 @@ const ParticipatedFundItem = ({item}: {item: ParticipatedFund}) => {
         activated === 'Y' && navigation.navigate('FundDetail', {id});
       }}>
       <View className="flex flex-row justify-between items-center">
-        <View className="flex flex-row">
-          <TextRegular title="[결제 일자]" style="text-Body-2" />
-          <TextSemiBold title={paidDate} style="text-Body-2 ml-2" />
-        </View>
+        <TextSemiBold title={paidDate} style="text-Body-2" />
         {activated === 'Y' ? (
           <View className="bg-Sub-01 rounded-xl px-2 h-[22px] flex flex-col justify-center items-center">
             <TextRegular title="펀딩중" style="text-Body-2 text-Main-01" />
@@ -56,6 +53,11 @@ const ParticipatedFundItem = ({item}: {item: ParticipatedFund}) => {
             />
             <TextRegular title=" 펀딩했어요" style="text-Detail-1" />
           </View>
+          {activated === 'Y' && (
+            <Pressable className="flex flex-col mt-2 bg-Main-01 px-2 py-1 w-[70px] items-center rounded-lg">
+              <TextRegular title="취소요청" style="text-Detail-1 text-white" />
+            </Pressable>
+          )}
         </View>
       </View>
     </Pressable>

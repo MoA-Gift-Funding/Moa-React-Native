@@ -89,7 +89,7 @@ export default function Home({navigation}) {
                 title: '내 30번째 생일은 에어팟으로 할래',
                 deadline: '2023-12-31T00:00:00',
                 fundRate: 80,
-                terminated: 'N',
+                activated: 'N',
                 fundedCount: 14,
               }}
             />
@@ -99,7 +99,7 @@ export default function Home({navigation}) {
                 title: '경민이 결혼 집들이 선물',
                 deadline: '2024-01-31T00:00:00',
                 fundRate: 22,
-                terminated: 'N',
+                activated: 'N',
                 fundedCount: 2,
               }}
             />
@@ -131,7 +131,7 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '내 30번째 생일은 에어팟으로 할래',
                 deadline: '2023-12-31T00:00:00',
-                terminated: 'N',
+                activated: 'N',
                 userId: 1,
                 profileImage:
                   'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
@@ -147,7 +147,7 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '졸업식 선물은 이걸루',
                 deadline: '2024-01-14T00:00:00',
-                terminated: 'N',
+                activated: 'N',
                 userId: 1,
                 profileImage:
                   'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png',
@@ -162,7 +162,7 @@ export default function Home({navigation}) {
                 id: 1,
                 title: '경민이 집들이 선물',
                 deadline: '2024-01-31T00:00:00',
-                terminated: 'N',
+                activated: 'N',
                 userId: 1,
                 profileImage:
                   'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
