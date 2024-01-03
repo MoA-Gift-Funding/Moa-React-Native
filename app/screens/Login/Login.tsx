@@ -46,7 +46,7 @@ export default function Login({navigation}) {
       <View className="flex flex-col gap-[12px]">
         <View>
           <LoginButton
-            buttonStyle="bg-[#27D34A]"
+            buttonStyle="bg-Naver"
             textStyle="text-white"
             title="네이버로 계속하기"
             onPressFn={handleNaverLogin}
@@ -54,7 +54,7 @@ export default function Login({navigation}) {
         </View>
         <View>
           <LoginButton
-            buttonStyle="bg-[#FFEB00]"
+            buttonStyle="bg-Kakao"
             textStyle="text-Gray-08"
             title="카카오로 계속하기"
             onPressFn={handleKakaoLogin}

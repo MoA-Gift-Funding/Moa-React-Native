@@ -22,6 +22,8 @@ module.exports = {
         'Main-01': '#FF5414',
         'Sub-01': '#FFF3EB',
         'Sub-02': '#F7F7EF',
+        Naver: '#27D34A',
+        Kakao: '#FFEB00',
       },
       fontSize: {
         'Heading-1': '34px',
