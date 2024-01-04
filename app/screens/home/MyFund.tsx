@@ -25,7 +25,7 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
             date={deadline}
             renderer={({days, completed}) => {
               if (completed) {
-                return <TextBold title={'D-0'} style="text-Body-1" />;
+                return <TextBold title={'펀딩 종료'} style="text-Body-1" />;
               } else {
                 return <TextBold title={`D-${days}`} style="text-Body-1" />;
               }

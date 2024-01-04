@@ -21,16 +21,7 @@ export default function Home({navigation}) {
   const {
     userState: {user},
   } = useUserContext();
-  const [inProcess, setInProcess] = useState(true);
-  const [completed, setCompleted] = useState(false);
-  const handleMenuPress = (component: string) => {
-    if (component === 'inProcess') {
-      setInProcess(true);
-      return setCompleted(false);
-    }
-    setInProcess(false);
-    setCompleted(true);
-  };
+  const [activated, setActivated] = useState(true);
 
   return (
     <>
@@ -39,29 +30,29 @@ export default function Home({navigation}) {
         <View className="flex flex-row h-[40px] bg-white justify-around border-b-2 border-Gray-02">
           <Pressable
             className={cls({
-              'border-b-2 border-Main-01': inProcess,
-              '': !inProcess,
+              'border-b-2 border-Main-01': activated,
+              '': !activated,
             })}
-            onPress={() => handleMenuPress('inProcess')}>
+            onPress={() => setActivated(true)}>
             <TextBold
               title="진행중"
               style={cls('text-center text-Heading-4', {
-                'text-Main-01': inProcess,
-                'text-Gray-06': !inProcess,
+                'text-Main-01': activated,
+                'text-Gray-06': !activated,
               })}
             />
           </Pressable>
           <Pressable
-            onPress={() => handleMenuPress('completed')}
+            onPress={() => setActivated(false)}
             className={cls({
-              'border-b-2 border-Main-01': completed,
-              '': !completed,
+              'border-b-2 border-Main-01': !activated,
+              '': activated,
             })}>
             <TextBold
               title="완료"
               style={cls('text-center text-Heading-4', {
-                'text-Main-01': completed,
-                'text-Gray-06': !completed,
+                'text-Main-01': !activated,
+                'text-Gray-06': activated,
               })}
             />
           </Pressable>
@@ -83,26 +74,54 @@ export default function Home({navigation}) {
             className="py-4 pl-6 flex flex-row"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
-            <MyFund
-              item={{
-                id: 1,
-                title: '내 30번째 생일은 에어팟으로 할래',
-                deadline: '2023-12-31T00:00:00',
-                fundRate: 80,
-                activated: 'N',
-                fundedCount: 14,
-              }}
-            />
-            <MyFund
-              item={{
-                id: 1,
-                title: '경민이 결혼 집들이 선물',
-                deadline: '2024-01-31T00:00:00',
-                fundRate: 22,
-                activated: 'N',
-                fundedCount: 2,
-              }}
-            />
+            {activated && (
+              <>
+                <MyFund
+                  item={{
+                    id: 1,
+                    title: '내 30번째 생일은 에어팟으로 할래',
+                    deadline: '2024-01-31T00:00:00',
+                    fundRate: 80,
+                    activated: 'Y',
+                    fundedCount: 14,
+                  }}
+                />
+                <MyFund
+                  item={{
+                    id: 1,
+                    title: '경민이 결혼 집들이 선물',
+                    deadline: '2024-02-14T00:00:00',
+                    fundRate: 22,
+                    activated: 'Y',
+                    fundedCount: 2,
+                  }}
+                />
+              </>
+            )}
+            {!activated && (
+              <>
+                <MyFund
+                  item={{
+                    id: 1,
+                    title: '올해 선물은 이거로 부탁할게 친구들아!',
+                    deadline: '2023-12-31T00:00:00',
+                    fundRate: 80,
+                    activated: 'N',
+                    fundedCount: 14,
+                  }}
+                />
+                <MyFund
+                  item={{
+                    id: 1,
+                    title: '☃🌲 윤정이의 겨울나기 ❄🎅',
+                    deadline: '2024-01-02T00:00:00',
+                    fundRate: 22,
+                    activated: 'N',
+                    fundedCount: 2,
+                  }}
+                />
+              </>
+            )}
           </ScrollView>
         </View>
         <View className="bg-white my-4 py-10 flex flex-col">
