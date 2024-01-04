@@ -3,6 +3,7 @@ import {Image, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import OrderPayment from './components/OrderPayment';
+import OrderDelivery from './components/OrderDelivery';
 
 const MyOrder = ({navigation, route}) => {
   const {orderId} = route.params;
@@ -30,47 +31,16 @@ const MyOrder = ({navigation, route}) => {
             <TextSemiBold title="750,000원" style="text-Body-2" />
           </View>
         </View>
-        <View className="flex flex-col bg-white px-6 py-2 mt-4">
-          <View className="w-full border-b-2 py-4 border-Gray-02">
-            <TextSemiBold title="배송 정보" style="text-Body-2" />
-          </View>
-          <View className="flex flex-row mt-2">
-            <View>
-              <TextRegular
-                title="받는 사람"
-                style="text-Body-2 leading-Body-2 text-Gray-06"
-              />
-              <TextRegular
-                title="연락처"
-                style="text-Body-2 leading-Body-2 text-Gray-06"
-              />
-              <TextRegular
-                title="주소"
-                style="text-Body-2 leading-Body-2 text-Gray-06"
-              />
-            </View>
-            <View className="mb-2 ml-4">
-              <TextRegular
-                title="이수진"
-                style="text-Body-2 leading-Body-2 text-Gray-06"
-              />
-              <TextRegular
-                title="010-4558-9598"
-                style="text-Body-2 leading-Body-2 text-Gray-06"
-              />
-              <TextRegular
-                title="서울특별시 영등포구 버드나루로 12길 8"
-                numberOfLines={2}
-                style="text-Body-2 leading-Body-2 text-Gray-06 w-[250px]"
-              />
-              <TextRegular
-                title="1102호"
-                numberOfLines={2}
-                style="text-Body-2 leading-Body-2 text-Gray-06 w-[250px]"
-              />
-            </View>
-          </View>
-        </View>
+        <OrderDelivery
+          item={{
+            recipientName: '이수진',
+            phoneNumber: '010-4558-9598',
+            roadAddress: '서울특별시 영등포구 버드나루로 12길 8',
+            detailedAddress: '1102호',
+            zonecode: '12345',
+            deliveryStatus: '배송중',
+          }}
+        />
         <OrderPayment
           item={[
             {price: '45000'},

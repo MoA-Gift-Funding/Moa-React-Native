@@ -11,3 +11,12 @@ export interface OrderListItem {
 export type OrderPaymentItem = {
   price: string;
 };
+
+export interface ShippingInfo {
+  recipientName: string;
+  roadAddress: string;
+  detailedAddress: string;
+  phoneNumber: string;
+  zonecode: string;
+  deliveryStatus: string;
+}
