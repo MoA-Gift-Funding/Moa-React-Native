@@ -29,6 +29,7 @@ import MyPageDetail from '../screens/myPage/MyPageDetail';
 import MyFunding from '../screens/myPage/MyFunding';
 import MyFriends from '../screens/myPage/MyFriends';
 import MyMessages from '../screens/myPage/MyMessages';
+import MyAlarm from '../screens/myPage/MyAlarm';
 
 const AuthRouter = () => {
   const {
@@ -133,6 +134,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="MyMessages"
             component={MyMessages}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="MyAlarm"
+            component={MyAlarm}
             options={{header: () => <TitleHeader />}}
           />
         </>

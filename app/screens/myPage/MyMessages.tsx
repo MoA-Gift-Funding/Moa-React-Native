@@ -1,13 +1,11 @@
 import React from 'react';
-import {Image, ScrollView, View} from 'react-native';
-import TextRegular from '../../components/text/TextRegular';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import {ScrollView, View} from 'react-native';
 import MessageItem from './components/MessageItem';
 
 const MyMessages = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} className="bg-white">
-      <View className="px-4">
+      <View className="px-5">
         <MessageItem
           item={{
             profileImage:

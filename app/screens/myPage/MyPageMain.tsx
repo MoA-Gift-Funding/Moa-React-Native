@@ -16,7 +16,11 @@ const MyPageMain = ({navigation}) => {
     <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
       <SafeAreaView className="bg-white">
         <View className="px-4">
-          <Pressable className="mb-2 flex items-end mt-2">
+          <Pressable
+            className="mb-2 flex items-end mt-2"
+            onPress={() =>
+              navigation.navigate('MyAlarm', {headerTitle: '알림'})
+            }>
             <Image
               source={{
                 uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704254786/image_gqjmje.png',
