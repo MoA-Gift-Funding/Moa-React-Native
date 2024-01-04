@@ -13,7 +13,7 @@ const MyPageMain = ({navigation}) => {
   } = useUserContext();
 
   return (
-    <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView className="bg-white">
         <View className="px-4">
           <Pressable
@@ -86,7 +86,12 @@ const MyPageMain = ({navigation}) => {
         </View>
       </SafeAreaView>
       <View className="bg-white mt-3">
-        <MenuCategory title="주문 · 배송" onPress={() => {}} />
+        <MenuCategory
+          title="주문 · 배송"
+          onPress={() =>
+            navigation.navigate('MyOrders', {headerTitle: '주문 · 배송'})
+          }
+        />
         <MenuCategory title="친구 불러오기" onPress={() => {}} />
       </View>
       <View className="bg-white mt-3">

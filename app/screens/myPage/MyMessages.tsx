@@ -5,7 +5,7 @@ import MessageItem from './components/MessageItem';
 const MyMessages = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} className="bg-white">
-      <View className="px-5">
+      <View className="px-5 border-t-2 border-Gray-02">
         <MessageItem
           item={{
             profileImage:

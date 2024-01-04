@@ -8,7 +8,7 @@ const MyFriends = () => {
       className="bg-white h-full"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="px-6 mt-2">
+        <View className="px-6 mt-2 border-t-2 border-Gray-02">
           <FriendItem
             item={{
               profileImage:

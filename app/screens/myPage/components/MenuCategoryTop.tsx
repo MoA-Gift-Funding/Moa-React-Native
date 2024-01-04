@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 import TextBold from '../../../components/text/TextBold';
 
@@ -14,7 +14,7 @@ const MenuCategoryTop = ({
 }) => {
   return (
     <Pressable
-      className="flex flex-col justify-center items-center"
+      className="flex flex-col justify-center items-center px-6"
       onPress={onPress}>
       <TextBold title={dataLength.toString()} style="text-Heading-4" />
       <TextRegular title={title} style="text-Body-2 text-Gray-06" />
