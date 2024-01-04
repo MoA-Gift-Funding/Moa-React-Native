@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  View,
-} from 'react-native';
-import TextRegular from '../../components/text/TextRegular';
+import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import FriendItem from './components/FriendItem';
 
 const MyFriends = () => {

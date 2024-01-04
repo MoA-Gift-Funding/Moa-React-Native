@@ -13,11 +13,6 @@ import ParticipatedFundItem from './components/ParticipatedFundItem';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
-  const [participatedFunds, setParticipatedFunds] = useState(false);
-  const pressMenuControl = () => {
-    setCreatedFunds(!createdFunds);
-    setParticipatedFunds(!participatedFunds);
-  };
   return (
     <KeyboardAvoidingView
       className="bg-white h-full"
@@ -28,7 +23,7 @@ const MyFunding = () => {
             className={cls('h-[48px] flex justify-center items-center flex-1', {
               'border-b-2 border-Main-01': createdFunds,
             })}
-            onPress={pressMenuControl}>
+            onPress={() => setCreatedFunds(true)}>
             <TextSemiBold
               title="내가 만든 펀딩"
               style={cls('text-Body-2', {'text-Gray-06': !createdFunds})}
@@ -36,12 +31,12 @@ const MyFunding = () => {
           </Pressable>
           <Pressable
             className={cls('h-[48px] flex justify-center items-center flex-1', {
-              'border-b-2 border-Main-01': participatedFunds,
+              'border-b-2 border-Main-01': !createdFunds,
             })}
-            onPress={pressMenuControl}>
+            onPress={() => setCreatedFunds(false)}>
             <TextSemiBold
               title="참여한 펀딩"
-              style={cls('text-Body-2', {'text-Gray-06': !participatedFunds})}
+              style={cls('text-Body-2', {'text-Gray-06': createdFunds})}
             />
           </Pressable>
         </View>
@@ -74,7 +69,7 @@ const MyFunding = () => {
               />
             </>
           )}
-          {participatedFunds && (
+          {!createdFunds && (
             <>
               <ParticipatedFundItem
                 item={{

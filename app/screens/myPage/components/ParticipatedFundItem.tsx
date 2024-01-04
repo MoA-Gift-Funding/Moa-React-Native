@@ -54,7 +54,7 @@ const ParticipatedFundItem = ({item}: {item: ParticipatedFund}) => {
             <TextRegular title=" 펀딩했어요" style="text-Detail-1" />
           </View>
           {activated === 'Y' && (
-            <Pressable className="flex flex-col mt-2 bg-Main-01 px-2 py-1 w-[70px] items-center rounded-lg">
+            <Pressable className="flex flex-col mt-2 bg-Gray-06 px-2 py-1 w-[70px] items-center rounded-lg">
               <TextRegular title="취소요청" style="text-Detail-1 text-white" />
             </Pressable>
           )}
