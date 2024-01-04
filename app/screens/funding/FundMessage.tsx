@@ -5,6 +5,7 @@ import TextRegular from '../../components/text/TextRegular';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
+import {FundMessageItem} from '../../types/Funding';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
 
@@ -13,12 +14,7 @@ const FundMessage = ({
   name,
   createdAt,
   profileImage,
-}: {
-  message: string;
-  name: string;
-  createdAt: string;
-  profileImage: string;
-}) => {
+}: FundMessageItem) => {
   return (
     <View className="flex flex-col border-b-2 border-Gray-01 py-4 px-6">
       <View className="flex flex-row items-center">

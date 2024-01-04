@@ -74,7 +74,9 @@ const MyPageMain = ({navigation}) => {
             <MenuCategoryTop
               dataLength={53}
               title="메세지"
-              onPress={() => {}}
+              onPress={() =>
+                navigation.navigate('MyMessages', {headerTitle: '메세지'})
+              }
             />
           </View>
         </View>

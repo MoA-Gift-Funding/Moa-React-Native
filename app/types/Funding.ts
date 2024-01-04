@@ -92,3 +92,10 @@ export const defaultFundingItem = {
   productId: '',
   productImage: '',
 };
+
+export interface FundMessageItem {
+  message: string;
+  name: string;
+  createdAt: string;
+  profileImage: string;
+}
