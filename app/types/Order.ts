@@ -7,3 +7,7 @@ export interface OrderListItem {
   price: string;
   image: string;
 }
+
+export type OrderPaymentItem = {
+  price: string;
+};

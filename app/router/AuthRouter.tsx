@@ -31,6 +31,7 @@ import MyFriends from '../screens/myPage/MyFriends';
 import MyMessages from '../screens/myPage/MyMessages';
 import MyAlarm from '../screens/myPage/MyAlarm';
 import MyOrders from '../screens/myPage/MyOrders';
+import MyOrder from '../screens/myPage/MyOrder';
 
 const AuthRouter = () => {
   const {
@@ -145,6 +146,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="MyOrders"
             component={MyOrders}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="MyOrder"
+            component={MyOrder}
             options={{header: () => <TitleHeader />}}
           />
         </>

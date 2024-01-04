@@ -8,6 +8,7 @@ const MyOrders = () => {
       <View className="h-full border-t-2 border-Gray-02 flex flex-col px-6">
         <OrderItem
           item={{
+            orderId: 1,
             orderCreatedAt: '24.01.04',
             deliveryStatus: '배송중',
             image:
@@ -19,6 +20,7 @@ const MyOrders = () => {
         />
         <OrderItem
           item={{
+            orderId: 1,
             orderCreatedAt: '23.12.24',
             deliveryStatus: '배송중',
             image:
@@ -30,6 +32,7 @@ const MyOrders = () => {
         />
         <OrderItem
           item={{
+            orderId: 1,
             orderCreatedAt: '23.11.20',
             deliveryStatus: '배송완료',
             image:
