@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883363053024",
+    "project_id": "giftmoa-842ac",
+    "storage_bucket": "giftmoa-842ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883363053024:android:616d8c1f864213f75bbf85",
+        "android_client_info": {
+          "package_name": "com.runko.moa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883363053024-o4oof2it06ibi847slkh7vj27hm7klfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpUSyPi3furNwLELH5g8E1bnGtWHP4bvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883363053024-o4oof2it06ibi847slkh7vj27hm7klfg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
