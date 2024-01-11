@@ -25,8 +25,11 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+
 target 'MoA' do
   config = use_native_modules!
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
   pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
   # Flags change depending on the env values.
   flags = get_default_flags()

@@ -95,7 +95,12 @@ const MyPageMain = ({navigation}) => {
         <MenuCategory title="친구 불러오기" onPress={() => {}} />
       </View>
       <View className="bg-white mt-3">
-        <MenuCategory title="공지사항" onPress={() => {}} />
+        <MenuCategory
+          title="공지사항"
+          onPress={() =>
+            navigation.navigate('Notices', {headerTitle: '공지사항'})
+          }
+        />
         <MenuCategory title="고객 센터" onPress={() => {}} />
         <MenuCategory title="1:1 문의" onPress={() => {}} />
         <MenuCategory title="앱 설정" onPress={() => {}} />

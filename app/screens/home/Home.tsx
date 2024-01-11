@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -16,6 +16,8 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import MyFund from './MyFund';
 import FundItem from './FundItem';
+import {PermissionsAndroid} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
 
 export default function Home({navigation}) {
   const {
@@ -23,9 +25,47 @@ export default function Home({navigation}) {
   } = useUserContext();
   const [activated, setActivated] = useState(true);
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      requestAOSPermit();
+    }
+    if (Platform.OS === 'ios') {
+      requestiOSPermit();
+    }
+  }, []);
+
+  const requestAOSPermit = async () => {
+    const authStatus = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    if (authStatus === 'granted') {
+      getFCMToken();
+    }
+    console.log(authStatus);
+  };
+
+  const requestiOSPermit = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    console.log(authStatus);
+    if (enabled) {
+      return getFCMToken();
+    }
+  };
+
+  const getFCMToken = async () => {
+    const fcmToken = await messaging()
+      .getToken()
+      .then(res => res)
+      .catch(error => console.log(error));
+    console.log('FCM토큰값:', fcmToken);
+  };
+
   return (
     <>
-      <ScrollView className="h-full">
+      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
         <HomeBanner navigation={navigation} />
         <View className="flex flex-row h-[40px] bg-white justify-around border-b-2 border-Gray-02">
           <Pressable
