@@ -101,7 +101,12 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('Notices', {headerTitle: '공지사항'})
           }
         />
-        <MenuCategory title="고객 센터" onPress={() => {}} />
+        <MenuCategory
+          title="고객 센터"
+          onPress={() =>
+            navigation.navigate('CustomerCenter', {headerTitle: '고객센터'})
+          }
+        />
         <MenuCategory title="1:1 문의" onPress={() => {}} />
         <MenuCategory title="앱 설정" onPress={() => {}} />
       </View>

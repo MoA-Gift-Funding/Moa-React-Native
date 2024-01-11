@@ -32,7 +32,8 @@ import MyMessages from '../screens/myPage/MyMessages';
 import MyAlarm from '../screens/myPage/MyAlarm';
 import MyOrders from '../screens/myPage/MyOrders';
 import MyOrder from '../screens/myPage/MyOrder';
-import Notices from '../screens/myPage/notice/Notices';
+import Notices from '../screens/myPage/cs/Notices';
+import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 
 const AuthRouter = () => {
   const {
@@ -157,6 +158,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="Notices"
             component={Notices}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="CustomerCenter"
+            component={CustomerCenter}
             options={{header: () => <TitleHeader />}}
           />
         </>

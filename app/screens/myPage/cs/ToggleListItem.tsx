@@ -4,7 +4,7 @@ import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import {Notice} from '../../../types/CS';
 
-const CSListItem = ({title, content, label, category}: Notice) => {
+const ToggleListItem = ({title, content, label, category}: Notice) => {
   const [toggled, setToggled] = useState(false);
   return (
     <View>
@@ -25,4 +25,4 @@ const CSListItem = ({title, content, label, category}: Notice) => {
   );
 };
 
-export default CSListItem;
+export default ToggleListItem;
