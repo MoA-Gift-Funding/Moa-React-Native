@@ -34,6 +34,7 @@ import MyOrders from '../screens/myPage/MyOrders';
 import MyOrder from '../screens/myPage/MyOrder';
 import Notices from '../screens/myPage/cs/Notices';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
+import MyInquiries from '../screens/myPage/cs/MyInquiries';
 
 const AuthRouter = () => {
   const {
@@ -163,6 +164,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="CustomerCenter"
             component={CustomerCenter}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="MyInquiries"
+            component={MyInquiries}
             options={{header: () => <TitleHeader />}}
           />
         </>
