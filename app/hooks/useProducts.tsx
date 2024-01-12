@@ -1,15 +1,13 @@
 import React from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {
-  getCategories,
-  getCategoryProducts,
-  getProduct,
-  getProducts,
-} from '../apis/store/Store';
+import {useProductContext} from '../contexts/APIContext';
 
 export default function useProducts(loadingCallback?: () => void) {
+  const products = useProductContext()!;
+
   const productsQuery = useMutation({
-    mutationFn: (page: number) => getProducts(page),
+    mutationFn: (page?: number, size?: number) =>
+      products.getProducts(page, size),
     onSuccess: () => {
       //   console.log(productsQuery);
     },
@@ -17,19 +15,26 @@ export default function useProducts(loadingCallback?: () => void) {
 
   const categoriesQuery = useQuery({
     queryKey: ['categories'],
-    queryFn: getCategories,
+    queryFn: () => products.getProductCategories(),
     staleTime: 1000 * 60 * 60 * 24,
   });
 
   const categoryProductsQuery = useMutation({
-    mutationFn: ({categoryType, page}: {categoryType: string; page: number}) =>
-      getCategoryProducts(categoryType, page),
+    mutationFn: ({
+      categoryType,
+      page,
+      size,
+    }: {
+      categoryType: string;
+      page: number;
+      size?: number;
+    }) => products.getCategorizedProducts(categoryType, page, size),
     onSuccess: loadingCallback,
     onError: loadingCallback,
   });
 
   const productDetailQuery = useMutation({
-    mutationFn: (productId: number) => getProduct(productId),
+    mutationFn: (productId: number) => products.getProductDetail(productId),
     onSuccess: loadingCallback,
     onError: loadingCallback,
   });

@@ -31,6 +31,7 @@ const ItemDetail = ({route, navigation}) => {
   useEffect(() => {
     mutate(id);
   }, [mutate, id]);
+
   return (
     <>
       <ScrollView

@@ -5,6 +5,7 @@ import {UserContextProvider} from './app/contexts/UserContext';
 import AuthRouter from './app/router/AuthRouter';
 import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
+import {ProductContextProvider} from './app/contexts/APIContext';
 
 export const App = () => {
   const queryClient = new QueryClient();
@@ -20,9 +21,11 @@ export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
-        <NavigationContainer>
-          <AuthRouter />
-        </NavigationContainer>
+        <ProductContextProvider>
+          <NavigationContainer>
+            <AuthRouter />
+          </NavigationContainer>
+        </ProductContextProvider>
       </UserContextProvider>
     </QueryClientProvider>
   );
