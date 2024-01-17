@@ -1,25 +1,46 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
 import LoadingBar from '../../components/bar/LoadingBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
   const textStyle = 'text-Gray-09 text-Heading-3';
   const [isLoading, setIsLoding] = useState(false);
+
+  const handleAppleLogin = async () => {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+    // 사용자 정보
+    console.log(appleAuthRequestResponse);
+
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // verified된 user
+      console.log(credentialState);
+    }
+  };
   const handleKakaoLogin = async () => {
     setIsLoding(true);
     const process = await AsyncStorage.getItem('process');
     await loginKakao()
       .then(async user => {
-        dispatch({type: 'LOGIN', payload: user});
-        if (user.level === 'ASSOCICATE_MEMBER' || process) {
-          navigation.navigate('Join');
-        }
+        console.log(user);
+
+        // dispatch({type: 'LOGIN', payload: user});
+        // if (user.level === 'ASSOCICATE_MEMBER' || process) {
+        //   navigation.navigate('Join');
+        // }
       })
       .finally(() => setIsLoding(false));
   };
@@ -61,11 +82,14 @@ export default function Login({navigation}) {
           />
         </View>
         <View>
-          <LoginButton
-            buttonStyle="bg-white border-Gray-03 border-2"
-            textStyle="text-Gray-08"
-            title="Apple로 계속하기"
-          />
+          {Platform.OS === 'ios' && (
+            <LoginButton
+              buttonStyle="bg-white border-Gray-03 border-2"
+              textStyle="text-Gray-08"
+              title="Apple로 계속하기"
+              onPressFn={handleAppleLogin}
+            />
+          )}
         </View>
       </View>
     </View>
