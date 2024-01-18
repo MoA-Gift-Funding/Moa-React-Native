@@ -1,17 +1,24 @@
 import {Category, Product, ProductDetail} from '../../types/Store';
+import ProductFakeClient from './ProductFakeClient';
 import ProductHttpClient from './ProductHttpClient';
 
 export class Products {
-  constructor(private readonly apiClient: ProductHttpClient) {
+  constructor(
+    private readonly apiClient: ProductHttpClient | ProductFakeClient,
+  ) {
     this.apiClient = apiClient;
   }
 
   async getProductCategories(): Promise<Category[]> {
     return this.apiClient
       .categories()
-      .then(res => res.data.data.categories)
+      .then(res => {
+        return res.data.data.categories;
+      })
       .catch(err => {
         console.log(err);
+        console.log(err.request);
+
         throw new Error('[ERROR] Categories를 가져오지 못함');
       });
   }
@@ -43,7 +50,7 @@ export class Products {
   async getProductDetail(productId: number): Promise<ProductDetail> {
     return this.apiClient
       .searchDetail(productId)
-      .then(res => res.data.data)
+      .then(res => res.data.data.product)
       .catch(err => {
         console.log(err);
         throw new Error('[ERROR] Product를 가져오지 못함');

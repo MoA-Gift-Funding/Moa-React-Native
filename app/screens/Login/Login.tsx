@@ -37,10 +37,10 @@ export default function Login({navigation}) {
       .then(async user => {
         console.log(user);
 
-        // dispatch({type: 'LOGIN', payload: user});
-        // if (user.level === 'ASSOCICATE_MEMBER' || process) {
-        //   navigation.navigate('Join');
-        // }
+        dispatch({type: 'LOGIN', payload: user});
+        if (user.level === 'ASSOCICATE_MEMBER' || process) {
+          navigation.navigate('Join');
+        }
       })
       .finally(() => setIsLoding(false));
   };
