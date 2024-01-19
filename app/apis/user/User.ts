@@ -5,15 +5,35 @@ import Config from 'react-native-config';
 import {User, UserFormData} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 export const loginKakao = async (): Promise<User> => {
   try {
     const {accessToken} = await KaKaoLogin.login();
-    const user = await loginMoA(accessToken, 'kakao');
+    const moaToken = await loginMoA(accessToken, 'KAKAO');
+    const user = await getUser(moaToken);
     return user;
   } catch (error) {
     console.log(error);
     console.log(error.response);
+    throw new Error('[ERROR] Network Error');
+  }
+};
+
+export const loginApple = async (): Promise<User> => {
+  try {
+    const {authorizationCode} = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+    if (!authorizationCode) {
+      throw new Error('[ERROR] Network Error');
+    }
+    const moaToken = await loginMoA(authorizationCode, 'APPLE');
+    const user = await getUser(moaToken);
+    return user;
+  } catch (error) {
+    console.error(error);
     throw new Error('[ERROR] Network Error');
   }
 };
@@ -30,7 +50,7 @@ export const loginNaver = async (): Promise<User> => {
     if (!isSuccess) {
       throw new Error(failureResponse?.message);
     }
-    const user = await loginMoA(successResponse.accessToken, 'naver');
+    const user = await loginMoA(successResponse.accessToken, 'NAVER');
     return user;
   } catch (error) {
     console.error(error);
@@ -41,20 +61,20 @@ export const loginNaver = async (): Promise<User> => {
 const loginMoA = async (
   accessToken: string,
   platform: string,
-): Promise<User> => {
+): Promise<string> => {
   try {
     const user = await Axios.get(
-      `/users/login/oauth2/${platform}/app/${accessToken}`,
+      `/oauth/login/app/${platform}/${accessToken}`,
     ).then(async res => {
-      await saveCookie(res);
-      await AsyncStorage.setItem('accessToken', res.data.data.accessToken);
-      Axios.defaults.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
-      return res.data.data;
+      await AsyncStorage.setItem('accessToken', res.data.accessToken);
+      Axios.defaults.headers.Authorization = `Bearer ${res.data.accessToken}`;
+      return res.data.accessToken;
     });
     return user;
   } catch (error) {
     console.error(error);
-    console.log(error.request);
+    console.log(error);
+
     console.log(error.response.data);
     const {message} = error.response.data;
     switch (message) {
@@ -130,12 +150,15 @@ export const updateUserProfile = async ({
   }
 };
 
-export const getUser = async () => {
+export const getUser = async (
+  accessToken: string | Promise<string | null> = AsyncStorage.getItem(
+    'accessToken',
+  ),
+) => {
   try {
-    const accessToken = await AsyncStorage.getItem('accessToken');
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    const res = await Axios.get('/users/get-user-info');
-    const user = res.data.data;
+    const res = await Axios.get('/members/my');
+    const user = res.data;
     return user;
   } catch (error) {
     console.log('에러 들어옴');

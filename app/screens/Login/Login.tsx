@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {Platform, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
-import {loginKakao, loginNaver} from '../../apis/user/User';
+import {loginApple, loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
 import LoadingBar from '../../components/bar/LoadingBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 export default function Login({navigation}) {
   const {dispatch} = useUserContext();
@@ -14,29 +13,21 @@ export default function Login({navigation}) {
   const [isLoading, setIsLoding] = useState(false);
 
   const handleAppleLogin = async () => {
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-    });
-    // 사용자 정보
-    console.log(appleAuthRequestResponse);
-
-    const credentialState = await appleAuth.getCredentialStateForUser(
-      appleAuthRequestResponse.user,
-    );
-
-    if (credentialState === appleAuth.State.AUTHORIZED) {
-      // verified된 user
-      console.log(credentialState);
-    }
+    setIsLoding(true);
+    await loginApple()
+      .then(async user => {
+        dispatch({type: 'LOGIN', payload: user});
+        if (user.status === 'PRESIGNED_UP' || process) {
+          navigation.navigate('Join');
+        }
+      })
+      .finally(() => setIsLoding(false));
   };
   const handleKakaoLogin = async () => {
     setIsLoding(true);
     const process = await AsyncStorage.getItem('process');
     await loginKakao()
       .then(async user => {
-        console.log(user);
-
         dispatch({type: 'LOGIN', payload: user});
         if (user.level === 'ASSOCICATE_MEMBER' || process) {
           navigation.navigate('Join');

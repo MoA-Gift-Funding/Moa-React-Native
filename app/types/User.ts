@@ -1,14 +1,17 @@
 export interface User {
-  accessToken: string;
+  id: number;
+  oauthId: string;
+  oauthProvider: 'APPLE' | 'KAKAO' | 'NAVER';
   email?: string;
-  nickname: string;
-  profileImage: string;
+  nickname?: string;
+  profileImageUrl?: string;
   birthday?: string;
   birthyear?: string;
-  phoneNumber: string;
-  level: 'ASSOCICATE_MEMBER' | 'REGULAR_MEMBER';
+  phoneNumber?: string;
+  status: 'PRESIGNED_UP' | 'SIGNED_UP';
   joinProcess?: string;
 }
+
 export type UserFormData = {
   nickname: string;
   phoneNumber: number;
