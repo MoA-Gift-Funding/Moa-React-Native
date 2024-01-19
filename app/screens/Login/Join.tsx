@@ -18,7 +18,7 @@ export default function Join({navigation}) {
     userState: {user},
     dispatch,
   } = useUserContext();
-  const {nickname, phoneNumber, birthday, birthyear} = user;
+  const {nickname, phoneNumber, birthday, birthyear, email} = user;
 
   const onSubmit = async (data: UserFormData) => {
     setIsLoading(true);
@@ -42,6 +42,7 @@ export default function Join({navigation}) {
     formState: {errors},
   } = useForm({
     defaultValues: {
+      email,
       nickname,
       birthday,
       phoneNumber,
@@ -87,6 +88,15 @@ export default function Join({navigation}) {
                   message: '최대 20자까지 입력 가능해요.',
                 },
               }}
+            />
+          </View>
+          <View>
+            <TextInputGroup
+              name="email"
+              label="이메일"
+              error={errors.email}
+              control={control}
+              editable={!!email || false}
             />
           </View>
           <View>

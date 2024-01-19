@@ -98,17 +98,15 @@ export const updateUser = async ({
   birthday,
   birthyear,
   nickname,
-  phoneNumber,
 }: UserFormData): Promise<User> => {
   try {
-    const user = await Axios.post('/users/update-new-user-info', {
+    const user = await Axios.put('/members', {
       nickname,
-      phoneNumber,
       birthday,
       birthyear,
     })
       .then(res => {
-        const user = res.data.data;
+        const user = res.data;
         return user;
       })
       .catch(error => {
@@ -150,15 +148,15 @@ export const updateUserProfile = async ({
   }
 };
 
-export const getUser = async (
-  accessToken: string | Promise<string | null> = AsyncStorage.getItem(
-    'accessToken',
-  ),
-) => {
+export const getUser = async (token?: string) => {
   try {
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    console.log('겟유저 accessToken', accessToken);
     Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     const res = await Axios.get('/members/my');
     const user = res.data;
+    console.log('겟유저', user);
+
     return user;
   } catch (error) {
     console.log('에러 들어옴');
