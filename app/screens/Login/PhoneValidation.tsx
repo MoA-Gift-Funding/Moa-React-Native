@@ -40,12 +40,13 @@ const PhoneValidation = ({navigation}) => {
     },
   });
 
-  const onSubmit = async (data: {
-    recipientNo: string;
+  const onSubmit = async ({
+    verificationNumber,
+  }: {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
-    const {isVerified, message} = await verifyPhoneNumber({...data});
+    const {isVerified, message} = await verifyPhoneNumber({verificationNumber});
     setIsLoading(false);
     if (isVerified) {
       await AsyncStorage.setItem('process', 'Profile');

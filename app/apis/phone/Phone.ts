@@ -1,12 +1,15 @@
 import {Contact} from '../../types/User';
 import {Axios} from '../axios.config';
 
-export const requestVerifyMSG = async (recipientNo: string) => {
+export const requestVerifyMSG = async (phoneNumber: string) => {
   let sent = false;
   try {
-    await Axios.post('/users/send-verification-number', {recipientNo}).then(
-      res => (sent = true),
-    );
+    await Axios.post('/members/verification/phone/send-number', {
+      phoneNumber,
+    }).then(res => {
+      console.log(res.data);
+      sent = true;
+    });
     return sent;
   } catch (error: any) {
     console.error(error.response.data);
@@ -15,16 +18,13 @@ export const requestVerifyMSG = async (recipientNo: string) => {
 };
 
 export const verifyPhoneNumber = async ({
-  recipientNo,
   verificationNumber,
 }: {
-  recipientNo: string;
   verificationNumber: string;
 }) => {
   const verified = {isVerified: false, message: ''};
   try {
-    await Axios.post('/users/verify-verification-number', {
-      recipientNo,
+    await Axios.post('/members/verification/phone/verify', {
       verificationNumber,
     }).then(res => {
       if (res.data.message === 'Verified VerificationNumber') {

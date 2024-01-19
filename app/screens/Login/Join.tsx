@@ -30,7 +30,7 @@ export default function Join({navigation}) {
     });
     dispatch({
       type: 'LOGIN',
-      payload: {...updated, joinProcess: 'inProcess'},
+      payload: {...updated, ...data, joinProcess: 'inProcess'},
     });
     await AsyncStorage.setItem('process', 'PhoneValidation');
     setIsLoading(false);

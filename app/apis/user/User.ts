@@ -106,8 +106,8 @@ export const updateUser = async ({
       birthyear,
     })
       .then(res => {
-        const user = res.data;
-        return user;
+        const updated = getUser();
+        return updated;
       })
       .catch(error => {
         console.error(error);

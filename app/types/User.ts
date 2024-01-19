@@ -14,7 +14,7 @@ export interface User {
 
 export type UserFormData = {
   nickname: string;
-  phoneNumber: number;
+  phoneNumber: string;
   birthday: string;
   birthyear: string;
   fullBirthday: string;
