@@ -52,7 +52,7 @@ const AuthRouter = () => {
 
   return (
     <Stack.Navigator>
-      {user?.level === 'REGULAR_MEMBER' && !process ? (
+      {user?.status === 'SIGNED_UP' && !process ? (
         <>
           <Stack.Screen
             name="Home"

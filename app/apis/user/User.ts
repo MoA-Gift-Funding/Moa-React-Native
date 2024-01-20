@@ -4,7 +4,7 @@ import {Axios} from '../axios.config';
 import Config from 'react-native-config';
 import {User, UserFormData} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
 
 export const loginKakao = async (): Promise<User> => {
@@ -40,17 +40,27 @@ export const loginApple = async (): Promise<User> => {
 
 export const loginNaver = async (): Promise<User> => {
   try {
+    console.log(Config.NAVER_CLIENT_KEY);
+    console.log(Config.NAVER_SECERT_KEY);
+    console.log(Config.NAVER_URL_SCHEME_IOS);
+
     const {isSuccess, successResponse, failureResponse} =
       await NaverLogin.login({
         appName: 'MoA',
         consumerKey: Config.NAVER_CLIENT_KEY!,
         consumerSecret: Config.NAVER_SECERT_KEY!,
-        serviceUrlScheme: Config.NAVER_URL_SCHEME,
+        serviceUrlScheme:
+          Platform.OS === 'ios'
+            ? Config.NAVER_URL_SCHEME_IOS
+            : Config.NAVER_URL_SCHEME_AOS,
       });
     if (!isSuccess) {
       throw new Error(failureResponse?.message);
     }
-    const user = await loginMoA(successResponse.accessToken, 'NAVER');
+    console.log(successResponse?.accessToken);
+
+    const moaToken = await loginMoA(successResponse.accessToken, 'NAVER');
+    const user = await getUser(moaToken);
     return user;
   } catch (error) {
     console.error(error);
@@ -63,9 +73,9 @@ const loginMoA = async (
   platform: string,
 ): Promise<string> => {
   try {
-    const user = await Axios.get(
-      `/oauth/login/app/${platform}/${accessToken}`,
-    ).then(async res => {
+    const user = await Axios.get(`/oauth/login/app/${platform}`, {
+      headers: {OAuthAccessToken: accessToken},
+    }).then(async res => {
       await AsyncStorage.setItem('accessToken', res.data.accessToken);
       Axios.defaults.headers.Authorization = `Bearer ${res.data.accessToken}`;
       return res.data.accessToken;
@@ -74,7 +84,6 @@ const loginMoA = async (
   } catch (error) {
     console.error(error);
     console.log(error);
-
     console.log(error.response.data);
     const {message} = error.response.data;
     switch (message) {
@@ -91,6 +100,21 @@ const loginMoA = async (
         Alert.alert('', '에러가 발생했습니다. 고객 센터로 문의해주세요.');
     }
     throw new Error('[ERROR] Network Error');
+  }
+};
+
+export const joinMoA = async () => {
+  try {
+    const res = await Axios.post('/members', {
+      email: 'suzythetravelerr@gmail.com',
+      nickname: '루마',
+      birthyear: '1993',
+      birthday: '0520',
+      profileImageUrl: 'https://blabal.s3.com',
+    });
+    console.log(res.data);
+  } catch (error) {
+    console.log(error);
   }
 };
 

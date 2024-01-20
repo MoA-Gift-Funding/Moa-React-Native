@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application
      openURL:(NSURL *)url
      options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  if ([url.scheme isEqualToString:@"com.runko.MoA"]) {
+  if ([url.scheme isEqualToString:@"com.runkoRN.MoA"]) {
     return [[NaverThirdPartyLoginConnection getSharedInstance] application:application openURL:url options:options];
   }
   if([RNKakaoLogins isKakaoTalkLoginUrl:url]) {

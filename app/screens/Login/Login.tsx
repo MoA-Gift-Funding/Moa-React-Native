@@ -29,7 +29,7 @@ export default function Login({navigation}) {
     await loginKakao()
       .then(async user => {
         dispatch({type: 'LOGIN', payload: user});
-        if (user.level === 'ASSOCICATE_MEMBER' || process) {
+        if (user.status === 'PRESIGNED_UP' || process) {
           navigation.navigate('Join');
         }
       })
@@ -40,7 +40,7 @@ export default function Login({navigation}) {
     await loginNaver()
       .then(async user => {
         dispatch({type: 'LOGIN', payload: user});
-        if (user.level === 'ASSOCICATE_MEMBER' || process) {
+        if (user.status === 'PRESIGNED_UP' || process) {
           navigation.navigate('Join');
         }
       })

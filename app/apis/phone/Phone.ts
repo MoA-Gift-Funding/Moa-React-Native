@@ -7,11 +7,14 @@ export const requestVerifyMSG = async (phoneNumber: string) => {
     await Axios.post('/members/verification/phone/send-number', {
       phoneNumber,
     }).then(res => {
-      console.log(res.data);
+      console.log(res.status);
       sent = true;
     });
     return sent;
   } catch (error: any) {
+    console.log(error);
+    console.log(error.status);
+
     console.error(error.response.data);
     return sent;
   }
@@ -27,9 +30,11 @@ export const verifyPhoneNumber = async ({
     await Axios.post('/members/verification/phone/verify', {
       verificationNumber,
     }).then(res => {
-      if (res.data.message === 'Verified VerificationNumber') {
-        verified.isVerified = true;
-      }
+      console.log(res.data);
+
+      verified.isVerified = true;
+      // if (res.data.message === 'Verified VerificationNumber') {
+      // }
     });
     return verified;
   } catch (error: any) {

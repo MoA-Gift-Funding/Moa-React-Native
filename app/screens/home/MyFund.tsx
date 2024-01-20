@@ -40,9 +40,9 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
           className="w-[58px] h-[58px] rounded-full"
           source={{
             uri:
-              user?.profileImage[4] !== 's'
-                ? `https://${user.profileImage?.substring(7)}`
-                : user.profileImage,
+              user?.profileImageUrl[4] !== 's'
+                ? `https://${user.profileImageUrl?.substring(7)}`
+                : user.profileImageUrl,
           }}
         />
       </View>

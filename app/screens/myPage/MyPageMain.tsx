@@ -33,9 +33,9 @@ const MyPageMain = ({navigation}) => {
             <Image
               source={{
                 uri:
-                  user?.profileImage[4] !== 's'
-                    ? `https://${user.profileImage?.substring(7)}`
-                    : user.profileImage,
+                  user?.profileImageUrl[4] !== 's'
+                    ? `https://${user.profileImageUrl?.substring(7)}`
+                    : user.profileImageUrl,
               }}
               className="w-[56px] h-[56px] rounded-full"
             />

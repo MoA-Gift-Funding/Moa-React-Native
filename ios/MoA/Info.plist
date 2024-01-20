@@ -30,7 +30,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>kakao$(KAKAO_APP_KEY)</string>
-				<string>$(NAVER_URL_SCHEME)</string>
+				<string>$(NAVER_URL_SCHEME_IOS)</string>
 			</array>
 		</dict>
 	</array>

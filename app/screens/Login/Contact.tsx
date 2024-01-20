@@ -10,6 +10,7 @@ import {UserContact} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import {connectContacts} from '../../apis/phone/Phone';
+import {joinMoA} from '../../apis/user/User';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +98,11 @@ const Contact = ({navigation}) => {
         </View> */}
       </View>
       <View className="mb-8 flex flex-col items-center">
-        <Pressable onPress={() => navigation.navigate('JoinCompleted')}>
+        <Pressable
+          onPress={async () => {
+            await joinMoA();
+            navigation.navigate('JoinCompleted');
+          }}>
           <TextRegular
             style="mb-10 text-Body-2 text-Gray-06 underline"
             title="건너뛰기"
