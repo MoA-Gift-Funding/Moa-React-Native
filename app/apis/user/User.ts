@@ -4,19 +4,18 @@ import {Axios} from '../axios.config';
 import Config from 'react-native-config';
 import {User, UserFormData} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
 
 export const loginKakao = async (): Promise<User> => {
   try {
     const {accessToken} = await KaKaoLogin.login();
-    const moaToken = await loginMoA(accessToken, 'KAKAO');
-    const user = await getUser(moaToken);
+    await loginMoA(accessToken, 'KAKAO');
+    const user = await getUser();
     return user;
-  } catch (error) {
-    console.log(error);
-    console.log(error.response);
-    throw new Error('[ERROR] Network Error');
+  } catch (error: any) {
+    console.log('KAKAO 인증에러 발생', error.response);
+    throw new Error('KAKAO 인증에러 발생');
   }
 };
 
@@ -40,10 +39,6 @@ export const loginApple = async (): Promise<User> => {
 
 export const loginNaver = async (): Promise<User> => {
   try {
-    console.log(Config.NAVER_CLIENT_KEY);
-    console.log(Config.NAVER_SECERT_KEY);
-    console.log(Config.NAVER_URL_SCHEME_IOS);
-
     const {isSuccess, successResponse, failureResponse} =
       await NaverLogin.login({
         appName: 'MoA',
@@ -81,25 +76,16 @@ const loginMoA = async (
       return res.data.accessToken;
     });
     return user;
-  } catch (error) {
-    console.error(error);
-    console.log(error);
-    console.log(error.response.data);
-    const {message} = error.response.data;
-    switch (message) {
-      case 'Member that already exists':
-        Alert.alert(
-          '',
-          '이미 가입 정보가 있는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.',
+  } catch (error: any) {
+    console.error(error.response);
+    switch (error.response.status) {
+      case 409:
+        throw new Error(
+          '이미 존재하는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.',
         );
-        break;
-      case 'Member deleted':
-        Alert.alert('', '탈퇴한 회원은 가입이 불가합니다.');
-        break;
       default:
-        Alert.alert('', '에러가 발생했습니다. 고객 센터로 문의해주세요.');
+        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
     }
-    throw new Error('[ERROR] Network Error');
   }
 };
 
@@ -174,21 +160,22 @@ export const updateUserProfile = async ({
 
 export const getUser = async (token?: string) => {
   try {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    console.log('겟유저 accessToken', accessToken);
-    Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
+    // const accessToken = await AsyncStorage.getItem('accessToken');
+    // Axios.defaults.headers.Authorization = `Bearer ${accessToken || token}`;
     const res = await Axios.get('/members/my');
     const user = res.data;
-    console.log('겟유저', user);
-
     return user;
-  } catch (error) {
-    console.log('에러 들어옴');
-    console.log('error: ', error);
+  } catch (error: any) {
     console.error(error);
-    console.log(error.response);
-    // 추후 삭제
-    await AsyncStorage.clear();
+    switch (error.response.status) {
+      case 401:
+        await AsyncStorage.clear();
+        throw new Error('세션이 만료되었습니다. 재로그인이 필요합니다.');
+      case 404:
+        throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
+      default:
+        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
+    }
   }
 };
 
