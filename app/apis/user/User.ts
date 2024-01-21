@@ -14,7 +14,7 @@ export const loginKakao = async (): Promise<User> => {
     const user = await getUser();
     return user;
   } catch (error: any) {
-    console.log('KAKAO 인증에러 발생', error.response);
+    console.log('KAKAO 인증에러 발생: ', error.response);
     throw new Error('KAKAO 인증에러 발생');
   }
 };
@@ -26,14 +26,14 @@ export const loginApple = async (): Promise<User> => {
       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     });
     if (!authorizationCode) {
-      throw new Error('[ERROR] Network Error');
+      throw new Error('APPLE 인증에러 발생: ');
     }
-    const moaToken = await loginMoA(authorizationCode, 'APPLE');
-    const user = await getUser(moaToken);
+    await loginMoA(authorizationCode, 'APPLE');
+    const user = await getUser();
     return user;
-  } catch (error) {
-    console.error(error);
-    throw new Error('[ERROR] Network Error');
+  } catch (error: any) {
+    console.log(error.response.message, error.response);
+    throw new Error('APPLE 인증에러 발생');
   }
 };
 
@@ -49,17 +49,15 @@ export const loginNaver = async (): Promise<User> => {
             ? Config.NAVER_URL_SCHEME_IOS
             : Config.NAVER_URL_SCHEME_AOS,
       });
-    if (!isSuccess) {
+    if (!isSuccess || !successResponse) {
       throw new Error(failureResponse?.message);
     }
-    console.log(successResponse?.accessToken);
-
-    const moaToken = await loginMoA(successResponse.accessToken, 'NAVER');
-    const user = await getUser(moaToken);
+    await loginMoA(successResponse.accessToken, 'NAVER');
+    const user = await getUser();
     return user;
-  } catch (error) {
-    console.error(error);
-    throw new Error('[ERROR] Network Error');
+  } catch (error: any) {
+    console.log('NAVER 인증에러 발생: ', error.response);
+    throw new Error('NAVER 인증에러 발생');
   }
 };
 
@@ -158,18 +156,18 @@ export const updateUserProfile = async ({
   }
 };
 
-export const getUser = async (token?: string) => {
+export const getUser = async () => {
   try {
-    // const accessToken = await AsyncStorage.getItem('accessToken');
-    // Axios.defaults.headers.Authorization = `Bearer ${accessToken || token}`;
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
     const res = await Axios.get('/members/my');
     const user = res.data;
     return user;
   } catch (error: any) {
     console.error(error);
+    await AsyncStorage.clear();
     switch (error.response.status) {
       case 401:
-        await AsyncStorage.clear();
         throw new Error('세션이 만료되었습니다. 재로그인이 필요합니다.');
       case 404:
         throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
