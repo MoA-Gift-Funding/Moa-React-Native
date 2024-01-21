@@ -18,7 +18,7 @@ export default function Join({navigation}) {
     userState: {user},
     dispatch,
   } = useUserContext();
-  const {nickname, phoneNumber, birthday, birthyear, email} = user;
+  const {nickname, phoneNumber, birthday, birthyear, email} = user!;
 
   const onSubmit = async (data: UserFormData) => {
     setIsLoading(true);
@@ -34,8 +34,9 @@ export default function Join({navigation}) {
     });
     await AsyncStorage.setItem('process', 'PhoneValidation');
     setIsLoading(false);
-    navigation.navigate('PhoneValidation');
+    navigation.navigate('PhoneValidation', {phoneNumber: data.phoneNumber});
   };
+
   const {
     control,
     handleSubmit,
@@ -45,7 +46,8 @@ export default function Join({navigation}) {
       email,
       nickname,
       birthday,
-      phoneNumber,
+      phoneNumber:
+        phoneNumber && phoneNumber[0] === '1' ? '0' + phoneNumber : phoneNumber,
       birthyear,
       fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
     },
@@ -113,7 +115,7 @@ export default function Join({navigation}) {
                   mesaage: '13자리 이상 입력이 불가해요.',
                 },
                 pattern: {
-                  value: /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                  value: /^(010{1})-?[0-9]{3,4}-?[0-9]{4}$/,
                   message: '전화번호 형식에 맞지 않아요.',
                 },
               }}

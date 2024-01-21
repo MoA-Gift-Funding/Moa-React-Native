@@ -20,7 +20,7 @@ import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
 
-const PhoneValidation = ({navigation}) => {
+const PhoneValidation = ({navigation, route}) => {
   const [sent, setSent] = useState(false);
   const [date, setDate] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +35,7 @@ const PhoneValidation = ({navigation}) => {
     formState: {errors, touchedFields},
   } = useForm({
     defaultValues: {
-      recipientNo: user?.phoneNumber || '',
+      recipientNo: route.params?.phoneNumber || user?.phoneNumber,
       verificationNumber: '',
     },
   });
