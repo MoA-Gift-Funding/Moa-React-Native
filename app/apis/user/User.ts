@@ -2,7 +2,7 @@ import * as KaKaoLogin from '@react-native-seoul/kakao-login';
 import NaverLogin from '@react-native-seoul/naver-login';
 import {Axios} from '../axios.config';
 import Config from 'react-native-config';
-import {User, UserFormData} from '../../types/User';
+import {User} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
@@ -106,53 +106,31 @@ export const updateUser = async ({
   birthday,
   birthyear,
   nickname,
-}: UserFormData): Promise<User> => {
+  profileImageUrl,
+}: Partial<User>): Promise<User> => {
   try {
     const user = await Axios.put('/members', {
       nickname,
       birthday,
       birthyear,
-    })
-      .then(res => {
-        const updated = getUser();
-        return updated;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      profileImageUrl,
+    }).then(() => {
+      const updated = getUser();
+      return updated;
+    });
     return user;
-  } catch (error) {
-    console.error(error);
-    throw new Error('[ERROR] Network Error');
-  }
-};
-
-export const updateUserProfile = async ({
-  birthday,
-  birthyear,
-  nickname,
-}: {
-  birthday: string;
-  birthyear: string;
-  nickname: string;
-}) => {
-  try {
-    const user = await Axios.post('/users/update-user-info/1', {
-      nickname,
-      birthday,
-      birthyear,
-    })
-      .then(res => {
-        const user = res.data.data;
-        return user;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    return user;
-  } catch (error) {
-    console.error(error);
-    throw new Error('[ERROR] Network Error');
+  } catch (error: any) {
+    console.error(error.response);
+    switch (error.response.status) {
+      case 401:
+        await AsyncStorage.clear();
+        throw new Error('세션이 만료되었습니다. 재로그인이 필요합니다.');
+      case 404:
+        await AsyncStorage.clear();
+        throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
+      default:
+        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
+    }
   }
 };
 

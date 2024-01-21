@@ -52,7 +52,6 @@ const Profile = ({navigation}) => {
       return Alert.alert('네트워크 오류 오류', res, [{text: '확인'}]);
     }
     setIsLoading(false);
-    await AsyncStorage.setItem('process', 'Contact');
     navigation.navigate('Contact');
   };
   return (

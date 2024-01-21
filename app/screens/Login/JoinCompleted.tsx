@@ -16,8 +16,7 @@ const JoinCompleted = ({navigation}) => {
   } = useUserContext();
   const handleDone = async () => {
     const user = await getUser();
-    dispatch({type: 'LOGIN', payload: {...user, joinProcess: 'done'}});
-    await AsyncStorage.removeItem('process');
+    dispatch({type: 'LOGIN', payload: {...user}});
     navigation.navigate('Home');
   };
 

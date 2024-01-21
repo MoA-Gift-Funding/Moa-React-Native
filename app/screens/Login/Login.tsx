@@ -18,7 +18,6 @@ export default function Login({navigation}) {
 
   const handleLogin = async (platform: OauthProvider) => {
     setIsLoding(true);
-    const process = await AsyncStorage.getItem('process');
     switch (platform) {
       case 'KAKAO':
         await loginKakao().then(async res =>
@@ -36,7 +35,7 @@ export default function Login({navigation}) {
         );
         break;
     }
-    if (user?.status === 'PRESIGNED_UP' || process) {
+    if (user?.status === 'PRESIGNED_UP') {
       navigation.navigate('Join');
     }
     setIsLoding(false);

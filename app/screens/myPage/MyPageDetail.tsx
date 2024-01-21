@@ -86,7 +86,7 @@ const MyPageDetail = () => {
       });
       dispatch({
         type: 'LOGIN',
-        payload: {...updated, joinProcess: 'inProcess'},
+        payload: {...updated},
       });
       Alert.alert('', '회원 정보가 변경되었습니다!');
     } catch (error) {

@@ -14,7 +14,6 @@ import {useUserContext} from '../../contexts/UserContext';
 import NextButton from '../../components/button/NextButton';
 import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
 import ProgressBar from '../../components/bar/ProgressBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
@@ -27,6 +26,7 @@ const PhoneValidation = ({navigation, route}) => {
   const {
     userState: {user},
   } = useUserContext();
+  console.log(user);
 
   const {
     control,
@@ -35,7 +35,10 @@ const PhoneValidation = ({navigation, route}) => {
     formState: {errors, touchedFields},
   } = useForm({
     defaultValues: {
-      recipientNo: route.params?.phoneNumber || user?.phoneNumber,
+      recipientNo:
+        user?.phoneNumber[0] === '1'
+          ? '0' + user?.phoneNumber
+          : user?.phoneNumber,
       verificationNumber: '',
     },
   });
@@ -46,25 +49,14 @@ const PhoneValidation = ({navigation, route}) => {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
-    const {isVerified, message} = await verifyPhoneNumber({verificationNumber});
+    const isVerified = await verifyPhoneNumber(verificationNumber);
     setIsLoading(false);
     if (isVerified) {
-      await AsyncStorage.setItem('process', 'Profile');
       return navigation.navigate('Profile');
-    }
-    Alert.alert('인증 번호 오류', message, [{text: '확인'}]);
-    if (message === '시간이 초과되었습니다. 다시 시도해주세요.') {
-      setSent(false);
-      setValue('verificationNumber', '');
     }
   };
 
-  const handleMSGButton = async ({
-    recipientNo,
-  }: {
-    recipientNo: string;
-    verificationNumber: string;
-  }) => {
+  const handleMSGButton = async (recipientNo: string) => {
     setIsLoading(true);
     setDate(Date.now());
     if (sent) {

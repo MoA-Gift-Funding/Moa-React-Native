@@ -10,15 +10,12 @@ export interface User {
   birthyear?: string;
   phoneNumber?: string;
   status: 'PRESIGNED_UP' | 'SIGNED_UP';
-  joinProcess?: string;
 }
 
 export type UserFormData = {
   nickname: string;
   phoneNumber: string;
-  birthday: string;
-  birthyear: string;
-  fullBirthday: string;
+  email: string;
 };
 
 export type UserContact = {

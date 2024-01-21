@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import {autoHyphenPhoneNumber, autoSlashBirthday} from '../../utils/regex';
-import {UserFormData} from '../../types/User';
-import {updateUser} from '../../apis/user/User';
+import {autoHyphenPhoneNumber} from '../../utils/regex';
+import {User} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoadingBar from '../../components/bar/LoadingBar';
+import {updateUser} from '../../apis/user/User';
 
 export default function Join({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,23 +17,20 @@ export default function Join({navigation}) {
     userState: {user},
     dispatch,
   } = useUserContext();
-  const {nickname, phoneNumber, birthday, birthyear, email} = user!;
 
-  const onSubmit = async (data: UserFormData) => {
+  const onSubmit = async ({
+    nickname,
+    email,
+    phoneNumber,
+  }: Pick<User, 'nickname' | 'email' | 'phoneNumber'>) => {
     setIsLoading(true);
-    const bdayList = data.fullBirthday.split('/');
-    const updated = await updateUser({
-      ...data,
-      birthyear: bdayList[0],
-      birthday: `${bdayList[1]}${bdayList[2]}`,
-    });
+    const updated = await updateUser({nickname, email, phoneNumber});
     dispatch({
       type: 'LOGIN',
-      payload: {...updated, ...data, joinProcess: 'inProcess'},
+      payload: updated,
     });
-    await AsyncStorage.setItem('process', 'PhoneValidation');
     setIsLoading(false);
-    navigation.navigate('PhoneValidation', {phoneNumber: data.phoneNumber});
+    navigation.navigate('PhoneValidation');
   };
 
   const {
@@ -43,24 +39,14 @@ export default function Join({navigation}) {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      email,
-      nickname,
-      birthday,
+      email: user?.email,
+      nickname: user?.nickname,
       phoneNumber:
-        phoneNumber && phoneNumber[0] === '1' ? '0' + phoneNumber : phoneNumber,
-      birthyear,
-      fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
+        user?.phoneNumber && user.phoneNumber[0] === '1'
+          ? '0' + user.phoneNumber
+          : user?.phoneNumber,
     },
   });
-  useEffect(() => {
-    async function getProcess() {
-      const process = await AsyncStorage.getItem('process');
-      if (process) {
-        return navigation.navigate(process);
-      }
-    }
-    getProcess();
-  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -98,7 +84,15 @@ export default function Join({navigation}) {
               label="이메일"
               error={errors.email}
               control={control}
-              editable={!!email || false}
+              editable={!user?.email}
+              rules={{
+                required: '이메일은 필수 입력 사항이예요',
+                pattern: {
+                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                  message: '올바른 이메일 형식이 아니예요.',
+                },
+              }}
+              keyboardType={'email-address'}
             />
           </View>
           <View>
@@ -116,14 +110,14 @@ export default function Join({navigation}) {
                 },
                 pattern: {
                   value: /^(010{1})-?[0-9]{3,4}-?[0-9]{4}$/,
-                  message: '전화번호 형식에 맞지 않아요.',
+                  message: '올바른 전화번호 형식이 아니예요.',
                 },
               }}
               keyboardType={'number-pad'}
             />
           </View>
           <View>
-            <TextInputGroup
+            {/* <TextInputGroup
               name="fullBirthday"
               label="생년월일"
               error={errors.fullBirthday}
@@ -146,7 +140,7 @@ export default function Join({navigation}) {
                 },
               }}
               keyboardType={'number-pad'}
-            />
+            /> */}
           </View>
         </View>
       </ScrollView>

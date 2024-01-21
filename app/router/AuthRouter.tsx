@@ -41,18 +41,10 @@ const AuthRouter = () => {
     userState: {user},
   } = useUserContext();
   const Stack = createNativeStackNavigator();
-  const [process, setProcess] = useState<string | null>(null);
-  useEffect(() => {
-    const getProcess = async () => {
-      const now = await AsyncStorage.getItem('process');
-      setProcess(now);
-    };
-    getProcess();
-  }, [user?.joinProcess]);
 
   return (
     <Stack.Navigator>
-      {user?.status === 'SIGNED_UP' && !process ? (
+      {user?.status === 'SIGNED_UP' ? (
         <>
           <Stack.Screen
             name="Home"
