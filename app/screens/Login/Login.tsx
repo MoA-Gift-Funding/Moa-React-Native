@@ -6,47 +6,42 @@ import LoginButton from '../../components/button/LoginButton';
 import {useUserContext} from '../../contexts/UserContext';
 import LoadingBar from '../../components/bar/LoadingBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {OauthProvider} from '../../types/User';
 
 export default function Login({navigation}) {
-  const {dispatch} = useUserContext();
-  const textStyle = 'text-Gray-09 text-Heading-3';
+  const {
+    dispatch,
+    userState: {user},
+  } = useUserContext();
   const [isLoading, setIsLoding] = useState(false);
+  const textStyle = 'text-Gray-09 text-Heading-3';
 
-  const handleAppleLogin = async () => {
-    setIsLoding(true);
-    await loginApple()
-      .then(async user => {
-        dispatch({type: 'LOGIN', payload: user});
-        if (user.status === 'PRESIGNED_UP' || process) {
-          navigation.navigate('Join');
-        }
-      })
-      .finally(() => setIsLoding(false));
-  };
-  const handleKakaoLogin = async () => {
+  const handleLogin = async (platform: OauthProvider) => {
     setIsLoding(true);
     const process = await AsyncStorage.getItem('process');
-    await loginKakao()
-      .then(async user => {
-        dispatch({type: 'LOGIN', payload: user});
-        if (user.status === 'PRESIGNED_UP' || process) {
-          navigation.navigate('Join');
-        }
-      })
-      .finally(() => setIsLoding(false));
+    switch (platform) {
+      case 'KAKAO':
+        await loginKakao().then(async res =>
+          dispatch({type: 'LOGIN', payload: res}),
+        );
+        break;
+      case 'APPLE':
+        await loginApple().then(async res =>
+          dispatch({type: 'LOGIN', payload: res}),
+        );
+        break;
+      case 'NAVER':
+        await loginNaver().then(async res =>
+          dispatch({type: 'LOGIN', payload: res}),
+        );
+        break;
+    }
+    if (user?.status === 'PRESIGNED_UP' || process) {
+      navigation.navigate('Join');
+    }
+    setIsLoding(false);
   };
-  const handleNaverLogin = async () => {
-    setIsLoding(true);
-    await loginNaver()
-      .then(async user => {
-        dispatch({type: 'LOGIN', payload: user});
-        if (user.status === 'PRESIGNED_UP' || process) {
-          navigation.navigate('Join');
-        }
-      })
-      .finally(() => setIsLoding(false));
-    navigation.navigate('Join');
-  };
+
   return (
     <View className="px-6 py-10 bg-white h-full">
       {isLoading && <LoadingBar />}
@@ -61,7 +56,7 @@ export default function Login({navigation}) {
             buttonStyle="bg-Naver"
             textStyle="text-white"
             title="네이버로 계속하기"
-            onPressFn={handleNaverLogin}
+            onPressFn={() => handleLogin('NAVER')}
           />
         </View>
         <View>
@@ -69,7 +64,7 @@ export default function Login({navigation}) {
             buttonStyle="bg-Kakao"
             textStyle="text-Gray-08"
             title="카카오로 계속하기"
-            onPressFn={handleKakaoLogin}
+            onPressFn={() => handleLogin('KAKAO')}
           />
         </View>
         <View>
@@ -78,7 +73,7 @@ export default function Login({navigation}) {
               buttonStyle="bg-white border-Gray-03 border-2"
               textStyle="text-Gray-08"
               title="Apple로 계속하기"
-              onPressFn={handleAppleLogin}
+              onPressFn={() => handleLogin('APPLE')}
             />
           )}
         </View>

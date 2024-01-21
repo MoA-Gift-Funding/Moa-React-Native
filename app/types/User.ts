@@ -1,7 +1,8 @@
+export type OauthProvider = 'APPLE' | 'KAKAO' | 'NAVER';
 export interface User {
   id: number;
   oauthId: string;
-  oauthProvider: 'APPLE' | 'KAKAO' | 'NAVER';
+  oauthProvider: OauthProvider;
   email?: string;
   nickname?: string;
   profileImageUrl?: string;
