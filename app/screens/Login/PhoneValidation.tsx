@@ -62,10 +62,8 @@ const PhoneValidation = ({navigation, route}) => {
     if (sent) {
       return;
     }
-
     setSent(true);
-
-    // await requestVerifyMSG(recipientNo);
+    await requestVerifyMSG(recipientNo);
     setIsLoading(false);
   };
 
@@ -119,51 +117,51 @@ const PhoneValidation = ({navigation, route}) => {
       </ScrollView>
       <KeyboardAvoidingView className="mb-8 items-center">
         {sent && (
-          <Pressable
-            className={cls(
-              'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
-              {
-                'bg-Gray-08': Object.keys(touchedFields).length === 0,
-                'bg-Main-01': Object.keys(touchedFields).length !== 0,
-              },
-            )}
-            onPress={handleSubmit(onSubmit)}>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title={`${twoDP(12)}:${twoDP(12)}`}
-            />
-          </Pressable>
-          // <Countdown
-          //   date={date + 1000 * 60 * 3 - 1000}
-          //   renderer={({minutes, seconds, completed}) => {
-          //     if (completed) {
-          //       return (
-          //         <NextButton
-          //           title="인증하기"
-          //           handleSubmit={handleSubmit}
-          //           onSubmit={handleMSGButton}
-          //         />
-          //       );
-          //     } else {
-          //       return (
-          //         <Pressable
-          //           className={cls(
-          //             'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
-          //             {
-          //               'bg-Gray-08': Object.keys(touchedFields).length === 0,
-          //               'bg-Main-01': Object.keys(touchedFields).length !== 0,
-          //             },
-          //           )}
-          //           onPress={handleSubmit(onSubmit)}>
-          //           <TextSemiBold
-          //             style="text-white text-Body-1 ml-[14px]"
-          //             title={`${twoDP(minutes)}:${twoDP(seconds)}`}
-          //           />
-          //         </Pressable>
-          //       );
-          //     }
-          //   }}
-          // />
+          // <Pressable
+          //   className={cls(
+          //     'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+          //     {
+          //       'bg-Gray-08': Object.keys(touchedFields).length === 0,
+          //       'bg-Main-01': Object.keys(touchedFields).length !== 0,
+          //     },
+          //   )}
+          //   onPress={handleSubmit(onSubmit)}>
+          //   <TextSemiBold
+          //     style="text-white text-Body-1 ml-[14px]"
+          //     title={`${twoDP(12)}:${twoDP(12)}`}
+          //   />
+          // </Pressable>
+          <Countdown
+            date={date + 1000 * 60 * 3 - 1000}
+            renderer={({minutes, seconds, completed}) => {
+              if (completed) {
+                return (
+                  <NextButton
+                    title="인증하기"
+                    handleSubmit={handleSubmit}
+                    onSubmit={handleMSGButton}
+                  />
+                );
+              } else {
+                return (
+                  <Pressable
+                    className={cls(
+                      'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+                      {
+                        'bg-Gray-08': Object.keys(touchedFields).length === 0,
+                        'bg-Main-01': Object.keys(touchedFields).length !== 0,
+                      },
+                    )}
+                    onPress={handleSubmit(onSubmit)}>
+                    <TextSemiBold
+                      style="text-white text-Body-1 ml-[14px]"
+                      title={`${twoDP(minutes)}:${twoDP(seconds)}`}
+                    />
+                  </Pressable>
+                );
+              }
+            }}
+          />
         )}
         {!sent && (
           <NextButton

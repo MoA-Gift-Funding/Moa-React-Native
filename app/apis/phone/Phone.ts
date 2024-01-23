@@ -32,24 +32,10 @@ export const requestVerifyMSG = async (phoneNumber: string) => {
 
 export const verifyPhoneNumber = async (verificationNumber: string) => {
   let verified = false;
-  console.log(await AsyncStorage.getItem('accessToken'));
-
   try {
-    await Axios.post(
-      '/members/verification/phone/verify',
-      {
-        verificationNumber,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    ).then(res => {
-      console.log(verificationNumber);
-      console.log('이게왜성공');
-      console.log(res.request);
-
+    await Axios.post('/members/verification/phone/verify', {
+      verificationNumber,
+    }).then(() => {
       verified = true;
     });
     return verified;
