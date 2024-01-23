@@ -9,7 +9,6 @@ import {autoHyphenPhoneNumber} from '../../utils/regex';
 import {User} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
-import {updateUser} from '../../apis/user/User';
 
 export default function Join({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,16 +17,13 @@ export default function Join({navigation}) {
     dispatch,
   } = useUserContext();
 
-  const onSubmit = async ({
-    nickname,
-    email,
-    phoneNumber,
-  }: Pick<User, 'nickname' | 'email' | 'phoneNumber'>) => {
+  const onSubmit = async (
+    data: Pick<User, 'nickname' | 'email' | 'phoneNumber'>,
+  ) => {
     setIsLoading(true);
-    const updated = await updateUser({nickname, email, phoneNumber});
     dispatch({
       type: 'LOGIN',
-      payload: {...updated, email},
+      payload: {...user!, ...data},
     });
     setIsLoading(false);
     navigation.navigate('PhoneValidation');
