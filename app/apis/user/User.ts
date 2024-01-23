@@ -12,6 +12,8 @@ export const loginKakao = async (): Promise<User> => {
     const {accessToken} = await KaKaoLogin.login();
     await loginMoA(accessToken, 'KAKAO');
     const user = await getUser();
+    console.log(user);
+
     return user;
   } catch (error: any) {
     console.log('KAKAO 인증에러 발생: ', error.response);
@@ -66,14 +68,14 @@ const loginMoA = async (
   platform: string,
 ): Promise<string> => {
   try {
-    const user = await Axios.get(`/oauth/login/app/${platform}`, {
+    const token = await Axios.get(`/oauth/login/app/${platform}`, {
       headers: {OAuthAccessToken: accessToken},
     }).then(async res => {
       await AsyncStorage.setItem('accessToken', res.data.accessToken);
       Axios.defaults.headers.Authorization = `Bearer ${res.data.accessToken}`;
       return res.data.accessToken;
     });
-    return user;
+    return token;
   } catch (error: any) {
     console.error(error.response);
     switch (error.response.status) {

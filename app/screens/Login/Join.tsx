@@ -27,7 +27,7 @@ export default function Join({navigation}) {
     const updated = await updateUser({nickname, email, phoneNumber});
     dispatch({
       type: 'LOGIN',
-      payload: updated,
+      payload: {...updated, email},
     });
     setIsLoading(false);
     navigation.navigate('PhoneValidation');
@@ -109,38 +109,12 @@ export default function Join({navigation}) {
                   mesaage: '13자리 이상 입력이 불가해요.',
                 },
                 pattern: {
-                  value: /^(010{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                  value: /^(010)-?[0-9]{3,4}-?[0-9]{4}$/,
                   message: '올바른 전화번호 형식이 아니예요.',
                 },
               }}
               keyboardType={'number-pad'}
             />
-          </View>
-          <View>
-            {/* <TextInputGroup
-              name="fullBirthday"
-              label="생년월일"
-              error={errors.fullBirthday}
-              control={control}
-              regex={autoSlashBirthday}
-              rules={{
-                required: '생년월일은 필수 입력 사항이예요.',
-                maxLength: {
-                  value: 10,
-                  message: '생년월일은 8자만 입력 가능해요.',
-                },
-                minLength: {
-                  value: 10,
-                  message: '1월은 01과 같은 형식으로 입력해주세요.',
-                },
-                pattern: {
-                  value:
-                    /(19\d\d|20[01]\d|202[0-2])[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])/,
-                  message: '올바른 생년월일을 입력해주세요.',
-                },
-              }}
-              keyboardType={'number-pad'}
-            /> */}
           </View>
         </View>
       </ScrollView>

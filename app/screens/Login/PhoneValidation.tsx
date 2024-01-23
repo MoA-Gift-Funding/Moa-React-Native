@@ -18,6 +18,7 @@ import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PhoneValidation = ({navigation, route}) => {
   const [sent, setSent] = useState(false);
@@ -31,12 +32,11 @@ const PhoneValidation = ({navigation, route}) => {
   const {
     control,
     handleSubmit,
-    setValue,
     formState: {errors, touchedFields},
   } = useForm({
     defaultValues: {
       recipientNo:
-        user?.phoneNumber[0] === '1'
+        user?.phoneNumber && user.phoneNumber[0] === '1'
           ? '0' + user?.phoneNumber
           : user?.phoneNumber,
       verificationNumber: '',
@@ -56,19 +56,19 @@ const PhoneValidation = ({navigation, route}) => {
     }
   };
 
-  const handleMSGButton = async (recipientNo: string) => {
+  const handleMSGButton = async ({recipientNo}: {recipientNo: string}) => {
     setIsLoading(true);
     setDate(Date.now());
     if (sent) {
       return;
     }
+
     setSent(true);
-    const msgSent = await requestVerifyMSG(recipientNo);
-    if (!msgSent) {
-      Alert.alert('네트워크 오류', '다시 시도해주세요.', [{text: '확인'}]);
-    }
+
+    // await requestVerifyMSG(recipientNo);
     setIsLoading(false);
   };
+
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full flex flex-col justify-between"
@@ -77,10 +77,13 @@ const PhoneValidation = ({navigation, route}) => {
         <ProgressBar progress={'w-2/5'} />
         {isLoading && <LoadingBar />}
         <View className="my-10 text-[22px] font-semibold">
-          <TextSemiBold style="text-Heading-3 text-black" title="아래 정보로" />
+          <TextSemiBold
+            style="text-Heading-3 text-black"
+            title="휴대폰 번호를"
+          />
           <TextSemiBold
             style="text-Heading-3  text-black"
-            title="가입을 진행합니다."
+            title="인증해주세요."
           />
         </View>
         <View className="flex flex-col gap-2">
@@ -102,7 +105,13 @@ const PhoneValidation = ({navigation, route}) => {
                 placeholder="인증번호 6자리 입력"
                 error={errors.verificationNumber}
                 keyboardType="number-pad"
-                rules={{required: '인증번호를 입력해주세요.'}}
+                rules={{
+                  required: '인증번호를 입력해주세요.',
+                  maxLength: {
+                    value: 6,
+                    message: '최대 6자까지 입력 가능해요.',
+                  },
+                }}
               />
             </View>
           )}
@@ -110,37 +119,51 @@ const PhoneValidation = ({navigation, route}) => {
       </ScrollView>
       <KeyboardAvoidingView className="mb-8 items-center">
         {sent && (
-          <Countdown
-            date={date + 1000 * 60 * 3 - 1000}
-            renderer={({minutes, seconds, completed}) => {
-              if (completed) {
-                return (
-                  <NextButton
-                    title="인증하기"
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                  />
-                );
-              } else {
-                return (
-                  <Pressable
-                    className={cls(
-                      'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
-                      {
-                        'bg-Gray-08': Object.keys(touchedFields).length === 0,
-                        'bg-Main-01': Object.keys(touchedFields).length !== 0,
-                      },
-                    )}
-                    onPress={handleSubmit(onSubmit)}>
-                    <TextSemiBold
-                      style="text-white text-Body-1 ml-[14px]"
-                      title={`${twoDP(minutes)}:${twoDP(seconds)}`}
-                    />
-                  </Pressable>
-                );
-              }
-            }}
-          />
+          <Pressable
+            className={cls(
+              'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+              {
+                'bg-Gray-08': Object.keys(touchedFields).length === 0,
+                'bg-Main-01': Object.keys(touchedFields).length !== 0,
+              },
+            )}
+            onPress={handleSubmit(onSubmit)}>
+            <TextSemiBold
+              style="text-white text-Body-1 ml-[14px]"
+              title={`${twoDP(12)}:${twoDP(12)}`}
+            />
+          </Pressable>
+          // <Countdown
+          //   date={date + 1000 * 60 * 3 - 1000}
+          //   renderer={({minutes, seconds, completed}) => {
+          //     if (completed) {
+          //       return (
+          //         <NextButton
+          //           title="인증하기"
+          //           handleSubmit={handleSubmit}
+          //           onSubmit={handleMSGButton}
+          //         />
+          //       );
+          //     } else {
+          //       return (
+          //         <Pressable
+          //           className={cls(
+          //             'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+          //             {
+          //               'bg-Gray-08': Object.keys(touchedFields).length === 0,
+          //               'bg-Main-01': Object.keys(touchedFields).length !== 0,
+          //             },
+          //           )}
+          //           onPress={handleSubmit(onSubmit)}>
+          //           <TextSemiBold
+          //             style="text-white text-Body-1 ml-[14px]"
+          //             title={`${twoDP(minutes)}:${twoDP(seconds)}`}
+          //           />
+          //         </Pressable>
+          //       );
+          //     }
+          //   }}
+          // />
         )}
         {!sent && (
           <NextButton
