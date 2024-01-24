@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Platform, Pressable, View} from 'react-native';
+import {Alert, Image, Platform, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';

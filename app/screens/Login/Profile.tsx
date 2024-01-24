@@ -21,7 +21,7 @@ const Profile = ({navigation}) => {
     userState: {user},
   } = useUserContext();
   const [imageURI, setImageURI] = useState(
-    user?.profileImage || Config.DEFAULT_IMAGE,
+    user?.profileImageUrl || Config.DEFAULT_IMAGE,
   );
   const {handleSubmit} = useForm();
   const onPress = async () => {
@@ -37,12 +37,22 @@ const Profile = ({navigation}) => {
         type,
         name,
       };
-      const {secure_url, message} = await uploadImage(source);
+      const getBlob = async (fileUri: string) => {
+        const resp = await fetch(fileUri);
+        const imageBody = await resp.blob();
+        return imageBody;
+      };
+      const imageBody = await getBlob(uri);
+
+      // const {secure_url, message} = await uploadImage(source);
+      const mes = await updateProfileImage({imageBody, name});
       setIsLoading(false);
-      if (message) {
-        return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
-      }
-      setImageURI(secure_url);
+      console.log(mes);
+
+      // if (message) {s
+      //   return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
+      // }
+      // setImageURI(secure_url);
     }
   };
   const handleButton = async () => {

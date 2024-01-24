@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -18,7 +17,6 @@ import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PhoneValidation = ({navigation, route}) => {
   const [sent, setSent] = useState(false);
@@ -49,10 +47,15 @@ const PhoneValidation = ({navigation, route}) => {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
-    const isVerified = await verifyPhoneNumber(verificationNumber);
-    setIsLoading(false);
-    if (isVerified) {
-      return navigation.navigate('Profile');
+    try {
+      const isVerified = await verifyPhoneNumber(verificationNumber, user!);
+      if (isVerified) {
+        return navigation.navigate('Profile');
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,7 +66,11 @@ const PhoneValidation = ({navigation, route}) => {
       return;
     }
     setSent(true);
-    await requestVerifyMSG(recipientNo);
+    try {
+      await requestVerifyMSG(recipientNo);
+    } catch (error) {
+      console.log(error.message);
+    }
     setIsLoading(false);
   };
 

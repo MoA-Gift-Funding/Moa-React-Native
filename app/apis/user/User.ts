@@ -6,6 +6,7 @@ import {User} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
+import axios from 'axios';
 
 export const loginKakao = async (): Promise<User> => {
   try {
@@ -89,18 +90,51 @@ const loginMoA = async (
   }
 };
 
-export const joinMoA = async () => {
+export const joinMoA = async (user: Partial<User>) => {
   try {
-    const res = await Axios.post('/members', {
-      email: 'suzythetravelerr@gmail.com',
-      nickname: '루마',
-      birthyear: '1993',
-      birthday: '0520',
-      profileImageUrl: 'https://blabal.s3.com',
-    });
+    const res = await Axios.post('/members', user);
     console.log(res.data);
+    return 'created';
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getPresignedUrl = async (fileName: string) => {
+  try {
+    const url = await Axios.post('/infra/aws/s3/presigned-url', {
+      fileName,
+    }).then(res => res.data);
+    return url;
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
+export const updateProfileImage = async ({
+  imageBody,
+  name,
+}: {
+  imageBody: any;
+  name: string;
+}) => {
+  try {
+    const {presignedUrl} = await getPresignedUrl(name);
+    const res = await fetch(presignedUrl, {
+      method: 'PUT',
+      body: imageBody,
+    });
+    console.log(res);
+
+    await axios
+      .put(presignedUrl, imageBody, {headers: {'Content-Type': 'image/jpeg'}})
+      .then(res => {
+        console.log(res.data);
+      });
+  } catch (error) {
+    console.log(error.response.data);
+
+    return '다시 시도해주세요.';
   }
 };
 
@@ -197,18 +231,5 @@ export const refreshRefreshToken = async () => {
     if (message === 'Unauthorized') {
       return '[ERROR] 재로그인 필요';
     }
-  }
-};
-
-export const updateProfileImage = async (profileImage: string) => {
-  try {
-    await Axios.post('/users/update-profile-image', {profileImage})
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(console.error);
-  } catch (error) {
-    console.log(error);
-    return '다시 시도해주세요.';
   }
 };
