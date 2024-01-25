@@ -47,6 +47,7 @@
     "react-native-screens": "^3.27.0",
     "react-native-svg": "^14.0.0",
     "react-native-ui-datepicker": "^1.0.10",
+    "react-native-vector-icons": "^10.0.3",
     "react-native-webview": "^13.6.3",
     "toastify-react-native": "^5.0.0",
     "zod": "^3.22.4"

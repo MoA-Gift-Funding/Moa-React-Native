@@ -47,17 +47,22 @@ const handlers: Record<HttpStatus | string, (str?: string) => void> = {
 };
 
 const useApiError = () => {
-  const handleError = useCallback((error: AxiosError<ServerResponse>) => {
-    const httpStatus: HttpStatus | undefined = error.response?.status;
-    const httpMessage: string | undefined = error.response?.data?.message;
+  const handleError = useCallback(
+    (error: AxiosError<ServerResponse> | Error) => {
+      if (error instanceof AxiosError) {
+        const httpStatus: HttpStatus | undefined = error.response?.status;
+        const httpMessage: string | undefined = error.response?.data?.message;
 
-    if (httpStatus && handlers[httpStatus]) {
-      handlers[httpStatus](httpMessage);
-      return;
-    }
+        if (httpStatus && handlers[httpStatus]) {
+          handlers[httpStatus](httpMessage);
+          return;
+        }
 
-    handlers.default(httpMessage);
-  }, []);
+        handlers.default(httpMessage);
+      }
+    },
+    [],
+  );
 
   return {handleError};
 };
