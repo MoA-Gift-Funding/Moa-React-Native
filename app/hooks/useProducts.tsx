@@ -13,11 +13,11 @@ export default function useProducts(loadingCallback?: () => void) {
     },
   });
 
-  const categoriesQuery = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => products.getProductCategories(),
-    staleTime: 1000 * 60 * 60 * 24,
-  });
+  // const categoriesQuery = useQuery({
+  //   queryKey: ['categories'],
+  //   queryFn: () => products.getProductCategories(),
+  //   staleTime: 1000 * 60 * 60 * 24,
+  // });
 
   const categoryProductsQuery = useMutation({
     mutationFn: ({
@@ -40,7 +40,7 @@ export default function useProducts(loadingCallback?: () => void) {
   });
   return {
     productsQuery,
-    categoriesQuery,
+    // categoriesQuery,
     categoryProductsQuery,
     productDetailQuery,
   };

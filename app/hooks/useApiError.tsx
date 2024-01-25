@@ -25,7 +25,9 @@ const handler400 = async (
 const handler401to404 = async (
   httpMessage: string = '재로그인이 필요합니다. 다시 로그인해주세요.',
 ) => {
-  Toast.error(httpMessage, 'top');
+  console.log('여긴왜안됑?');
+
+  Toast.error('gugugu', 'top');
   await AsyncStorage.clear();
 };
 
@@ -49,13 +51,16 @@ const handlers: Record<HttpStatus | string, (str?: string) => void> = {
 const useApiError = () => {
   const handleError = useCallback(
     (error: AxiosError<ServerResponse> | Error) => {
+      console.log('여기로 들어오긴하는건가??');
+      console.log(error.response.status);
+      console.log(error instanceof AxiosError);
+
       if (error instanceof AxiosError) {
         const httpStatus: HttpStatus | undefined = error.response?.status;
         const httpMessage: string | undefined = error.response?.data?.message;
 
         if (httpStatus && handlers[httpStatus]) {
           handlers[httpStatus](httpMessage);
-          return;
         }
 
         handlers.default(httpMessage);

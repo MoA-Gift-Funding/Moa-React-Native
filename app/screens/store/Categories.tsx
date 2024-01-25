@@ -1,12 +1,12 @@
 import React from 'react';
 import CategoryIcon from '../../components/button/CategoryIcon';
 import {View} from 'react-native';
-import useProducts from '../../hooks/useProducts';
+// import useProducts from '../../hooks/useProducts';
 
 const Categories = () => {
-  const {
-    categoriesQuery: {data: categories},
-  } = useProducts();
+  // const {
+  //   categoriesQuery: {data: categories},
+  // } = useProducts();
 
   const cgTyper = (name: string) => {
     let type;

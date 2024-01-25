@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Image, ScrollView, View} from 'react-native';
-import Categories from './Categories';
+// import Categories from './Categories';
 import TextBold from '../../components/text/TextBold';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
@@ -28,9 +28,7 @@ const StoreMain = () => {
             }}
           />
         </View>
-        <View className="flex flex-col mt-6">
-          <Categories />
-        </View>
+        <View className="flex flex-col mt-6">{/* <Categories /> */}</View>
         <View className="flex my-8">
           <TextBold title="오늘의 인기 선물" style="text-Heading-4 ml-7" />
           <View className="flex items-center justify-center">
