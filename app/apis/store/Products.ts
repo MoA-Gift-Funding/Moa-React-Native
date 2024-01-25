@@ -10,17 +10,11 @@ export class Products {
   }
 
   async getProductCategories(): Promise<Category[]> {
-    return this.apiClient
-      .categories()
-      .then(res => {
-        return res.data.data.categories;
-      })
-      .catch(err => {
-        console.log(err);
-        console.log(err.request);
+    const categories = await this.apiClient.categories();
+    console.log(categories.data);
+    console.log(categories.status);
 
-        throw new Error('[ERROR] Categories를 가져오지 못함');
-      });
+    return categories.data.data;
   }
 
   async getProducts(page?: number, size?: number): Promise<Product[]> {

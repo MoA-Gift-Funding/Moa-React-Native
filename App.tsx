@@ -4,6 +4,7 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
+  QueryErrorResetBoundary,
 } from '@tanstack/react-query';
 import {UserContextProvider} from './app/contexts/UserContext';
 import AuthRouter from './app/router/AuthRouter';
@@ -11,11 +12,18 @@ import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
 import {ProductContextProvider} from './app/contexts/APIContext';
 import useApiError from './app/hooks/useApiError';
+import {ErrorBoundary} from 'react-error-boundary';
+import FallbackUI from './app/apis/fallbackUI';
 
 export const App = () => {
   const {handleError} = useApiError();
   const queryClient = new QueryClient({
-    defaultOptions: {mutations: {onError: handleError}},
+    defaultOptions: {
+      mutations: {onError: handleError},
+      queries: {
+        throwOnError: true,
+      },
+    },
     queryCache: new QueryCache({
       onError: handleError,
     }),
@@ -34,7 +42,13 @@ export const App = () => {
       <UserContextProvider>
         <ProductContextProvider>
           <NavigationContainer>
-            <AuthRouter />
+            <QueryErrorResetBoundary>
+              {({reset}) => (
+                <ErrorBoundary onReset={reset} FallbackComponent={FallbackUI}>
+                  <AuthRouter />
+                </ErrorBoundary>
+              )}
+            </QueryErrorResetBoundary>
           </NavigationContainer>
         </ProductContextProvider>
       </UserContextProvider>
