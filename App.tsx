@@ -14,7 +14,7 @@ import {ProductContextProvider} from './app/contexts/APIContext';
 import useApiError from './app/hooks/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/apis/fallbackUI';
-import ToastManager from 'toastify-react-native';
+import Toast from 'react-native-toast-message';
 
 export const App = () => {
   const {handleError} = useApiError();
@@ -46,12 +46,12 @@ export const App = () => {
             <QueryErrorResetBoundary>
               {({reset}) => (
                 <ErrorBoundary onReset={reset} FallbackComponent={FallbackUI}>
-                  <ToastManager />
                   <AuthRouter />
                 </ErrorBoundary>
               )}
             </QueryErrorResetBoundary>
           </NavigationContainer>
+          <Toast />
         </ProductContextProvider>
       </UserContextProvider>
     </QueryClientProvider>

@@ -1,41 +1,38 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AxiosError} from 'axios';
 import {useCallback} from 'react';
-import {Toast} from 'toastify-react-native';
-
+import Toast from 'react-native-toast-message';
 type HttpStatus = number;
 interface ServerResponse {
   message?: string;
 }
 
 const defaultHandler = (httpMessage: string = '에러가 발생했습니다.') => {
-  Toast.error(httpMessage, 'top');
+  Toast.show({type: 'error', text1: httpMessage});
 };
 
 const handler409 = async (httpMessage: string = '에러가 발생했습니다.') => {
-  Toast.error(httpMessage, 'top');
+  Toast.show({type: 'error', text1: httpMessage});
 };
 
 const handler400 = async (
   httpMessage: string = '에러가 발생했습니다. 재시도해주세요.',
 ) => {
-  Toast.error(httpMessage, 'top');
+  Toast.show({type: 'error', text1: httpMessage});
   await AsyncStorage.clear();
 };
 const handler401to404 = async (
   httpMessage: string = '재로그인이 필요합니다. 다시 로그인해주세요.',
 ) => {
-  console.log('여긴왜안됑?');
-
-  Toast.error('gugugu', 'top');
+  Toast.show({type: 'error', text1: httpMessage});
   await AsyncStorage.clear();
 };
 
 const handler500 = () => {
-  Toast.error(
-    '알 수 없는 문제가 발생하였습니다. 고객센터로 문의해주세요.',
-    'top',
-  );
+  Toast.show({
+    type: 'error',
+    text1: '알 수 없는 문제가 발생했습니다.',
+  });
 };
 
 const handlers: Record<HttpStatus | string, (str?: string) => void> = {
@@ -51,10 +48,6 @@ const handlers: Record<HttpStatus | string, (str?: string) => void> = {
 const useApiError = () => {
   const handleError = useCallback(
     (error: AxiosError<ServerResponse> | Error) => {
-      console.log('여기로 들어오긴하는건가??');
-      console.log(error.response.status);
-      console.log(error instanceof AxiosError);
-
       if (error instanceof AxiosError) {
         const httpStatus: HttpStatus | undefined = error.response?.status;
         const httpMessage: string | undefined = error.response?.data?.message;
