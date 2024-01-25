@@ -10,7 +10,7 @@ import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
 import {uploadImage} from '../../apis/cloudinary/Image';
 import {useForm} from 'react-hook-form';
-import {updateProfileImage} from '../../apis/user/User';
+import {updateProfileImage, updateUser} from '../../apis/user/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
@@ -19,6 +19,7 @@ const Profile = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
+    dispatch,
   } = useUserContext();
   const [imageURI, setImageURI] = useState(
     user?.profileImageUrl || Config.DEFAULT_IMAGE,
@@ -43,26 +44,21 @@ const Profile = ({navigation}) => {
         return imageBody;
       };
       const imageBody = await getBlob(uri);
-
-      // const {secure_url, message} = await uploadImage(source);
-      const mes = await updateProfileImage({imageBody, name});
+      const profileImageUrl = await updateProfileImage({imageBody, name});
       setIsLoading(false);
-      console.log(mes);
-
-      // if (message) {s
-      //   return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
-      // }
-      // setImageURI(secure_url);
+      setImageURI(profileImageUrl);
+      dispatch({
+        type: 'LOGIN',
+        payload: {...user!, profileImageUrl},
+      });
     }
   };
   const handleButton = async () => {
-    setIsLoading(true);
-    const res = await updateProfileImage(imageURI!);
-    if (res) {
-      return Alert.alert('네트워크 오류 오류', res, [{text: '확인'}]);
-    }
-    setIsLoading(false);
-    navigation.navigate('Contact');
+    const {birthday, birthyear, profileImageUrl, nickname} = user;
+    try {
+      await updateUser({birthday, birthyear, profileImageUrl, nickname});
+      navigation.navigate('Contact');
+    } catch (error) {}
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">
@@ -94,7 +90,7 @@ const Profile = ({navigation}) => {
       </View>
       <View className="mb-8 flex flex-col items-center">
         <NextButton
-          title="저장하기"
+          title="다음"
           handleSubmit={handleSubmit}
           onSubmit={handleButton}
         />

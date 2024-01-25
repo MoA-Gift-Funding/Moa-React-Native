@@ -19,7 +19,7 @@ export default function Login({navigation}) {
         await loginKakao().then(async user => {
           dispatch({type: 'LOGIN', payload: user});
           if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Profile');
+            navigation.navigate('Join');
           }
         });
         break;
@@ -27,7 +27,7 @@ export default function Login({navigation}) {
         await loginApple().then(async user => {
           dispatch({type: 'LOGIN', payload: user});
           if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Profile');
+            navigation.navigate('Join');
           }
         });
         break;
@@ -35,7 +35,7 @@ export default function Login({navigation}) {
         await loginNaver().then(async user => {
           dispatch({type: 'LOGIN', payload: user});
           if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Profile');
+            navigation.navigate('Join');
           }
         });
         break;

@@ -73,7 +73,6 @@ export const connectContacts = async ({
 }) => {
   try {
     const res = await Axios.post('/friends/sync-contact', {contactList});
-    console.log(res);
     return res.data;
   } catch (error: any) {
     console.log(error.response.data);

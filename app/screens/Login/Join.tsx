@@ -5,8 +5,7 @@ import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import {autoHyphenPhoneNumber} from '../../utils/regex';
-import {User} from '../../types/User';
+import {autoHyphenPhoneNumber, autoSlashBirthday} from '../../utils/regex';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 
@@ -17,13 +16,22 @@ export default function Join({navigation}) {
     dispatch,
   } = useUserContext();
 
-  const onSubmit = async (
-    data: Pick<User, 'nickname' | 'email' | 'phoneNumber'>,
-  ) => {
+  const onSubmit = async (data: {
+    nickname: string;
+    email: string;
+    phoneNumber: string;
+    fullBirthday: string;
+  }) => {
     setIsLoading(true);
+    const bdayList = data.fullBirthday.split('/');
     dispatch({
       type: 'LOGIN',
-      payload: {...user!, ...data},
+      payload: {
+        ...user!,
+        ...data,
+        birthyear: bdayList[0],
+        birthday: `${bdayList[1]}${bdayList[2]}`,
+      },
     });
     setIsLoading(false);
     navigation.navigate('PhoneValidation');
@@ -41,6 +49,7 @@ export default function Join({navigation}) {
         user?.phoneNumber && user.phoneNumber[0] === '1'
           ? '0' + user.phoneNumber
           : user?.phoneNumber,
+      fullBirthday: autoSlashBirthday(`${user?.birthyear}${user?.birthday}`),
     },
   });
 
@@ -107,6 +116,32 @@ export default function Join({navigation}) {
                 pattern: {
                   value: /^(010)-?[0-9]{3,4}-?[0-9]{4}$/,
                   message: '올바른 전화번호 형식이 아니예요.',
+                },
+              }}
+              keyboardType={'number-pad'}
+            />
+          </View>
+          <View>
+            <TextInputGroup
+              name="fullBirthday"
+              label="생년월일"
+              error={errors.fullBirthday}
+              control={control}
+              regex={autoSlashBirthday}
+              rules={{
+                required: '생년월일은 필수 입력 사항이예요.',
+                maxLength: {
+                  value: 10,
+                  message: '생년월일은 8자만 입력 가능해요.',
+                },
+                minLength: {
+                  value: 10,
+                  message: '1월은 01과 같은 형식으로 입력해주세요.',
+                },
+                pattern: {
+                  value:
+                    /(19\d\d|20[01]\d|202[0-2])[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])/,
+                  message: '올바른 생년월일을 입력해주세요.',
                 },
               }}
               keyboardType={'number-pad'}

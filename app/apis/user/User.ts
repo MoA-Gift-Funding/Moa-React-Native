@@ -124,13 +124,11 @@ export const updateProfileImage = async ({
       method: 'PUT',
       body: imageBody,
     });
-    console.log(res);
-
-    await axios
-      .put(presignedUrl, imageBody, {headers: {'Content-Type': 'image/jpeg'}})
-      .then(res => {
-        console.log(res.data);
-      });
+    const fileName = res.url.substring(
+      res.url.indexOf('images/') + 7,
+      res.url.indexOf('?'),
+    );
+    return `https://image.giftmoa.co.kr/images/${fileName}`;
   } catch (error) {
     console.log(error.response.data);
 

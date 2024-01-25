@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Image, Platform, Pressable, View} from 'react-native';
+import {Alert, Platform, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
@@ -10,7 +10,6 @@ import {UserContact} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import {connectContacts} from '../../apis/phone/Phone';
-import {joinMoA} from '../../apis/user/User';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +99,6 @@ const Contact = ({navigation}) => {
       <View className="mb-8 flex flex-col items-center">
         <Pressable
           onPress={async () => {
-            await joinMoA();
             navigation.navigate('JoinCompleted');
           }}>
           <TextRegular
