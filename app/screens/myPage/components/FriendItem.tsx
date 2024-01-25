@@ -1,28 +1,52 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 
 const FriendItem = ({
   item,
 }: {
-  item: {profileImage: string; name: string; birthday: string};
+  item: {
+    profileImage: string;
+    name: string;
+    birthday: string;
+    blocked?: boolean;
+  };
 }) => {
   const {profileImage, name, birthday} = item;
   return (
-    <View className="flex flex-row items-center py-2">
-      <Image
-        source={{
-          uri: profileImage,
-        }}
-        className="w-[56px] h-[56px] rounded-full"
-      />
-      <View className="flex flex-col ml-4">
-        <TextRegular title={name} style="text-Body-2" />
-        <TextRegular
-          title={`🎂 ${birthday.substring(0, 2)}월 ${birthday.substring(2)}일`}
-          style="text-Body-2 text-Gray-06 mt-1"
+    <View className="flex flex-row items-center justify-between py-2">
+      <View className="flex flex-row items-center">
+        <Image
+          source={{
+            uri: profileImage,
+          }}
+          className="w-[56px] h-[56px] rounded-full"
         />
+        <View className="flex flex-col ml-4">
+          <TextRegular title={name} style="text-Body-2" />
+          <TextRegular
+            title={`🎂 ${birthday.substring(0, 2)}월 ${birthday.substring(
+              2,
+            )}일`}
+            style="text-Body-2 text-Gray-06 mt-1"
+          />
+        </View>
       </View>
+      {item.blocked ? (
+        <Pressable className="bg-Gray-06 flex px-2 py-1 rounded-md">
+          <TextRegular
+            title="차단 해제"
+            style="text-Detail-1 leading-Detail-1 text-white"
+          />
+        </Pressable>
+      ) : (
+        <Pressable className="bg-Sub-01 flex px-2 py-1 rounded-md">
+          <TextRegular
+            title="차단"
+            style="text-Detail-1 text-Main-01 leading-Detail-1"
+          />
+        </Pressable>
+      )}
     </View>
   );
 };

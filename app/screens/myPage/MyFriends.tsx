@@ -20,27 +20,27 @@ const MyFriends = () => {
         <View className="flex flex-row items-center h-[48px] border-b-2 border-Gray-02 px-6">
           <Pressable
             className={cls('h-[48px] flex justify-center items-center flex-1', {
-              'border-b-2 border-Main-01': blocked,
-            })}
-            onPress={() => setBlocked(true)}>
-            <TextSemiBold
-              title="친구"
-              style={cls('text-Body-2', {'text-Gray-06': !blocked})}
-            />
-          </Pressable>
-          <Pressable
-            className={cls('h-[48px] flex justify-center items-center flex-1', {
               'border-b-2 border-Main-01': !blocked,
             })}
             onPress={() => setBlocked(false)}>
             <TextSemiBold
-              title="차단한 친구"
+              title="친구"
               style={cls('text-Body-2', {'text-Gray-06': blocked})}
+            />
+          </Pressable>
+          <Pressable
+            className={cls('h-[48px] flex justify-center items-center flex-1', {
+              'border-b-2 border-Main-01': blocked,
+            })}
+            onPress={() => setBlocked(true)}>
+            <TextSemiBold
+              title="차단한 친구"
+              style={cls('text-Body-2', {'text-Gray-06': !blocked})}
             />
           </Pressable>
         </View>
         <View className="px-6 mt-2 ">
-          {blocked && (
+          {!blocked && (
             <>
               <FriendItem
                 item={{
@@ -68,13 +68,14 @@ const MyFriends = () => {
               />
             </>
           )}
-          {!blocked && (
+          {blocked && (
             <FriendItem
               item={{
                 profileImage:
                   'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
                 name: '랄프',
                 birthday: '1204',
+                blocked: true,
               }}
             />
           )}
