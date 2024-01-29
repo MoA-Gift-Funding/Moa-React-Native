@@ -7,6 +7,65 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import axios from 'axios';
+import {UserHttpClient} from './UserHttpClient';
+import {UserFakeClient} from './UserfakeClient';
+
+export class Users {
+  constructor(private readonly apiClient: UserHttpClient | UserFakeClient) {
+    this.apiClient = apiClient;
+  }
+  async loginKakao(): Promise<User> {
+    const {accessToken} = await KaKaoLogin.login();
+    await this.loginMoA(accessToken, 'KAKAO');
+    const user = await this.getUser();
+    return user;
+  }
+
+  async loginMoA(accessToken: string, platform: string): Promise<string> {
+    try {
+      const token = await this.apiClient
+        .moaAuth(accessToken, platform)
+        .then(async res => {
+          await AsyncStorage.setItem('accessToken', res.data.accessToken);
+          Axios.defaults.headers.Authorization = `Bearer ${res.data.accessToken}`;
+          return res.data.accessToken;
+        });
+      return token;
+    } catch (error: any) {
+      console.error(error.response);
+      switch (error.response.status) {
+        case 409:
+          error.response.data.message =
+            '이미 존재하는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.';
+          return error;
+        default:
+          return error;
+      }
+    }
+  }
+
+  async getUser(): Promise<User> {
+    try {
+      const user = await this.apiClient.getUser();
+      return user.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      await AsyncStorage.clear();
+      switch (error.response.status) {
+        case 401:
+          error.response.data.message =
+            '세션이 만료되었습니다. 재로그인이 필요합니다.';
+          return error;
+        case 404:
+          error.response.data.message =
+            '세션이 만료되었습니다. 재로그인이 필요합니다.';
+          return error;
+        default:
+          return error;
+      }
+    }
+  }
+}
 
 export const loginKakao = async (): Promise<User> => {
   try {
