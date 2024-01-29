@@ -75,7 +75,7 @@ export class Users {
     }
   }
 
-  private async getUser(): Promise<User> {
+  async getUser(): Promise<User> {
     try {
       const user = await this.apiClient.getUser();
       return user.data;

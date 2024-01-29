@@ -5,16 +5,19 @@ import LoginButton from '../../components/button/LoginButton';
 import LoadingBar from '../../components/bar/LoadingBar';
 import {OauthProvider} from '../../types/User';
 import useUser from '../../hooks/useUser';
+import {useUserContext} from '../../contexts/UserContext';
 
 export default function Login({navigation}) {
   const [isLoading, setIsLoding] = useState(false);
   const textStyle = 'text-Gray-09 text-Heading-3';
   const {loginQuery} = useUser();
+  const {dispatch} = useUserContext();
 
   const handleLogin = async (platform: OauthProvider) => {
     setIsLoding(true);
     const user = await loginQuery(platform);
     if (user?.status === 'PRESIGNED_UP') {
+      dispatch({type: 'LOGIN', payload: user});
       navigation.navigate('Join');
     }
     setIsLoding(false);
