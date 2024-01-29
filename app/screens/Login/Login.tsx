@@ -1,44 +1,21 @@
 import React, {useState} from 'react';
 import {Platform, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
-import {loginApple, loginKakao, loginNaver} from '../../apis/user/User';
 import LoginButton from '../../components/button/LoginButton';
-import {useUserContext} from '../../contexts/UserContext';
 import LoadingBar from '../../components/bar/LoadingBar';
 import {OauthProvider} from '../../types/User';
+import useUser from '../../hooks/useUser';
 
 export default function Login({navigation}) {
-  const {dispatch} = useUserContext();
   const [isLoading, setIsLoding] = useState(false);
   const textStyle = 'text-Gray-09 text-Heading-3';
+  const {loginQuery} = useUser();
 
   const handleLogin = async (platform: OauthProvider) => {
     setIsLoding(true);
-    switch (platform) {
-      case 'KAKAO':
-        await loginKakao().then(async user => {
-          dispatch({type: 'LOGIN', payload: user});
-          if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Join');
-          }
-        });
-        break;
-      case 'APPLE':
-        await loginApple().then(async user => {
-          dispatch({type: 'LOGIN', payload: user});
-          if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Join');
-          }
-        });
-        break;
-      case 'NAVER':
-        await loginNaver().then(async user => {
-          dispatch({type: 'LOGIN', payload: user});
-          if (user?.status === 'PRESIGNED_UP') {
-            navigation.navigate('Join');
-          }
-        });
-        break;
+    const user = await loginQuery(platform);
+    if (user?.status === 'PRESIGNED_UP') {
+      navigation.navigate('Join');
     }
     setIsLoding(false);
   };

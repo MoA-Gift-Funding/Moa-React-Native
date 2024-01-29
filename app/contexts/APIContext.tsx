@@ -8,50 +8,6 @@ import ProductFakeClient from '../apis/store/ProductFakeClient';
 const productClient = new ProductFakeClient();
 const products = new Products(productClient);
 export const ProductContext = createContext<Products | null>(null);
-// {
-/* <Products>({
-  apiClient: '',
-  getProductCategories: async () => [
-    {id: 0, name: '', image: '', categoryType: ''},
-  ],
-  getProducts: async () => [
-    {
-      id: 0,
-      image: '',
-      brand: '',
-      name: '',
-      price: '',
-      salesNumber: '',
-      categoryType: '',
-    },
-  ],
-  getCategorizedProducts: async () => [
-    {
-      id: 0,
-      image: '',
-      brand: '',
-      name: '',
-      price: '',
-      salesNumber: '',
-      categoryType: '',
-    },
-  ],
-  getProductDetail: async () => {
-    return {
-      id: 0,
-      image: '',
-      brand: '',
-      name: '',
-      price: '',
-      salesNumber: '',
-      categoryType: '',
-      description: '',
-      notes: '',
-      directions: '',
-    };
-  },
-}); */
-// }
 export function ProductContextProvider({
   children,
 }: {

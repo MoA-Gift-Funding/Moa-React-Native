@@ -1,22 +1,19 @@
 import React from 'react';
-import {UserFormData} from '../types/User';
-import {useUserContext} from '../contexts/UserContext';
+import {OauthProvider} from '../types/User';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {updateUser} from '../apis/user/User';
+import {Users} from '../apis/user/User';
+import {UserHttpClient} from '../apis/user/UserHttpClient';
 
 export default function useUser() {
-  const {
-    userState: {
-      user: {phoneNumber},
-    },
-  } = useUserContext();
-
+  const userClient = new UserHttpClient();
+  const user = new Users(userClient);
   const queryClient = useQueryClient();
-  const {mutate: updateUserQuery, data: updatedQueryUser} = useMutation({
-    mutationFn: (formData: UserFormData) => updateUser(formData),
-    onSuccess: () =>
-      queryClient.invalidateQueries({queryKey: ['user', phoneNumber]}),
+  const {mutateAsync: loginQuery, data: updatedUser} = useMutation({
+    mutationFn: (platform: OauthProvider) => user.loginOAuth(platform),
+    onSuccess: () => {
+      queryClient.setQueryData([updatedUser?.id], updatedUser);
+    },
   });
 
-  return {updateUserQuery, updatedQueryUser};
+  return {loginQuery};
 }

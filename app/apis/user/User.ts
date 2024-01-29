@@ -2,11 +2,10 @@ import * as KaKaoLogin from '@react-native-seoul/kakao-login';
 import NaverLogin from '@react-native-seoul/naver-login';
 import {Axios} from '../axios.config';
 import Config from 'react-native-config';
-import {User} from '../../types/User';
+import {OauthProvider, User} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
-import axios from 'axios';
 import {UserHttpClient} from './UserHttpClient';
 import {UserFakeClient} from './UserfakeClient';
 
@@ -14,14 +13,46 @@ export class Users {
   constructor(private readonly apiClient: UserHttpClient | UserFakeClient) {
     this.apiClient = apiClient;
   }
-  async loginKakao(): Promise<User> {
-    const {accessToken} = await KaKaoLogin.login();
-    await this.loginMoA(accessToken, 'KAKAO');
+  async loginOAuth(platform: OauthProvider): Promise<User> {
+    switch (platform) {
+      case 'KAKAO':
+        const {accessToken} = await KaKaoLogin.login();
+        await this.loginMoA(accessToken, platform);
+        break;
+      case 'NAVER':
+        const {isSuccess, successResponse} = await NaverLogin.login({
+          appName: 'MoA',
+          consumerKey: Config.NAVER_CLIENT_KEY!,
+          consumerSecret: Config.NAVER_SECERT_KEY!,
+          serviceUrlScheme:
+            Platform.OS === 'ios'
+              ? Config.NAVER_URL_SCHEME_IOS
+              : Config.NAVER_URL_SCHEME_AOS,
+        });
+        if (isSuccess && successResponse) {
+          await this.loginMoA(successResponse?.accessToken, platform);
+        }
+        break;
+      case 'APPLE':
+        const {authorizationCode} = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        });
+        if (authorizationCode) {
+          await this.loginMoA(authorizationCode, platform);
+        }
+        break;
+      default:
+        throw new Error('유효하지않은 OAuth 플랫폼');
+    }
     const user = await this.getUser();
     return user;
   }
 
-  async loginMoA(accessToken: string, platform: string): Promise<string> {
+  private async loginMoA(
+    accessToken: string,
+    platform: string,
+  ): Promise<string> {
     try {
       const token = await this.apiClient
         .moaAuth(accessToken, platform)
@@ -44,7 +75,7 @@ export class Users {
     }
   }
 
-  async getUser(): Promise<User> {
+  private async getUser(): Promise<User> {
     try {
       const user = await this.apiClient.getUser();
       return user.data;
@@ -66,88 +97,6 @@ export class Users {
     }
   }
 }
-
-export const loginKakao = async (): Promise<User> => {
-  try {
-    const {accessToken} = await KaKaoLogin.login();
-    await loginMoA(accessToken, 'KAKAO');
-    const user = await getUser();
-    console.log(user);
-
-    return user;
-  } catch (error: any) {
-    console.log('KAKAO 인증에러 발생: ', error.response);
-    throw new Error('KAKAO 인증에러 발생');
-  }
-};
-
-export const loginApple = async (): Promise<User> => {
-  try {
-    const {authorizationCode} = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-    });
-    if (!authorizationCode) {
-      throw new Error('APPLE 인증에러 발생: ');
-    }
-    await loginMoA(authorizationCode, 'APPLE');
-    const user = await getUser();
-    return user;
-  } catch (error: any) {
-    console.log(error.response.message, error.response);
-    throw new Error('APPLE 인증에러 발생');
-  }
-};
-
-export const loginNaver = async (): Promise<User> => {
-  try {
-    const {isSuccess, successResponse, failureResponse} =
-      await NaverLogin.login({
-        appName: 'MoA',
-        consumerKey: Config.NAVER_CLIENT_KEY!,
-        consumerSecret: Config.NAVER_SECERT_KEY!,
-        serviceUrlScheme:
-          Platform.OS === 'ios'
-            ? Config.NAVER_URL_SCHEME_IOS
-            : Config.NAVER_URL_SCHEME_AOS,
-      });
-    if (!isSuccess || !successResponse) {
-      throw new Error(failureResponse?.message);
-    }
-    await loginMoA(successResponse.accessToken, 'NAVER');
-    const user = await getUser();
-    return user;
-  } catch (error: any) {
-    console.log('NAVER 인증에러 발생: ', error.response);
-    throw new Error('NAVER 인증에러 발생');
-  }
-};
-
-const loginMoA = async (
-  accessToken: string,
-  platform: string,
-): Promise<string> => {
-  try {
-    const token = await Axios.get(`/oauth/login/app/${platform}`, {
-      headers: {OAuthAccessToken: accessToken},
-    }).then(async res => {
-      await AsyncStorage.setItem('accessToken', res.data.accessToken);
-      Axios.defaults.headers.Authorization = `Bearer ${res.data.accessToken}`;
-      return res.data.accessToken;
-    });
-    return token;
-  } catch (error: any) {
-    console.error(error.response);
-    switch (error.response.status) {
-      case 409:
-        throw new Error(
-          '이미 존재하는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.',
-        );
-      default:
-        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
-    }
-  }
-};
 
 export const joinMoA = async (user: Partial<User>) => {
   try {
@@ -223,70 +172,6 @@ export const updateUser = async ({
         throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
       default:
         throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
-    }
-  }
-};
-
-export const getUser = async () => {
-  try {
-    const accessToken = await AsyncStorage.getItem('accessToken');
-    Axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    const res = await Axios.get('/members/my');
-    const user = res.data;
-    return user;
-  } catch (error: any) {
-    console.error(error);
-    await AsyncStorage.clear();
-    switch (error.response.status) {
-      case 401:
-        throw new Error('세션이 만료되었습니다. 재로그인이 필요합니다.');
-      case 404:
-        throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
-      default:
-        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
-    }
-  }
-};
-
-const saveCookie = async res => {
-  const [cookie] = res.headers['set-cookie'];
-  const jwt = JSON.stringify(cookie);
-  const refresh = jwt.substring(9, jwt.indexOf(';'));
-  await AsyncStorage.setItem('refresh', refresh);
-  return refresh;
-};
-
-export const refreshAccessToken = async () => {
-  try {
-    const refreshToken = await AsyncStorage.getItem('refresh');
-    const res = await Axios.post('/tokens/reissue-access-token', {
-      refreshToken,
-    });
-    const accessToken = res.data.data.accessToken;
-    await AsyncStorage.setItem('accessToken', accessToken);
-    return accessToken;
-  } catch (error) {
-    console.error(error);
-    const message = error.response.data.message;
-    if (message === 'Unauthorized') {
-      return 'Refresh Token Expired';
-    }
-  }
-};
-
-export const refreshRefreshToken = async () => {
-  try {
-    const refreshToken = await AsyncStorage.getItem('refresh');
-    await Axios.post('/tokens/reissue-access-token', {
-      refreshToken,
-    })
-      .then(async res => await saveCookie(res))
-      .catch(console.error);
-  } catch (error) {
-    console.error(error);
-    const message = error.response.data.message;
-    if (message === 'Unauthorized') {
-      return '[ERROR] 재로그인 필요';
     }
   }
 };
