@@ -103,14 +103,42 @@ export class Users {
     nickname,
     profileImageUrl,
   }: Partial<User>) {
-    await this.apiClient.updateUser({
-      nickname,
-      birthday,
-      birthyear,
-      profileImageUrl,
-    });
+    const updatedUser = await this.apiClient
+      .updateUser({
+        nickname,
+        birthday,
+        birthyear,
+        profileImageUrl,
+      })
+      .then(async () => {
+        const updated = await this.getUser();
+        return updated;
+      });
+    return updatedUser;
   }
 }
+
+export const getUser = async () => {
+  try {
+    const user = await Axios.get('/members/my');
+    return user.data;
+  } catch (error: any) {
+    console.error(error.response.data);
+    await AsyncStorage.clear();
+    switch (error.response.status) {
+      case 401:
+        error.response.data.message =
+          '세션이 만료되었습니다. 재로그인이 필요합니다.';
+        throw error;
+      case 404:
+        error.response.data.message =
+          '세션이 만료되었습니다. 재로그인이 필요합니다.';
+        throw error;
+      default:
+        throw error;
+    }
+  }
+};
 
 export const joinMoA = async (user: Partial<User>) => {
   try {

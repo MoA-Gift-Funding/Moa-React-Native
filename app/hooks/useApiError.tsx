@@ -24,10 +24,8 @@ const handler400 = async (
 const handler401to404 = async (
   httpMessage: string = '재로그인이 필요합니다. 다시 로그인해주세요.',
 ) => {
-  console.log(httpMessage);
   Toast.show({type: 'error', text1: httpMessage});
   await AsyncStorage.clear();
-  return;
 };
 
 const handler500 = () => {

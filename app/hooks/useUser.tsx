@@ -8,7 +8,7 @@ import {useUserContext} from '../contexts/UserContext';
 export default function useUser() {
   const userClient = new UserHttpClient();
   const user = new Users(userClient);
-  const {userState} = useUserContext();
+  // const {userState} = useUserContext();
   const queryClient = useQueryClient();
 
   const {mutateAsync: loginQuery, data: updatedUser} = useMutation({
@@ -18,10 +18,10 @@ export default function useUser() {
     },
   });
 
-  const {data: queryUser} = useQuery({
-    queryKey: ['user', userState?.user?.id],
-    queryFn: () => user.getUser(),
-  });
+  // const {data: queryUser} = useQuery({
+  //   queryKey: ['user', userState?.user?.id],
+  //   queryFn: () => user.getUser(),
+  // });
 
   const {mutate: updateUserQuery} = useMutation({
     mutationFn: data => {
@@ -29,5 +29,5 @@ export default function useUser() {
     },
   });
 
-  return {loginQuery, queryUser};
+  return {loginQuery};
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Button, Image, ImageBackground, View} from 'react-native';
-import TextRegular from '../components/text/TextRegular';
+import {ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import NextButton from '../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import TextSemiBold from '../components/text/TextSemiBold';
+// import TextRegular from '../components/text/TextRegular';
 
 const FallbackUI = ({error, resetErrorBoundary}) => {
   const {handleSubmit} = useForm();
