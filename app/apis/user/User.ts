@@ -68,9 +68,9 @@ export class Users {
         case 409:
           error.response.data.message =
             '이미 존재하는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.';
-          return error;
+          throw error;
         default:
-          return error;
+          throw error;
       }
     }
   }
@@ -86,15 +86,29 @@ export class Users {
         case 401:
           error.response.data.message =
             '세션이 만료되었습니다. 재로그인이 필요합니다.';
-          return error;
+          throw error;
         case 404:
           error.response.data.message =
             '세션이 만료되었습니다. 재로그인이 필요합니다.';
-          return error;
+          throw error;
         default:
-          return error;
+          throw error;
       }
     }
+  }
+
+  async updateUser({
+    birthday,
+    birthyear,
+    nickname,
+    profileImageUrl,
+  }: Partial<User>) {
+    await this.apiClient.updateUser({
+      nickname,
+      birthday,
+      birthyear,
+      profileImageUrl,
+    });
   }
 }
 

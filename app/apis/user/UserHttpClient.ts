@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoaHttpClient from '../MoaHttpClient';
+import {User} from '../../types/User';
 
 export class UserHttpClient extends MoaHttpClient {
   constructor() {
@@ -15,5 +16,9 @@ export class UserHttpClient extends MoaHttpClient {
     const accessToken = await AsyncStorage.getItem('accessToken');
     this.httpClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
     return this.httpClient.get('/members/my');
+  }
+
+  updateUser(data: Partial<User>) {
+    return this.httpClient.put('/members', data);
   }
 }

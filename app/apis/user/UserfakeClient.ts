@@ -1,3 +1,4 @@
+import {User} from '../../types/User';
 import {FakeHttpClient} from '../FakeHttpClient';
 
 export class UserFakeClient extends FakeHttpClient {
@@ -8,6 +9,9 @@ export class UserFakeClient extends FakeHttpClient {
     return this.httpClient.get('');
   }
   async getUser() {
+    return this.httpClient.get('');
+  }
+  updateUser(data: Partial<User>) {
     return this.httpClient.get('');
   }
 }

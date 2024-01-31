@@ -4,13 +4,12 @@ import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
-  QueryErrorResetBoundary,
+  useQueryErrorResetBoundary,
 } from '@tanstack/react-query';
 import {UserContextProvider} from './app/contexts/UserContext';
 import AuthRouter from './app/router/AuthRouter';
 import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
-import {ProductContextProvider} from './app/contexts/APIContext';
 import useApiError from './app/hooks/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/apis/fallbackUI';
@@ -23,12 +22,14 @@ export const App = () => {
       mutations: {onError: handleError},
       queries: {
         throwOnError: true,
+        retry: false,
       },
     },
     queryCache: new QueryCache({
       onError: handleError,
     }),
   });
+  const {reset} = useQueryErrorResetBoundary();
 
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
@@ -37,23 +38,16 @@ export const App = () => {
 
     return unsubscribe;
   }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
-        <ProductContextProvider>
-          <NavigationContainer>
-            <QueryErrorResetBoundary>
-              {({reset}) => (
-                <ErrorBoundary onReset={reset} FallbackComponent={FallbackUI}>
-                  <AuthRouter />
-                </ErrorBoundary>
-              )}
-            </QueryErrorResetBoundary>
-          </NavigationContainer>
-          <Toast />
-        </ProductContextProvider>
-      </UserContextProvider>
+      <NavigationContainer>
+        <ErrorBoundary onReset={reset} FallbackComponent={FallbackUI}>
+          <UserContextProvider>
+            <AuthRouter />
+          </UserContextProvider>
+        </ErrorBoundary>
+      </NavigationContainer>
+      <Toast />
     </QueryClientProvider>
   );
 };

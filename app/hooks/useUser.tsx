@@ -23,5 +23,11 @@ export default function useUser() {
     queryFn: () => user.getUser(),
   });
 
+  const {mutate: updateUserQuery} = useMutation({
+    mutationFn: data => {
+      user.updateUser(data);
+    },
+  });
+
   return {loginQuery, queryUser};
 }

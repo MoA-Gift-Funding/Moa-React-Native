@@ -62,7 +62,10 @@ export const UserContextProvider = ({
       const accessToken = await AsyncStorage.getItem('accessToken');
       try {
         if (accessToken) {
-          dispatch({type: 'LOGIN', payload: queryUser!});
+          dispatch({
+            type: 'LOGIN',
+            payload: queryUser!,
+          });
         }
       } catch (error) {
         console.error(error);
