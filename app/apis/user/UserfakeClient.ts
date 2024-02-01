@@ -14,4 +14,13 @@ export class UserFakeClient extends FakeHttpClient {
   updateUser(data: Partial<User>) {
     return this.httpClient.get('');
   }
+  verifyMobile(verificationNumber: string) {
+    return this.httpClient.get('');
+  }
+  signUp(user: Partial<User>) {
+    return this.httpClient.get('');
+  }
+  requestMobileVerification(phoneNumber: string) {
+    return this.httpClient.get('');
+  }
 }

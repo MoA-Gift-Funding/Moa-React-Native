@@ -8,6 +8,7 @@ import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
 import {UserHttpClient} from './UserHttpClient';
 import {UserFakeClient} from './UserfakeClient';
+import Toast from 'react-native-toast-message';
 
 export class Users {
   constructor(private readonly apiClient: UserHttpClient | UserFakeClient) {
@@ -63,7 +64,7 @@ export class Users {
         });
       return token;
     } catch (error: any) {
-      console.error(error.response);
+      console.error(error.response.data);
       switch (error.response.status) {
         case 409:
           error.response.data.message =
@@ -81,18 +82,15 @@ export class Users {
       return user.data;
     } catch (error: any) {
       console.error(error.response.data);
-      await AsyncStorage.clear();
       switch (error.response.status) {
         case 401:
-          error.response.data.message =
-            '세션이 만료되었습니다. 재로그인이 필요합니다.';
-          throw error;
+          Toast.show({type: 'error', text1: error.response.data.message});
+          return error;
         case 404:
-          error.response.data.message =
-            '세션이 만료되었습니다. 재로그인이 필요합니다.';
-          throw error;
+          Toast.show({type: 'error', text1: error.response.data.message});
+          return error;
         default:
-          throw error;
+          return error;
       }
     }
   }
@@ -103,42 +101,71 @@ export class Users {
     nickname,
     profileImageUrl,
   }: Partial<User>) {
-    const updatedUser = await this.apiClient
-      .updateUser({
+    try {
+      await this.apiClient.updateUser({
         nickname,
         birthday,
         birthyear,
         profileImageUrl,
-      })
-      .then(async () => {
-        const updated = await this.getUser();
-        return updated;
       });
-    return updatedUser;
-  }
-}
-
-export const getUser = async () => {
-  try {
-    const user = await Axios.get('/members/my');
-    return user.data;
-  } catch (error: any) {
-    console.error(error.response.data);
-    await AsyncStorage.clear();
-    switch (error.response.status) {
-      case 401:
-        error.response.data.message =
-          '세션이 만료되었습니다. 재로그인이 필요합니다.';
-        throw error;
-      case 404:
-        error.response.data.message =
-          '세션이 만료되었습니다. 재로그인이 필요합니다.';
-        throw error;
-      default:
-        throw error;
+      const updated = await this.getUser();
+      return updated;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
     }
   }
-};
+
+  async joinMoA(user: Partial<User>) {
+    try {
+      const res = await this.apiClient.signUp(user);
+      return res.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
+
+  async requestVerification(phoneNumber: string) {
+    try {
+      const requested = await this.apiClient.requestMobileVerification(
+        phoneNumber,
+      );
+      return requested.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        case 403:
+          error.response.data.message =
+            '인증번호가 일치하지 않습니다. 다시 시도해주세요.';
+          throw error;
+        case 409:
+          error.response.data.message =
+            '이미 사용중인 번호입니다. 고객센터로 문의바랍니다.';
+          throw error;
+        default:
+          throw error;
+      }
+    }
+  }
+
+  async verifyPhoneNumber(verificationNumber: string) {
+    try {
+      const res = await this.apiClient.verifyMobile(verificationNumber);
+      return res.data;
+    } catch (error: any) {
+      console.log(error.response.data);
+      switch (error.response.status) {
+        case 409:
+          error.response.data.message =
+            '이미 사용중인 번호입니다. 고객센터로 문의바랍니다.';
+          throw error;
+        default:
+          throw error;
+      }
+    }
+  }
+}
 
 export const joinMoA = async (user: Partial<User>) => {
   try {

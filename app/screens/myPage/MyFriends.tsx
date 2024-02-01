@@ -9,9 +9,12 @@ import {
 import FriendItem from './components/FriendItem';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import cls from 'classnames';
+import useFriends from '../../hooks/useFriends';
 
 const MyFriends = () => {
   const [blocked, setBlocked] = useState(false);
+  const {friendsQuery} = useFriends();
+
   return (
     <KeyboardAvoidingView
       className="bg-white h-full"

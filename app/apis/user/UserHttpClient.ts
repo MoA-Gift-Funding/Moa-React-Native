@@ -21,4 +21,20 @@ export class UserHttpClient extends MoaHttpClient {
   updateUser(data: Partial<User>) {
     return this.httpClient.put('/members', data);
   }
+
+  requestMobileVerification(phoneNumber: string) {
+    return this.httpClient.post('/members/verification/phone/send-number', {
+      phoneNumber,
+    });
+  }
+
+  verifyMobile(verificationNumber: string) {
+    return this.httpClient.post('/members/verification/phone/verify', {
+      verificationNumber,
+    });
+  }
+
+  signUp(user: Partial<User>) {
+    return this.httpClient.post('/members', user);
+  }
 }

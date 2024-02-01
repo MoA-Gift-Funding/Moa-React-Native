@@ -1,10 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {Dispatch, createContext, useEffect, useReducer} from 'react';
 import {User} from '../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useUser from '../hooks/useUser';
 import {UserHttpClient} from '../apis/user/UserHttpClient';
-import {Users, getUser} from '../apis/user/User';
+import {Users} from '../apis/user/User';
 
 interface State {
   authenticated: boolean;
@@ -19,6 +18,7 @@ type Action =
 interface UserContextProps {
   userState: State;
   dispatch: Dispatch<Action>;
+  userApi: Users;
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -28,6 +28,7 @@ export const UserContext = createContext<UserContextProps>({
     isLoading: true,
   },
   dispatch: () => {},
+  userApi: new Users(new UserHttpClient()),
 });
 
 const userReducer = (state: State, {type, payload}: Action) => {
@@ -58,12 +59,18 @@ export const UserContextProvider = ({
     defaultDispatch(action);
   };
 
+  const userApi = useMemo(() => {
+    const userClient = new UserHttpClient();
+    const user = new Users(userClient);
+    return user;
+  }, []);
+
   useEffect(() => {
     async function loadUser() {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      const user = await getUser();
       try {
         if (accessToken) {
+          const user = await userApi.getUser();
           dispatch({
             type: 'LOGIN',
             payload: user,
@@ -76,9 +83,10 @@ export const UserContextProvider = ({
       }
     }
     loadUser();
-  }, []);
+  }, [userApi]);
+
   return (
-    <UserContext.Provider value={{userState, dispatch}}>
+    <UserContext.Provider value={{userState, dispatch, userApi}}>
       {children}
     </UserContext.Provider>
   );

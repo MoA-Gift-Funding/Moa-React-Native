@@ -11,21 +11,22 @@ import TextInputGroup from '../../components/text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
 import NextButton from '../../components/button/NextButton';
-import {requestVerifyMSG, verifyPhoneNumber} from '../../apis/phone/Phone';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
+import useUser from '../../hooks/useUser';
 
-const PhoneValidation = ({navigation, route}) => {
+const PhoneValidation = () => {
   const [sent, setSent] = useState(false);
   const [date, setDate] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
   } = useUserContext();
-  console.log(user);
+
+  const {requestMobileQuery, verifyMobileQuery, signUpQuery} = useUser();
 
   const {
     control,
@@ -47,16 +48,9 @@ const PhoneValidation = ({navigation, route}) => {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
-    try {
-      const isVerified = await verifyPhoneNumber(verificationNumber, user!);
-      if (isVerified) {
-        return navigation.navigate('Profile');
-      }
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    verifyMobileQuery(verificationNumber);
+    signUpQuery(user!);
+    setIsLoading(false);
   };
 
   const handleMSGButton = async ({recipientNo}: {recipientNo: string}) => {
@@ -66,11 +60,7 @@ const PhoneValidation = ({navigation, route}) => {
       return;
     }
     setSent(true);
-    try {
-      await requestVerifyMSG(recipientNo);
-    } catch (error) {
-      console.log(error.message);
-    }
+    requestMobileQuery(recipientNo);
     setIsLoading(false);
   };
 

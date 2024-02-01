@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
 import {AxiosError} from 'axios';
 import {useCallback} from 'react';
 import Toast from 'react-native-toast-message';
@@ -19,13 +20,14 @@ const handler400 = async (
   httpMessage: string = '에러가 발생했습니다. 재시도해주세요.',
 ) => {
   Toast.show({type: 'error', text1: httpMessage});
-  await AsyncStorage.clear();
+  // await AsyncStorage.clear();
 };
 const handler401to404 = async (
   httpMessage: string = '재로그인이 필요합니다. 다시 로그인해주세요.',
 ) => {
+  console.log('여기로 왔는데?!');
   Toast.show({type: 'error', text1: httpMessage});
-  await AsyncStorage.clear();
+  // await AsyncStorage.clear();
 };
 
 const handler500 = () => {
