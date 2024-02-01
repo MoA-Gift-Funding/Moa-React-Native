@@ -1,7 +1,7 @@
 import React from 'react';
 import {FriendsHttpClient} from '../apis/friends/FriendsHttpClients';
 import {Friends} from '../apis/friends/Friends';
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useUserContext} from '../contexts/UserContext';
 
 export default function useFriends() {
@@ -12,10 +12,24 @@ export default function useFriends() {
     userState: {user},
   } = useUserContext();
 
+  const queryClient = useQueryClient();
+
   const {data: friendsQuery} = useQuery({
     queryKey: ['friends', user?.id],
-    queryFn: async () => await friends.getList(),
+    queryFn: () => friends.getList(),
   });
 
-  return {friendsQuery};
+  const {mutate: blockQuery} = useMutation({
+    mutationFn: (friendId: number) => friends.block(friendId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: ['friends', user?.id]}),
+  });
+
+  const {mutate: unblockQuery} = useMutation({
+    mutationFn: (friendId: number) => friends.unblock(friendId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: ['friends', user?.id]}),
+  });
+
+  return {friendsQuery, blockQuery, unblockQuery};
 }

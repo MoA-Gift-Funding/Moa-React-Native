@@ -6,11 +6,13 @@ import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
 import MenuCategory from './components/MenuCategory';
 import MenuCategoryTop from './components/MenuCategoryTop';
+import useFriends from '../../hooks/useFriends';
 
 const MyPageMain = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
+  const {friendsQuery} = useFriends();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -69,7 +71,7 @@ const MyPageMain = ({navigation}) => {
               }
             />
             <MenuCategoryTop
-              dataLength={102}
+              dataLength={friendsQuery?.length || 0}
               title="친구"
               onPress={() =>
                 navigation.navigate('MyFriends', {headerTitle: '친구'})

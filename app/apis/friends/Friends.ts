@@ -19,11 +19,21 @@ export class Friends {
   }
 
   async block(friendId: number) {
-    await this.apiClient.blockFriend(friendId);
+    try {
+      await this.apiClient.blockFriend(friendId);
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
   }
 
   async unblock(friendId: number) {
-    await this.apiClient.unblockFriend(friendId);
+    try {
+      await this.apiClient.unblockFriend(friendId);
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
   }
 
   async syncronize(contacts: {contactList: Contact[]}) {

@@ -10,6 +10,7 @@ import FriendItem from './components/FriendItem';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import cls from 'classnames';
 import useFriends from '../../hooks/useFriends';
+import TextRegular from '../../components/text/TextRegular';
 
 const MyFriends = () => {
   const [blocked, setBlocked] = useState(false);
@@ -42,34 +43,66 @@ const MyFriends = () => {
             />
           </Pressable>
         </View>
+
         <View className="px-6 mt-2 ">
+          {!blocked && (
+            <TextRegular
+              title="내 펀딩을 노출하고 싶지 않은 친구를 차단할 수 있어요."
+              style="text-center text-Gray-06 my-2 text-Detail-1"
+            />
+          )}
           {!blocked &&
             friendsQuery
               ?.filter(friends => !friends.isBlocked)
-              .map(({profileImageUrl, customNickname, birthday, isBlocked}) => (
-                <FriendItem
-                  item={{
-                    profileImageUrl,
-                    customNickname,
-                    birthday,
-                    isBlocked,
-                  }}
-                />
-              ))}
-
+              .map(
+                ({
+                  profileImageUrl,
+                  customNickname,
+                  birthday,
+                  isBlocked,
+                  id,
+                }) => (
+                  <FriendItem
+                    key={id}
+                    item={{
+                      id,
+                      profileImageUrl,
+                      customNickname,
+                      birthday,
+                      isBlocked,
+                    }}
+                  />
+                ),
+              )}
+          {blocked && (
+            <TextRegular
+              title="차단한 친구에게는 내가 만든 펀딩이 보이지 않아요"
+              style="text-center text-Gray-06 my-2 text-Detail-1"
+            />
+          )}
           {blocked &&
             friendsQuery
               ?.filter(friends => friends.isBlocked)
-              .map(({profileImageUrl, customNickname, birthday, isBlocked}) => (
-                <FriendItem
-                  item={{
-                    profileImageUrl,
-                    customNickname,
-                    birthday,
-                    isBlocked,
-                  }}
-                />
-              ))}
+              .map(
+                ({
+                  profileImageUrl,
+                  customNickname,
+                  birthday,
+                  isBlocked,
+                  id,
+                }) => (
+                  <FriendItem
+                    key={id}
+                    item={{
+                      id,
+                      profileImageUrl,
+                      customNickname,
+                      birthday,
+                      isBlocked,
+                    }}
+                  />
+                ),
+              )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

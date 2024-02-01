@@ -19,11 +19,15 @@ export class FriendsHttpClient extends MoaHttpClient {
     return this.httpClient.post('/friends/sync-contact', contacts);
   }
 
-  blockFriend(id: number) {
+  async blockFriend(id: number) {
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    this.httpClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
     return this.httpClient.post(`/friends/block/${id}`);
   }
 
-  unblockFriend(id: number) {
-    return this.httpClient.post(`/friends/block/${id}`);
+  async unblockFriend(id: number) {
+    const accessToken = await AsyncStorage.getItem('accessToken');
+    this.httpClient.defaults.headers.Authorization = `Bearer ${accessToken}`;
+    return this.httpClient.post(`/friends/unblock/${id}`);
   }
 }
