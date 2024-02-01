@@ -1,14 +1,10 @@
 import React from 'react';
 import {OauthProvider, User} from '../types/User';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {Users} from '../apis/user/User';
-import {UserHttpClient} from '../apis/user/UserHttpClient';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useUserContext} from '../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
 
 export default function useUser() {
-  // const userClient = new UserHttpClient();
-  // const user = new Users(userClient);
   const {userApi} = useUserContext();
   const queryClient = useQueryClient();
 
@@ -19,15 +15,9 @@ export default function useUser() {
     },
   });
 
-  // const {data: queryUser} = useQuery({
-  //   queryKey: ['user', userState?.user?.id || ''],
-  //   queryFn: () => user.getUser(),
-  // });
-
   const {mutate: updateUserQuery} = useMutation({
-    mutationFn: data => {
-      userApi.updateUser(data);
-    },
+    mutationFn: (data: Partial<User>) => userApi.updateUser(data),
+    onSuccess: () => navigation.navigate('Contact'),
   });
 
   const {mutate: requestMobileQuery} = useMutation({
@@ -46,5 +36,17 @@ export default function useUser() {
     onSuccess: () => navigation.navigate('Profile'),
   });
 
-  return {loginQuery, requestMobileQuery, verifyMobileQuery, signUpQuery};
+  const {mutateAsync: updateProfileImageQuery} = useMutation({
+    mutationFn: (data: {imageBody: any; name: string}) =>
+      userApi.updateProfileImage(data),
+  });
+
+  return {
+    loginQuery,
+    requestMobileQuery,
+    verifyMobileQuery,
+    signUpQuery,
+    updateUserQuery,
+    updateProfileImageQuery,
+  };
 }

@@ -90,6 +90,7 @@ export class Users {
           Toast.show({type: 'error', text1: error.response.data.message});
           return error;
         default:
+          Toast.show({type: 'error', text1: error.response.data.message});
           return error;
       }
     }
@@ -102,21 +103,20 @@ export class Users {
     profileImageUrl,
   }: Partial<User>) {
     try {
-      await this.apiClient.updateUser({
+      const res = await this.apiClient.updateUser({
         nickname,
         birthday,
         birthyear,
         profileImageUrl,
       });
-      const updated = await this.getUser();
-      return updated;
+      return res.data;
     } catch (error: any) {
       console.error(error.response.data);
       throw error;
     }
   }
 
-  async joinMoA(user: Partial<User>) {
+  async joinMoA(user: Partial<User>): Promise<string> {
     try {
       const res = await this.apiClient.signUp(user);
       return res.data;
@@ -136,12 +136,10 @@ export class Users {
       console.error(error.response.data);
       switch (error.response.status) {
         case 403:
-          error.response.data.message =
-            '인증번호가 일치하지 않습니다. 다시 시도해주세요.';
+          error.response.data.message = '인증번호가 일치하지 않아요🥲';
           throw error;
         case 409:
-          error.response.data.message =
-            '이미 사용중인 번호입니다. 고객센터로 문의바랍니다.';
+          error.response.data.message = '이미 사용중인 번호예요🥲';
           throw error;
         default:
           throw error;
@@ -158,60 +156,52 @@ export class Users {
       switch (error.response.status) {
         case 409:
           error.response.data.message =
-            '이미 사용중인 번호입니다. 고객센터로 문의바랍니다.';
+            '이미 사용중인 번호예요. 고객센터로 문의해주세요🙏🏻';
           throw error;
         default:
           throw error;
       }
     }
   }
+
+  private async getPresignedUrl(fileName: string) {
+    try {
+      const url = await this.apiClient.getPresignedUrl(fileName);
+      return url.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
+
+  async updateProfileImage({
+    imageBody,
+    name,
+  }: {
+    imageBody: any;
+    name: string;
+  }): Promise<string> {
+    try {
+      const {presignedUrl} = await this.getPresignedUrl(name);
+      const res = await fetch(presignedUrl, {
+        method: 'PUT',
+        body: imageBody,
+      });
+      const fileName = res.url.substring(
+        res.url.indexOf('images/') + 7,
+        res.url.indexOf('?'),
+      );
+      return `https://image.giftmoa.co.kr/images/${fileName}`;
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: '등록에 실패했어요. 다시 시도해주세요🥲',
+      });
+      throw error;
+    }
+  }
 }
-
-export const joinMoA = async (user: Partial<User>) => {
-  try {
-    const res = await Axios.post('/members', user);
-    console.log(res.data);
-    return 'created';
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getPresignedUrl = async (fileName: string) => {
-  try {
-    const url = await Axios.post('/infra/aws/s3/presigned-url', {
-      fileName,
-    }).then(res => res.data);
-    return url;
-  } catch (error) {
-    console.log(error.response);
-  }
-};
-
-export const updateProfileImage = async ({
-  imageBody,
-  name,
-}: {
-  imageBody: any;
-  name: string;
-}) => {
-  try {
-    const {presignedUrl} = await getPresignedUrl(name);
-    const res = await fetch(presignedUrl, {
-      method: 'PUT',
-      body: imageBody,
-    });
-    const fileName = res.url.substring(
-      res.url.indexOf('images/') + 7,
-      res.url.indexOf('?'),
-    );
-    return `https://image.giftmoa.co.kr/images/${fileName}`;
-  } catch (error) {
-    console.log(error.response.data);
-
-    return '다시 시도해주세요.';
-  }
-};
 
 export const updateUser = async ({
   birthday,

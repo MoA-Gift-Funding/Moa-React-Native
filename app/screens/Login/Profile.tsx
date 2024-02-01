@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
-import {Alert, Image, Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCamera} from '@fortawesome/free-solid-svg-icons';
-import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
-import {uploadImage} from '../../apis/cloudinary/Image';
 import {useForm} from 'react-hook-form';
-import {updateProfileImage, updateUser} from '../../apis/user/User';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {updateUser} from '../../apis/user/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
+import useUser from '../../hooks/useUser';
 
 const Profile = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +22,7 @@ const Profile = ({navigation}) => {
   const [imageURI, setImageURI] = useState(
     user?.profileImageUrl || Config.DEFAULT_IMAGE,
   );
+  const {updateProfileImageQuery, updateUserQuery} = useUser();
   const {handleSubmit} = useForm();
   const onPress = async () => {
     setIsLoading(true);
@@ -31,22 +30,16 @@ const Profile = ({navigation}) => {
     if (assets) {
       const file = assets[0];
       const uri = file.uri;
-      const type = file.type;
-      const name = file.fileName;
-      const source = {
-        uri,
-        type,
-        name,
-      };
+      const name = file.fileName!;
       const getBlob = async (fileUri: string) => {
         const resp = await fetch(fileUri);
         const imageBody = await resp.blob();
         return imageBody;
       };
-      const imageBody = await getBlob(uri);
-      const profileImageUrl = await updateProfileImage({imageBody, name});
+      const imageBody = await getBlob(uri!);
+      const profileImageUrl = await updateProfileImageQuery({imageBody, name});
       setIsLoading(false);
-      setImageURI(profileImageUrl);
+      setImageURI(profileImageUrl || imageURI);
       dispatch({
         type: 'LOGIN',
         payload: {...user!, profileImageUrl},
@@ -55,10 +48,7 @@ const Profile = ({navigation}) => {
   };
   const handleButton = async () => {
     const {birthday, birthyear, profileImageUrl, nickname} = user;
-    try {
-      await updateUser({birthday, birthyear, profileImageUrl, nickname});
-      navigation.navigate('Contact');
-    } catch (error) {}
+    updateUserQuery({birthday, birthyear, profileImageUrl, nickname});
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">

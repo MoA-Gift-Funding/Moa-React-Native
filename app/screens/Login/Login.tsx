@@ -15,12 +15,17 @@ export default function Login({navigation}) {
 
   const handleLogin = async (platform: OauthProvider) => {
     setIsLoding(true);
-    const user = await loginQuery(platform);
-    if (user?.status === 'PRESIGNED_UP') {
-      dispatch({type: 'LOGIN', payload: user});
-      navigation.navigate('Join');
+    try {
+      const user = await loginQuery(platform);
+      if (user?.status === 'PRESIGNED_UP') {
+        dispatch({type: 'LOGIN', payload: user});
+        navigation.navigate('Join');
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoding(false);
     }
-    setIsLoding(false);
   };
 
   return (

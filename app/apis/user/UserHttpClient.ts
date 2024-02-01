@@ -1,3 +1,4 @@
+import {getPresignedUrl} from './User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoaHttpClient from '../MoaHttpClient';
 import {User} from '../../types/User';
@@ -36,5 +37,11 @@ export class UserHttpClient extends MoaHttpClient {
 
   signUp(user: Partial<User>) {
     return this.httpClient.post('/members', user);
+  }
+
+  getPresignedUrl(fileName: string) {
+    return this.httpClient.post('/infra/aws/s3/presigned-url', {
+      fileName,
+    });
   }
 }

@@ -23,4 +23,7 @@ export class UserFakeClient extends FakeHttpClient {
   requestMobileVerification(phoneNumber: string) {
     return this.httpClient.get('');
   }
+  getPresignedUrl(fileName: string) {
+    return this.httpClient.get('');
+  }
 }
