@@ -6,24 +6,24 @@ const FriendItem = ({
   item,
 }: {
   item: {
-    profileImage: string;
-    name: string;
+    profileImageUrl: string;
+    customNickname: string;
     birthday: string;
-    blocked?: boolean;
+    isBlocked: boolean;
   };
 }) => {
-  const {profileImage, name, birthday} = item;
+  const {profileImageUrl, customNickname, birthday} = item;
   return (
     <View className="flex flex-row items-center justify-between py-2">
       <View className="flex flex-row items-center">
         <Image
           source={{
-            uri: profileImage,
+            uri: profileImageUrl,
           }}
           className="w-[56px] h-[56px] rounded-full"
         />
         <View className="flex flex-col ml-4">
-          <TextRegular title={name} style="text-Body-2" />
+          <TextRegular title={customNickname} style="text-Body-2" />
           <TextRegular
             title={`🎂 ${birthday.substring(0, 2)}월 ${birthday.substring(
               2,
@@ -32,7 +32,7 @@ const FriendItem = ({
           />
         </View>
       </View>
-      {item.blocked ? (
+      {item.isBlocked ? (
         <Pressable className="bg-Gray-06 flex px-2 py-1 rounded-md">
           <TextRegular
             title="차단 해제"

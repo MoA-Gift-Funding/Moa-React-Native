@@ -26,3 +26,15 @@ export type Contact = {
   name: string | undefined;
   phoneNumber: string | undefined;
 };
+
+export type Friend = {
+  birthday: string;
+  birthyear: string;
+  customNickname: string;
+  id: number;
+  isBlocked: false;
+  memberId: number;
+  phoneNumber: string;
+  profileImageUrl: string;
+  realNickName: string;
+};

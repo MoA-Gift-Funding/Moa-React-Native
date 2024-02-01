@@ -43,45 +43,33 @@ const MyFriends = () => {
           </Pressable>
         </View>
         <View className="px-6 mt-2 ">
-          {!blocked && (
-            <>
-              <FriendItem
-                item={{
-                  profileImage:
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
-                  name: '랄프',
-                  birthday: '1204',
-                }}
-              />
-              <FriendItem
-                item={{
-                  profileImage:
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
-                  name: '배수지',
-                  birthday: '0204',
-                }}
-              />
-              <FriendItem
-                item={{
-                  profileImage:
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png',
-                  name: '루피',
-                  birthday: '0711',
-                }}
-              />
-            </>
-          )}
-          {blocked && (
-            <FriendItem
-              item={{
-                profileImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
-                name: '랄프',
-                birthday: '1204',
-                blocked: true,
-              }}
-            />
-          )}
+          {!blocked &&
+            friendsQuery
+              ?.filter(friends => !friends.isBlocked)
+              .map(({profileImageUrl, customNickname, birthday, isBlocked}) => (
+                <FriendItem
+                  item={{
+                    profileImageUrl,
+                    customNickname,
+                    birthday,
+                    isBlocked,
+                  }}
+                />
+              ))}
+
+          {blocked &&
+            friendsQuery
+              ?.filter(friends => friends.isBlocked)
+              .map(({profileImageUrl, customNickname, birthday, isBlocked}) => (
+                <FriendItem
+                  item={{
+                    profileImageUrl,
+                    customNickname,
+                    birthday,
+                    isBlocked,
+                  }}
+                />
+              ))}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

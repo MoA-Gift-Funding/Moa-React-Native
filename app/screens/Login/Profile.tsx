@@ -8,12 +8,11 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import Config from 'react-native-config';
 import {useUserContext} from '../../contexts/UserContext';
 import {useForm} from 'react-hook-form';
-import {updateUser} from '../../apis/user/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useUser from '../../hooks/useUser';
 
-const Profile = ({navigation}) => {
+const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},

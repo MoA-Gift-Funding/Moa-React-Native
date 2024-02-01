@@ -202,35 +202,3 @@ export class Users {
     }
   }
 }
-
-export const updateUser = async ({
-  birthday,
-  birthyear,
-  nickname,
-  profileImageUrl,
-}: Partial<User>): Promise<User> => {
-  try {
-    const user = await Axios.put('/members', {
-      nickname,
-      birthday,
-      birthyear,
-      profileImageUrl,
-    }).then(() => {
-      const updated = getUser();
-      return updated;
-    });
-    return user;
-  } catch (error: any) {
-    console.error(error.response);
-    switch (error.response.status) {
-      case 401:
-        await AsyncStorage.clear();
-        throw new Error('세션이 만료되었습니다. 재로그인이 필요합니다.');
-      case 404:
-        await AsyncStorage.clear();
-        throw new Error('유효하지 않은 회원입니다. 재로그인이 필요합니다.');
-      default:
-        throw new Error('네트워크 에러가 발생했습니다. 다시 시도해주세요.');
-    }
-  }
-};

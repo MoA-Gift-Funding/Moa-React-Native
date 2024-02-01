@@ -1,4 +1,3 @@
-import {getPresignedUrl} from './User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MoaHttpClient from '../MoaHttpClient';
 import {User} from '../../types/User';

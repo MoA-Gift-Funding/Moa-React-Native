@@ -3,8 +3,6 @@ import {Image, SafeAreaView, View} from 'react-native';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import {useUserContext} from '../../contexts/UserContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getUser} from '../../apis/user/User';
 import TextBold from '../../components/text/TextBold';
 import TextRegular from '../../components/text/TextRegular';
 
@@ -12,11 +10,12 @@ const JoinCompleted = ({navigation}) => {
   const {handleSubmit} = useForm();
   const {
     userState: {user},
+    userApi,
     dispatch,
   } = useUserContext();
   const handleDone = async () => {
-    const user = await getUser();
-    dispatch({type: 'LOGIN', payload: {...user}});
+    const found = await userApi.getUser();
+    dispatch({type: 'LOGIN', payload: {...found}});
     navigation.navigate('Home');
   };
 

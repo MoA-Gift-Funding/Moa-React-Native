@@ -1,4 +1,4 @@
-import {Contact} from '../../types/User';
+import {Contact, Friend} from '../../types/User';
 import {FriendsHttpClient} from './FriendsHttpClients';
 
 export class Friends {
@@ -8,9 +8,14 @@ export class Friends {
     this.apiClient = apiClient;
   }
 
-  async getList(): Promise<Contact[]> {
-    const friends = await this.apiClient.getFriends();
-    return friends.data;
+  async getList(): Promise<Friend[]> {
+    try {
+      const friends = await this.apiClient.getFriends();
+      return friends.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
   }
 
   async block(friendId: number) {

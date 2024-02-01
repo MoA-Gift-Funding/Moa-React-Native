@@ -14,7 +14,7 @@ export default function useFriends() {
 
   const {data: friendsQuery} = useQuery({
     queryKey: ['friends', user?.id],
-    queryFn: () => friends.getList(),
+    queryFn: async () => await friends.getList(),
   });
 
   return {friendsQuery};
