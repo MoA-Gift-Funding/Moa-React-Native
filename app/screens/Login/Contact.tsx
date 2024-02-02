@@ -9,11 +9,12 @@ import Contacts from 'react-native-contacts';
 import {UserContact} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
-import {connectContacts} from '../../apis/phone/Phone';
+import useFriends from '../../hooks/useFriends';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {handleSubmit} = useForm();
+  const {syncContactsQuery} = useFriends();
   const getContacts = async () => {
     const organized: UserContact = {contactList: []};
     if (Platform.OS === 'android') {
@@ -36,7 +37,7 @@ const Contact = ({navigation}) => {
               });
             })
             .then(async () => {
-              await connectContacts(organized);
+              syncContactsQuery(organized);
             })
             .catch(e => {
               console.log(e);
@@ -59,7 +60,7 @@ const Contact = ({navigation}) => {
           });
         })
         .then(async () => {
-          await connectContacts(organized);
+          syncContactsQuery(organized);
         })
         .catch(error => {
           console.error('Permission error: ', error);

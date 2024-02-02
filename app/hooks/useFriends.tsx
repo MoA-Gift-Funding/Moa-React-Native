@@ -3,6 +3,7 @@ import {FriendsHttpClient} from '../apis/friends/FriendsHttpClients';
 import {Friends} from '../apis/friends/Friends';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useUserContext} from '../contexts/UserContext';
+import {Contact} from '../types/User';
 
 export default function useFriends() {
   const client = new FriendsHttpClient();
@@ -31,5 +32,10 @@ export default function useFriends() {
       queryClient.invalidateQueries({queryKey: ['friends', user?.id]}),
   });
 
-  return {friendsQuery, blockQuery, unblockQuery};
+  const {mutate: syncContactsQuery} = useMutation({
+    mutationFn: (contacts: {contactList: Contact[]}) =>
+      friends.syncronize(contacts),
+  });
+
+  return {friendsQuery, blockQuery, unblockQuery, syncContactsQuery};
 }

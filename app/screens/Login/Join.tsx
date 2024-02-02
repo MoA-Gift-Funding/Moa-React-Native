@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  View,
+} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import NextButton from '../../components/button/NextButton';
 import TextInputGroup from '../../components/text/TextInputGroup';
@@ -8,9 +14,15 @@ import {useUserContext} from '../../contexts/UserContext';
 import {autoHyphenPhoneNumber, autoSlashBirthday} from '../../utils/regex';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import TextRegular from '../../components/text/TextRegular';
+import TextDeepLink from '../../components/text/TextDeepLink';
 
 export default function Join({navigation}) {
   const [isLoading, setIsLoading] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [error, setError] = useState(false);
   const {
     userState: {user},
     dispatch,
@@ -22,6 +34,10 @@ export default function Join({navigation}) {
     phoneNumber: string;
     fullBirthday: string;
   }) => {
+    if (!checked) {
+      setError(true);
+      return;
+    }
     setIsLoading(true);
     const bdayList = data.fullBirthday.split('/');
     dispatch({
@@ -91,7 +107,7 @@ export default function Join({navigation}) {
               control={control}
               editable={!user?.email}
               rules={{
-                required: '이메일은 필수 입력 사항이예요',
+                required: '이메일은 필수 입력 사항이예요.',
                 pattern: {
                   value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
                   message: '올바른 이메일 형식이 아니예요.',
@@ -146,6 +162,40 @@ export default function Join({navigation}) {
               }}
               keyboardType={'number-pad'}
             />
+          </View>
+          <View>
+            <View className="flex flex-row items-center pt-2">
+              <Pressable
+                className="border border-Gray-05 w-4 h-4 flex justify-center items-center rounded"
+                onPress={() => setChecked(!checked)}>
+                {checked && (
+                  <FontAwesomeIcon icon={faCheck} color="#FF5414" size={13} />
+                )}
+              </Pressable>
+              <View className="flex flex-row items-center">
+                <TextRegular title="(필수) " style="text-Detail-1 ml-2" />
+                <TextDeepLink
+                  text="이용약관"
+                  style="text-Detail-1"
+                  url="https://scalloped-oriole-e20.notion.site/9a69de5e6cf642b5aa91547369ff8ae2"
+                />
+                <TextRegular title=" 및 " style="text-Detail-1" />
+                <TextDeepLink
+                  text="개인정보 처리방침"
+                  style="text-Detail-1"
+                  url="https://scalloped-oriole-e20.notion.site/2000535c63d542468afbb0722ff96f08"
+                />
+                <TextRegular title="에 동의합니다." style="text-Detail-1" />
+              </View>
+            </View>
+            <View>
+              {error && !checked && (
+                <TextRegular
+                  title="서비스 이용을 위한 약관에 동의해주세요."
+                  style="text-Detail-1 text-red-500 ml-6"
+                />
+              )}
+            </View>
           </View>
         </View>
       </ScrollView>
