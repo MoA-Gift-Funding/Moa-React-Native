@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
+import {ShippingInfo} from '../types/Funding';
 
 export class FakeHttpClient {
   protected httpClient;
@@ -7,5 +8,13 @@ export class FakeHttpClient {
     this.httpClient = axios.create({
       baseURL: Config.FAKE_BASE_URL,
     });
+  }
+
+  getMyAddresses() {
+    return this.httpClient.get('');
+  }
+
+  createAddress(data: Omit<ShippingInfo, 'id'>) {
+    return this.httpClient.get('');
   }
 }

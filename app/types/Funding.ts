@@ -7,7 +7,6 @@ export interface NewFunding {
   deliveryAddressId: number;
   deliveryRequestMessage: string;
 }
-
 export interface ShippingInfo {
   id: number;
   name: string;

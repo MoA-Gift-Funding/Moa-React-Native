@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
+import {ShippingInfo} from '../types/Funding';
 
 export default class MoaHttpClient {
   protected httpClient;
@@ -12,7 +13,6 @@ export default class MoaHttpClient {
   }
 
   // user
-
   moaAuth(accessToken: string, platform: string) {
     return this.httpClient.get(`/oauth/login/app/${platform}`, {
       headers: {OAuthAccessToken: accessToken},
@@ -71,5 +71,9 @@ export default class MoaHttpClient {
   // funding
   getMyAddresses() {
     return this.httpClient.get('/addresses');
+  }
+
+  createAddress(data: Omit<ShippingInfo, 'id'>) {
+    return this.httpClient.post('/addresses', data);
   }
 }

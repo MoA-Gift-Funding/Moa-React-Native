@@ -8,6 +8,7 @@ import {
   FieldErrorsImpl,
   Merge,
 } from 'react-hook-form';
+import TextSemiBold from './TextSemiBold';
 
 interface TextInputGroupProps {
   name: string;
@@ -42,7 +43,7 @@ const TextInputGroupWhite: React.FC<TextInputGroupProps> = ({
 }) => {
   return (
     <>
-      <TextRegular
+      <TextSemiBold
         style="text-Body-1 text-black leading-Body-1 mb-1"
         title={label}
       />

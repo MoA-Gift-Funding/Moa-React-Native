@@ -8,6 +8,7 @@ import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import NextButton from '../../components/button/NextButton';
+import TextSemiBold from '../../components/text/TextSemiBold';
 // import TextEditor from '../../components/text/TextEditor';
 
 const NewFund = ({navigation, route}) => {
@@ -130,7 +131,7 @@ const NewFund = ({navigation, route}) => {
             />
           </View>
           <View className="mt-2">
-            <TextRegular
+            <TextSemiBold
               style="text-Body-1 text-black leading-Body-1 mb-1"
               title="펀딩 종료일"
             />
@@ -163,7 +164,7 @@ const NewFund = ({navigation, route}) => {
             )}
           </View>
         </View>
-        <KeyboardAvoidingView className="py-8">
+        <KeyboardAvoidingView className="py-8 flex justify-center items-center">
           <NextButton
             title="다음"
             onSubmit={onSubmit}
