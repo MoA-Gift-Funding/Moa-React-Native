@@ -38,7 +38,10 @@ const HomeBanner = ({navigation}) => {
         />
         <Pressable
           className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
-          onPress={() => navigation.navigate('StoreMain')}>
+          // Store로 추후 변경해야함
+          onPress={() =>
+            navigation.navigate('NewFund', {id: 1, headerTitle: '펀딩개설하기'})
+          }>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
       </View>

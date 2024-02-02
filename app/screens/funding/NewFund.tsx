@@ -12,7 +12,7 @@ import NextButton from '../../components/button/NextButton';
 
 const NewFund = ({navigation, route}) => {
   const {id} = route.params;
-  const [deadline, setDeadline] = useState(dayjs());
+  const [endDate, setEndDate] = useState(dayjs());
   const [dateError, setDateError] = useState(false);
   const {
     control,
@@ -24,12 +24,20 @@ const NewFund = ({navigation, route}) => {
     defaultValues: {
       title: '',
       description: '',
-      upperPriceLimit: '',
-      deadline: '',
+      maximumAmount: '',
+      endDate: '',
     },
   });
-  const onSubmit = () => {
-    if (deadline.day === dayjs().day) {
+  const onSubmit = (data: {
+    title: string;
+    description: string;
+    maximumAmount: string;
+    endDate: string;
+  }) => {
+    if (!data.maximumAmount) {
+      setValue('maximumAmount', '10000000');
+    }
+    if (endDate.day === dayjs().day) {
       return setDateError(true);
     }
     const userInputs = getValues();
@@ -42,7 +50,7 @@ const NewFund = ({navigation, route}) => {
 
   return (
     <KeyboardAvoidingView
-      className="px-6 bg-white h-full"
+      className="px-6 bg-white h-full mx-auto"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="mt-8">
@@ -102,20 +110,20 @@ const NewFund = ({navigation, route}) => {
           </View>
           <View className="mt-2">
             <TextInputGroupWhite
-              name="upperPriceLimit"
+              name="maximumAmount"
               label="1인당 펀딩 최대 가능 금액"
               control={control}
-              error={errors.upperPriceLimit}
+              error={errors.maximumAmount}
               desc="펀딩에 참여할 친구의 1인당 최대 펀딩 가능 금액을 설정할 수 있어요. 입력 칸을 비워두면 금액 제한 없이 펀딩이 가능해요."
               keyboardType={'number-pad'}
               // regex={autoCurrency}
               rules={{
-                minLength: {
-                  value: 5,
+                min: {
+                  value: 10000,
                   message: '최소 1만원부터 설정 가능해요.',
                 },
-                maxLength: {
-                  value: 9,
+                max: {
+                  value: 10000000,
                   message: '최대 1천만원까지 설정 가능해요.',
                 },
               }}
@@ -132,11 +140,11 @@ const NewFund = ({navigation, route}) => {
             />
             <View className="bg-Gray-01 rounded-lg p-2">
               <DateTimePicker
-                value={deadline}
+                value={endDate}
                 onValueChange={date => {
                   const cleaned = date?.substring(0, 10);
-                  setDeadline(cleaned);
-                  setValue('deadline', cleaned);
+                  setEndDate(cleaned);
+                  setValue('endDate', cleaned);
                   setDateError(false);
                 }}
                 locale="ko"

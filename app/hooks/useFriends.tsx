@@ -1,12 +1,13 @@
 import React from 'react';
-import {FriendsHttpClient} from '../apis/friends/FriendsHttpClients';
 import {Friends} from '../apis/friends/Friends';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useUserContext} from '../contexts/UserContext';
 import {Contact} from '../types/User';
 
 export default function useFriends() {
-  const client = new FriendsHttpClient();
+  const {
+    useApi: {client},
+  } = useUserContext();
   const friends = new Friends(client);
 
   const {

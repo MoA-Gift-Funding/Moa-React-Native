@@ -10,11 +10,11 @@ const JoinCompleted = ({navigation}) => {
   const {handleSubmit} = useForm();
   const {
     userState: {user},
-    userApi,
+    useApi: {useUserApi},
     dispatch,
   } = useUserContext();
   const handleDone = async () => {
-    const found = await userApi.getUser();
+    const found = await useUserApi.getUser();
     dispatch({type: 'LOGIN', payload: {...found}});
     navigation.navigate('Home');
   };

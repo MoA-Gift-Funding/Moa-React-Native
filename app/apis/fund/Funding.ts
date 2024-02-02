@@ -1,6 +1,8 @@
 import {Fund} from '../../types/Funding';
 import {Axios} from '../axios.config';
 
+export default class Funding {}
+
 export const createFund = async (params: Fund) => {
   try {
     const result = await Axios.post('/funding/create-funding', params)

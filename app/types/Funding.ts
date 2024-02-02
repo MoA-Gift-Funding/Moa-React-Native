@@ -1,16 +1,23 @@
 export interface NewFunding {
+  productId: string;
   title: string;
   description: string;
-  upperPriceLimit: string;
-  deadline: string;
+  endDate: string;
+  maximumAmount: string;
+  deliveryAddressId: number;
+  deliveryRequestMessage: string;
 }
 
 export interface ShippingInfo {
+  id: number;
+  name: string;
   recipientName: string;
-  roadAddress: string;
-  detailedAddress: string;
-  zonecode: number;
   phoneNumber: string;
+  zonecode: string;
+  roadAddress: string;
+  jibunAddress: string;
+  detailAddress: string;
+  isDefault: boolean;
 }
 
 export interface Fund {

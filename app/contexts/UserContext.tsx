@@ -2,8 +2,8 @@ import React, {useContext, useMemo} from 'react';
 import {Dispatch, createContext, useEffect, useReducer} from 'react';
 import {User} from '../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {UserHttpClient} from '../apis/user/UserHttpClient';
 import {Users} from '../apis/user/User';
+import MoaHttpClient from '../apis/MoaHttpClient';
 
 interface State {
   authenticated: boolean;
@@ -18,7 +18,7 @@ type Action =
 interface UserContextProps {
   userState: State;
   dispatch: Dispatch<Action>;
-  userApi: Users;
+  useApi: {useUserApi: Users; client: MoaHttpClient};
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -28,7 +28,10 @@ export const UserContext = createContext<UserContextProps>({
     isLoading: true,
   },
   dispatch: () => {},
-  userApi: new Users(new UserHttpClient()),
+  useApi: {
+    client: new MoaHttpClient(),
+    useUserApi: new Users(new MoaHttpClient()),
+  },
 });
 
 const userReducer = (state: State, {type, payload}: Action) => {
@@ -59,10 +62,10 @@ export const UserContextProvider = ({
     defaultDispatch(action);
   };
 
-  const userApi = useMemo(() => {
-    const userClient = new UserHttpClient();
-    const user = new Users(userClient);
-    return user;
+  const useApi = useMemo(() => {
+    const client = new MoaHttpClient();
+    const useUserApi = new Users(client);
+    return {useUserApi, client};
   }, []);
 
   useEffect(() => {
@@ -70,7 +73,7 @@ export const UserContextProvider = ({
       const accessToken = await AsyncStorage.getItem('accessToken');
       try {
         if (accessToken) {
-          const user = await userApi.getUser();
+          const user = await useApi.useUserApi.getUser();
           dispatch({
             type: 'LOGIN',
             payload: user,
@@ -83,10 +86,10 @@ export const UserContextProvider = ({
       }
     }
     loadUser();
-  }, [userApi]);
+  }, [useApi]);
 
   return (
-    <UserContext.Provider value={{userState, dispatch, userApi}}>
+    <UserContext.Provider value={{userState, dispatch, useApi}}>
       {children}
     </UserContext.Provider>
   );
