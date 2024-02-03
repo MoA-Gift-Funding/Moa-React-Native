@@ -2,8 +2,9 @@ import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import Funding from '../apis/fund/Funding';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {ShippingInfo} from '../types/Funding';
+import {NewFundItem, ShippingInfo} from '../types/Funding';
 import Toast from 'react-native-toast-message';
+import {useNavigation} from '@react-navigation/native';
 
 const useFunding = () => {
   const {
@@ -12,6 +13,7 @@ const useFunding = () => {
   } = useUserContext();
   const funding = new Funding(client);
   const queryClient = useQueryClient();
+  const navigation = useNavigation();
 
   const {data: addrsQuery} = useQuery({
     queryKey: ['addresses', user?.id],
@@ -29,7 +31,14 @@ const useFunding = () => {
     },
   });
 
-  return {addrsQuery, createAddrQuery};
+  const {mutate: createFundingQuery} = useMutation({
+    mutationFn: (data: NewFundItem) => funding.createFunding(data),
+    onSuccess: () => {
+      navigation.navigate('FundCompleted');
+    },
+  });
+
+  return {addrsQuery, createAddrQuery, createFundingQuery};
 };
 
 export default useFunding;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
-import {ShippingInfo} from '../types/Funding';
+import {NewFundItem, ShippingInfo} from '../types/Funding';
 
 export class FakeHttpClient {
   protected httpClient;
@@ -15,6 +15,9 @@ export class FakeHttpClient {
   }
 
   createAddress(data: Omit<ShippingInfo, 'id'>) {
+    return this.httpClient.get('');
+  }
+  createFunding(data: NewFundItem) {
     return this.httpClient.get('');
   }
 }

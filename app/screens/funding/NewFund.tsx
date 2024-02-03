@@ -44,7 +44,7 @@ const NewFund = ({navigation, route}) => {
     const userInputs = getValues();
     navigation.navigate('NewFundShipping', {
       headerTitle: '펀딩개설하기',
-      id,
+      productId: id,
       ...userInputs,
     });
   };

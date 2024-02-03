@@ -13,36 +13,36 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 
 const NewFundShipping = ({navigation, route}) => {
-  const {deadline, description, upperPriceLimit, title, id} = route.params;
+  const {productId, title, description, endDate, maximumAmount} = route.params;
   const [isLoading, setIsLoading] = useState(false);
-  const {addrsQuery} = useFunding();
+  const {addrsQuery, createFundingQuery} = useFunding();
   const [leftPressed, setLeftPressed] = useState(true);
+  const [selectedAddr, setSelectedAddr] = useState(0);
+  const [deliveryRequestMessage, setDeliveryRequestMessage] = useState('');
+  const [toggled, setToggled] = useState(false);
+  const {handleSubmit} = useForm();
+
   useEffect(() => {
     if (addrsQuery && addrsQuery.length < 1) {
       setLeftPressed(false);
     }
     if (addrsQuery && addrsQuery.length > 0) {
-      setSelected(addrsQuery.find(addr => addr.isDefault).id);
+      setSelectedAddr(addrsQuery.find(addr => addr.isDefault).id);
     }
   }, [addrsQuery]);
-  const [seleted, setSelected] = useState(0);
-  const [toggled, setToggled] = useState(false);
 
-  const {
-    handleSubmit,
-    control,
-    formState: {error},
-  } = useForm({
-    defaultValues: {
-      recipientName: '',
-      roadAddress: '',
-      detailedAddress: '',
-      phoneNumber: '',
-      zonecode: 0,
-    },
-  });
   const onSubmit = async () => {
     setIsLoading(true);
+
+    createFundingQuery({
+      productId,
+      title,
+      description,
+      endDate,
+      maximumAmount,
+      deliveryAddressId: selectedAddr,
+      deliveryRequestMessage,
+    });
   };
 
   return (
@@ -67,19 +67,20 @@ const NewFundShipping = ({navigation, route}) => {
               {addrsQuery.length > 0 && (
                 <>
                   {addrsQuery
-                    .filter((addr: ShippingInfo) => addr.id === seleted)
+                    .filter((addr: ShippingInfo) => addr.id === selectedAddr)
                     .map((addr: ShippingInfo) => (
                       <AddressItem
                         item={addr}
                         key={addr.id}
-                        selected={seleted}
-                        onPress={setSelected}
+                        selected={selectedAddr}
+                        onPress={setSelectedAddr}
                         setToggled={setToggled}
                       />
                     ))}
                   <TextInput
                     className="border border-Gray-05 rounded-lg h-[42px] px-3 -mt-2 mb-4"
                     placeholder="배송시 요청사항을 입력해주세요."
+                    onChangeText={setDeliveryRequestMessage}
                   />
                 </>
               )}
@@ -87,13 +88,13 @@ const NewFundShipping = ({navigation, route}) => {
                 <ScrollView className="h-[300px]">
                   {addrsQuery.length > 0 &&
                     addrsQuery
-                      .filter((addr: ShippingInfo) => addr.id !== seleted)
+                      .filter((addr: ShippingInfo) => addr.id !== selectedAddr)
                       .map((addr: ShippingInfo) => (
                         <AddressItem
                           item={addr}
                           key={addr.id}
-                          selected={seleted}
-                          onPress={setSelected}
+                          selected={selectedAddr}
+                          onPress={setSelectedAddr}
                           setToggled={setToggled}
                         />
                       ))}

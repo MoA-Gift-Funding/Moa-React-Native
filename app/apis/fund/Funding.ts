@@ -1,7 +1,6 @@
-import {Fund, ShippingInfo} from '../../types/Funding';
+import {NewFundItem, ShippingInfo} from '../../types/Funding';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
-import {Axios} from '../axios.config';
 
 export default class Funding {
   constructor(private readonly apiClient: MoaHttpClient | FakeHttpClient) {
@@ -27,23 +26,14 @@ export default class Funding {
       throw error;
     }
   }
-}
 
-export const createFund = async (params: Fund) => {
-  try {
-    const result = await Axios.post('/funding/create-funding', params)
-      .then(res => {
-        console.log(res.data);
-        return res.data;
-      })
-      .then(res => {
-        console.log(res);
-        return res;
-      })
-      .catch(error => console.log(error.response));
-    return result;
-  } catch (error) {
-    console.log(error);
-    throw new Error('[ERROR] 네트워크 에러');
+  async createFunding(data: NewFundItem) {
+    try {
+      const fund = await this.apiClient.createFunding(data);
+      return fund.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
   }
-};
+}

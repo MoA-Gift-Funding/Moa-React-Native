@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
-import {ShippingInfo} from '../types/Funding';
+import {NewFundItem, ShippingInfo} from '../types/Funding';
 
 export default class MoaHttpClient {
   protected httpClient;
@@ -75,5 +75,9 @@ export default class MoaHttpClient {
 
   createAddress(data: Omit<ShippingInfo, 'id'>) {
     return this.httpClient.post('/addresses', data);
+  }
+
+  createFunding(data: NewFundItem) {
+    return this.httpClient.post('/fundings', data);
   }
 }

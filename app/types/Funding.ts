@@ -1,12 +1,3 @@
-export interface NewFunding {
-  productId: string;
-  title: string;
-  description: string;
-  endDate: string;
-  maximumAmount: string;
-  deliveryAddressId: number;
-  deliveryRequestMessage: string;
-}
 export interface ShippingInfo {
   id: number;
   name: string;
@@ -17,6 +8,16 @@ export interface ShippingInfo {
   jibunAddress: string;
   detailAddress: string;
   isDefault: boolean;
+}
+
+export interface NewFundItem {
+  productId: number;
+  title: string;
+  description: string;
+  endDate: string;
+  maximumAmount: string;
+  deliveryAddressId: number;
+  deliveryRequestMessage: string;
 }
 
 export interface Fund {
