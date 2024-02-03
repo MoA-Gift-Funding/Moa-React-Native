@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView} from 'react-native';
+import {Pressable, ScrollView, TextInput, View} from 'react-native';
 import {useForm} from 'react-hook-form';
 import NextButton from '../../components/button/NextButton';
 import LoadingBar from '../../components/bar/LoadingBar';
 import SideToggle from '../../components/button/SideToggle';
-import MyAddress from './address/MyAddress';
 import UpdateAddress from './address/UpdateAddress';
 import useFunding from '../../hooks/useFunding';
+import TextRegular from '../../components/text/TextRegular';
+import {ShippingInfo} from '../../types/Funding';
+import AddressItem from './address/AddressItem';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 
 const NewFundShipping = ({navigation, route}) => {
   const {deadline, description, upperPriceLimit, title, id} = route.params;
@@ -17,8 +21,18 @@ const NewFundShipping = ({navigation, route}) => {
     if (addrsQuery && addrsQuery.length < 1) {
       setLeftPressed(false);
     }
+    if (addrsQuery && addrsQuery.length > 0) {
+      setSelected(addrsQuery.find(addr => addr.isDefault).id);
+    }
   }, [addrsQuery]);
-  const {handleSubmit} = useForm({
+  const [seleted, setSelected] = useState(0);
+  const [toggled, setToggled] = useState(false);
+
+  const {
+    handleSubmit,
+    control,
+    formState: {error},
+  } = useForm({
     defaultValues: {
       recipientName: '',
       roadAddress: '',
@@ -29,40 +43,99 @@ const NewFundShipping = ({navigation, route}) => {
   });
   const onSubmit = async () => {
     setIsLoading(true);
-    try {
-      if (result.status === 'OK') {
-        return navigation.navigate('FundCompleted');
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
-    <KeyboardAvoidingView
-      className="px-6 bg-white h-full flex flex-col"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+    <View className="px-6 bg-white h-full flex flex-col justify-between">
       {isLoading && <LoadingBar />}
-      <SideToggle
-        leftTxt="기존 배송지"
-        rightTxt="신규 입력"
-        state={leftPressed}
-        onPress={setLeftPressed}
-      />
-      {leftPressed && <MyAddress />}
-      {!leftPressed && <UpdateAddress />}
-      {/* </ScrollView> */}
-      {/* <KeyboardAvoidingView className="mb-8 flex justify-center items-center">
-        <NextButton
-          title="펀딩 개설하기"
-          onSubmit={onSubmit}
-          handleSubmit={handleSubmit}
+      <View>
+        <SideToggle
+          leftTxt="기존 배송지"
+          rightTxt="신규 입력"
+          state={leftPressed}
+          onPress={setLeftPressed}
         />
-      </KeyboardAvoidingView> */}
-    </KeyboardAvoidingView>
+        {addrsQuery && leftPressed && (
+          <View className="flex">
+            {addrsQuery.length < 1 && (
+              <TextRegular
+                title="신규 입력으로 배송지를 등록해주세요🚚"
+                style="text-Body-1 leading-Body-1 text-center text-Gray-08 mt-10"
+              />
+            )}
+            <View>
+              {addrsQuery.length > 0 && (
+                <>
+                  {addrsQuery
+                    .filter((addr: ShippingInfo) => addr.id === seleted)
+                    .map((addr: ShippingInfo) => (
+                      <AddressItem
+                        item={addr}
+                        key={addr.id}
+                        selected={seleted}
+                        onPress={setSelected}
+                        setToggled={setToggled}
+                      />
+                    ))}
+                  <TextInput
+                    className="border border-Gray-05 rounded-lg h-[42px] px-3 -mt-2 mb-4"
+                    placeholder="배송시 요청사항을 입력해주세요."
+                  />
+                </>
+              )}
+              {toggled && (
+                <ScrollView className="h-[300px]">
+                  {addrsQuery.length > 0 &&
+                    addrsQuery
+                      .filter((addr: ShippingInfo) => addr.id !== seleted)
+                      .map((addr: ShippingInfo) => (
+                        <AddressItem
+                          item={addr}
+                          key={addr.id}
+                          selected={seleted}
+                          onPress={setSelected}
+                          setToggled={setToggled}
+                        />
+                      ))}
+                </ScrollView>
+              )}
+            </View>
+            <Pressable
+              className="flex flex-row items-center justify-center mt-4"
+              onPress={() => setToggled(!toggled)}>
+              {!toggled && (
+                <>
+                  <TextRegular
+                    title="다른 배송지 펼쳐보기"
+                    style="text-Gray-06 w-[120px]"
+                  />
+                  <FontAwesomeIcon icon={faAngleDown} color="#9E9E9E" />
+                </>
+              )}
+              {toggled && (
+                <>
+                  <TextRegular
+                    title="다른 배송지 접기"
+                    style="text-Gray-06 w-[100px]"
+                  />
+                  <FontAwesomeIcon icon={faAngleUp} color="#9E9E9E" />
+                </>
+              )}
+            </Pressable>
+          </View>
+        )}
+        {!leftPressed && <UpdateAddress setLeftPressed={setLeftPressed} />}
+      </View>
+      {leftPressed && (
+        <View className="mb-8 flex justify-center items-center">
+          <NextButton
+            title="펀딩 개설하기"
+            onSubmit={onSubmit}
+            handleSubmit={handleSubmit}
+          />
+        </View>
+      )}
+    </View>
   );
 };
 

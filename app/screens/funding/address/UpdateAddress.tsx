@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Modal,
@@ -20,8 +20,13 @@ import TextSemiBold from '../../../components/text/TextSemiBold';
 import CheckBox from '../../../components/button/CheckBox';
 import TextRegular from '../../../components/text/TextRegular';
 import useFunding from '../../../hooks/useFunding';
+import {ShippingInfo} from '../../../types/Funding';
 
-const UpdateAddress = () => {
+const UpdateAddress = ({
+  setLeftPressed,
+}: {
+  setLeftPressed: Dispatch<SetStateAction<boolean>>;
+}) => {
   const [onPostModal, setOnPostModal] = useState(false);
   const [checked, setChecked] = useState(false);
   const [diabled, setDisabled] = useState(false);
@@ -40,12 +45,13 @@ const UpdateAddress = () => {
       jibunAddress: '',
       detailAddress: '',
       phoneNumber: '',
-      zonecode: 0,
+      zonecode: '',
     },
   });
   const {addrsQuery, createAddrQuery} = useFunding();
-  const onSubmit = data => {
-    createAddrQuery(data);
+  const onSubmit = (data: Omit<ShippingInfo, 'id' | 'isDefault'>) => {
+    createAddrQuery({...data, isDefault: checked});
+    setLeftPressed(true);
   };
   useEffect(() => {
     if (addrsQuery && addrsQuery.length < 1) {
@@ -53,14 +59,7 @@ const UpdateAddress = () => {
       setDisabled(true);
     }
   }, [addrsQuery]);
-  const {
-    recipientName,
-    roadAddress,
-    detailAddress,
-    phoneNumber,
-    zonecode,
-    jibunAddress,
-  } = getValues();
+  const {roadAddress, jibunAddress} = getValues();
   return (
     <View className="h-full flex flex-col justify-between mt-8">
       {isLoading && <LoadingBar />}
@@ -118,7 +117,7 @@ const UpdateAddress = () => {
                 },
                 pattern: {
                   value: /^(010)-?[0-9]{3,4}-?[0-9]{4}$/,
-                  message: '전화번호 형식에 맞지 않아요. 모바일만 가능해요.',
+                  message: '010으로 시작하는 모바일 번호만 가능해요.',
                 },
               }}
               keyboardType={'number-pad'}
@@ -177,7 +176,7 @@ const UpdateAddress = () => {
                       onSelected={data => {
                         setValue('roadAddress', data.roadAddress);
                         setValue('jibunAddress', data.jibunAddress);
-                        setValue('zonecode', data.zonecode);
+                        setValue('zonecode', data.zonecode.toString());
                         setOnPostModal(false);
                         setIsLoading(false);
                       }}
@@ -195,13 +194,15 @@ const UpdateAddress = () => {
             setChecked={() => setChecked(!checked)}
             disabled={diabled}
           />
-          <TextRegular
-            title="기본 배송지로 등록"
-            style="ml-2 text-Gray-08 text-Body-2"
-          />
+          <Pressable onPress={() => setChecked(!checked)}>
+            <TextRegular
+              title="기본 배송지로 등록"
+              style="ml-2 text-Gray-08 text-Body-2"
+            />
+          </Pressable>
         </View>
       </ScrollView>
-      <KeyboardAvoidingView className="mb-28 flex justify-end items-center">
+      <KeyboardAvoidingView className="mb-48 flex justify-end items-center">
         <NextButton
           title="배송지 추가하기"
           onSubmit={onSubmit}

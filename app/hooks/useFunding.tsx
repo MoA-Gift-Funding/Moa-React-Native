@@ -3,7 +3,7 @@ import {useUserContext} from '../contexts/UserContext';
 import Funding from '../apis/fund/Funding';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {ShippingInfo} from '../types/Funding';
-import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 const useFunding = () => {
   const {
@@ -22,6 +22,10 @@ const useFunding = () => {
     mutationFn: (data: Omit<ShippingInfo, 'id'>) => funding.createAddress(data),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['addresses', user?.id]});
+      Toast.show({
+        type: 'success',
+        text1: '배송지가 추가되었어요🚚',
+      });
     },
   });
 
