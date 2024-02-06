@@ -32,7 +32,7 @@ const useFunding = () => {
     },
   });
 
-  const {mutate: UpdateAddressQuery} = useMutation({
+  const {mutate: updateAddressQuery} = useMutation({
     mutationFn: ({data, id}: {data: Omit<ShippingInfo, 'id'>; id: number}) =>
       funding.updateAddress(data, id),
     onSuccess: () => {
@@ -46,6 +46,13 @@ const useFunding = () => {
 
   const {mutate: deleteAddressQuery} = useMutation({
     mutationFn: (id: number) => funding.deleteAddress(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['addresses', user?.id]});
+      Toast.show({
+        type: 'success',
+        text1: '배송지가 삭제되었어요🚚',
+      });
+    },
   });
 
   const {mutate: createFundingQuery} = useMutation({
@@ -55,7 +62,13 @@ const useFunding = () => {
     },
   });
 
-  return {addrsQuery, createAddrQuery, createFundingQuery};
+  return {
+    addrsQuery,
+    createAddrQuery,
+    createFundingQuery,
+    deleteAddressQuery,
+    updateAddressQuery,
+  };
 };
 
 export default useFunding;

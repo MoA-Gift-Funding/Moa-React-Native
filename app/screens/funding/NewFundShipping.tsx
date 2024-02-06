@@ -15,12 +15,16 @@ import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 const NewFundShipping = ({navigation, route}) => {
   const {productId, title, description, endDate, maximumAmount} = route.params;
   const [isLoading, setIsLoading] = useState(false);
-  const {addrsQuery, createFundingQuery} = useFunding();
   const [leftPressed, setLeftPressed] = useState(true);
-  const [selectedAddr, setSelectedAddr] = useState();
+  const [selectedAddr, setSelectedAddr] = useState(0);
   const [deliveryRequestMessage, setDeliveryRequestMessage] = useState('');
   const [toggled, setToggled] = useState(false);
+  const [updatedAddress, setUpdatedAddress] = useState<ShippingInfo | null>(
+    null,
+  );
+
   const {handleSubmit} = useForm();
+  const {addrsQuery, createFundingQuery} = useFunding();
 
   useEffect(() => {
     if (addrsQuery && addrsQuery.length < 1) {
@@ -76,6 +80,8 @@ const NewFundShipping = ({navigation, route}) => {
                         selected={selectedAddr}
                         onPress={setSelectedAddr}
                         setToggled={setToggled}
+                        setLeftPressed={setLeftPressed}
+                        setUpdatedAddress={setUpdatedAddress}
                       />
                     ))}
                   <TextInput
@@ -97,6 +103,8 @@ const NewFundShipping = ({navigation, route}) => {
                           selected={selectedAddr}
                           onPress={setSelectedAddr}
                           setToggled={setToggled}
+                          setLeftPressed={setLeftPressed}
+                          setUpdatedAddress={setUpdatedAddress}
                         />
                       ))}
                 </ScrollView>
@@ -128,7 +136,13 @@ const NewFundShipping = ({navigation, route}) => {
             )}
           </View>
         )}
-        {!leftPressed && <UpdateAddress setLeftPressed={setLeftPressed} />}
+        {!leftPressed && (
+          <UpdateAddress
+            setLeftPressed={setLeftPressed}
+            updatedAddress={updatedAddress}
+            setUpdatedAddress={setUpdatedAddress}
+          />
+        )}
       </View>
       {leftPressed && (
         <View className="mb-8 flex justify-center items-center">

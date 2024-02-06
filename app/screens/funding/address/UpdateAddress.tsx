@@ -24,8 +24,12 @@ import {ShippingInfo} from '../../../types/Funding';
 
 const UpdateAddress = ({
   setLeftPressed,
+  updatedAddress,
+  setUpdatedAddress,
 }: {
   setLeftPressed: Dispatch<SetStateAction<boolean>>;
+  updatedAddress?: ShippingInfo | null;
+  setUpdatedAddress: Dispatch<SetStateAction<ShippingInfo | null>>;
 }) => {
   const [onPostModal, setOnPostModal] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -39,18 +43,44 @@ const UpdateAddress = ({
     formState: {errors},
   } = useForm({
     defaultValues: {
-      name: '',
-      recipientName: '',
-      roadAddress: '',
-      jibunAddress: '',
-      detailAddress: '',
-      phoneNumber: '',
-      zonecode: '',
+      name: updatedAddress?.name || '',
+      recipientName: updatedAddress?.recipientName || '',
+      roadAddress: updatedAddress?.roadAddress || '',
+      jibunAddress: updatedAddress?.jibunAddress || '',
+      detailAddress: updatedAddress?.detailAddress || '',
+      phoneNumber: updatedAddress?.phoneNumber || '',
+      zonecode: updatedAddress?.zonecode || '',
     },
   });
-  const {addrsQuery, createAddrQuery} = useFunding();
+  const {
+    roadAddress,
+    jibunAddress,
+    name,
+    recipientName,
+    detailAddress,
+    phoneNumber,
+    zonecode,
+  } = getValues();
+  const {addrsQuery, createAddrQuery, updateAddressQuery} = useFunding();
   const onSubmit = async (data: Omit<ShippingInfo, 'id' | 'isDefault'>) => {
     await createAddrQuery({...data, isDefault: checked});
+    setLeftPressed(true);
+  };
+  const onUpdateSubmit = async () => {
+    await updateAddressQuery({
+      data: {
+        roadAddress,
+        jibunAddress,
+        name,
+        recipientName,
+        detailAddress,
+        phoneNumber,
+        zonecode,
+        isDefault: checked,
+      },
+      id: updatedAddress!.id,
+    });
+    setUpdatedAddress(null);
     setLeftPressed(true);
   };
   useEffect(() => {
@@ -58,8 +88,11 @@ const UpdateAddress = ({
       setChecked(true);
       setDisabled(true);
     }
-  }, [addrsQuery]);
-  const {roadAddress, jibunAddress} = getValues();
+    if (updatedAddress && updatedAddress.isDefault) {
+      setChecked(true);
+      setDisabled(true);
+    }
+  }, [addrsQuery, updatedAddress]);
   return (
     <View className="h-full flex flex-col justify-between mt-8">
       {isLoading && <LoadingBar />}
@@ -216,11 +249,20 @@ const UpdateAddress = ({
         </View>
       </ScrollView>
       <KeyboardAvoidingView className="mb-48 flex justify-end items-center">
-        <NextButton
-          title="배송지 추가하기"
-          onSubmit={onSubmit}
-          handleSubmit={handleSubmit}
-        />
+        {!updatedAddress && (
+          <NextButton
+            title="배송지 추가하기"
+            onSubmit={onSubmit}
+            handleSubmit={handleSubmit}
+          />
+        )}
+        {updatedAddress && (
+          <NextButton
+            title="배송지 수정하기"
+            onSubmit={onUpdateSubmit}
+            handleSubmit={handleSubmit}
+          />
+        )}
       </KeyboardAvoidingView>
     </View>
   );

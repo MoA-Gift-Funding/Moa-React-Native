@@ -4,17 +4,23 @@ import TextBold from '../../../components/text/TextBold';
 import {ShippingInfo} from '../../../types/Funding';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
+import useFunding from '../../../hooks/useFunding';
+import {useNavigation} from '@react-navigation/native';
 
 const AddressItem = ({
   item,
   selected,
   onPress,
   setToggled,
+  setLeftPressed,
+  setUpdatedAddress,
 }: {
   item: ShippingInfo;
   selected: number;
   onPress: Dispatch<SetStateAction<number>>;
   setToggled: Dispatch<SetStateAction<boolean>>;
+  setLeftPressed: Dispatch<SetStateAction<boolean>>;
+  setUpdatedAddress: Dispatch<SetStateAction<ShippingInfo | null>>;
 }) => {
   const {
     id,
@@ -27,6 +33,16 @@ const AddressItem = ({
     zonecode,
     isDefault,
   } = item;
+
+  const {deleteAddressQuery} = useFunding();
+  const handleUpdateBtn = () => {
+    setUpdatedAddress(item);
+    setLeftPressed(false);
+  };
+  const handleDeleteBtn = () => {
+    deleteAddressQuery(id);
+  };
+
   return (
     <View className="flex flex-row items-center w-[360px]">
       <Pressable
@@ -50,11 +66,15 @@ const AddressItem = ({
             {isDefault && <TextSemiBold title=" (기본)" style="text-Main-01" />}
           </View>
           <View className="flex flex-row">
-            <Pressable className="bg-Sub-01 rounded-full px-2 py-1">
+            <Pressable
+              className="bg-Sub-01 rounded-full px-2 py-1"
+              onPress={handleUpdateBtn}>
               <TextSemiBold title="수정" style="text-Main-01 text-Detail-1" />
             </Pressable>
             {!isDefault && (
-              <Pressable className="bg-Gray-02 rounded-full px-2 py-1 ml-1">
+              <Pressable
+                className="bg-Gray-02 rounded-full px-2 py-1 ml-1"
+                onPress={handleDeleteBtn}>
                 <TextSemiBold title="삭제" style="text-Gray-06 text-Detail-1" />
               </Pressable>
             )}

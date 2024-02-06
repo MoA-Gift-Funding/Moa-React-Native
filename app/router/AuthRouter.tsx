@@ -9,7 +9,6 @@ import Profile from '../screens/Login/Profile';
 import Contact from '../screens/Login/Contact';
 import JoinCompleted from '../screens/Login/JoinCompleted';
 import Join from '../screens/Login/Join';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import BlankHeader from '../components/header/BlankHeader';
 import StoreMain from '../screens/store/StoreMain';
 import StoreHeader from '../components/header/StoreHeader';
