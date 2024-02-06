@@ -37,4 +37,8 @@ export class FakeHttpClient {
   ) {
     return this.httpClient.get('');
   }
+
+  getFundingDetail(id: number) {
+    return this.httpClient.get('');
+  }
 }

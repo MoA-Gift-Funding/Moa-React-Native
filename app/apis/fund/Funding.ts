@@ -71,4 +71,14 @@ export default class Funding {
       throw error;
     }
   }
+
+  async getFundDetail(id: number) {
+    try {
+      const fund = await this.apiClient.getFundingDetail(id);
+      return fund.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
 }

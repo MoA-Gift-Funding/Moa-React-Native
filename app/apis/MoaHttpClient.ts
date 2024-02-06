@@ -96,4 +96,8 @@ export default class MoaHttpClient {
   ) {
     return this.httpClient.get('/fundings/my', {params: {page, size, sort}});
   }
+
+  getFundingDetail(id: number) {
+    return this.httpClient.get(`/fundings/${id}`);
+  }
 }

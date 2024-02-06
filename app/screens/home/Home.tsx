@@ -114,30 +114,41 @@ export default function Home({navigation}) {
               title={`${user?.nickname}님의 펀딩`}
               style="text-Heading-4"
             />
-            <Pressable>
-              <TextSemiBold
-                title="모두보기 >"
-                style="text-Detail-1 text-Gray-06"
-              />
-            </Pressable>
+            {myFunds.length > 0 && (
+              <Pressable>
+                <TextSemiBold
+                  title="모두보기 >"
+                  style="text-Detail-1 text-Gray-06"
+                />
+              </Pressable>
+            )}
           </View>
           <ScrollView
             className="py-4 pl-6 flex flex-row"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
             {myFunds.length > 0 &&
-              myFunds.map(fund => (
-                <MyFund
-                  item={{
-                    id: fund.id,
-                    title: fund.title,
-                    endDate: fund.endDate,
-                    fundRate: fund.fundingRate,
-                    activated: 'Y',
-                    fundedCount: fund.participationCount,
-                  }}
-                />
-              ))}
+              activated &&
+              myFunds
+                .filter(fund => fund.fundingStatus === '진행중')
+                .map(fund => (
+                  <MyFund
+                    item={{
+                      id: fund.id,
+                      title: fund.title,
+                      endDate: fund.endDate,
+                      fundRate: fund.fundingRate,
+                      activated: 'Y',
+                      fundedCount: fund.participationCount,
+                    }}
+                  />
+                ))}
+            {myFunds.length > 0 && !activated && (
+              <TextRegular
+                title="아직 완료된 펀딩이 없어요🎁"
+                style="text-Body-2 mt-4"
+              />
+            )}
             {myFunds.length < 1 && (
               <TextRegular
                 title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
