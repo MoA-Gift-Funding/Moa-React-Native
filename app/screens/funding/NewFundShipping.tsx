@@ -17,7 +17,7 @@ const NewFundShipping = ({navigation, route}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {addrsQuery, createFundingQuery} = useFunding();
   const [leftPressed, setLeftPressed] = useState(true);
-  const [selectedAddr, setSelectedAddr] = useState(0);
+  const [selectedAddr, setSelectedAddr] = useState();
   const [deliveryRequestMessage, setDeliveryRequestMessage] = useState('');
   const [toggled, setToggled] = useState(false);
   const {handleSubmit} = useForm();
@@ -43,6 +43,7 @@ const NewFundShipping = ({navigation, route}) => {
       deliveryAddressId: selectedAddr,
       deliveryRequestMessage,
     });
+    setIsLoading(false);
   };
 
   return (
@@ -101,28 +102,30 @@ const NewFundShipping = ({navigation, route}) => {
                 </ScrollView>
               )}
             </View>
-            <Pressable
-              className="flex flex-row items-center justify-center mt-4"
-              onPress={() => setToggled(!toggled)}>
-              {!toggled && (
-                <>
-                  <TextRegular
-                    title="다른 배송지 펼쳐보기"
-                    style="text-Gray-06 w-[120px]"
-                  />
-                  <FontAwesomeIcon icon={faAngleDown} color="#9E9E9E" />
-                </>
-              )}
-              {toggled && (
-                <>
-                  <TextRegular
-                    title="다른 배송지 접기"
-                    style="text-Gray-06 w-[100px]"
-                  />
-                  <FontAwesomeIcon icon={faAngleUp} color="#9E9E9E" />
-                </>
-              )}
-            </Pressable>
+            {addrsQuery && addrsQuery.length > 1 && (
+              <Pressable
+                className="flex flex-row items-center justify-center mt-4"
+                onPress={() => setToggled(!toggled)}>
+                {!toggled && (
+                  <>
+                    <TextRegular
+                      title="다른 배송지 펼쳐보기"
+                      style="text-Gray-06 w-[120px]"
+                    />
+                    <FontAwesomeIcon icon={faAngleDown} color="#9E9E9E" />
+                  </>
+                )}
+                {toggled && (
+                  <>
+                    <TextRegular
+                      title="다른 배송지 접기"
+                      style="text-Gray-06 w-[100px]"
+                    />
+                    <FontAwesomeIcon icon={faAngleUp} color="#9E9E9E" />
+                  </>
+                )}
+              </Pressable>
+            )}
           </View>
         )}
         {!leftPressed && <UpdateAddress setLeftPressed={setLeftPressed} />}

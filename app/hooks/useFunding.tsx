@@ -20,8 +20,9 @@ const useFunding = () => {
     queryFn: () => funding.getAddresses(),
   });
 
-  const {mutate: createAddrQuery} = useMutation({
-    mutationFn: (data: Omit<ShippingInfo, 'id'>) => funding.createAddress(data),
+  const {mutateAsync: createAddrQuery} = useMutation({
+    mutationFn: async (data: Omit<ShippingInfo, 'id'>) =>
+      await funding.createAddress(data),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['addresses', user?.id]});
       Toast.show({

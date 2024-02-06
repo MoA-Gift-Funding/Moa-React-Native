@@ -20,7 +20,8 @@ export default class Funding {
   async createAddress(data: Omit<ShippingInfo, 'id'>) {
     try {
       const addr = await this.apiClient.createAddress(data);
-      return addr.data;
+      const id = addr.headers.location.split('/');
+      return id[2];
     } catch (error: any) {
       console.log(error.response.data);
       throw error;

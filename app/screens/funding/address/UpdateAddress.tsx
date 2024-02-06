@@ -14,7 +14,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 import Postcode from '@actbase/react-daum-postcode';
 import LoadingBar from '../../../components/bar/LoadingBar';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import NextButton from '../../../components/button/NextButton';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import CheckBox from '../../../components/button/CheckBox';
@@ -49,8 +49,8 @@ const UpdateAddress = ({
     },
   });
   const {addrsQuery, createAddrQuery} = useFunding();
-  const onSubmit = (data: Omit<ShippingInfo, 'id' | 'isDefault'>) => {
-    createAddrQuery({...data, isDefault: checked});
+  const onSubmit = async (data: Omit<ShippingInfo, 'id' | 'isDefault'>) => {
+    await createAddrQuery({...data, isDefault: checked});
     setLeftPressed(true);
   };
   useEffect(() => {
@@ -129,16 +129,29 @@ const UpdateAddress = ({
               title="배송지 주소"
             />
             <Pressable
-              className="w-[312px] h-[56px] justify-center placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md px-3 text-Body-1"
+              className="relative w-[312px] h-[56px] flex justify-center placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md text-Body-1"
               onPress={() => setOnPostModal(true)}>
-              <TextInput
-                placeholder="주소 검색하기"
-                editable={false}
-                value={roadAddress || jibunAddress}
-                className="placeholder:text-[#858585] text-Body-1"
-                pointerEvents="none"
+              <Controller
+                control={control}
+                rules={{required: '주소를 검색해주세요🚚'}}
+                render={({field: {onBlur, value}}) => (
+                  <TextInput
+                    editable={false}
+                    className="placeholder:text-[#858585] text-Body-1 mt-3 absolute px-3"
+                    placeholder="주소 검색하기"
+                    onBlur={onBlur}
+                    value={value}
+                  />
+                )}
+                name="roadAddress"
               />
             </Pressable>
+            {errors.roadAddress && !roadAddress && (
+              <TextRegular
+                style="text-red-500 text-sm ml-1"
+                title={errors.roadAddress.message}
+              />
+            )}
             {(roadAddress || jibunAddress) && (
               <>
                 <TextInputGroupWhite
