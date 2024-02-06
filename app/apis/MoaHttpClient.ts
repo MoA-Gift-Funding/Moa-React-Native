@@ -77,6 +77,14 @@ export default class MoaHttpClient {
     return this.httpClient.post('/addresses', data);
   }
 
+  updateAddress(data: Omit<ShippingInfo, 'id'>, id: number) {
+    return this.httpClient.put(`/addresses/${id}`, data);
+  }
+
+  deleteAddress(id: number) {
+    return this.httpClient.delete(`/addresses/${id}`);
+  }
+
   createFunding(data: NewFundItem) {
     return this.httpClient.post('/fundings', data);
   }

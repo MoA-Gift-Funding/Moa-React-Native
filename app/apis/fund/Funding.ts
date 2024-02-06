@@ -23,7 +23,27 @@ export default class Funding {
       const id = addr.headers.location.split('/');
       return id[2];
     } catch (error: any) {
-      console.log(error.response.data);
+      console.error(error.response.data);
+      throw error;
+    }
+  }
+
+  async updateAddress(data: Omit<ShippingInfo, 'id'>, id: number) {
+    try {
+      const addr = await this.apiClient.updateAddress(data, id);
+      return addr.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
+
+  async deleteAddress(id: number) {
+    try {
+      const deleted = await this.apiClient.deleteAddress(id);
+      return deleted.data;
+    } catch (error: any) {
+      console.error(error.response.data);
       throw error;
     }
   }

@@ -17,6 +17,15 @@ export class FakeHttpClient {
   createAddress(data: Omit<ShippingInfo, 'id'>) {
     return this.httpClient.get('');
   }
+
+  updateAddress(data: Omit<ShippingInfo, 'id'>, id: number) {
+    return this.httpClient.get('');
+  }
+
+  deleteAddress(id: number) {
+    return this.httpClient.get('');
+  }
+
   createFunding(data: NewFundItem) {
     return this.httpClient.get('');
   }

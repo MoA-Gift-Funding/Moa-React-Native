@@ -32,6 +32,22 @@ const useFunding = () => {
     },
   });
 
+  const {mutate: UpdateAddressQuery} = useMutation({
+    mutationFn: ({data, id}: {data: Omit<ShippingInfo, 'id'>; id: number}) =>
+      funding.updateAddress(data, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['addresses', user?.id]});
+      Toast.show({
+        type: 'success',
+        text1: '배송지가 업데이트 되었어요🚚',
+      });
+    },
+  });
+
+  const {mutate: deleteAddressQuery} = useMutation({
+    mutationFn: (id: number) => funding.deleteAddress(id),
+  });
+
   const {mutate: createFundingQuery} = useMutation({
     mutationFn: (data: NewFundItem) => funding.createFunding(data),
     onSuccess: () => {
