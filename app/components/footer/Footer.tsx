@@ -10,7 +10,7 @@ const Footer = ({screen}: {screen: string}) => {
     <View
       className={
         Platform.OS === 'ios'
-          ? 'sticky bottom-0 bg-white w-full h-[70px] pb-6 flex flex-row items-center justify-around'
+          ? 'sticky bottom-0 bg-white w-full h-[85px] pb-2 flex flex-row items-center justify-around'
           : 'sticky bottom-0 bg-white w-full h-[70px] flex flex-row items-center justify-around'
       }>
       <Pressable

@@ -7,13 +7,11 @@ import {
   Share,
   View,
 } from 'react-native';
-import LoadingBar from '../../components/bar/LoadingBar';
 import cls from 'classnames';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import TextRegular from '../../components/text/TextRegular';
-import {useForm} from 'react-hook-form';
 import FundDesc from './FundDesc';
 import FundMessage from './FundMessage';
 import useFunding from '../../hooks/useFunding';
@@ -22,63 +20,51 @@ import {useUserContext} from '../../contexts/UserContext';
 
 const FundDetail = ({navigation, route}) => {
   const {id} = route.params;
-  const [loading, setLoading] = useState(false);
-  const [desc, setDesc] = useState(true);
-  const [message, setMessage] = useState(false);
+  const [leftSelected, setLeftSelected] = useState(true);
   const [caution, setCaution] = useState(true);
   const {
     userState: {user},
   } = useUserContext();
   const [data, setData] = useState<FundDetailItem>({
-    id: 1,
-    memberId: 1,
-    title: '나의 에어팟 펀딩',
-    description:
-      '다들 모여랏! 나에게 에어팟 맥스를 선물해 줄 기회! 기프티콘 줄거면 펀딩해주셈!',
-    endDate: '2024-02-04',
-    maximumAmount: 50000,
-    remainAmount: 140000,
-    fundingRate: 56,
-    status: '진행중',
-    fundedAmount: 50000,
-    participationCount: 17,
-    productImageUrl: 'https://imageurl.example',
+    id: 0,
+    memberId: 0,
+    title: '',
+    description: '',
+    endDate: '',
+    maximumAmount: 0,
+    remainAmount: 0,
+    fundingRate: 0,
+    status: '',
+    fundedAmount: 0,
+    participationCount: 0,
+    productImageUrl: '',
     message: [
       {
-        nickName: '주노',
-        profileImageUrl: 'https://example.com',
-        message: '형님이 보태준다',
-        createAt: '2024-02-06T15:12:59.034Z',
+        nickName: '',
+        profileImageUrl: '',
+        message: '',
+        createAt: '',
       },
     ],
   });
-  const handleSelection = () => {
-    setDesc(!desc);
-    setMessage(!message);
-  };
   const {fundDetailQuery} = useFunding();
-  const {handleSubmit} = useForm();
+
   useEffect(() => {
     const getFundDetail = async () => {
       const fund = await fundDetailQuery(id);
-      setData(fund);
+      setData({
+        ...fund,
+        productImageUrl:
+          'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
+      });
     };
     getFundDetail();
   }, [fundDetailQuery, id]);
 
-  const {
-    title,
-    endDate,
-    status,
-    memberId,
-    fundingRate,
-    productImageUrl,
-    description,
-  } = data;
+  const {title, endDate, fundingRate, productImageUrl, description} = data;
 
   return (
     <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
-      {loading && <LoadingBar />}
       <Image
         className="w-[360px] h-[360px]"
         source={{
@@ -88,30 +74,30 @@ const FundDetail = ({navigation, route}) => {
       <FundDesc
         userName={user?.nickname}
         title={title}
-        deadline={endDate}
-        fundRate={fundingRate}
+        endDate={endDate}
+        fundingRate={fundingRate}
       />
       <View className="mt-4 bg-white flex flex-col items-center">
         <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
           <Pressable
             className={cls(
               'w-[156px] h-[48px] flex items-center justify-center',
-              {'border-b-Main-01 border-b-2': desc},
+              {'border-b-Main-01 border-b-2': leftSelected},
             )}
-            onPress={handleSelection}>
+            onPress={() => setLeftSelected(true)}>
             <TextSemiBold title="소개글" style="text-Gray-10" />
           </Pressable>
           <Pressable
             className={cls(
               'w-[156px] h-[48px] flex items-center justify-center',
-              {'border-b-Main-01 border-b-2': message},
+              {'border-b-Main-01 border-b-2': !leftSelected},
             )}
-            onPress={handleSelection}>
+            onPress={() => setLeftSelected(false)}>
             <TextSemiBold title="메세지" style="text-Gray-10" />
           </Pressable>
         </View>
         <View className="w-full py-6">
-          {desc && (
+          {leftSelected && (
             <>
               <View className="pb-4 mx-6">
                 <TextRegular
@@ -150,30 +136,23 @@ const FundDetail = ({navigation, route}) => {
               </Pressable>
             </>
           )}
-          {message && (
+          {!leftSelected && (
             <View>
-              <FundMessage
-                message={
-                  '경민아 결혼 축하해 행복하게 살아랏! 오늘 파티하자요~ 도움이 되는 선물이었으면 좋겠다!'
-                }
-                name="루피"
-                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png"
-                createdAt="2023-12-30T00:00:00"
-              />
-              <FundMessage
-                message={'잘살아라'}
-                name="주먹왕랄프"
-                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png"
-                createdAt="2023-12-20T00:00:00"
-              />
-              <FundMessage
-                message={
-                  '경민아 결혼 축하해 행복하게 살아랏! 오늘 파티하자요~ 도움이 되는 선물이었으면 좋겠다!'
-                }
-                name="수지"
-                profileImage="https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png"
-                createdAt="2023-12-14T00:00:00"
-              />
+              {data.message.length > 0 &&
+                data.message.map(msg => (
+                  <FundMessage
+                    message={msg.message}
+                    name={msg.nickName}
+                    profileImage={msg.profileImageUrl}
+                    createdAt={msg.createAt}
+                  />
+                ))}
+              {data.message.length < 1 && (
+                <TextRegular
+                  title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
+                  style="text-center mt-4"
+                />
+              )}
             </View>
           )}
         </View>

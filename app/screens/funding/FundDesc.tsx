@@ -2,21 +2,22 @@ import React from 'react';
 import {View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
-import ProgressBar from '../../components/bar/ProgressBar';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../utils/regex';
 
 const FundDesc = ({
   userName,
   title,
-  deadline,
-  fundRate,
+  endDate,
+  fundingRate,
 }: {
   userName: string;
   title: string;
-  deadline: string;
-  fundRate: number;
+  endDate: string;
+  fundingRate: number;
 }) => {
+  console.log(endDate);
+
   return (
     <View className="flex items-center bg-white">
       <View className="w-[312px]">
@@ -38,12 +39,12 @@ const FundDesc = ({
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <Countdown
-              date={deadline}
+              date={new Date(endDate + ' 00:00:00')}
               renderer={({days, hours, minutes, seconds, completed}) => {
                 if (completed) {
                   return (
                     <TextBold
-                      title={'00:00:00'}
+                      title={'펀딩 종료'}
                       style="text-Gray-10 text-Heading-3 leading-Heading-3"
                     />
                   );
@@ -66,13 +67,13 @@ const FundDesc = ({
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <TextBold
-              title={`${fundRate}%`}
+              title={`${fundingRate}%`}
               style="text-Gray-10 text-Heading-3 leading-Heading-3"
             />
             <View className="w-full bg-Sub-01 rounded-full h-3 mt-2">
               <View
                 className={'bg-Main-01 h-3 rounded-full'}
-                style={{width: `${fundRate}%`}}
+                style={{width: `${fundingRate}%`}}
               />
             </View>
           </View>

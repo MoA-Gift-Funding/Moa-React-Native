@@ -132,6 +132,7 @@ export default function Home({navigation}) {
                 .filter(fund => fund.fundingStatus === '진행중')
                 .map(fund => (
                   <MyFund
+                    key={fund.id}
                     item={{
                       id: fund.id,
                       title: fund.title,
