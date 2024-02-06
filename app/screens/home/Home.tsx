@@ -18,50 +18,59 @@ import MyFund from './MyFund';
 import FundItem from './FundItem';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import useFunding from '../../hooks/useFunding';
 
 export default function Home({navigation}) {
   const {
     userState: {user},
   } = useUserContext();
   const [activated, setActivated] = useState(true);
+  const [myFunds, setMyFunds] = useState();
+  const {myFundingsQuery} = useFunding();
 
   useEffect(() => {
+    const requestAOSPermit = async () => {
+      const authStatus = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+      if (authStatus === 'granted') {
+        getFCMToken();
+      }
+      console.log(authStatus);
+    };
+
+    const requestiOSPermit = async () => {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      console.log(authStatus);
+      if (enabled) {
+        return getFCMToken();
+      }
+    };
+
+    const getFCMToken = async () => {
+      const fcmToken = await messaging()
+        .getToken()
+        .then(res => res)
+        .catch(error => console.log(error));
+      console.log('FCM토큰값:', fcmToken);
+    };
+
     if (Platform.OS === 'android') {
       requestAOSPermit();
     }
     if (Platform.OS === 'ios') {
       requestiOSPermit();
     }
-  }, []);
 
-  const requestAOSPermit = async () => {
-    const authStatus = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
-    if (authStatus === 'granted') {
-      getFCMToken();
-    }
-    console.log(authStatus);
-  };
-
-  const requestiOSPermit = async () => {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-    console.log(authStatus);
-    if (enabled) {
-      return getFCMToken();
-    }
-  };
-
-  const getFCMToken = async () => {
-    const fcmToken = await messaging()
-      .getToken()
-      .then(res => res)
-      .catch(error => console.log(error));
-    console.log('FCM토큰값:', fcmToken);
-  };
+    const getMyFunds = async () => {
+      const funds = await myFundingsQuery({});
+      setMyFunds(funds.content);
+    };
+    getMyFunds();
+  }, [myFundingsQuery]);
 
   return (
     <>

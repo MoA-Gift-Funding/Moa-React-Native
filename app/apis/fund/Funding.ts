@@ -57,4 +57,18 @@ export default class Funding {
       throw error;
     }
   }
+
+  async findMyFundings(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    try {
+      const fund = await this.apiClient.findMyFundings(page, size, sort);
+      return fund.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
 }

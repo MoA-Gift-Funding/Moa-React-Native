@@ -16,9 +16,13 @@ const HomeBanner = ({navigation}) => {
       }}
       resizeMode="cover">
       <View className="h-[250px] flex flex-col ml-4 mt-12">
-        <Pressable className="mb-2">
+        <Pressable
+          className="mb-2 w-[40px] h-[40px]"
+          onPress={() =>
+            navigation.navigate('MyMessages', {headerTitle: '알림'})
+          }>
           <Image
-            className="w-[40px] h-[40px]"
+            className="w-[40px] h-[40px] "
             source={{
               uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701672813/moa-alarm_szvywe.png',
             }}

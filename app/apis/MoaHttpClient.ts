@@ -88,4 +88,12 @@ export default class MoaHttpClient {
   createFunding(data: NewFundItem) {
     return this.httpClient.post('/fundings', data);
   }
+
+  findMyFundings(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('/fundings/my', {params: {page, size, sort}});
+  }
 }

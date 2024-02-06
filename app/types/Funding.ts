@@ -20,6 +20,17 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
+export interface FundItem {
+  endDate: string;
+  fundedAmount: number;
+  fundingRate: number;
+  fundingStatus: '진행중' | '배달완료' | '배송대기' | '취소';
+  id: number;
+  participationCount: number;
+  productImageUrl: string;
+  title: string;
+}
+
 export interface Fund {
   productId: number;
   userId: number;

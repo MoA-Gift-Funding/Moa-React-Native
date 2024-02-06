@@ -29,4 +29,12 @@ export class FakeHttpClient {
   createFunding(data: NewFundItem) {
     return this.httpClient.get('');
   }
+
+  findMyFundings(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('');
+  }
 }

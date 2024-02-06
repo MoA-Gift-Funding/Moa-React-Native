@@ -62,12 +62,26 @@ const useFunding = () => {
     },
   });
 
+  const {mutateAsync: myFundingsQuery} = useMutation({
+    mutationKey: ['myfunds', user?.id],
+    mutationFn: ({
+      page,
+      size,
+      sort,
+    }: {
+      page?: number;
+      size?: number;
+      sort?: string;
+    }) => funding.findMyFundings(page, size, sort),
+  });
+
   return {
     addrsQuery,
     createAddrQuery,
     createFundingQuery,
     deleteAddressQuery,
     updateAddressQuery,
+    myFundingsQuery,
   };
 };
 
