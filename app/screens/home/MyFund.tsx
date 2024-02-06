@@ -22,7 +22,7 @@ const MyFund = ({item}: {item: MyFundItem}) => {
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <Countdown
-            date={new Date(endDate + ' 00:00:00')}
+            date={new Date(endDate + ' 23:59:59')}
             renderer={({days, completed}) => {
               if (completed) {
                 return <TextBold title={'펀딩 종료'} style="text-Body-1" />;

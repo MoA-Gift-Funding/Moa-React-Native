@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Config from 'react-native-config';
-import {NewFundItem, ShippingInfo} from '../types/Funding';
+import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
 
 export class FakeHttpClient {
   protected httpClient;
@@ -31,6 +31,15 @@ export class FakeHttpClient {
   }
 
   findMyFundings(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('');
+  }
+
+  findFriendFundings(
+    statuses: FundRequestStatus,
     page: number = 0,
     size: number = 10,
     sort: string = 'createdDate,DESC',

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
-import {NewFundItem, ShippingInfo} from '../types/Funding';
+import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
 
 export default class MoaHttpClient {
   protected httpClient;
@@ -95,6 +95,17 @@ export default class MoaHttpClient {
     sort: string = 'createdDate,DESC',
   ) {
     return this.httpClient.get('/fundings/my', {params: {page, size, sort}});
+  }
+
+  findFriendFundings(
+    statuses: FundRequestStatus = 'PROCESSING',
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('/fundings', {
+      params: {statuses, page, size, sort},
+    });
   }
 
   getFundingDetail(id: number) {

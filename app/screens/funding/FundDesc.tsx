@@ -16,8 +16,6 @@ const FundDesc = ({
   endDate: string;
   fundingRate: number;
 }) => {
-  console.log(endDate);
-
   return (
     <View className="flex items-center bg-white">
       <View className="w-[312px]">
@@ -39,7 +37,7 @@ const FundDesc = ({
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <Countdown
-              date={new Date(endDate + ' 00:00:00')}
+              date={new Date(endDate + ' 23:59:59')}
               renderer={({days, hours, minutes, seconds, completed}) => {
                 if (completed) {
                   return (

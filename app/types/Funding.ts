@@ -20,11 +20,19 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
+type FundStatus = '진행중' | '배달완료' | '배송대기' | '취소';
+
+export type FundRequestStatus =
+  | 'PROCESSING'
+  | 'DELIVERY_WAITING'
+  | 'DELIVERY_COMPLETED'
+  | 'CANCELLED';
+
 export interface MyFundItem {
   endDate: string;
   fundedAmount: number;
   fundingRate: number;
-  fundingStatus: '진행중' | '배달완료' | '배송대기' | '취소';
+  fundingStatus: FundStatus;
   id: number;
   participationCount: number;
   productImageUrl: string;

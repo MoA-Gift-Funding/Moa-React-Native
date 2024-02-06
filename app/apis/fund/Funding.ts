@@ -1,4 +1,8 @@
-import {NewFundItem, ShippingInfo} from '../../types/Funding';
+import {
+  FundRequestStatus,
+  NewFundItem,
+  ShippingInfo,
+} from '../../types/Funding';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
 
@@ -64,8 +68,28 @@ export default class Funding {
     sort: string = 'createdDate,DESC',
   ) {
     try {
-      const fund = await this.apiClient.findMyFundings(page, size, sort);
-      return fund.data;
+      const funds = await this.apiClient.findMyFundings(page, size, sort);
+      return funds.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
+
+  async findFriendFundings(
+    statuses: FundRequestStatus = 'PROCESSING',
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    try {
+      const funds = await this.apiClient.findFriendFundings(
+        statuses,
+        page,
+        size,
+        sort,
+      );
+      return funds.data;
     } catch (error: any) {
       console.error(error.response.data);
       throw error;

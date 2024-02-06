@@ -2,7 +2,7 @@ import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import Funding from '../apis/fund/Funding';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {NewFundItem, ShippingInfo} from '../types/Funding';
+import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 
@@ -58,6 +58,7 @@ const useFunding = () => {
   const {mutate: createFundingQuery} = useMutation({
     mutationFn: (data: NewFundItem) => funding.createFunding(data),
     onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['myfunds', user?.id]});
       navigation.navigate('FundCompleted');
     },
   });
@@ -75,6 +76,21 @@ const useFunding = () => {
     }) => funding.findMyFundings(page, size, sort),
   });
 
+  const {mutateAsync: friendFundingsQuery} = useMutation({
+    mutationKey: ['friendsFunds', user?.id],
+    mutationFn: ({
+      statuses,
+      page,
+      size,
+      sort,
+    }: {
+      statuses?: FundRequestStatus;
+      page?: number;
+      size?: number;
+      sort?: string;
+    }) => funding.findFriendFundings(statuses, page, size, sort),
+  });
+
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
   });
@@ -87,6 +103,7 @@ const useFunding = () => {
     updateAddressQuery,
     myFundingsQuery,
     fundDetailQuery,
+    friendFundingsQuery,
   };
 };
 
