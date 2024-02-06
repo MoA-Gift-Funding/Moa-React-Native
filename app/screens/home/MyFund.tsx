@@ -9,7 +9,7 @@ import {MyFundingItem} from '../../types/Funding';
 import {useUserContext} from '../../contexts/UserContext';
 
 const MyFund = ({item}: {item: MyFundingItem}) => {
-  const {title, deadline, fundRate, activated, fundedCount} = item;
+  const {title, endDate, fundRate, activated, fundedCount} = item;
   const {
     userState: {user},
   } = useUserContext();
@@ -22,7 +22,7 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <Countdown
-            date={deadline}
+            date={endDate}
             renderer={({days, completed}) => {
               if (completed) {
                 return <TextBold title={'펀딩 종료'} style="text-Body-1" />;

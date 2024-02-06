@@ -19,13 +19,14 @@ import FundItem from './FundItem';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/useFunding';
+import {MyFundItem} from '../../types/Funding';
 
 export default function Home({navigation}) {
   const {
     userState: {user},
   } = useUserContext();
   const [activated, setActivated] = useState(true);
-  const [myFunds, setMyFunds] = useState();
+  const [myFunds, setMyFunds] = useState<MyFundItem[]>([]);
   const {myFundingsQuery} = useFunding();
 
   useEffect(() => {
@@ -68,6 +69,7 @@ export default function Home({navigation}) {
     const getMyFunds = async () => {
       const funds = await myFundingsQuery({});
       setMyFunds(funds.content);
+      console.log(funds);
     };
     getMyFunds();
   }, [myFundingsQuery]);
@@ -123,53 +125,24 @@ export default function Home({navigation}) {
             className="py-4 pl-6 flex flex-row"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
-            {activated && (
-              <>
+            {myFunds.length > 0 &&
+              myFunds.map(fund => (
                 <MyFund
                   item={{
-                    id: 1,
-                    title: '내 30번째 생일은 에어팟으로 할래',
-                    deadline: '2024-01-31T00:00:00',
-                    fundRate: 80,
+                    id: fund.id,
+                    title: fund.title,
+                    endDate: fund.endDate,
+                    fundRate: fund.fundingRate,
                     activated: 'Y',
-                    fundedCount: 14,
+                    fundedCount: fund.participationCount,
                   }}
                 />
-                <MyFund
-                  item={{
-                    id: 1,
-                    title: '경민이 결혼 집들이 선물',
-                    deadline: '2024-02-14T00:00:00',
-                    fundRate: 22,
-                    activated: 'Y',
-                    fundedCount: 2,
-                  }}
-                />
-              </>
-            )}
-            {!activated && (
-              <>
-                <MyFund
-                  item={{
-                    id: 1,
-                    title: '올해 선물은 이거로 부탁할게 친구들아!',
-                    deadline: '2023-12-31T00:00:00',
-                    fundRate: 80,
-                    activated: 'N',
-                    fundedCount: 14,
-                  }}
-                />
-                <MyFund
-                  item={{
-                    id: 1,
-                    title: '☃🌲 윤정이의 겨울나기 ❄🎅',
-                    deadline: '2024-01-02T00:00:00',
-                    fundRate: 22,
-                    activated: 'N',
-                    fundedCount: 2,
-                  }}
-                />
-              </>
+              ))}
+            {myFunds.length < 1 && (
+              <TextRegular
+                title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
+                style="text-Body-2 mt-4"
+              />
             )}
           </ScrollView>
         </View>

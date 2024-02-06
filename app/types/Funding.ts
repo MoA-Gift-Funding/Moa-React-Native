@@ -20,7 +20,7 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
-export interface FundItem {
+export interface MyFundItem {
   endDate: string;
   fundedAmount: number;
   fundingRate: number;
@@ -31,20 +31,20 @@ export interface FundItem {
   title: string;
 }
 
-export interface Fund {
-  productId: number;
-  userId: number;
-  title: string;
-  description: string;
-  recipientName: string;
-  phoneNumber: string;
-  zonecode: number;
-  roadAddress: string;
-  detailedAddress: string;
-  upperPriceLimit: string;
-  deadline: string;
-  agreement: 'Y';
-}
+// export interface Fund {
+//   productId: number;
+//   userId: number;
+//   title: string;
+//   description: string;
+//   recipientName: string;
+//   phoneNumber: string;
+//   zonecode: number;
+//   roadAddress: string;
+//   detailedAddress: string;
+//   upperPriceLimit: string;
+//   deadline: string;
+//   agreement: 'Y';
+// }
 
 export interface FundingItem {
   id: number;
@@ -64,7 +64,7 @@ export interface FundingItem {
 export interface MyFundingItem {
   id: number;
   title: string;
-  deadline: string;
+  endDate: string;
 
   fundRate: number;
   activated: string;
