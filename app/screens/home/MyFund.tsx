@@ -5,11 +5,11 @@ import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
 import Countdown from 'react-countdown';
-import {MyFundingItem} from '../../types/Funding';
+import {MyFundItem} from '../../types/Funding';
 import {useUserContext} from '../../contexts/UserContext';
 
-const MyFund = ({item}: {item: MyFundingItem}) => {
-  const {title, endDate, fundRate, activated, fundedCount} = item;
+const MyFund = ({item}: {item: MyFundItem}) => {
+  const {title, endDate, fundingRate, participationCount, id} = item;
   const {
     userState: {user},
   } = useUserContext();
@@ -18,7 +18,7 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
     <Pressable
       className="w-[285px] rounded-2xl mr-4 mb-2"
       style={{elevation: 3, backgroundColor: 'transparent'}}
-      onPress={() => navigation.navigate('FundDetail')}>
+      onPress={() => navigation.navigate('FundDetail', {id})}>
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <Countdown
@@ -48,16 +48,16 @@ const MyFund = ({item}: {item: MyFundingItem}) => {
       </View>
       <View className="bg-white h-[60px] rounded-b-xl shadow-lg flex flex-col px-4 justify-center">
         <View className="flex flex-row justify-between w-full">
-          <TextSemiBold title={`${fundRate}% 펀딩`} style="text-Main-01" />
+          <TextSemiBold title={`${fundingRate}% 펀딩`} style="text-Main-01" />
           <TextSemiBold
-            title={`${fundedCount}명 참여중`}
+            title={`${participationCount}명 참여중`}
             style="text-Gray-08"
           />
         </View>
         <View className="w-full bg-Sub-01 rounded-full h-3 mt-2">
           <View
             className={'bg-Main-01 h-3 rounded-full'}
-            style={{width: `${fundRate}%`}}
+            style={{width: `${fundingRate}%`}}
           />
         </View>
       </View>

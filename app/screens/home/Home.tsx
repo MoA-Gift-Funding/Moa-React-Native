@@ -69,7 +69,6 @@ export default function Home({navigation}) {
     const getMyFunds = async () => {
       const funds = await myFundingsQuery({});
       setMyFunds(funds.content);
-      console.log(funds);
     };
     getMyFunds();
   }, [myFundingsQuery]);
@@ -137,9 +136,11 @@ export default function Home({navigation}) {
                       id: fund.id,
                       title: fund.title,
                       endDate: fund.endDate,
-                      fundRate: fund.fundingRate,
-                      activated: 'Y',
-                      fundedCount: fund.participationCount,
+                      fundingRate: fund.fundingRate,
+                      fundingStatus: fund.fundingStatus,
+                      participationCount: fund.participationCount,
+                      fundedAmount: fund.fundedAmount,
+                      productImageUrl: fund.productImageUrl,
                     }}
                   />
                 ))}

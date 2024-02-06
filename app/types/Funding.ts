@@ -31,6 +31,29 @@ export interface MyFundItem {
   title: string;
 }
 
+export interface FundDetailItem {
+  id: number;
+  memberId: number;
+  title: string;
+  description: string;
+  endDate: string;
+  maximumAmount: number;
+  remainAmount: number;
+  fundingRate: number;
+  status: string;
+  fundedAmount: number;
+  participationCount: number;
+  productImageUrl: string;
+  message: [
+    {
+      nickName: string;
+      profileImageUrl: string;
+      message: string;
+      createAt: string;
+    },
+  ];
+}
+
 // export interface Fund {
 //   productId: number;
 //   userId: number;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -16,60 +16,80 @@ import TextRegular from '../../components/text/TextRegular';
 import {useForm} from 'react-hook-form';
 import FundDesc from './FundDesc';
 import FundMessage from './FundMessage';
+import useFunding from '../../hooks/useFunding';
+import {FundDetailItem} from '../../types/Funding';
+import {useUserContext} from '../../contexts/UserContext';
 
-const FundDetail = ({navigation}) => {
+const FundDetail = ({navigation, route}) => {
+  const {id} = route.params;
   const [loading, setLoading] = useState(false);
   const [desc, setDesc] = useState(true);
   const [message, setMessage] = useState(false);
   const [caution, setCaution] = useState(true);
+  const {
+    userState: {user},
+  } = useUserContext();
+  const [data, setData] = useState<FundDetailItem>({
+    id: 1,
+    memberId: 1,
+    title: '나의 에어팟 펀딩',
+    description:
+      '다들 모여랏! 나에게 에어팟 맥스를 선물해 줄 기회! 기프티콘 줄거면 펀딩해주셈!',
+    endDate: '2024-02-04',
+    maximumAmount: 50000,
+    remainAmount: 140000,
+    fundingRate: 56,
+    status: '진행중',
+    fundedAmount: 50000,
+    participationCount: 17,
+    productImageUrl: 'https://imageurl.example',
+    message: [
+      {
+        nickName: '주노',
+        profileImageUrl: 'https://example.com',
+        message: '형님이 보태준다',
+        createAt: '2024-02-06T15:12:59.034Z',
+      },
+    ],
+  });
   const handleSelection = () => {
     setDesc(!desc);
     setMessage(!message);
   };
+  const {fundDetailQuery} = useFunding();
   const {handleSubmit} = useForm();
-  const data = {
-    id: 1,
-    title: '내 30번째 생일은 에어팟으로 할래',
-    deadline: '2023-12-31T00:00:00',
-    terminated: 'N',
-    userId: 1,
-    profileImage:
-      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
-    userName: '배수지',
-    productId: 1,
-    productImage:
-      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
-    fundRate: 24,
-    fundedCount: 14,
-    descriptions:
-      '펀딩 상세 소개글할지라도 피는 것이 어디 꽃 현저하게 이것이다. 청춘의 거선의 품었기 것이다. 것은 별과 대중을 피부가 기쁘며, 아름답고 칼이다. 이성은 방지하는 따뜻한 그리하였는가?있으며, 찾아 별과 우리는 무엇을 가진 쓸쓸하랴? 같으며, 불어 거친 어디 그리하였는가? 무엇을 인간에 날카로우나 바이며, 얼음에 만물은 싹이 봄바람이다.붙잡아 얼음과 얼음 것이 착목한는 영원히 위하여서. 꽃이 꽃이 귀는 끝에 것이다.',
-  };
+  useEffect(() => {
+    const getFundDetail = async () => {
+      const fund = await fundDetailQuery(id);
+      setData(fund);
+    };
+    getFundDetail();
+  }, [fundDetailQuery, id]);
+
   const {
     title,
-    deadline,
-    terminated,
-    userId,
-    profileImage,
-    userName,
-    productId,
-    fundRate,
-    productImage,
-    descriptions,
+    endDate,
+    status,
+    memberId,
+    fundingRate,
+    productImageUrl,
+    description,
   } = data;
+
   return (
     <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
       {loading && <LoadingBar />}
       <Image
         className="w-[360px] h-[360px]"
         source={{
-          uri: productImage,
+          uri: productImageUrl,
         }}
       />
       <FundDesc
-        userName={userName}
+        userName={user?.nickname}
         title={title}
-        deadline={deadline}
-        fundRate={fundRate}
+        deadline={endDate}
+        fundRate={fundingRate}
       />
       <View className="mt-4 bg-white flex flex-col items-center">
         <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
@@ -95,7 +115,7 @@ const FundDetail = ({navigation}) => {
             <>
               <View className="pb-4 mx-6">
                 <TextRegular
-                  title={descriptions}
+                  title={description}
                   style="text-Gray-06 text-Body-2 leading-Body-2"
                 />
               </View>
