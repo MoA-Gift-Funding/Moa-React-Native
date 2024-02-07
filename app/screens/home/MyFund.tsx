@@ -33,7 +33,9 @@ const MyFund = ({item}: {item: MyFundItem}) => {
             }}
           />
           <TextRegular
-            title={`#${title.substring(0, 14)}...`}
+            title={`#${title.substring(0, 14)}${
+              title.length > 14 ? '...' : ''
+            }`}
             style="text-Body-1"
           />
         </View>

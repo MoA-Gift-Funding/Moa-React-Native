@@ -49,7 +49,6 @@ const FundDetail = ({navigation, route}) => {
     ],
   });
   const {fundDetailQuery} = useFunding();
-  console.log(data);
 
   useEffect(() => {
     const getFundDetail = async () => {
@@ -63,7 +62,14 @@ const FundDetail = ({navigation, route}) => {
     getFundDetail();
   }, [fundDetailQuery, id]);
 
-  const {title, endDate, fundingRate, productImageUrl, description} = data;
+  const {
+    title,
+    endDate,
+    fundingRate,
+    productImageUrl,
+    description,
+    participants,
+  } = data;
 
   return (
     <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
@@ -140,9 +146,8 @@ const FundDetail = ({navigation, route}) => {
           )}
           {!leftSelected && (
             <View>
-              {data.message &&
-                data.message.length > 0 &&
-                data.message.map(msg => (
+              {participants.length > 0 &&
+                participants.map(msg => (
                   <FundMessage
                     message={msg.message}
                     name={msg.nickName}
@@ -150,7 +155,7 @@ const FundDetail = ({navigation, route}) => {
                     createdAt={msg.createAt}
                   />
                 ))}
-              {data.message && data.message.length < 1 && (
+              {participants.length < 1 && (
                 <TextRegular
                   title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
                   style="text-center mt-4"
