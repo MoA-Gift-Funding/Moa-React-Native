@@ -7,6 +7,7 @@ import TextBold from '../../components/text/TextBold';
 import MenuCategory from './components/MenuCategory';
 import MenuCategoryTop from './components/MenuCategoryTop';
 import useFriends from '../../hooks/useFriends';
+import {httpsUrlCorrector} from '../../utils/regex';
 
 const MyPageMain = ({navigation}) => {
   const {
@@ -34,10 +35,7 @@ const MyPageMain = ({navigation}) => {
           <View className="flex flex-row mb-6">
             <Image
               source={{
-                uri:
-                  user?.profileImageUrl[4] !== 's'
-                    ? `https://${user.profileImageUrl?.substring(7)}`
-                    : user.profileImageUrl,
+                uri: httpsUrlCorrector(user?.profileImageUrl),
               }}
               className="w-[56px] h-[56px] rounded-full"
             />

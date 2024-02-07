@@ -52,8 +52,9 @@ export interface FundDetailItem {
   fundedAmount: number;
   participationCount: number;
   productImageUrl: string;
-  message: [
+  participants: [
     {
+      memberId: number;
       nickName: string;
       profileImageUrl: string;
       message: string;

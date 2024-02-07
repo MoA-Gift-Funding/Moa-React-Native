@@ -38,8 +38,9 @@ const FundDetail = ({navigation, route}) => {
     fundedAmount: 0,
     participationCount: 0,
     productImageUrl: '',
-    message: [
+    participants: [
       {
+        memberId: 0,
         nickName: '',
         profileImageUrl: '',
         message: '',
@@ -48,6 +49,7 @@ const FundDetail = ({navigation, route}) => {
     ],
   });
   const {fundDetailQuery} = useFunding();
+  console.log(data);
 
   useEffect(() => {
     const getFundDetail = async () => {
@@ -138,7 +140,8 @@ const FundDetail = ({navigation, route}) => {
           )}
           {!leftSelected && (
             <View>
-              {data.message.length > 0 &&
+              {data.message &&
+                data.message.length > 0 &&
                 data.message.map(msg => (
                   <FundMessage
                     message={msg.message}
@@ -147,7 +150,7 @@ const FundDetail = ({navigation, route}) => {
                     createdAt={msg.createAt}
                   />
                 ))}
-              {data.message.length < 1 && (
+              {data.message && data.message.length < 1 && (
                 <TextRegular
                   title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
                   style="text-center mt-4"

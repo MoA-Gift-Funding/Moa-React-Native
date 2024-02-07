@@ -3,7 +3,7 @@ import {Image, Pressable, View} from 'react-native';
 import {Circle, Path, Svg} from 'react-native-svg';
 import TextRegular from '../../components/text/TextRegular';
 import Countdown from 'react-countdown';
-import {twoDP} from '../../utils/regex';
+import {httpsUrlCorrector, twoDP} from '../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import {FriendFund} from '../../types/Funding';
 
@@ -72,7 +72,7 @@ const FundItem = ({item}: {item: Partial<FriendFund>}) => {
         <View className="flex flex-row items-center mt-3">
           <Image
             source={{
-              uri: profileImageUrl,
+              uri: httpsUrlCorrector(profileImageUrl),
             }}
             className="w-[25px] h-[25px] rounded-full"
           />

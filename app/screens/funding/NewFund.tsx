@@ -9,7 +9,6 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import NextButton from '../../components/button/NextButton';
 import TextSemiBold from '../../components/text/TextSemiBold';
-// import TextEditor from '../../components/text/TextEditor';
 
 const NewFund = ({navigation, route}) => {
   const {id} = route.params;
@@ -36,7 +35,7 @@ const NewFund = ({navigation, route}) => {
     endDate: string;
   }) => {
     if (!data.maximumAmount) {
-      setValue('maximumAmount', '10000000');
+      setValue('maximumAmount', '50000');
     }
     if (endDate.day === dayjs().day) {
       return setDateError(true);

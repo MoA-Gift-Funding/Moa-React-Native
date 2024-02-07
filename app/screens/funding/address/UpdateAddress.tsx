@@ -104,7 +104,7 @@ const UpdateAddress = ({
               label="배송지명"
               control={control}
               error={errors.name}
-              placeholder="배송지 이름을 입력해주세요."
+              placeholder="배송지명을 입력해주세요. ex)우리집"
               rules={{
                 required: '배송지 이름을 입력해주세요.',
                 maxLength: {

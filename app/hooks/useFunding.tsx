@@ -68,15 +68,16 @@ const useFunding = (
     },
   });
 
-  const {data: myFundingsQuery} = useQuery({
+  const {data: myFundingsQuery, refetch: refetchMyFundingsQuery} = useQuery({
     queryKey: ['myfunds', user?.id],
     queryFn: () => funding.findMyFundings(page, size, sort),
   });
 
-  const {data: friendFundingsQuery} = useQuery({
-    queryKey: ['friendsFunds', user?.id],
-    queryFn: () => funding.findFriendFundings(statuses, page, size, sort),
-  });
+  const {data: friendFundingsQuery, refetch: refetchFriendFudingQuery} =
+    useQuery({
+      queryKey: ['friendsFunds', user?.id],
+      queryFn: () => funding.findFriendFundings(statuses, page, size, sort),
+    });
 
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
@@ -91,6 +92,8 @@ const useFunding = (
     myFundingsQuery,
     fundDetailQuery,
     friendFundingsQuery,
+    refetchMyFundingsQuery,
+    refetchFriendFudingQuery,
   };
 };
 

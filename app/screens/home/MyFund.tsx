@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import Countdown from 'react-countdown';
 import {MyFundItem} from '../../types/Funding';
 import {useUserContext} from '../../contexts/UserContext';
+import {httpsUrlCorrector} from '../../utils/regex';
 
 const MyFund = ({item}: {item: MyFundItem}) => {
   const {title, endDate, fundingRate, participationCount, id} = item;
@@ -39,10 +40,7 @@ const MyFund = ({item}: {item: MyFundItem}) => {
         <Image
           className="w-[58px] h-[58px] rounded-full"
           source={{
-            uri:
-              user?.profileImageUrl[4] !== 's'
-                ? `https://${user.profileImageUrl?.substring(7)}`
-                : user.profileImageUrl,
+            uri: httpsUrlCorrector(user?.profileImageUrl),
           }}
         />
       </View>

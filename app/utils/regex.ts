@@ -20,3 +20,10 @@ export const autoCurrency = (money: string | number) => {
 };
 
 export const twoDP = (n: number) => (n > 9 ? n : '0' + n);
+
+export const httpsUrlCorrector = (imageUrl: string | undefined) => {
+  if (imageUrl) {
+    return imageUrl[4] !== 's' ? `https://${imageUrl.substring(7)}` : imageUrl;
+  }
+  return '';
+};

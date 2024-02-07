@@ -11,6 +11,7 @@ import {useForm} from 'react-hook-form';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useUser from '../../hooks/useUser';
+import {httpsUrlCorrector} from '../../utils/regex';
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -64,10 +65,7 @@ const Profile = () => {
           <Image
             className="w-[200px] h-[200px] rounded-full"
             source={{
-              uri:
-                imageURI[4] !== 's'
-                  ? `https://${imageURI?.substring(7)}`
-                  : imageURI,
+              uri: httpsUrlCorrector(imageURI),
             }}
           />
           <Pressable

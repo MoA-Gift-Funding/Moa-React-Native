@@ -20,6 +20,7 @@ import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/useFunding';
 import {FriendFund, MyFundItem} from '../../types/Funding';
+import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
 
 export default function Home({navigation}) {
   const {
@@ -28,7 +29,14 @@ export default function Home({navigation}) {
   const [activated, setActivated] = useState(true);
   const [myFunds, setMyFunds] = useState<MyFundItem[]>([]);
   const [friendFunds, setFriendFunds] = useState<FriendFund[]>([]);
-  const {myFundingsQuery, friendFundingsQuery} = useFunding();
+  const {
+    myFundingsQuery,
+    friendFundingsQuery,
+    refetchFriendFudingQuery,
+    refetchMyFundingsQuery,
+  } = useFunding();
+  useRefetchOnFocus(refetchFriendFudingQuery);
+  useRefetchOnFocus(refetchMyFundingsQuery);
 
   useEffect(() => {
     const requestAOSPermit = async () => {
@@ -136,14 +144,19 @@ export default function Home({navigation}) {
                   <MyFund
                     key={fund.id}
                     item={{
-                      id: fund.id,
-                      title: fund.title,
-                      endDate: fund.endDate,
-                      fundingRate: fund.fundingRate,
-                      fundingStatus: fund.fundingStatus,
-                      participationCount: fund.participationCount,
-                      fundedAmount: fund.fundedAmount,
-                      productImageUrl: fund.productImageUrl,
+                      ...fund,
+                    }}
+                  />
+                ))}
+            {myFunds.length > 0 &&
+              !activated &&
+              myFunds
+                .filter(fund => fund.fundingStatus === '배달완료')
+                .map(fund => (
+                  <MyFund
+                    key={fund.id}
+                    item={{
+                      ...fund,
                     }}
                   />
                 ))}
