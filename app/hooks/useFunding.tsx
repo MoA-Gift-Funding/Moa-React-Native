@@ -6,7 +6,12 @@ import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 
-const useFunding = () => {
+const useFunding = (
+  statuses?: FundRequestStatus,
+  page?: number,
+  size?: number,
+  sort?: string,
+) => {
   const {
     userState: {user},
     useApi: {client},
@@ -63,32 +68,14 @@ const useFunding = () => {
     },
   });
 
-  const {mutateAsync: myFundingsQuery} = useMutation({
-    mutationKey: ['myfunds', user?.id],
-    mutationFn: ({
-      page,
-      size,
-      sort,
-    }: {
-      page?: number;
-      size?: number;
-      sort?: string;
-    }) => funding.findMyFundings(page, size, sort),
+  const {data: myFundingsQuery} = useQuery({
+    queryKey: ['myfunds', user?.id],
+    queryFn: () => funding.findMyFundings(page, size, sort),
   });
 
-  const {mutateAsync: friendFundingsQuery} = useMutation({
-    mutationKey: ['friendsFunds', user?.id],
-    mutationFn: ({
-      statuses,
-      page,
-      size,
-      sort,
-    }: {
-      statuses?: FundRequestStatus;
-      page?: number;
-      size?: number;
-      sort?: string;
-    }) => funding.findFriendFundings(statuses, page, size, sort),
+  const {data: friendFundingsQuery} = useQuery({
+    queryKey: ['friendsFunds', user?.id],
+    queryFn: () => funding.findFriendFundings(statuses, page, size, sort),
   });
 
   const {mutateAsync: fundDetailQuery} = useMutation({

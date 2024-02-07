@@ -62,6 +62,39 @@ export interface FundDetailItem {
   ];
 }
 
+type 추후수정해야할펀딩아이템 = {
+  endDate: string;
+  fundedAmount: number;
+  fundingRate: number;
+  fundingStatus: FundStatus;
+  id: number;
+  participationCount: number;
+  nickName: string;
+  memberId: number;
+  productId: number;
+  productImageUrl: string;
+  title: string;
+};
+
+export interface FundResponse {
+  content: FriendFund[];
+  hasNext: true;
+  currentPage: 0;
+  pageSize: 0;
+}
+
+export interface FriendFund {
+  fundingId: number;
+  title: string;
+  endDate: string;
+  status: FundStatus;
+  memberId: number;
+  nickName: string;
+  profileImageUrl: string;
+  productId: number;
+  productImageUrl: string;
+}
+
 // export interface Fund {
 //   productId: number;
 //   userId: number;

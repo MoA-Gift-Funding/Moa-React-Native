@@ -19,7 +19,7 @@ import FundItem from './FundItem';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/useFunding';
-import {MyFundItem} from '../../types/Funding';
+import {FriendFund, MyFundItem} from '../../types/Funding';
 
 export default function Home({navigation}) {
   const {
@@ -27,7 +27,8 @@ export default function Home({navigation}) {
   } = useUserContext();
   const [activated, setActivated] = useState(true);
   const [myFunds, setMyFunds] = useState<MyFundItem[]>([]);
-  const {myFundingsQuery} = useFunding();
+  const [friendFunds, setFriendFunds] = useState<FriendFund[]>([]);
+  const {myFundingsQuery, friendFundingsQuery} = useFunding();
 
   useEffect(() => {
     const requestAOSPermit = async () => {
@@ -66,12 +67,13 @@ export default function Home({navigation}) {
       requestiOSPermit();
     }
 
-    const getMyFunds = async () => {
-      const funds = await myFundingsQuery({});
-      setMyFunds(funds.content);
-    };
-    getMyFunds();
-  }, [myFundingsQuery]);
+    if (myFundingsQuery) {
+      setMyFunds(myFundingsQuery.content);
+    }
+    if (friendFundingsQuery) {
+      setFriendFunds(friendFundingsQuery.content);
+    }
+  }, [myFundingsQuery, friendFundingsQuery]);
 
   return (
     <>
@@ -180,52 +182,21 @@ export default function Home({navigation}) {
             className="flex flex-row py-6 px-6"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
-            <FundItem
-              item={{
-                id: 1,
-                title: '내 30번째 생일은 에어팟으로 할래',
-                deadline: '2023-12-31T00:00:00',
-                activated: 'N',
-                userId: 1,
-                profileImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-suzy_ukhrxz.png',
-                userName: '배수지',
-                productId: 1,
-                productImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img2_dnu8xk.png',
-              }}
-            />
-
-            <FundItem
-              item={{
-                id: 1,
-                title: '졸업식 선물은 이걸루',
-                deadline: '2024-01-14T00:00:00',
-                activated: 'N',
-                userId: 1,
-                profileImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703225044/moa-loopy_kpoquw.png',
-                userName: '루피',
-                productId: 1,
-                productImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
-              }}
-            />
-            <FundItem
-              item={{
-                id: 1,
-                title: '경민이 집들이 선물',
-                deadline: '2024-01-31T00:00:00',
-                activated: 'N',
-                userId: 1,
-                profileImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703079069/moa-profile_tl4ilu.png',
-                userName: '주먹왕 랄프',
-                productId: 1,
-                productImage:
-                  'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1691491069/Cloudinary-React/h23ilj5zs2wveoeembqm.jpg',
-              }}
-            />
+            {friendFunds.length > 0 &&
+              friendFunds.map(fund => (
+                <FundItem
+                  key={fund.fundingId}
+                  item={{
+                    ...fund,
+                    productImageUrl:
+                      fund.productImageUrl ||
+                      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
+                  }}
+                />
+              ))}
+            {friendFunds.length < 1 && (
+              <TextRegular title="진행중인 펀딩이 없네요🤫" style="mt-8 ml-4" />
+            )}
           </ScrollView>
           <Pressable
             className="mt-10 bg-white rounded-xl"

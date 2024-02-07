@@ -5,29 +5,27 @@ import TextRegular from '../../components/text/TextRegular';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
-import {FundingItem} from '../../types/Funding';
+import {FriendFund} from '../../types/Funding';
 
-const FundItem = ({item}: {item: FundingItem}) => {
+const FundItem = ({item}: {item: Partial<FriendFund>}) => {
   const {
     title,
-    deadline,
-    activated,
-    userId,
-    profileImage,
-    userName,
-    productId,
-    productImage,
+    endDate,
+    profileImageUrl,
+    nickName,
+    productImageUrl,
+    fundingId,
   } = item;
   const navigation = useNavigation();
 
   return (
     <Pressable
       className="flex flex-col"
-      onPress={() => navigation.navigate('FundDetail')}>
+      onPress={() => navigation.navigate('FundDetail', {id: fundingId})}>
       <View className="relative rounded-lg mr-2">
         <Image
           source={{
-            uri: productImage,
+            uri: productImageUrl,
           }}
           className="w-[170px] h-[170px] rounded-lg"
         />
@@ -47,12 +45,12 @@ const FundItem = ({item}: {item: FundingItem}) => {
             style="text-white mr-1 text-Detail-1"
           />
           <Countdown
-            date={deadline}
+            date={new Date(endDate + ' 23:59:59')}
             renderer={({days, hours, minutes, seconds, completed}) => {
               if (completed) {
                 return (
                   <TextRegular
-                    title={'00:00:00'}
+                    title={'펀딩 종료'}
                     style="text-white mr-1 text-Detail-1"
                   />
                 );
@@ -74,11 +72,11 @@ const FundItem = ({item}: {item: FundingItem}) => {
         <View className="flex flex-row items-center mt-3">
           <Image
             source={{
-              uri: profileImage,
+              uri: profileImageUrl,
             }}
             className="w-[25px] h-[25px] rounded-full"
           />
-          <TextRegular title={userName} style="text-Body-1 ml-2" />
+          <TextRegular title={nickName} style="text-Body-1 ml-2" />
         </View>
         <TextRegular
           title={title}
