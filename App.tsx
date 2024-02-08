@@ -14,6 +14,7 @@ import useApiError from './app/hooks/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/apis/fallbackUI';
 import Toast from 'react-native-toast-message';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 
 export const App = () => {
   const {handleError} = useApiError();
@@ -32,8 +33,44 @@ export const App = () => {
   const {reset} = useQueryErrorResetBoundary();
 
   React.useEffect(() => {
+    const foreGroundMessage = async (title, body) => {
+      await notifee.requestPermission();
+
+      const channelId = await notifee.createChannel({
+        id: 'MoA',
+        name: '모아',
+        importance: AndroidImportance.HIGH,
+      });
+
+      await notifee.displayNotification({
+        title,
+        body,
+        android: {
+          channelId,
+          // smallIcon: 'ic_launcher',
+          pressAction: {
+            id: 'MoA',
+          },
+        },
+      });
+    };
+    // 추후 테스트후 변경할 것
+    // notifee.onForegroundEvent(({type, detail}) => {
+    //   const {
+    //     notification: {title, body},
+    //   } = detail;
+    //   switch (type) {
+    //     case EventType.PRESS:
+    //       console.log('User pressed notification', detail.notification);
+    //       break;
+    //   }
+    // });
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      const {
+        notification: {body, title},
+      } = remoteMessage;
+      foreGroundMessage(title, body);
     });
 
     return unsubscribe;

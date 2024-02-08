@@ -139,7 +139,7 @@ export default function Home({navigation}) {
             {myFunds.length > 0 &&
               activated &&
               myFunds
-                .filter(fund => fund.fundingStatus === '진행중')
+                .filter(fund => fund.status === '진행중')
                 .map(fund => (
                   <MyFund
                     key={fund.id}
@@ -151,7 +151,7 @@ export default function Home({navigation}) {
             {myFunds.length > 0 &&
               !activated &&
               myFunds
-                .filter(fund => fund.fundingStatus === '배달완료')
+                .filter(fund => fund.status === '배달완료')
                 .map(fund => (
                   <MyFund
                     key={fund.id}
@@ -192,7 +192,7 @@ export default function Home({navigation}) {
             </Pressable>
           </View>
           <ScrollView
-            className="flex flex-row py-6 px-6"
+            className="flex flex-row py-6 pl-4 pr-16"
             horizontal={true}
             showsHorizontalScrollIndicator={true}>
             {friendFunds.length > 0 &&

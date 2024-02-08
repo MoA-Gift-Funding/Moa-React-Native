@@ -32,10 +32,11 @@ export interface MyFundItem {
   endDate: string;
   fundedAmount: number;
   fundingRate: number;
-  fundingStatus: FundStatus;
+  fundingImageUrl: string | null;
+  status: FundStatus;
   id: number;
   participationCount: number;
-  productImageUrl: string;
+  productImageUrl: string | null;
   title: string;
 }
 
