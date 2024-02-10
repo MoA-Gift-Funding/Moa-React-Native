@@ -65,7 +65,7 @@ export default class Funding {
   async findMyFundings(
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     try {
       const funds = await this.apiClient.findMyFundings(page, size, sort);
@@ -80,7 +80,7 @@ export default class Funding {
     statuses: FundRequestStatus = 'PROCESSING',
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     try {
       const funds = await this.apiClient.findFriendFundings(

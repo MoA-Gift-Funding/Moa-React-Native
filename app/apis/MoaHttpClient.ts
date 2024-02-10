@@ -92,7 +92,7 @@ export default class MoaHttpClient {
   findMyFundings(
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     return this.httpClient.get('/fundings/my', {params: {page, size, sort}});
   }
@@ -101,7 +101,7 @@ export default class MoaHttpClient {
     statuses: FundRequestStatus = 'PROCESSING',
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     return this.httpClient.get('/fundings', {
       params: {statuses, page, size, sort},

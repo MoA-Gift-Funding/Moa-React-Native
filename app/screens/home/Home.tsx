@@ -34,7 +34,7 @@ export default function Home({navigation}) {
     friendFundingsQuery,
     refetchFriendFudingQuery,
     refetchMyFundingsQuery,
-  } = useFunding();
+  } = useFunding(0, 3);
   useRefetchOnFocus(refetchFriendFudingQuery);
   useRefetchOnFocus(refetchMyFundingsQuery);
 

@@ -7,10 +7,10 @@ import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 
 const useFunding = (
-  statuses?: FundRequestStatus,
   page?: number,
   size?: number,
   sort?: string,
+  statuses?: FundRequestStatus,
 ) => {
   const {
     userState: {user},

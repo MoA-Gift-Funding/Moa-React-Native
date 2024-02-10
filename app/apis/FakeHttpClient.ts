@@ -33,7 +33,7 @@ export class FakeHttpClient {
   findMyFundings(
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     return this.httpClient.get('');
   }
@@ -42,7 +42,7 @@ export class FakeHttpClient {
     statuses: FundRequestStatus,
     page: number = 0,
     size: number = 10,
-    sort: string = 'createdDate,DESC',
+    sort: string = 'endDate,ASC',
   ) {
     return this.httpClient.get('');
   }
