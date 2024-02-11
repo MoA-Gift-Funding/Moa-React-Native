@@ -11,11 +11,10 @@ import cls from 'classnames';
 import CreatedFundItem from './components/CreatedFundItem';
 import useFunding from '../../hooks/useFunding';
 import {MyFundItem} from '../../types/Funding';
-import {v4 as uuidv4} from 'uuid';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
-  const {myInfiteQuery} = useFunding();
+  const {myInfiteQuery, myInfiteFetchNextQuery} = useFunding();
 
   return (
     <KeyboardAvoidingView
@@ -45,28 +44,34 @@ const MyFunding = () => {
       </View>
       {myInfiteQuery && (
         <View className="px-6 pb-10">
-          {createdFunds &&
-            myInfiteQuery.pages.map(item => (
-              <FlatList
-                data={item.content.filter(
-                  (fund: MyFundItem) => fund.status === '진행중',
-                )}
-                renderItem={fund => <CreatedFundItem content={fund.item} />}
-                key={uuidv4}
-                showsVerticalScrollIndicator={false}
-              />
-            ))}
-          {!createdFunds &&
-            myInfiteQuery.pages.map(item => (
-              <FlatList
-                data={item.content.filter(
-                  (fund: MyFundItem) => fund.status !== '진행중',
-                )}
-                renderItem={fund => <CreatedFundItem content={fund.item} />}
-                key={uuidv4}
-                showsVerticalScrollIndicator={false}
-              />
-            ))}
+          {createdFunds && (
+            <FlatList
+              data={myInfiteQuery.pages.flatMap(page =>
+                page.content
+                  .filter((fund: MyFundItem) => fund.status === '진행중')
+                  .flat(),
+              )}
+              renderItem={fund => <CreatedFundItem content={fund.item} />}
+              keyExtractor={fund => fund.id}
+              showsVerticalScrollIndicator={false}
+              onEndReached={async () => await myInfiteFetchNextQuery()}
+              onEndReachedThreshold={0.6}
+            />
+          )}
+          {!createdFunds && (
+            <FlatList
+              data={myInfiteQuery.pages.flatMap(page =>
+                page.content
+                  .filter((fund: MyFundItem) => fund.status !== '진행중')
+                  .flat(),
+              )}
+              renderItem={fund => <CreatedFundItem content={fund.item} />}
+              keyExtractor={fund => fund.id}
+              showsVerticalScrollIndicator={false}
+              onEndReached={async () => await myInfiteFetchNextQuery()}
+              onEndReachedThreshold={0.6}
+            />
+          )}
         </View>
       )}
     </KeyboardAvoidingView>

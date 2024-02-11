@@ -2,6 +2,7 @@ import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import Funding from '../apis/fund/Funding';
 import {
+  keepPreviousData,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -79,17 +80,19 @@ const useFunding = (
     queryFn: () => funding.findMyFundings(page, size, sort),
   });
 
-  const {data: myInfiteQuery} = useInfiniteQuery({
-    queryKey: ['myfundList', user?.id],
-    queryFn: ({pageParam = 0}) =>
-      funding.findMyFundings(pageParam, 10, 'createdDate,DESC'),
-    getNextPageParam: lastPage => {
-      if (lastPage.hasNext) {
-        return lastPage.currentPage + 1;
-      }
-      return undefined;
-    },
-  });
+  const {data: myInfiteQuery, fetchNextPage: myInfiteFetchNextQuery} =
+    useInfiniteQuery({
+      queryKey: ['myfundList', user?.id],
+      queryFn: ({pageParam = 0}) =>
+        funding.findMyFundings(pageParam, 10, 'createdDate,DESC'),
+      getNextPageParam: lastPage => {
+        if (lastPage.hasNext) {
+          return lastPage.currentPage + 1;
+        }
+        return undefined;
+      },
+      initialPageParam: 0,
+    });
 
   const {data: friendFundingsQuery, refetch: refetchFriendFudingQuery} =
     useQuery({
@@ -114,6 +117,7 @@ const useFunding = (
     refetchMyFundingsQuery,
     refetchFriendFudingQuery,
     myInfiteQuery,
+    myInfiteFetchNextQuery,
   };
 };
 
