@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Pressable, ScrollView, TextInput, View} from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  ScrollView,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {useForm} from 'react-hook-form';
 import NextButton from '../../components/button/NextButton';
 import LoadingBar from '../../components/bar/LoadingBar';
@@ -51,51 +58,29 @@ const NewFundShipping = ({navigation, route}) => {
   };
 
   return (
-    <View className="px-6 bg-white h-full flex flex-col justify-between">
-      {isLoading && <LoadingBar />}
-      <View>
-        <SideToggle
-          leftTxt="기존 배송지"
-          rightTxt="신규 입력"
-          state={leftPressed}
-          onPress={setLeftPressed}
-        />
-        {addrsQuery && leftPressed && (
-          <View className="flex">
-            {addrsQuery.length < 1 && (
-              <TextRegular
-                title="신규 입력으로 배송지를 등록해주세요🚚"
-                style="text-Body-1 leading-Body-1 text-center text-Gray-08 mt-10"
-              />
-            )}
-            <View>
-              {addrsQuery.length > 0 && (
-                <>
-                  {addrsQuery
-                    .filter((addr: ShippingInfo) => addr.id === selectedAddr)
-                    .map((addr: ShippingInfo) => (
-                      <AddressItem
-                        item={addr}
-                        key={addr.id}
-                        selected={selectedAddr}
-                        onPress={setSelectedAddr}
-                        setToggled={setToggled}
-                        setLeftPressed={setLeftPressed}
-                        setUpdatedAddress={setUpdatedAddress}
-                      />
-                    ))}
-                  <TextInput
-                    className="border border-Gray-05 rounded-lg h-[42px] px-3 -mt-2 mb-4"
-                    placeholder="배송시 요청사항을 입력해주세요."
-                    onChangeText={setDeliveryRequestMessage}
-                  />
-                </>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View className="px-6 bg-white h-full flex flex-col justify-between">
+        {isLoading && <LoadingBar />}
+        <View>
+          <SideToggle
+            leftTxt="기존 배송지"
+            rightTxt="신규 입력"
+            state={leftPressed}
+            onPress={setLeftPressed}
+          />
+          {addrsQuery && leftPressed && (
+            <View className="flex">
+              {addrsQuery.length < 1 && (
+                <TextRegular
+                  title="신규 입력으로 배송지를 등록해주세요🚚"
+                  style="text-Body-1 leading-Body-1 text-center text-Gray-08 mt-10"
+                />
               )}
-              {toggled && (
-                <ScrollView className="h-[300px]">
-                  {addrsQuery.length > 0 &&
-                    addrsQuery
-                      .filter((addr: ShippingInfo) => addr.id !== selectedAddr)
+              <View>
+                {addrsQuery.length > 0 && (
+                  <>
+                    {addrsQuery
+                      .filter((addr: ShippingInfo) => addr.id === selectedAddr)
                       .map((addr: ShippingInfo) => (
                         <AddressItem
                           item={addr}
@@ -107,53 +92,79 @@ const NewFundShipping = ({navigation, route}) => {
                           setUpdatedAddress={setUpdatedAddress}
                         />
                       ))}
-                </ScrollView>
-              )}
-            </View>
-            {addrsQuery && addrsQuery.length > 1 && (
-              <Pressable
-                className="flex flex-row items-center justify-center mt-4"
-                onPress={() => setToggled(!toggled)}>
-                {!toggled && (
-                  <>
-                    <TextRegular
-                      title="다른 배송지 펼쳐보기"
-                      style="text-Gray-06 w-[120px]"
+                    <TextInput
+                      className="border border-Gray-05 rounded-lg h-[42px] px-3 -mt-2 mb-4"
+                      placeholder="배송시 요청사항을 입력해주세요."
+                      onChangeText={setDeliveryRequestMessage}
                     />
-                    <FontAwesomeIcon icon={faAngleDown} color="#9E9E9E" />
                   </>
                 )}
                 {toggled && (
-                  <>
-                    <TextRegular
-                      title="다른 배송지 접기"
-                      style="text-Gray-06 w-[100px]"
-                    />
-                    <FontAwesomeIcon icon={faAngleUp} color="#9E9E9E" />
-                  </>
+                  <ScrollView className="h-[300px]">
+                    {addrsQuery.length > 0 &&
+                      addrsQuery
+                        .filter(
+                          (addr: ShippingInfo) => addr.id !== selectedAddr,
+                        )
+                        .map((addr: ShippingInfo) => (
+                          <AddressItem
+                            item={addr}
+                            key={addr.id}
+                            selected={selectedAddr}
+                            onPress={setSelectedAddr}
+                            setToggled={setToggled}
+                            setLeftPressed={setLeftPressed}
+                            setUpdatedAddress={setUpdatedAddress}
+                          />
+                        ))}
+                  </ScrollView>
                 )}
-              </Pressable>
-            )}
+              </View>
+              {addrsQuery && addrsQuery.length > 1 && (
+                <Pressable
+                  className="flex flex-row items-center justify-center mt-4"
+                  onPress={() => setToggled(!toggled)}>
+                  {!toggled && (
+                    <>
+                      <TextRegular
+                        title="다른 배송지 펼쳐보기"
+                        style="text-Gray-06 w-[120px]"
+                      />
+                      <FontAwesomeIcon icon={faAngleDown} color="#9E9E9E" />
+                    </>
+                  )}
+                  {toggled && (
+                    <>
+                      <TextRegular
+                        title="다른 배송지 접기"
+                        style="text-Gray-06 w-[100px]"
+                      />
+                      <FontAwesomeIcon icon={faAngleUp} color="#9E9E9E" />
+                    </>
+                  )}
+                </Pressable>
+              )}
+            </View>
+          )}
+          {!leftPressed && (
+            <UpdateAddress
+              setLeftPressed={setLeftPressed}
+              updatedAddress={updatedAddress}
+              setUpdatedAddress={setUpdatedAddress}
+            />
+          )}
+        </View>
+        {leftPressed && (
+          <View className="mb-8 flex justify-center items-center">
+            <NextButton
+              title="펀딩 개설하기"
+              onSubmit={onSubmit}
+              handleSubmit={handleSubmit}
+            />
           </View>
         )}
-        {!leftPressed && (
-          <UpdateAddress
-            setLeftPressed={setLeftPressed}
-            updatedAddress={updatedAddress}
-            setUpdatedAddress={setUpdatedAddress}
-          />
-        )}
       </View>
-      {leftPressed && (
-        <View className="mb-8 flex justify-center items-center">
-          <NextButton
-            title="펀딩 개설하기"
-            onSubmit={onSubmit}
-            handleSubmit={handleSubmit}
-          />
-        </View>
-      )}
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

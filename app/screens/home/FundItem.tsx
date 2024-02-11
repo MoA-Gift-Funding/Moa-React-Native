@@ -5,9 +5,9 @@ import TextRegular from '../../components/text/TextRegular';
 import Countdown from 'react-countdown';
 import {httpsUrlCorrector, twoDP} from '../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
-import {FriendFund} from '../../types/Funding';
+import {FriendFundItem} from '../../types/Funding';
 
-const FundItem = ({item}: {item: Partial<FriendFund>}) => {
+const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
   const {
     title,
     endDate,

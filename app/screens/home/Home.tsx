@@ -19,7 +19,7 @@ import FundItem from './FundItem';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/useFunding';
-import {FriendFund, MyFundItem} from '../../types/Funding';
+import {FriendFundItem, MyFundItem} from '../../types/Funding';
 import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
 
 export default function Home({navigation}) {
@@ -27,8 +27,6 @@ export default function Home({navigation}) {
     userState: {user},
   } = useUserContext();
   const [activated, setActivated] = useState(true);
-  const [myFunds, setMyFunds] = useState<MyFundItem[]>([]);
-  const [friendFunds, setFriendFunds] = useState<FriendFund[]>([]);
   const {
     myFundingsQuery,
     friendFundingsQuery,
@@ -74,14 +72,7 @@ export default function Home({navigation}) {
     if (Platform.OS === 'ios') {
       requestiOSPermit();
     }
-
-    if (myFundingsQuery) {
-      setMyFunds(myFundingsQuery.content);
-    }
-    if (friendFundingsQuery) {
-      setFriendFunds(friendFundingsQuery.content);
-    }
-  }, [myFundingsQuery, friendFundingsQuery]);
+  }, []);
 
   return (
     <>
@@ -117,63 +108,70 @@ export default function Home({navigation}) {
             />
           </Pressable>
         </View>
-        <View className="bg-white flex flex-col py-10 justify-center">
-          <View className="flex flex-row justify-between items-center mx-6">
-            <TextSemiBold
-              title={`${user?.nickname}님의 펀딩`}
-              style="text-Heading-4"
-            />
-            {myFunds.length > 0 && (
-              <Pressable>
-                <TextSemiBold
-                  title="모두보기 >"
-                  style="text-Detail-1 text-Gray-06"
+        {myFundingsQuery && (
+          <View className="bg-white flex flex-col py-10 justify-center">
+            <View className="flex flex-row justify-between items-center mx-6">
+              <TextSemiBold
+                title={`${user?.nickname}님의 펀딩`}
+                style="text-Heading-4"
+              />
+              {myFundingsQuery.length > 0 && (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('MyFunding', {
+                      headerTitle: '펀딩',
+                    })
+                  }>
+                  <TextSemiBold
+                    title="모두보기 >"
+                    style="text-Detail-1 text-Gray-06"
+                  />
+                </Pressable>
+              )}
+            </View>
+            <ScrollView
+              className="py-4 pl-6 flex flex-row"
+              horizontal={true}
+              showsHorizontalScrollIndicator={true}>
+              {myFundingsQuery.length > 0 &&
+                activated &&
+                myFundingsQuery
+                  .filter((fund: MyFundItem) => fund.status === '진행중')
+                  .map((fund: MyFundItem) => (
+                    <MyFund
+                      key={fund.id}
+                      item={{
+                        ...fund,
+                      }}
+                    />
+                  ))}
+              {myFundingsQuery.length < 1 &&
+                !activated &&
+                myFundingsQuery
+                  .filter((fund: MyFundItem) => fund.status === '배달완료')
+                  .map((fund: MyFundItem) => (
+                    <MyFund
+                      key={fund.id}
+                      item={{
+                        ...fund,
+                      }}
+                    />
+                  ))}
+              {myFundingsQuery.length > 0 && !activated && (
+                <TextRegular
+                  title="아직 완료된 펀딩이 없어요🎁"
+                  style="text-Body-2 mt-4"
                 />
-              </Pressable>
-            )}
+              )}
+              {myFundingsQuery.length < 1 && (
+                <TextRegular
+                  title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
+                  style="text-Body-2 mt-4"
+                />
+              )}
+            </ScrollView>
           </View>
-          <ScrollView
-            className="py-4 pl-6 flex flex-row"
-            horizontal={true}
-            showsHorizontalScrollIndicator={true}>
-            {myFunds.length > 0 &&
-              activated &&
-              myFunds
-                .filter(fund => fund.status === '진행중')
-                .map(fund => (
-                  <MyFund
-                    key={fund.id}
-                    item={{
-                      ...fund,
-                    }}
-                  />
-                ))}
-            {myFunds.length > 0 &&
-              !activated &&
-              myFunds
-                .filter(fund => fund.status === '배달완료')
-                .map(fund => (
-                  <MyFund
-                    key={fund.id}
-                    item={{
-                      ...fund,
-                    }}
-                  />
-                ))}
-            {myFunds.length > 0 && !activated && (
-              <TextRegular
-                title="아직 완료된 펀딩이 없어요🎁"
-                style="text-Body-2 mt-4"
-              />
-            )}
-            {myFunds.length < 1 && (
-              <TextRegular
-                title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
-                style="text-Body-2 mt-4"
-              />
-            )}
-          </ScrollView>
-        </View>
+        )}
         <View className="bg-white my-4 py-10 flex flex-col">
           <View className="flex flex-row ml-6">
             <TextSemiBold title="현재 " style="text-Heading-4" />
@@ -191,26 +189,31 @@ export default function Home({navigation}) {
               <TextRegular title="집들이" style="text-Main-01" />
             </Pressable>
           </View>
-          <ScrollView
-            className="flex flex-row py-6 pl-4 pr-16"
-            horizontal={true}
-            showsHorizontalScrollIndicator={true}>
-            {friendFunds.length > 0 &&
-              friendFunds.map(fund => (
-                <FundItem
-                  key={fund.fundingId}
-                  item={{
-                    ...fund,
-                    productImageUrl:
-                      fund.productImageUrl ||
-                      'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
-                  }}
+          {friendFundingsQuery && (
+            <ScrollView
+              className="flex flex-row py-6 pl-4 pr-16"
+              horizontal={true}
+              showsHorizontalScrollIndicator={true}>
+              {friendFundingsQuery.length > 0 &&
+                friendFundingsQuery.map((fund: FriendFundItem) => (
+                  <FundItem
+                    key={fund.fundingId}
+                    item={{
+                      ...fund,
+                      productImageUrl:
+                        fund.productImageUrl ||
+                        'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
+                    }}
+                  />
+                ))}
+              {friendFundingsQuery.length < 1 && (
+                <TextRegular
+                  title="진행중인 펀딩이 없네요🤫"
+                  style="mt-8 ml-4"
                 />
-              ))}
-            {friendFunds.length < 1 && (
-              <TextRegular title="진행중인 펀딩이 없네요🤫" style="mt-8 ml-4" />
-            )}
-          </ScrollView>
+              )}
+            </ScrollView>
+          )}
           <Pressable
             className="mt-10 bg-white rounded-xl"
             onPress={async () => {

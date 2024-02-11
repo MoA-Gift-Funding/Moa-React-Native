@@ -34,6 +34,7 @@ import MyOrder from '../screens/myPage/MyOrder';
 import Notices from '../screens/myPage/cs/Notices';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 import MyInquiries from '../screens/myPage/cs/MyInquiries';
+import MyFundList from '../screens/funding/MyFundList';
 
 const AuthRouter = () => {
   const {
@@ -81,6 +82,11 @@ const AuthRouter = () => {
             name="FundCompleted"
             component={FundCompleted}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="MyFundList"
+            component={MyFundList}
+            options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
             name="FundDetail"

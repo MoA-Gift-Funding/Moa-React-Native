@@ -1,7 +1,12 @@
 import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import Funding from '../apis/fund/Funding';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
@@ -70,12 +75,26 @@ const useFunding = (
 
   const {data: myFundingsQuery, refetch: refetchMyFundingsQuery} = useQuery({
     queryKey: ['myfunds', user?.id],
+    select: data => data.content,
     queryFn: () => funding.findMyFundings(page, size, sort),
+  });
+
+  const {data: myInfiteQuery} = useInfiniteQuery({
+    queryKey: ['myfundList', user?.id],
+    queryFn: ({pageParam = 0}) =>
+      funding.findMyFundings(pageParam, 10, 'createdDate,DESC'),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
   });
 
   const {data: friendFundingsQuery, refetch: refetchFriendFudingQuery} =
     useQuery({
       queryKey: ['friendsFunds', user?.id],
+      select: data => data.content,
       queryFn: () => funding.findFriendFundings(statuses, page, size, sort),
     });
 
@@ -94,6 +113,7 @@ const useFunding = (
     friendFundingsQuery,
     refetchMyFundingsQuery,
     refetchFriendFudingQuery,
+    myInfiteQuery,
   };
 };
 
