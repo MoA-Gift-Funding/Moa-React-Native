@@ -164,10 +164,12 @@ export default function Home({navigation}) {
                 />
               )}
               {myFundingsQuery.length < 1 && (
-                <TextRegular
-                  title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
-                  style="text-Body-2 mt-4"
-                />
+                <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
+                  <TextRegular
+                    title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
+                    style="text-Body-2 text-Gray-06"
+                  />
+                </View>
               )}
             </ScrollView>
           </View>
@@ -201,12 +203,12 @@ export default function Home({navigation}) {
               <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
                 <TextRegular title="전체" style="text-white" />
               </Pressable>
-              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+              {/* <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
                 <TextRegular title="생일" style="text-Main-01" />
               </Pressable>
               <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
                 <TextRegular title="집들이" style="text-Main-01" />
-              </Pressable>
+              </Pressable> */}
             </View>
             <ScrollView
               className="flex flex-row pb-6 pl-4 pr-16"
@@ -222,10 +224,12 @@ export default function Home({navigation}) {
                   />
                 ))}
               {friendFundingsQuery.length < 1 && (
-                <TextRegular
-                  title="진행중인 펀딩이 없네요🤫"
-                  style="mt-8 ml-4"
-                />
+                <View className="pt-10 pb-14 w-[340px] flex justify-center items-center">
+                  <TextRegular
+                    title="엇, 진행중인 펀딩이 없어요🤫"
+                    style="text-Gray-06"
+                  />
+                </View>
               )}
             </ScrollView>
             <Pressable
