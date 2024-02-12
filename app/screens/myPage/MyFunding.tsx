@@ -17,6 +17,7 @@ const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
   const {myInfiteQuery, myInfiteFetchNextQuery, refetchMyInfiniteQuery} =
     useFunding();
+
   useRefetchOnFocus(refetchMyInfiniteQuery);
 
   return (

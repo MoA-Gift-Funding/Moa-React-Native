@@ -24,7 +24,7 @@ const FriendFundList = () => {
       />
       {friendFundingInfiteQuery && (
         <View className="pb-10 flex items-center justify-center">
-          <View className="w-[360px">
+          <View className="w-[360px]">
             {activated && (
               <FlatList
                 data={friendFundingInfiteQuery.pages.flatMap(page =>

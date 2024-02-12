@@ -15,6 +15,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/apis/fallbackUI';
 import Toast from 'react-native-toast-message';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 export const App = () => {
   const {handleError} = useApiError();
@@ -72,6 +73,7 @@ export const App = () => {
       } = remoteMessage;
       foreGroundMessage(title, body);
     });
+    SplashScreen.hide();
 
     return unsubscribe;
   }, []);

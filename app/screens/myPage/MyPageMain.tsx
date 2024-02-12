@@ -8,12 +8,14 @@ import MenuCategory from './components/MenuCategory';
 import MenuCategoryTop from './components/MenuCategoryTop';
 import useFriends from '../../hooks/useFriends';
 import {httpsUrlCorrector} from '../../utils/regex';
+import useFunding from '../../hooks/useFunding';
 
 const MyPageMain = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
   const {friendsQuery} = useFriends();
+  const {myFundingsQuery} = useFunding(0, 100);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -62,7 +64,7 @@ const MyPageMain = ({navigation}) => {
           </View>
           <View className="flex flex-row items-center justify-around py-6 border-t-2 border-Gray-01">
             <MenuCategoryTop
-              dataLength={2}
+              dataLength={myFundingsQuery?.length || 0}
               title="펀딩"
               onPress={() =>
                 navigation.navigate('MyFunding', {headerTitle: '펀딩'})

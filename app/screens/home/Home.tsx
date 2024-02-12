@@ -226,7 +226,7 @@ export default function Home({navigation}) {
               {friendFundingsQuery.length < 1 && (
                 <View className="pt-10 pb-14 w-[340px] flex justify-center items-center">
                   <TextRegular
-                    title="엇, 진행중인 펀딩이 없어요🤫"
+                    title="앗, 진행중인 펀딩이 없어요🤫"
                     style="text-Gray-06"
                   />
                 </View>

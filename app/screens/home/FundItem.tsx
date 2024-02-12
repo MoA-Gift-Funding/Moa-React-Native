@@ -20,12 +20,12 @@ const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
 
   return (
     <Pressable
-      className="flex flex-col my-4 w-[170px] ml-2"
+      className="flex flex-col my-4 ml-1"
       onPress={() => navigation.navigate('FundDetail', {id: fundingId})}>
       <View className="relative rounded-lg mr-2">
         <Image
           source={{
-            uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707655783/moa-ssg_tzh1mo.jpg',
+            uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img_n6bsbb.png',
           }}
           className="w-[170px] h-[170px] rounded-lg"
         />
