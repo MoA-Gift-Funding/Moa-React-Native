@@ -148,7 +148,7 @@ export default function Home({navigation}) {
               {myFundingsQuery.length < 1 &&
                 !activated &&
                 myFundingsQuery
-                  .filter((fund: MyFundItem) => fund.status === '배달완료')
+                  .filter((fund: MyFundItem) => fund.status !== '진행중')
                   .map((fund: MyFundItem) => (
                     <MyFund
                       key={fund.id}
@@ -172,26 +172,44 @@ export default function Home({navigation}) {
             </ScrollView>
           </View>
         )}
-        <View className="bg-white my-4 py-10 flex flex-col">
-          <View className="flex flex-row ml-6">
-            <TextSemiBold title="현재 " style="text-Heading-4" />
-            <TextSemiBold title="진행중" style="text-Heading-4 text-Main-01" />
-            <TextSemiBold title="인 펀딩" style="text-Heading-4" />
-          </View>
-          <View className="flex flex-row gap-1 mt-6 ml-6">
-            <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-              <TextRegular title="전체" style="text-white" />
-            </Pressable>
-            <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-              <TextRegular title="생일" style="text-Main-01" />
-            </Pressable>
-            <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
-              <TextRegular title="집들이" style="text-Main-01" />
-            </Pressable>
-          </View>
-          {friendFundingsQuery && (
+        {friendFundingsQuery && (
+          <View className="bg-white my-4 py-10 flex flex-col">
+            <View className="flex flex-row justify-between mx-6">
+              <View className="flex flex-row">
+                <TextSemiBold title="현재 " style="text-Heading-4" />
+                <TextSemiBold
+                  title="진행중"
+                  style="text-Heading-4 text-Main-01"
+                />
+                <TextSemiBold title="인 펀딩" style="text-Heading-4" />
+              </View>
+              {friendFundingsQuery.length > 0 && (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('FriendFundList', {
+                      headerTitle: '펀딩',
+                    })
+                  }>
+                  <TextSemiBold
+                    title="모두보기 >"
+                    style="text-Detail-1 text-Gray-06"
+                  />
+                </Pressable>
+              )}
+            </View>
+            <View className="flex flex-row gap-1 mt-6 ml-6">
+              <Pressable className="bg-Main-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="전체" style="text-white" />
+              </Pressable>
+              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="생일" style="text-Main-01" />
+              </Pressable>
+              <Pressable className="bg-Sub-01 px-4 h-[32px] flex justify-center items-center rounded-3xl">
+                <TextRegular title="집들이" style="text-Main-01" />
+              </Pressable>
+            </View>
             <ScrollView
-              className="flex flex-row py-6 pl-4 pr-16"
+              className="flex flex-row pb-6 pl-4 pr-16"
               horizontal={true}
               showsHorizontalScrollIndicator={true}>
               {friendFundingsQuery.length > 0 &&
@@ -200,9 +218,6 @@ export default function Home({navigation}) {
                     key={fund.fundingId}
                     item={{
                       ...fund,
-                      productImageUrl:
-                        fund.productImageUrl ||
-                        'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
                     }}
                   />
                 ))}
@@ -213,28 +228,28 @@ export default function Home({navigation}) {
                 />
               )}
             </ScrollView>
-          )}
-          <Pressable
-            className="mt-10 bg-white rounded-xl"
-            onPress={async () => {
-              Platform.OS === 'ios'
-                ? Share.share({
-                    url: 'https://www.giftmoa.co.kr/',
-                    message: '새로운 선물 경험을 선사하는 플랫폼, 모아',
-                  })
-                : Share.share({
-                    title: '새로운 선물 경험을 선사하는 플랫폼, 모아',
-                    message: 'https://www.giftmoa.co.kr/',
-                  });
-            }}>
-            <Image
-              className="w-full h-[136px] rounded-xl"
-              source={{
-                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703226051/moa-banner2_atc4su.png',
-              }}
-            />
-          </Pressable>
-        </View>
+            <Pressable
+              className="mt-10 bg-white rounded-xl"
+              onPress={async () => {
+                Platform.OS === 'ios'
+                  ? Share.share({
+                      url: 'https://www.giftmoa.co.kr/',
+                      message: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                    })
+                  : Share.share({
+                      title: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                      message: 'https://www.giftmoa.co.kr/',
+                    });
+              }}>
+              <Image
+                className="w-full h-[136px] rounded-xl"
+                source={{
+                  uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703226051/moa-banner2_atc4su.png',
+                }}
+              />
+            </Pressable>
+          </View>
+        )}
       </ScrollView>
       <Footer screen="Home" />
     </>

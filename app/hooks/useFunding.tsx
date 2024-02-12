@@ -80,19 +80,22 @@ const useFunding = (
     queryFn: () => funding.findMyFundings(page, size, sort),
   });
 
-  const {data: myInfiteQuery, fetchNextPage: myInfiteFetchNextQuery} =
-    useInfiniteQuery({
-      queryKey: ['myfundList', user?.id],
-      queryFn: ({pageParam = 0}) =>
-        funding.findMyFundings(pageParam, 10, 'createdDate,DESC'),
-      getNextPageParam: lastPage => {
-        if (lastPage.hasNext) {
-          return lastPage.currentPage + 1;
-        }
-        return undefined;
-      },
-      initialPageParam: 0,
-    });
+  const {
+    data: myInfiteQuery,
+    fetchNextPage: myInfiteFetchNextQuery,
+    refetch: refetchMyInfiniteQuery,
+  } = useInfiniteQuery({
+    queryKey: ['myfundList', user?.id],
+    queryFn: ({pageParam = 0}) =>
+      funding.findMyFundings(pageParam, 10, 'createdDate,DESC'),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+  });
 
   const {data: friendFundingsQuery, refetch: refetchFriendFudingQuery} =
     useQuery({
@@ -100,6 +103,27 @@ const useFunding = (
       select: data => data.content,
       queryFn: () => funding.findFriendFundings(statuses, page, size, sort),
     });
+
+  const {
+    data: friendFundingInfiteQuery,
+    fetchNextPage: friendFundingInfiteFetchNextQuery,
+    refetch: refetchFriendFundingInfiteQuery,
+  } = useInfiniteQuery({
+    queryKey: ['friendsFundList', user?.id],
+    queryFn: ({pageParam = 0}) =>
+      funding.findFriendFundings(
+        'PROCESSING, DELIVERY_WAITING, DELIVERY_COMPLETED',
+        pageParam,
+        10,
+      ),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+  });
 
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
@@ -118,6 +142,10 @@ const useFunding = (
     refetchFriendFudingQuery,
     myInfiteQuery,
     myInfiteFetchNextQuery,
+    refetchMyInfiniteQuery,
+    friendFundingInfiteQuery,
+    friendFundingInfiteFetchNextQuery,
+    refetchFriendFundingInfiteQuery,
   };
 };
 

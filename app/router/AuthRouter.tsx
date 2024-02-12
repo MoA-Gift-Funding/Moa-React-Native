@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/home/Home';
@@ -34,7 +34,7 @@ import MyOrder from '../screens/myPage/MyOrder';
 import Notices from '../screens/myPage/cs/Notices';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 import MyInquiries from '../screens/myPage/cs/MyInquiries';
-import MyFundList from '../screens/funding/MyFundList';
+import FriendFundList from '../screens/funding/FriendFundList';
 
 const AuthRouter = () => {
   const {
@@ -84,8 +84,8 @@ const AuthRouter = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="MyFundList"
-            component={MyFundList}
+            name="FriendFundList"
+            component={FriendFundList}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen

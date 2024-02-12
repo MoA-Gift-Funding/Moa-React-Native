@@ -11,10 +11,13 @@ import cls from 'classnames';
 import CreatedFundItem from './components/CreatedFundItem';
 import useFunding from '../../hooks/useFunding';
 import {MyFundItem} from '../../types/Funding';
+import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
-  const {myInfiteQuery, myInfiteFetchNextQuery} = useFunding();
+  const {myInfiteQuery, myInfiteFetchNextQuery, refetchMyInfiniteQuery} =
+    useFunding();
+  useRefetchOnFocus(refetchMyInfiniteQuery);
 
   return (
     <KeyboardAvoidingView

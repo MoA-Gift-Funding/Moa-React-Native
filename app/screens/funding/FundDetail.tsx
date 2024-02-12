@@ -56,7 +56,7 @@ const FundDetail = ({navigation, route}) => {
       setData({
         ...fund,
         productImageUrl:
-          'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707260796/moa_testimg_zcylnl.jpg',
+          'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707655783/moa-ssg_tzh1mo.jpg',
       });
     };
     getFundDetail();
