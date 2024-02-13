@@ -50,4 +50,17 @@ export class FakeHttpClient {
   getFundingDetail(id: number) {
     return this.httpClient.get('');
   }
+
+  // payment
+  sendPayInfo(data: {orderId: string; amount: number}) {
+    return this.httpClient.get('');
+  }
+
+  sendSuccessPayment(paymentKey: string, orderId: string, amount: number) {
+    return this.httpClient.get('');
+  }
+
+  sendFailPayment(message: string, code: number) {
+    return this.httpClient.get('');
+  }
 }

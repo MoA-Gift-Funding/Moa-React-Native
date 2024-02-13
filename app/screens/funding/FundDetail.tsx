@@ -214,7 +214,12 @@ const FundDetail = ({navigation, route}) => {
         <Pressable
           className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
           onPress={() =>
-            navigation.navigate('JoinFund', {maximumAmount, remainAmount, id})
+            navigation.navigate('JoinFund', {
+              maximumAmount,
+              remainAmount,
+              id,
+              title,
+            })
           }>
           <TextSemiBold
             style="text-white text-Body-1 ml-[14px]"

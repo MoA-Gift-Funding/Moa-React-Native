@@ -21,7 +21,7 @@ const JoinFund = ({navigation, route}) => {
     getValues,
     formState: {errors},
   } = useForm({defaultValues: {price: ''}});
-  const {maximumAmount, remainAmount, id} = route.params;
+  const {maximumAmount, remainAmount, id, title} = route.params;
   const maxPrice = maximumAmount > remainAmount ? maximumAmount : remainAmount;
   const handleAddedPrice = (amount: number) => {
     const added = Number(getValues().price || 0) + amount;
@@ -129,6 +129,7 @@ const JoinFund = ({navigation, route}) => {
               navigation.navigate('JoinFundMSG', {
                 price: getValues().price,
                 id,
+                title,
               })
             }
           />

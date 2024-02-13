@@ -12,10 +12,11 @@ import {
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
-import {autoCurrency} from '../../utils/regex';
+import {autoCurrency, createOrderId} from '../../utils/regex';
+import Toast from 'react-native-toast-message';
 
 const JoinFundPay = ({navigation, route}) => {
-  const {price, id} = route.params;
+  const {price, id, title} = route.params;
   return (
     <View className="px-6 bg-white h-full">
       <View className="mt-4">
@@ -31,12 +32,12 @@ const JoinFundPay = ({navigation, route}) => {
       <PaymentWidgetProvider
         clientKey={'test_gck_Z1aOwX7K8mydZ55A1deP8yQxzvNP'}
         customerKey={'test_gsk_LkKEypNArW26726WYYYQVlmeaxYG'}>
-        <CheckoutPage price={price} />
+        <CheckoutPage price={price} orderName={title} />
       </PaymentWidgetProvider>
     </View>
   );
 };
-function CheckoutPage({price}: {price: string}) {
+function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
   const paymentWidgetControl = usePaymentWidget();
   const [paymentMethodWidgetControl, setPaymentMethodWidgetControl] =
     useState<PaymentMethodWidgetControl | null>(null);
@@ -44,6 +45,7 @@ function CheckoutPage({price}: {price: string}) {
     useState<AgreementWidgetControl | null>(null);
   const {handleSubmit} = useForm();
   const navigation = useNavigation();
+  const orderId = createOrderId();
   return (
     <View className="h-full flex flex-col justify-between">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -85,26 +87,35 @@ function CheckoutPage({price}: {price: string}) {
               paymentWidgetControl == null ||
               agreementWidgetControl == null
             ) {
-              Alert.alert('주문 정보가 초기화되지 않았습니다.');
+              Toast.show({
+                type: 'error',
+                text1: '주문 정보가 초기화되지 않았어요. 다시 시도해주세요.',
+              });
               return;
             }
 
             const agreeement =
               await agreementWidgetControl.getAgreementStatus();
             if (agreeement.agreedRequiredTerms !== true) {
-              Alert.alert('약관에 동의하지 않았습니다.');
+              Toast.show({
+                type: 'error',
+                text1: '약관에 동의해주세요.',
+              });
               return;
             }
 
             paymentWidgetControl
               .requestPayment?.({
-                orderId: 'yBVbkwLtWkAx_dzRGq8cc',
-                orderName: '토스 티셔츠 외 2건',
+                orderId,
+                orderName,
               })
-              .then(() => navigation.navigate('JoinFundCompleted'))
-              .catch(error => {
-                console.log('실패!!!');
-                console.log(error);
+              .then(result => {
+                if (result?.success) {
+                  // 결제 성공 비즈니스 로직을 구현하세요.
+                  // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
+                } else if (result?.fail) {
+                  // 결제 실패 비즈니스 로직을 구현하세요.
+                }
               });
           }}
         />
