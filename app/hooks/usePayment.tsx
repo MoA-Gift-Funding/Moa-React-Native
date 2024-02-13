@@ -4,6 +4,7 @@ import {useUserContext} from '../contexts/UserContext';
 import {useMutation} from '@tanstack/react-query';
 import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import useFunding from './useFunding';
 
 const usePayment = () => {
   const {
@@ -11,6 +12,7 @@ const usePayment = () => {
   } = useUserContext();
   const payment = new Payment(client);
   const navigation = useNavigation();
+  const {joinFund} = useFunding();
 
   const {mutate: prePayQuery} = useMutation({
     mutationFn: (data: {orderId: string; amount: number}) =>
@@ -33,9 +35,6 @@ const usePayment = () => {
       orderId: string;
       amount: number;
     }) => payment.sendSuccessPayment(paymentKey, orderId, amount),
-    onSuccess: () => {
-      navigation.navigate('JoinFundCompleted');
-    },
   });
 
   const {mutateAsync: failPaymentQuery} = useMutation({

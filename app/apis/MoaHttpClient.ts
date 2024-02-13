@@ -112,6 +112,24 @@ export default class MoaHttpClient {
     return this.httpClient.get(`/fundings/${id}`);
   }
 
+  joinFund({
+    orderId,
+    paymentOrderId,
+    message,
+    visible,
+  }: {
+    orderId: number;
+    paymentOrderId: string;
+    message: string;
+    visible: 'PUBLIC' | 'PRIVATE';
+  }) {
+    return this.httpClient.post(`/fundings/${orderId}/participate`, {
+      paymentOrderId,
+      message,
+      visible,
+    });
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/prepay', data);

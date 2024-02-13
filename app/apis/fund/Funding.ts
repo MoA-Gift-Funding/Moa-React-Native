@@ -105,4 +105,19 @@ export default class Funding {
       throw error;
     }
   }
+
+  async joinFund(data: {
+    orderId: number;
+    paymentOrderId: string;
+    message: string;
+    visible: 'PUBLIC' | 'PRIVATE';
+  }) {
+    try {
+      const join = await this.apiClient.joinFund(data);
+      return join.data;
+    } catch (error) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
 }

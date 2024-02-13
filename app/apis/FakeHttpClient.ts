@@ -51,6 +51,15 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  joinFund(data: {
+    orderId: number;
+    paymentOrderId: string;
+    message: string;
+    visible: 'PUBLIC' | 'PRIVATE';
+  }) {
+    return this.httpClient.get('');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');

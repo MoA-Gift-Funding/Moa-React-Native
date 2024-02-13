@@ -130,7 +130,15 @@ const useFunding = (
   });
 
   const {mutateAsync: joinFundQuery} = useMutation({
-    // mutationFn: ()=
+    mutationFn: (data: {
+      orderId: number;
+      paymentOrderId: string;
+      message: string;
+      visible: 'PUBLIC' | 'PRIVATE';
+    }) => funding.joinFund(data),
+    onSuccess: () => {
+      navigation.navigate('JoinFundCompleted');
+    },
   });
 
   return {
@@ -150,6 +158,7 @@ const useFunding = (
     friendFundingInfiteQuery,
     friendFundingInfiteFetchNextQuery,
     refetchFriendFundingInfiteQuery,
+    joinFundQuery,
   };
 };
 

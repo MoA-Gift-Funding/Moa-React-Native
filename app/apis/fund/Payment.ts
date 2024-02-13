@@ -31,6 +31,7 @@ export default class Payment {
       return success.data;
     } catch (error: any) {
       console.error(error.response.data);
+      console.log(error.request);
       throw error;
     }
   }
