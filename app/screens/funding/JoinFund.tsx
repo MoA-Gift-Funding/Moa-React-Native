@@ -20,8 +20,16 @@ const JoinFund = ({navigation, route}) => {
     setValue,
     getValues,
     formState: {errors},
-  } = useForm();
-  const total = '145000';
+  } = useForm({defaultValues: {price: ''}});
+  const {maximumAmount, remainAmount, id} = route.params;
+  const maxPrice = maximumAmount > remainAmount ? maximumAmount : remainAmount;
+  const handleAddedPrice = (amount: number) => {
+    const added = Number(getValues().price || 0) + amount;
+    if (added > maxPrice) {
+      return setValue('price', maxPrice.toString());
+    }
+    setValue('price', added.toString());
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -52,14 +60,17 @@ const JoinFund = ({navigation, route}) => {
                 control={control}
                 rules={{
                   required: '펀딩할 금액을 입력해주세요.',
-                  pattern: /\d/,
                   max: {
-                    value: total,
+                    value: maxPrice,
                     message: '최대 펀딩 가능한 금액을 초과했어요.',
                   },
                   min: {
-                    value: 10000,
-                    message: '펀딩은 최소 1만원부터 가능해요.',
+                    value: 5000,
+                    message: '펀딩은 최소 5천원부터 가능해요.',
+                  },
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: '숫자만 입력가능해요.',
                   },
                 }}
                 render={({field: {onChange, onBlur, value}}) => (
@@ -70,7 +81,7 @@ const JoinFund = ({navigation, route}) => {
                     onChangeText={text => {
                       onChange(text);
                     }}
-                    value={value}
+                    value={value.toString()}
                     keyboardType="number-pad"
                   />
                 )}
@@ -86,39 +97,24 @@ const JoinFund = ({navigation, route}) => {
             <View className="flex flex-row justify-around mt-2 w-[312px]">
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() =>
-                  setValue(
-                    'price',
-                    String(Number(getValues().price || 0) + 5000),
-                  )
-                }>
+                onPress={() => handleAddedPrice(5000)}>
                 <TextRegular title="+5천원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() =>
-                  setValue(
-                    'price',
-                    String(Number(getValues().price || 0) + 10000),
-                  )
-                }>
+                onPress={() => handleAddedPrice(10000)}>
                 <TextRegular title="+1만원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() =>
-                  setValue(
-                    'price',
-                    String(Number(getValues().price || 0) + 50000),
-                  )
-                }>
+                onPress={() => handleAddedPrice(50000)}>
                 <TextRegular title="+5만원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable
                 className="px-2 h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() => setValue('price', total)}>
+                onPress={() => setValue('price', maxPrice.toString())}>
                 <TextRegular
-                  title="남은 금액 채우기"
+                  title="최대 금액 채우기"
                   style="text-Gray-06 text-Body-2"
                 />
               </Pressable>
@@ -132,7 +128,7 @@ const JoinFund = ({navigation, route}) => {
             onSubmit={() =>
               navigation.navigate('JoinFundMSG', {
                 price: getValues().price,
-                ...route.params,
+                id,
               })
             }
           />

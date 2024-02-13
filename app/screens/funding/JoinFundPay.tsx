@@ -15,12 +15,10 @@ import {useNavigation} from '@react-navigation/native';
 import {autoCurrency} from '../../utils/regex';
 
 const JoinFundPay = ({navigation, route}) => {
-  const {price} = route.params;
+  const {price, id} = route.params;
   return (
-    <ScrollView
-      className="px-6 bg-white h-full"
-      showsVerticalScrollIndicator={false}>
-      <View className="mt-8">
+    <View className="px-6 bg-white h-full">
+      <View className="mt-4">
         <TextBold
           title="펀딩 결제 수단을"
           style="text-Heading-3 leading-Heading-3"
@@ -35,7 +33,7 @@ const JoinFundPay = ({navigation, route}) => {
         customerKey={'test_gsk_LkKEypNArW26726WYYYQVlmeaxYG'}>
         <CheckoutPage price={price} />
       </PaymentWidgetProvider>
-    </ScrollView>
+    </View>
   );
 };
 function CheckoutPage({price}: {price: string}) {
@@ -47,8 +45,8 @@ function CheckoutPage({price}: {price: string}) {
   const {handleSubmit} = useForm();
   const navigation = useNavigation();
   return (
-    <View className="flex flex-coljustify-end">
-      <View>
+    <View className="h-full flex flex-col justify-between">
+      <ScrollView showsVerticalScrollIndicator={false}>
         <PaymentMethodWidget
           selector="payment-methods"
           onLoadEnd={() => {
@@ -65,8 +63,6 @@ function CheckoutPage({price}: {price: string}) {
               });
           }}
         />
-      </View>
-      <View>
         <AgreementWidget
           selector="agreement"
           onLoadEnd={() => {
@@ -79,8 +75,8 @@ function CheckoutPage({price}: {price: string}) {
               });
           }}
         />
-      </View>
-      <View className="flex justify-center items-center">
+      </ScrollView>
+      <View className="flex justify-center items-center mb-28">
         <NextButton
           title={`${autoCurrency(price)}원 펀딩하기`}
           handleSubmit={handleSubmit}
@@ -105,7 +101,6 @@ function CheckoutPage({price}: {price: string}) {
                 orderId: 'yBVbkwLtWkAx_dzRGq8cc',
                 orderName: '토스 티셔츠 외 2건',
               })
-              .then(res => console.log(res))
               .then(() => navigation.navigate('JoinFundCompleted'))
               .catch(error => {
                 console.log('실패!!!');

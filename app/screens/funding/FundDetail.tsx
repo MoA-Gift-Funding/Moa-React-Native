@@ -69,102 +69,132 @@ const FundDetail = ({navigation, route}) => {
     productImageUrl,
     description,
     participants,
+    memberId,
+    maximumAmount,
+    remainAmount,
   } = data;
 
   return (
-    <ScrollView className="flex flex-col" showsVerticalScrollIndicator={false}>
-      <Image
-        className="w-[360px] h-[360px]"
-        source={{
-          uri: productImageUrl,
-        }}
-      />
-      <FundDesc
-        userName={user?.nickname}
-        title={title}
-        endDate={endDate}
-        fundingRate={fundingRate}
-      />
-      <View className="mt-4 bg-white flex flex-col items-center">
-        <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
-          <Pressable
-            className={cls(
-              'w-[156px] h-[48px] flex items-center justify-center',
-              {'border-b-Main-01 border-b-2': leftSelected},
-            )}
-            onPress={() => setLeftSelected(true)}>
-            <TextSemiBold title="소개글" style="text-Gray-10" />
-          </Pressable>
-          <Pressable
-            className={cls(
-              'w-[156px] h-[48px] flex items-center justify-center',
-              {'border-b-Main-01 border-b-2': !leftSelected},
-            )}
-            onPress={() => setLeftSelected(false)}>
-            <TextSemiBold title="메세지" style="text-Gray-10" />
-          </Pressable>
-        </View>
-        <View className="w-full py-6">
-          {leftSelected && (
-            <>
-              <View className="pb-4 mx-6">
-                <TextRegular
-                  title={description}
-                  style="text-Gray-06 text-Body-2 leading-Body-2"
-                />
-              </View>
-              <Pressable
-                className="w-full border-y-[1px] border-Gray-02 flex items-center"
-                onPress={() => setCaution(!caution)}>
-                <View className="w-[312px] h-[60px] flex flex-row justify-between items-center">
-                  <TextSemiBold
-                    title="펀딩 취소 규정"
-                    style="text-Body-2 text-Gray-10"
-                  />
-                  <FontAwesomeIcon
-                    icon={caution ? faChevronDown : faChevronUp}
+    <>
+      <ScrollView
+        className="flex flex-col"
+        showsVerticalScrollIndicator={false}>
+        <Image
+          className="w-[360px] h-[360px]"
+          source={{
+            uri: productImageUrl,
+          }}
+        />
+        <FundDesc
+          userName={user?.nickname}
+          title={title}
+          endDate={endDate}
+          fundingRate={fundingRate}
+        />
+        <View className="mt-4 bg-white flex flex-col items-center">
+          <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
+            <Pressable
+              className={cls(
+                'w-[156px] h-[48px] flex items-center justify-center',
+                {'border-b-Main-01 border-b-2': leftSelected},
+              )}
+              onPress={() => setLeftSelected(true)}>
+              <TextSemiBold title="소개글" style="text-Gray-10" />
+            </Pressable>
+            <Pressable
+              className={cls(
+                'w-[156px] h-[48px] flex items-center justify-center',
+                {'border-b-Main-01 border-b-2': !leftSelected},
+              )}
+              onPress={() => setLeftSelected(false)}>
+              <TextSemiBold title="메세지" style="text-Gray-10" />
+            </Pressable>
+          </View>
+          <View className="w-full py-6">
+            {leftSelected && (
+              <>
+                <View className="pb-4 mx-6">
+                  <TextRegular
+                    title={description}
+                    style="text-Gray-06 text-Body-2 leading-Body-2"
                   />
                 </View>
-                {caution && (
-                  <View className="w-full bg-Gray-02 flex items-center py-4">
-                    <TextRegular
-                      title="- 취소 안돼"
-                      style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                <Pressable
+                  className="w-full border-y-[1px] border-Gray-02 flex items-center"
+                  onPress={() => setCaution(!caution)}>
+                  <View className="w-[312px] h-[60px] flex flex-row justify-between items-center">
+                    <TextSemiBold
+                      title="펀딩 취소 규정"
+                      style="text-Body-2 text-Gray-10"
                     />
-                    <TextRegular
-                      title="- 하지마요"
-                      style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                    <FontAwesomeIcon
+                      icon={caution ? faChevronDown : faChevronUp}
                     />
+                  </View>
+                  {caution && (
+                    <View className="w-full bg-Gray-02 flex items-center py-4">
+                      <TextRegular
+                        title="- 취소 안돼"
+                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                      />
+                      <TextRegular
+                        title="- 하지마요"
+                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                      />
+                      <TextRegular
+                        title="- 수수료 나와요"
+                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                      />
+                    </View>
+                  )}
+                </Pressable>
+              </>
+            )}
+            {!leftSelected && (
+              <View>
+                {participants.length > 0 &&
+                  participants.map(msg => (
+                    <FundMessage
+                      message={msg.message}
+                      name={msg.nickName}
+                      profileImage={msg.profileImageUrl}
+                      createdAt={msg.createAt}
+                    />
+                  ))}
+                {participants.length < 1 && (
+                  <View className="pt-8 pb-14">
                     <TextRegular
-                      title="- 수수료 나와요"
-                      style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                      title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
+                      style="text-center"
                     />
                   </View>
                 )}
-              </Pressable>
-            </>
-          )}
-          {!leftSelected && (
-            <View>
-              {participants.length > 0 &&
-                participants.map(msg => (
-                  <FundMessage
-                    message={msg.message}
-                    name={msg.nickName}
-                    profileImage={msg.profileImageUrl}
-                    createdAt={msg.createAt}
-                  />
-                ))}
-              {participants.length < 1 && (
-                <TextRegular
-                  title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
-                  style="text-center mt-4"
-                />
-              )}
-            </View>
-          )}
+              </View>
+            )}
+          </View>
         </View>
-      </View>
+
+        {/* {memberId !== user?.id && (
+          <Pressable
+            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+            onPress={() => navigation.navigate('JoinFund')}>
+            <TextSemiBold
+              style="text-white text-Body-1 ml-[14px]"
+              title="선물 펀딩하기"
+            />
+          </Pressable>
+        )} */}
+        {/* {memberId === user?.id && (
+          <Pressable
+            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+            onPress={() => navigation.navigate('JoinFund')}>
+            <TextSemiBold
+              style="text-white text-Body-1 ml-[14px]"
+              title="펀딩 채우기"
+            />
+          </Pressable>
+        )} */}
+      </ScrollView>
       <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
         <Pressable
           className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
@@ -182,17 +212,17 @@ const FundDetail = ({navigation, route}) => {
           <TextSemiBold title="공유" style="text-white text-Body-1" />
         </Pressable>
         <Pressable
-          className={
-            'h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center'
-          }
-          onPress={() => navigation.navigate('JoinFund')}>
+          className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+          onPress={() =>
+            navigation.navigate('JoinFund', {maximumAmount, remainAmount, id})
+          }>
           <TextSemiBold
             style="text-white text-Body-1 ml-[14px]"
             title="선물 펀딩하기"
           />
         </Pressable>
       </View>
-    </ScrollView>
+    </>
   );
 };
 

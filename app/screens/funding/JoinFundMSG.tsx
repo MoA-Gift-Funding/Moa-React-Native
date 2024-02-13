@@ -17,7 +17,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
 
 const JoinFundMSG = ({navigation, route}) => {
-  console.log(route.params);
   const [checked, setChecked] = useState(false);
   const {
     control,
@@ -93,7 +92,7 @@ const JoinFundMSG = ({navigation, route}) => {
               navigation.navigate('JoinFundPay', {
                 ...route.params,
                 ...getValues(),
-                checked,
+                visible: checked ? 'PRIVATE' : 'PUBLIC',
               })
             }
             handleSubmit={handleSubmit}

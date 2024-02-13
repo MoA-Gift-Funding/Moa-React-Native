@@ -27,3 +27,12 @@ export const httpsUrlCorrector = (imageUrl: string | undefined) => {
   }
   return '';
 };
+
+export const createOrderId = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = twoDP(date.getMonth() + 1);
+  const day = twoDP(date.getDate());
+  const random = Math.floor(Math.random() * Number(date));
+  return `MOA${year}${month}${day}-${random}`;
+};
