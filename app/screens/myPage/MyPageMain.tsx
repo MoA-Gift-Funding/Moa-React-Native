@@ -94,7 +94,10 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('MyOrders', {headerTitle: '주문 · 배송'})
           }
         />
-        <MenuCategory title="친구 불러오기" onPress={() => {}} />
+        <MenuCategory
+          title="친구 불러오기"
+          onPress={() => navigation.navigate('Contact')}
+        />
       </View>
       <View className="bg-white mt-3">
         <MenuCategory

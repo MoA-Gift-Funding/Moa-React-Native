@@ -15,8 +15,8 @@ import {autoCurrency, createOrderId} from '../../utils/regex';
 import Toast from 'react-native-toast-message';
 import usePayment from '../../hooks/usePayment';
 
-const JoinFundPay = ({navigation, route}) => {
-  const {price, id, title} = route.params;
+const JoinFundPay = ({route}) => {
+  const {price, id, title, nickName} = route.params;
   return (
     <View className="px-6 bg-white h-full">
       <View className="mt-4">
@@ -30,14 +30,22 @@ const JoinFundPay = ({navigation, route}) => {
         />
       </View>
       <PaymentWidgetProvider
-        clientKey={'test_gck_Z1aOwX7K8mydZ55A1deP8yQxzvNP'}
+        clientKey={'test_ck_6BYq7GWPVvgR5JAOJbPwrNE5vbo1'}
         customerKey={'test_gsk_LkKEypNArW26726WYYYQVlmeaxYG'}>
-        <CheckoutPage price={price} orderName={title} />
+        <CheckoutPage price={price} orderName={title} nickName={nickName} />
       </PaymentWidgetProvider>
     </View>
   );
 };
-function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
+function CheckoutPage({
+  price,
+  orderName,
+  nickName,
+}: {
+  price: string;
+  orderName: string;
+  nickName: string;
+}) {
   const paymentWidgetControl = usePaymentWidget();
   const [paymentMethodWidgetControl, setPaymentMethodWidgetControl] =
     useState<PaymentMethodWidgetControl | null>(null);
@@ -46,7 +54,8 @@ function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
   const {handleSubmit} = useForm();
   const orderId = createOrderId();
 
-  const {prePayQuery, successPaymentQuery, failPaymentQuery} = usePayment();
+  const {prePayQuery, successPaymentQuery, failPaymentQuery} =
+    usePayment(nickName);
   return (
     <View className="h-full flex flex-col justify-between">
       <ScrollView showsVerticalScrollIndicator={false}>

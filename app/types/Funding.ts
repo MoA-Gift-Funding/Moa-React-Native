@@ -24,12 +24,10 @@ type FundStatus = '진행중' | '배달완료' | '배송대기' | '취소';
 
 export type FundRequestStatus =
   | 'PROCESSING'
-  | 'DELIVERY_WAITING'
-  | 'DELIVERY_COMPLETED'
+  | 'COMPLETED'
   | 'CANCELLED'
-  | 'PROCESSING, DELIVERY_WAITING, DELIVERY_COMPLETED'
-  | 'DELIVERY_WAITING, DELIVERY_COMPLETED'
-  | 'PROCESSING, DELIVERY_WAITING, DELIVERY_COMPLETED, CANCELLED';
+  | 'PROCESSING, COMPLETED'
+  | 'PROCESSING, COMPLETED, CANCELLED';
 
 export interface MyFundItem {
   endDate: string;
@@ -46,6 +44,7 @@ export interface MyFundItem {
 export interface FundDetailItem {
   id: number;
   memberId: number;
+  nickName: string;
   title: string;
   description: string;
   endDate: string;

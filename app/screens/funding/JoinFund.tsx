@@ -21,8 +21,8 @@ const JoinFund = ({navigation, route}) => {
     getValues,
     formState: {errors},
   } = useForm({defaultValues: {price: ''}});
-  const {maximumAmount, remainAmount, id, title} = route.params;
-  const maxPrice = maximumAmount > remainAmount ? maximumAmount : remainAmount;
+  const {maximumAmount, remainAmount, id, title, nickName} = route.params;
+  const maxPrice = remainAmount < maximumAmount ? remainAmount : maximumAmount;
   const handleAddedPrice = (amount: number) => {
     const added = Number(getValues().price || 0) + amount;
     if (added > maxPrice) {
@@ -130,6 +130,7 @@ const JoinFund = ({navigation, route}) => {
                 price: getValues().price,
                 id,
                 title,
+                nickName,
               })
             }
           />

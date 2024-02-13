@@ -21,6 +21,7 @@ import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/useFunding';
 import {FriendFundItem, MyFundItem} from '../../types/Funding';
 import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {
   const {
@@ -65,6 +66,8 @@ export default function Home({navigation}) {
         .catch(error => console.log(error));
       console.log('FCM토큰값:', fcmToken);
     };
+    const ac = async () =>
+      console.log(await AsyncStorage.getItem('accessToken'));
 
     if (Platform.OS === 'android') {
       requestAOSPermit();
@@ -72,6 +75,7 @@ export default function Home({navigation}) {
     if (Platform.OS === 'ios') {
       requestiOSPermit();
     }
+    ac();
   }, []);
 
   return (

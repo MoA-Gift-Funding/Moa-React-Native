@@ -27,6 +27,7 @@ const FundDetail = ({navigation, route}) => {
   } = useUserContext();
   const [data, setData] = useState<FundDetailItem>({
     id: 0,
+    nickName: '',
     memberId: 0,
     title: '',
     description: '',
@@ -63,6 +64,7 @@ const FundDetail = ({navigation, route}) => {
   }, [fundDetailQuery, id]);
 
   const {
+    nickName,
     title,
     endDate,
     fundingRate,
@@ -86,7 +88,7 @@ const FundDetail = ({navigation, route}) => {
           }}
         />
         <FundDesc
-          userName={user?.nickname}
+          userName={nickName}
           title={title}
           endDate={endDate}
           fundingRate={fundingRate}
@@ -173,27 +175,6 @@ const FundDetail = ({navigation, route}) => {
             )}
           </View>
         </View>
-
-        {/* {memberId !== user?.id && (
-          <Pressable
-            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-            onPress={() => navigation.navigate('JoinFund')}>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title="선물 펀딩하기"
-            />
-          </Pressable>
-        )} */}
-        {/* {memberId === user?.id && (
-          <Pressable
-            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-            onPress={() => navigation.navigate('JoinFund')}>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title="펀딩 채우기"
-            />
-          </Pressable>
-        )} */}
       </ScrollView>
       <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
         <Pressable
@@ -211,21 +192,34 @@ const FundDetail = ({navigation, route}) => {
           }}>
           <TextSemiBold title="공유" style="text-white text-Body-1" />
         </Pressable>
-        <Pressable
-          className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-          onPress={() =>
-            navigation.navigate('JoinFund', {
-              maximumAmount,
-              remainAmount,
-              id,
-              title,
-            })
-          }>
-          <TextSemiBold
-            style="text-white text-Body-1 ml-[14px]"
-            title="선물 펀딩하기"
-          />
-        </Pressable>
+        {memberId !== user?.id && (
+          <Pressable
+            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+            onPress={() =>
+              navigation.navigate('JoinFund', {
+                maximumAmount,
+                remainAmount,
+                id,
+                title,
+                nickName,
+              })
+            }>
+            <TextSemiBold
+              style="text-white text-Body-1 ml-[14px]"
+              title="선물 펀딩하기"
+            />
+          </Pressable>
+        )}
+        {memberId === user?.id && (
+          <Pressable
+            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+            onPress={() => navigation.navigate('JoinFund')}>
+            <TextSemiBold
+              style="text-white text-Body-1 ml-[14px]"
+              title="펀딩 채우기"
+            />
+          </Pressable>
+        )}
       </View>
     </>
   );

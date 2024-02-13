@@ -21,6 +21,7 @@ import useUser from '../../hooks/useUser';
 const PhoneValidation = () => {
   const [sent, setSent] = useState(false);
   const [date, setDate] = useState(Date.now());
+  const [pressed, setPressed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
@@ -48,6 +49,7 @@ const PhoneValidation = () => {
     verificationNumber: string;
   }) => {
     setIsLoading(true);
+    setPressed(true);
     verifyMobileQuery(verificationNumber);
     signUpQuery(user!);
     setIsLoading(false);
@@ -149,6 +151,7 @@ const PhoneValidation = () => {
                         'bg-Main-01': Object.keys(touchedFields).length !== 0,
                       },
                     )}
+                    disabled={pressed}
                     onPress={handleSubmit(onSubmit)}>
                     <TextSemiBold
                       style="text-white text-Body-1 ml-[14px]"

@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import useFunding from './useFunding';
 
-const usePayment = () => {
+const usePayment = (nickName: string) => {
   const {
     useApi: {client},
   } = useUserContext();
@@ -35,6 +35,9 @@ const usePayment = () => {
       orderId: string;
       amount: number;
     }) => payment.sendSuccessPayment(paymentKey, orderId, amount),
+    onSuccess: () => {
+      navigation.navigate('JoinFundCompleted', {nickName});
+    },
   });
 
   const {mutateAsync: failPaymentQuery} = useMutation({

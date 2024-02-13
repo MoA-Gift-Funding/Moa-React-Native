@@ -132,16 +132,18 @@ export default class MoaHttpClient {
 
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
-    return this.httpClient.post('/prepay', data);
+    return this.httpClient.post('/payments/toss/prepay', data);
   }
 
   sendSuccessPayment(paymentKey: string, orderId: string, amount: number) {
-    return this.httpClient.get('/success', {
+    return this.httpClient.get('/payments/toss/success', {
       params: {paymentKey, orderId, amount},
     });
   }
 
   sendFailPayment(message: string, code: string) {
-    return this.httpClient.get('/fail', {params: {code, message}});
+    return this.httpClient.get('/payments/toss/fail', {
+      params: {code, message},
+    });
   }
 }
