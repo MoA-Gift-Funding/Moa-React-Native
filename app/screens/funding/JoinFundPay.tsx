@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import TextBold from '../../components/text/TextBold';
 import {
   AgreementWidget,
@@ -11,9 +11,9 @@ import {
 } from '@tosspayments/widget-sdk-react-native';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
-import {useNavigation} from '@react-navigation/native';
 import {autoCurrency, createOrderId} from '../../utils/regex';
 import Toast from 'react-native-toast-message';
+import usePayment from '../../hooks/usePayment';
 
 const JoinFundPay = ({navigation, route}) => {
   const {price, id, title} = route.params;
@@ -44,8 +44,9 @@ function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
   const [agreementWidgetControl, setAgreementWidgetControl] =
     useState<AgreementWidgetControl | null>(null);
   const {handleSubmit} = useForm();
-  const navigation = useNavigation();
   const orderId = createOrderId();
+
+  const {prePayQuery, successPaymentQuery, failPaymentQuery} = usePayment();
   return (
     <View className="h-full flex flex-col justify-between">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -53,13 +54,7 @@ function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
           selector="payment-methods"
           onLoadEnd={() => {
             paymentWidgetControl
-              .renderPaymentMethods(
-                'payment-methods',
-                {value: Number(price)},
-                {
-                  variantKey: 'BRANDPAY',
-                },
-              )
+              .renderPaymentMethods('payment-methods', {value: Number(price)})
               .then(control => {
                 setPaymentMethodWidgetControl(control);
               });
@@ -104,17 +99,24 @@ function CheckoutPage({price, orderName}: {price: string; orderName: string}) {
               return;
             }
 
+            await prePayQuery({orderId, amount: Number(price)});
+
             paymentWidgetControl
               .requestPayment?.({
                 orderId,
                 orderName,
               })
-              .then(result => {
+              .then(async result => {
                 if (result?.success) {
-                  // 결제 성공 비즈니스 로직을 구현하세요.
-                  // result.success에 있는 값을 서버로 전달해서 결제 승인을 호출하세요.
+                  const {orderId, amount, paymentKey} = result.success;
+                  await successPaymentQuery({
+                    orderId,
+                    amount,
+                    paymentKey,
+                  });
                 } else if (result?.fail) {
-                  // 결제 실패 비즈니스 로직을 구현하세요.
+                  const {message, code} = result.fail;
+                  await failPaymentQuery({message, code});
                 }
               });
           }}

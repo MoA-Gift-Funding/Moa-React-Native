@@ -60,7 +60,7 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
-  sendFailPayment(message: string, code: number) {
+  sendFailPayment(message: string, code: string) {
     return this.httpClient.get('');
   }
 }

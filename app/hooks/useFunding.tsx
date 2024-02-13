@@ -129,6 +129,10 @@ const useFunding = (
     mutationFn: (id: number) => funding.getFundDetail(id),
   });
 
+  const {mutateAsync: joinFundQuery} = useMutation({
+    // mutationFn: ()=
+  });
+
   return {
     addrsQuery,
     createAddrQuery,

@@ -35,7 +35,7 @@ export default class Payment {
     }
   }
 
-  async sendFailPayment(message: string, code: number) {
+  async sendFailPayment(message: string, code: string) {
     try {
       const fail = await this.apiClient.sendFailPayment(message, code);
       return fail.data;

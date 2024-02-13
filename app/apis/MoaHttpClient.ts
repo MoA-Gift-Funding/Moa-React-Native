@@ -123,7 +123,7 @@ export default class MoaHttpClient {
     });
   }
 
-  sendFailPayment(message: string, code: number) {
+  sendFailPayment(message: string, code: string) {
     return this.httpClient.get('/fail', {params: {code, message}});
   }
 }

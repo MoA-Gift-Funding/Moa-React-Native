@@ -39,7 +39,7 @@ const usePayment = () => {
   });
 
   const {mutateAsync: failPaymentQuery} = useMutation({
-    mutationFn: ({message, code}: {pmessage: string; code: number}) =>
+    mutationFn: ({message, code}: {message: string; code: string}) =>
       payment.sendFailPayment(message, code),
     onSuccess: () => {
       Toast.show({
