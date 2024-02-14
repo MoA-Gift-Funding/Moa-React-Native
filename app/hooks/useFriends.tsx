@@ -36,6 +36,8 @@ export default function useFriends() {
   const {mutate: syncContactsQuery} = useMutation({
     mutationFn: (contacts: {contactList: Contact[]}) =>
       friends.syncronize(contacts),
+    onSuccess: () =>
+      queryClient.invalidateQueries({queryKey: ['friends', user?.id]}),
   });
 
   return {friendsQuery, blockQuery, unblockQuery, syncContactsQuery};

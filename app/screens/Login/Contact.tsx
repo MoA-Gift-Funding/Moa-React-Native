@@ -1,76 +1,30 @@
 import React, {useState} from 'react';
-import {Alert, Platform, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
-import {PermissionsAndroid} from 'react-native';
-import Contacts from 'react-native-contacts';
-import {UserContact} from '../../types/User';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useFriends from '../../hooks/useFriends';
+import {getContactsInfo} from '../../utils/device';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {handleSubmit} = useForm();
   const {syncContactsQuery} = useFriends();
   const getContacts = async () => {
-    const organized: UserContact = {contactList: []};
-    if (Platform.OS === 'android') {
-      await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-        {
-          title: 'Contacts',
-          message: 'This app would like to view your contacts.',
-          buttonPositive: 'Please accept bare mortal',
-        },
-      )
-        .then(res => {
-          console.log('Permission: ', res);
-          Contacts.getAll()
-            .then(contacts => {
-              contacts.forEach(contact => {
-                const name = contact.displayName;
-                const phoneNumber = contact.phoneNumbers[0].number;
-                organized.contactList.push({name, phoneNumber});
-              });
-            })
-            .then(async () => {
-              syncContactsQuery(organized);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-        })
-        .catch(error => {
-          console.error('Permission error: ', error);
-          Alert.alert('권한 에러', '연락처 권한이 필요합니다.');
-        });
+    try {
+      setIsLoading(true);
+      const organized = await getContactsInfo();
+      console.log(organized);
+      syncContactsQuery(organized);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+      navigation.navigate('JoinCompleted');
     }
-    if (Platform.OS === 'ios') {
-      await Contacts.getAll()
-        .then(contacts => {
-          contacts.forEach(contact => {
-            if (contact.phoneNumbers[0]) {
-              const name = `${contact.familyName}${contact.givenName}`;
-              const phoneNumber = contact.phoneNumbers[0].number;
-              organized.contactList.push({name, phoneNumber});
-            }
-          });
-        })
-        .then(async () => {
-          syncContactsQuery(organized);
-        })
-        .catch(error => {
-          console.error('Permission error: ', error);
-          Alert.alert('권한 에러', '연락처 권한이 필요합니다.');
-        });
-    }
-    setIsLoading(true);
-
-    setIsLoading(false);
-    navigation.navigate('JoinCompleted');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">

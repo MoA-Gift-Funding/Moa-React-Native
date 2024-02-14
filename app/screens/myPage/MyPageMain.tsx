@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, Pressable, SafeAreaView, ScrollView, View} from 'react-native';
 import {useUserContext} from '../../contexts/UserContext';
 import TextSemiBold from '../../components/text/TextSemiBold';
@@ -9,18 +9,33 @@ import MenuCategoryTop from './components/MenuCategoryTop';
 import useFriends from '../../hooks/useFriends';
 import {httpsUrlCorrector} from '../../utils/regex';
 import useFunding from '../../hooks/useFunding';
+import {getContactsInfo} from '../../utils/device';
+import LoadingBar from '../../components/bar/LoadingBar';
 
 const MyPageMain = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
-  const {friendsQuery} = useFriends();
+  const [isLoading, setIsLoading] = useState(false);
+  const {friendsQuery, syncContactsQuery} = useFriends();
   const {myFundingsQuery} = useFunding(0, 100);
+  const syncFriends = async () => {
+    try {
+      setIsLoading(true);
+      const organized = await getContactsInfo();
+      syncContactsQuery(organized);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView className="bg-white">
         <View className="px-4">
+          {isLoading && <LoadingBar />}
           <Pressable
             className="mb-2 flex items-end mt-2"
             onPress={() =>
@@ -94,10 +109,7 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('MyOrders', {headerTitle: '주문 · 배송'})
           }
         />
-        <MenuCategory
-          title="친구 불러오기"
-          onPress={() => navigation.navigate('Contact')}
-        />
+        <MenuCategory title="친구 불러오기" onPress={syncFriends} />
       </View>
       <View className="bg-white mt-3">
         <MenuCategory
