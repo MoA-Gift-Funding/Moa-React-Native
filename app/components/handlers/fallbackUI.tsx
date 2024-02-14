@@ -1,9 +1,9 @@
 import React from 'react';
 import {ImageBackground} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import NextButton from '../components/button/NextButton';
+import NextButton from '../button/NextButton';
 import {useForm} from 'react-hook-form';
-import TextSemiBold from '../components/text/TextSemiBold';
+import TextSemiBold from '../text/TextSemiBold';
 // import TextRegular from '../components/text/TextRegular';
 
 const FallbackUI = ({error, resetErrorBoundary}) => {

@@ -1,10 +1,9 @@
 import {Contact, Friend} from '../../types/User';
-import {FriendsHttpClient} from './FriendsHttpClients';
+import {FakeHttpClient} from '../FakeHttpClient';
+import MoaHttpClient from '../MoaHttpClient';
 
 export class Friends {
-  constructor(
-    private readonly apiClient: FriendsHttpClient | FriendsHttpClient,
-  ) {
+  constructor(private readonly apiClient: MoaHttpClient | FakeHttpClient) {
     this.apiClient = apiClient;
   }
 

@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {createContext} from 'react';
-import ProductHttpClient from '../apis/store/ProductHttpClient';
-import {Products} from '../apis/store/Products';
-import ProductFakeClient from '../apis/store/ProductFakeClient';
+import ProductHttpClient from './ProductHttpClient';
+import ProductFakeClient from './ProductFakeClient';
+import {Products} from './Products';
 
 // const productClient = new ProductHttpClient();
 const productClient = new ProductFakeClient();

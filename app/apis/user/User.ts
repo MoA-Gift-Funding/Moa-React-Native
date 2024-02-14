@@ -6,12 +6,12 @@ import {OauthProvider, User} from '../../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Platform} from 'react-native';
 import appleAuth from '@invertase/react-native-apple-authentication';
-import {UserHttpClient} from './UserHttpClient';
-import {UserFakeClient} from './UserfakeClient';
 import Toast from 'react-native-toast-message';
+import {FakeHttpClient} from '../FakeHttpClient';
+import MoaHttpClient from '../MoaHttpClient';
 
 export class Users {
-  constructor(private readonly apiClient: UserHttpClient | UserFakeClient) {
+  constructor(private readonly apiClient: MoaHttpClient | FakeHttpClient) {
     this.apiClient = apiClient;
   }
   async loginOAuth(platform: OauthProvider): Promise<User> {

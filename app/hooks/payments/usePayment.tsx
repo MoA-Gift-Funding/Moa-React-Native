@@ -1,5 +1,5 @@
 import React from 'react';
-import Payment from '../../apis/fund/Payment';
+import Payment from '../../apis/payments/Payment';
 import {useUserContext} from '../../contexts/UserContext';
 import {useMutation} from '@tanstack/react-query';
 import {useNavigation} from '@react-navigation/native';

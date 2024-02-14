@@ -12,7 +12,7 @@ import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
 import useApiError from './app/hooks/handlers/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
-import FallbackUI from './app/apis/fallbackUI';
+import FallbackUI from './app/components/handlers/fallbackUI';
 import Toast from 'react-native-toast-message';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';

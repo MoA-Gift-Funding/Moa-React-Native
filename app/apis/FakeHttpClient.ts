@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Config from 'react-native-config';
 import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
+import {Contact, User} from '../types/User';
 
 export class FakeHttpClient {
   protected httpClient;
@@ -10,6 +11,53 @@ export class FakeHttpClient {
     });
   }
 
+  // user
+  moaAuth(accessToken: string, platform: string) {
+    return this.httpClient.get('');
+  }
+
+  async getUser() {
+    return this.httpClient.get('');
+  }
+
+  updateUser(data: Partial<User>) {
+    return this.httpClient.get('');
+  }
+
+  requestMobileVerification(phoneNumber: string) {
+    return this.httpClient.get('');
+  }
+
+  verifyMobile(verificationNumber: string) {
+    return this.httpClient.get('');
+  }
+
+  signUp(user: Partial<User>) {
+    return this.httpClient.get('');
+  }
+
+  getPresignedUrl(fileName: string) {
+    return this.httpClient.get('');
+  }
+
+  // friends
+  async getFriends() {
+    return this.httpClient.get('');
+  }
+
+  async syncContact(contacts: {contactList: Contact[]}) {
+    return this.httpClient.get('');
+  }
+
+  async blockFriend(id: number) {
+    return this.httpClient.get('');
+  }
+
+  async unblockFriend(id: number) {
+    return this.httpClient.get('');
+  }
+
+  // funding
   getMyAddresses() {
     return this.httpClient.get('');
   }
