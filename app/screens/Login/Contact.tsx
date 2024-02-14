@@ -6,7 +6,7 @@ import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
-import useFriends from '../../hooks/useFriends';
+import useFriends from '../../hooks/friends/useFriends';
 import {getContactsInfo} from '../../utils/device';
 
 const Contact = ({navigation}) => {

@@ -10,7 +10,7 @@ import {useUserContext} from '../../contexts/UserContext';
 import {useForm} from 'react-hook-form';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
-import useUser from '../../hooks/useUser';
+import useUser from '../../hooks/user/useUser';
 import {httpsUrlCorrector} from '../../utils/regex';
 
 const Profile = () => {

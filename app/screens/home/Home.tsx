@@ -14,13 +14,13 @@ import HomeBanner from './HomeBanner';
 import cls from 'classnames';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
-import MyFund from './MyFund';
-import FundItem from './FundItem';
+import MyFund from '../funding/components/MyFund';
+import FundItem from '../funding/components/FundItem';
 import {PermissionsAndroid} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import useFunding from '../../hooks/useFunding';
+import useFunding from '../../hooks/fundings/useFunding';
 import {FriendFundItem, MyFundItem} from '../../types/Funding';
-import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
+import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({navigation}) {

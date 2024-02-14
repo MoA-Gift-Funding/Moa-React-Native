@@ -10,7 +10,7 @@ import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
 import LoadingBar from '../../components/bar/LoadingBar';
-import useProducts from '../../hooks/useProducts';
+import useProducts from '../../hooks/products/useProducts';
 
 const ItemDetail = ({route, navigation}) => {
   const {id, image, brand, name, price, salesNumber} = route.params;

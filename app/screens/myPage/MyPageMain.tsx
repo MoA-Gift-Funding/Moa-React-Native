@@ -6,9 +6,9 @@ import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
 import MenuCategory from './components/MenuCategory';
 import MenuCategoryTop from './components/MenuCategoryTop';
-import useFriends from '../../hooks/useFriends';
+import useFriends from '../../hooks/friends/useFriends';
 import {httpsUrlCorrector} from '../../utils/regex';
-import useFunding from '../../hooks/useFunding';
+import useFunding from '../../hooks/fundings/useFunding';
 import {getContactsInfo} from '../../utils/device';
 import LoadingBar from '../../components/bar/LoadingBar';
 
@@ -19,10 +19,13 @@ const MyPageMain = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
   const {myFundingsQuery} = useFunding(0, 100);
+
   const syncFriends = async () => {
     try {
       setIsLoading(true);
       const organized = await getContactsInfo();
+      console.log(organized);
+
       syncContactsQuery(organized);
     } catch (error) {
       console.error(error);

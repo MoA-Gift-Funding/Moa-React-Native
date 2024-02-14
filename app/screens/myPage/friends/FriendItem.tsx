@@ -1,7 +1,8 @@
 import React from 'react';
 import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
-import useFriends from '../../../hooks/useFriends';
+import useFriends from '../../../hooks/friends/useFriends';
+import {httpsUrlCorrector} from '../../../utils/regex';
 
 const FriendItem = ({
   item,
@@ -27,7 +28,7 @@ const FriendItem = ({
       <View className="flex flex-row items-center">
         <Image
           source={{
-            uri: profileImageUrl,
+            uri: httpsUrlCorrector(profileImageUrl),
           }}
           className="w-[56px] h-[56px] rounded-full"
         />

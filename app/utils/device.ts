@@ -14,8 +14,8 @@ export const getContactsInfo = async () => {
         buttonPositive: 'Please accept bare mortal',
       },
     )
-      .then(() => {
-        Contacts.getAll()
+      .then(async () => {
+        await Contacts.getAll()
           .then(contacts => {
             contacts.forEach(contact => {
               const name = contact.displayName;
@@ -25,7 +25,10 @@ export const getContactsInfo = async () => {
           })
           .then(() => organized);
       })
-      .then(res => res)
+      .then(res => {
+        console.log(res);
+        return res;
+      })
       .catch(error => {
         console.error('Permission error: ', error);
         Toast.show({type: 'error', text1: '연락처 권한이 설정되지 못했어요🥲'});

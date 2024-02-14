@@ -1,7 +1,7 @@
 import React from 'react';
-import {OauthProvider, User} from '../types/User';
+import {OauthProvider, User} from '../../types/User';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {useUserContext} from '../contexts/UserContext';
+import {useUserContext} from '../../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
 
 export default function useUser() {

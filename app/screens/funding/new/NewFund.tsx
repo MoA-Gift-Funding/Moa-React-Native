@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
-import TextBold from '../../components/text/TextBold';
+import TextBold from '../../../components/text/TextBold';
 import {useForm} from 'react-hook-form';
-import TextInputGroupWhite from '../../components/text/textInputGroupWhite';
-import TextRegular from '../../components/text/TextRegular';
+import TextInputGroupWhite from '../../../components/text/textInputGroupWhite';
+import TextRegular from '../../../components/text/TextRegular';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import NextButton from '../../components/button/NextButton';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import NextButton from '../../../components/button/NextButton';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 
 const NewFund = ({navigation, route}) => {
   const {id} = route.params;

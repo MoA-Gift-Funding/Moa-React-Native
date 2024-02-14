@@ -1,12 +1,12 @@
 import React from 'react';
 import {Image, Pressable, Share} from 'react-native';
 import {View} from 'react-native';
-import TextBold from '../../components/text/TextBold';
-import NextButton from '../../components/button/NextButton';
-import {useUserContext} from '../../contexts/UserContext';
+import TextBold from '../../../components/text/TextBold';
+import NextButton from '../../../components/button/NextButton';
+import {useUserContext} from '../../../contexts/UserContext';
 import {useForm} from 'react-hook-form';
-import TextRegular from '../../components/text/TextRegular';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import TextRegular from '../../../components/text/TextRegular';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 
 const JoinFundCompleted = ({navigation}) => {
   const {

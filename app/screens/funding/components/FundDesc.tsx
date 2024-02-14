@@ -1,9 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
-import TextRegular from '../../components/text/TextRegular';
-import TextBold from '../../components/text/TextBold';
+import TextRegular from '../../../components/text/TextRegular';
+import TextBold from '../../../components/text/TextBold';
 import Countdown from 'react-countdown';
-import {twoDP} from '../../utils/regex';
+import {twoDP} from '../../../utils/regex';
 
 const FundDesc = ({
   userName,

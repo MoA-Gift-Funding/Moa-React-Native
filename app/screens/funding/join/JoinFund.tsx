@@ -8,10 +8,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import TextBold from '../../components/text/TextBold';
-import TextRegular from '../../components/text/TextRegular';
+import TextBold from '../../../components/text/TextBold';
+import TextRegular from '../../../components/text/TextRegular';
 import {Controller, useForm} from 'react-hook-form';
-import NextButton from '../../components/button/NextButton';
+import NextButton from '../../../components/button/NextButton';
 
 const JoinFund = ({navigation, route}) => {
   const {

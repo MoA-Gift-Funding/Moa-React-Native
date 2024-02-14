@@ -16,7 +16,7 @@ import LoadingBar from '../../components/bar/LoadingBar';
 import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
-import useUser from '../../hooks/useUser';
+import useUser from '../../hooks/user/useUser';
 
 const PhoneValidation = () => {
   const [sent, setSent] = useState(false);

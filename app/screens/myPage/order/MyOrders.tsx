@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import OrderItem from './components/OrderItem';
+import OrderItem from './OrderItem';
 
 const MyOrders = () => {
   return (

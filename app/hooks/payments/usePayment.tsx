@@ -1,10 +1,10 @@
 import React from 'react';
-import Payment from '../apis/fund/Payment';
-import {useUserContext} from '../contexts/UserContext';
+import Payment from '../../apis/fund/Payment';
+import {useUserContext} from '../../contexts/UserContext';
 import {useMutation} from '@tanstack/react-query';
 import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import useFunding from './useFunding';
+import useFunding from '../fundings/useFunding';
 
 const usePayment = (nickName: string) => {
   const {

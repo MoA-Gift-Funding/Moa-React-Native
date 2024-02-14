@@ -19,7 +19,7 @@ import NextButton from '../../../components/button/NextButton';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import CheckBox from '../../../components/button/CheckBox';
 import TextRegular from '../../../components/text/TextRegular';
-import useFunding from '../../../hooks/useFunding';
+import useFunding from '../../../hooks/fundings/useFunding';
 import {ShippingInfo} from '../../../types/Funding';
 
 const UpdateAddress = ({

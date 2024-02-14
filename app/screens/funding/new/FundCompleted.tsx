@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image, View} from 'react-native';
-import TextBold from '../../components/text/TextBold';
-import {useUserContext} from '../../contexts/UserContext';
-import NextButton from '../../components/button/NextButton';
+import TextBold from '../../../components/text/TextBold';
+import {useUserContext} from '../../../contexts/UserContext';
+import NextButton from '../../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 
 const FundCompleted = ({navigation}) => {

@@ -10,7 +10,7 @@ import {UserContextProvider} from './app/contexts/UserContext';
 import AuthRouter from './app/router/AuthRouter';
 import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
-import useApiError from './app/hooks/useApiError';
+import useApiError from './app/hooks/handlers/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/apis/fallbackUI';
 import Toast from 'react-native-toast-message';

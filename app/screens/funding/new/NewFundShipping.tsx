@@ -8,14 +8,14 @@ import {
   View,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
-import NextButton from '../../components/button/NextButton';
-import LoadingBar from '../../components/bar/LoadingBar';
-import SideToggle from '../../components/button/SideToggle';
-import UpdateAddress from './address/UpdateAddress';
-import useFunding from '../../hooks/useFunding';
-import TextRegular from '../../components/text/TextRegular';
-import {ShippingInfo} from '../../types/Funding';
-import AddressItem from './address/AddressItem';
+import NextButton from '../../../components/button/NextButton';
+import LoadingBar from '../../../components/bar/LoadingBar';
+import SideToggle from '../../../components/button/SideToggle';
+import UpdateAddress from '../address/UpdateAddress';
+import useFunding from '../../../hooks/fundings/useFunding';
+import TextRegular from '../../../components/text/TextRegular';
+import {ShippingInfo} from '../../../types/Funding';
+import AddressItem from '../address/AddressItem';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 

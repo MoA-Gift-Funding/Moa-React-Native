@@ -5,7 +5,7 @@ import TextBold from '../../components/text/TextBold';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
 import {autoCurrency} from '../../utils/regex';
-import useProducts from '../../hooks/useProducts';
+import useProducts from '../../hooks/products/useProducts';
 
 const StoreMain = () => {
   const {

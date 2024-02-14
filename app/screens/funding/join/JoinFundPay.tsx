@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ScrollView, View} from 'react-native';
-import TextBold from '../../components/text/TextBold';
+import TextBold from '../../../components/text/TextBold';
 import {
   AgreementWidget,
   AgreementWidgetControl,
@@ -9,11 +9,11 @@ import {
   PaymentWidgetProvider,
   usePaymentWidget,
 } from '@tosspayments/widget-sdk-react-native';
-import NextButton from '../../components/button/NextButton';
+import NextButton from '../../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
-import {autoCurrency, createOrderId} from '../../utils/regex';
+import {autoCurrency, createOrderId} from '../../../utils/regex';
 import Toast from 'react-native-toast-message';
-import usePayment from '../../hooks/usePayment';
+import usePayment from '../../../hooks/payments/usePayment';
 
 const JoinFundPay = ({route}) => {
   const {price, id, title, nickName} = route.params;

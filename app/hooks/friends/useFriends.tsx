@@ -1,8 +1,8 @@
 import React from 'react';
-import {Friends} from '../apis/friends/Friends';
+import {Friends} from '../../apis/friends/Friends';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {useUserContext} from '../contexts/UserContext';
-import {Contact} from '../types/User';
+import {useUserContext} from '../../contexts/UserContext';
+import {Contact} from '../../types/User';
 
 export default function useFriends() {
   const {

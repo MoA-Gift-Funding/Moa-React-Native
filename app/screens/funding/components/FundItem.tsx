@@ -1,11 +1,11 @@
 import React from 'react';
 import {Image, Pressable, View} from 'react-native';
 import {Circle, Path, Svg} from 'react-native-svg';
-import TextRegular from '../../components/text/TextRegular';
+import TextRegular from '../../../components/text/TextRegular';
 import Countdown from 'react-countdown';
-import {httpsUrlCorrector, twoDP} from '../../utils/regex';
+import {httpsUrlCorrector, twoDP} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
-import {FriendFundItem} from '../../types/Funding';
+import {FriendFundItem} from '../../../types/Funding';
 
 const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
   const {

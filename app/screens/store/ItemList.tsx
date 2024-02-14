@@ -5,7 +5,7 @@ import Item from './Item';
 import Footer from '../../components/footer/Footer';
 import {autoCurrency} from '../../utils/regex';
 import LoadingBar from '../../components/bar/LoadingBar';
-import useProducts from '../../hooks/useProducts';
+import useProducts from '../../hooks/products/useProducts';
 const ItemList = ({route}) => {
   const {categoryType} = route.params;
   const [loading, setLoading] = useState(true);

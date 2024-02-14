@@ -4,7 +4,7 @@ import TextBold from '../../../components/text/TextBold';
 import {ShippingInfo} from '../../../types/Funding';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
-import useFunding from '../../../hooks/useFunding';
+import useFunding from '../../../hooks/fundings/useFunding';
 import {useNavigation} from '@react-navigation/native';
 
 const AddressItem = ({

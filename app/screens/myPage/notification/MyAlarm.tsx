@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import AlarmItem from './components/AlarmItem';
+import AlarmItem from './AlarmItem';
 
 const MyAlarm = () => {
   return (

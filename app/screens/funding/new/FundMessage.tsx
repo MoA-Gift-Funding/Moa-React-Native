@@ -1,11 +1,11 @@
 import React from 'react';
 import {Image, View} from 'react-native';
-import TextSemiBold from '../../components/text/TextSemiBold';
-import TextRegular from '../../components/text/TextRegular';
+import TextSemiBold from '../../../components/text/TextSemiBold';
+import TextRegular from '../../../components/text/TextRegular';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
-import {FundMessageItem} from '../../types/Funding';
+import {FundMessageItem} from '../../../types/Funding';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
 

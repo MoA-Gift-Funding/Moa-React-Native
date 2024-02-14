@@ -8,11 +8,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import TextBold from '../../components/text/TextBold';
-import TextRegular from '../../components/text/TextRegular';
-import NextButton from '../../components/button/NextButton';
+import TextBold from '../../../components/text/TextBold';
+import TextRegular from '../../../components/text/TextRegular';
+import NextButton from '../../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
-import TextInputGroup from '../../components/text/TextInputGroup';
+import TextInputGroup from '../../../components/text/TextInputGroup';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
 

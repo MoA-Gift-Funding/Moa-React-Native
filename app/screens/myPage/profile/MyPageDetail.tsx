@@ -10,17 +10,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useUserContext} from '../../contexts/UserContext';
+import {useUserContext} from '../../../contexts/UserContext';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCamera} from '@fortawesome/free-solid-svg-icons';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {uploadImage} from '../../apis/cloudinary/Image';
-import {autoSlashBirthday, httpsUrlCorrector} from '../../utils/regex';
+import {uploadImage} from '../../../apis/cloudinary/Image';
+import {autoSlashBirthday, httpsUrlCorrector} from '../../../utils/regex';
 import {useForm} from 'react-hook-form';
-import TextInputGroupPlain from './components/TextInputGroupPlain';
-import LoadingBar from '../../components/bar/LoadingBar';
-import NextButton from '../../components/button/NextButton';
-import {updateUserProfile} from '../../apis/user/User';
+import TextInputGroupPlain from '../components/TextInputGroupPlain';
+import LoadingBar from '../../../components/bar/LoadingBar';
+import NextButton from '../../../components/button/NextButton';
+import {updateUserProfile} from '../../../apis/user/User';
 
 const MyPageDetail = () => {
   const {

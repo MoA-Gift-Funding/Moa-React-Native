@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {FlatList, View} from 'react-native';
-import useFunding from '../../hooks/useFunding';
+import useFunding from '../../hooks/fundings/useFunding';
 import SideToggle from '../../components/button/SideToggle';
 import {FriendFundItem} from '../../types/Funding';
-import FundItem from '../home/FundItem';
-import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
+import FundItem from './components/FundItem';
+import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 
 const FriendFundList = () => {
   const [activated, setActivated] = useState(true);

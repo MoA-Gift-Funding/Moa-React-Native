@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import MessageItem from './components/MessageItem';
+import MessageItem from './MessageItem';
 
 const MyMessages = () => {
   return (

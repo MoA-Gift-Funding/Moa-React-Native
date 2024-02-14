@@ -8,15 +8,15 @@ import {
   View,
 } from 'react-native';
 import cls from 'classnames';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
-import TextRegular from '../../components/text/TextRegular';
+import TextRegular from '../../../components/text/TextRegular';
 import FundDesc from './FundDesc';
-import FundMessage from './FundMessage';
-import useFunding from '../../hooks/useFunding';
-import {FundDetailItem} from '../../types/Funding';
-import {useUserContext} from '../../contexts/UserContext';
+import FundMessage from '../new/FundMessage';
+import useFunding from '../../../hooks/fundings/useFunding';
+import {FundDetailItem} from '../../../types/Funding';
+import {useUserContext} from '../../../contexts/UserContext';
 
 const FundDetail = ({navigation, route}) => {
   const {id} = route.params;

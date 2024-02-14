@@ -6,12 +6,12 @@ import {
   Pressable,
   View,
 } from 'react-native';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 import cls from 'classnames';
-import CreatedFundItem from './components/CreatedFundItem';
-import useFunding from '../../hooks/useFunding';
-import {MyFundItem} from '../../types/Funding';
-import {useRefetchOnFocus} from '../../hooks/useRefetchOnFocus';
+import CreatedFundItem from './CreatedFundItem';
+import useFunding from '../../../hooks/fundings/useFunding';
+import {MyFundItem} from '../../../types/Funding';
+import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);

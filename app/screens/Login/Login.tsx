@@ -4,7 +4,7 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import LoginButton from '../../components/button/LoginButton';
 import LoadingBar from '../../components/bar/LoadingBar';
 import {OauthProvider} from '../../types/User';
-import useUser from '../../hooks/useUser';
+import useUser from '../../hooks/user/useUser';
 import {useUserContext} from '../../contexts/UserContext';
 
 export default function Login({navigation}) {

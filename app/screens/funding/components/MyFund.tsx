@@ -1,13 +1,13 @@
 import React from 'react';
 import {Image, Pressable, View} from 'react-native';
-import TextBold from '../../components/text/TextBold';
-import TextRegular from '../../components/text/TextRegular';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import TextBold from '../../../components/text/TextBold';
+import TextRegular from '../../../components/text/TextRegular';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
 import Countdown from 'react-countdown';
-import {MyFundItem} from '../../types/Funding';
-import {useUserContext} from '../../contexts/UserContext';
-import {httpsUrlCorrector} from '../../utils/regex';
+import {MyFundItem} from '../../../types/Funding';
+import {useUserContext} from '../../../contexts/UserContext';
+import {httpsUrlCorrector} from '../../../utils/regex';
 
 const MyFund = ({item}: {item: MyFundItem}) => {
   const {title, endDate, fundingRate, participationCount, id} = item;

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, ScrollView, View} from 'react-native';
-import TextSemiBold from '../../components/text/TextSemiBold';
-import TextRegular from '../../components/text/TextRegular';
-import OrderPayment from './components/OrderPayment';
-import OrderDelivery from './components/OrderDelivery';
+import TextSemiBold from '../../../components/text/TextSemiBold';
+import TextRegular from '../../../components/text/TextRegular';
+import OrderPayment from './OrderPayment';
+import OrderDelivery from './OrderDelivery';
 
 const MyOrder = ({navigation, route}) => {
   const {orderId} = route.params;

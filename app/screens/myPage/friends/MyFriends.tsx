@@ -6,11 +6,11 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import FriendItem from './components/FriendItem';
-import TextSemiBold from '../../components/text/TextSemiBold';
+import FriendItem from './FriendItem';
+import TextSemiBold from '../../../components/text/TextSemiBold';
 import cls from 'classnames';
-import useFriends from '../../hooks/useFriends';
-import TextRegular from '../../components/text/TextRegular';
+import useFriends from '../../../hooks/friends/useFriends';
+import TextRegular from '../../../components/text/TextRegular';
 
 const MyFriends = () => {
   const [blocked, setBlocked] = useState(false);

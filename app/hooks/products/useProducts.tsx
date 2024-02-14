@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMutation, useQuery} from '@tanstack/react-query';
-import {useProductContext} from '../contexts/APIContext';
+import {useProductContext} from '../../contexts/APIContext';
 
 export default function useProducts(loadingCallback?: () => void) {
   const products = useProductContext()!;

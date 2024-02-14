@@ -1,6 +1,6 @@
 import React from 'react';
-import {useUserContext} from '../contexts/UserContext';
-import Funding from '../apis/fund/Funding';
+import {useUserContext} from '../../contexts/UserContext';
+import Funding from '../../apis/fund/Funding';
 import {
   keepPreviousData,
   useInfiniteQuery,
@@ -8,7 +8,11 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
+import {
+  FundRequestStatus,
+  NewFundItem,
+  ShippingInfo,
+} from '../../types/Funding';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 
