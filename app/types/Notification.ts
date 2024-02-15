@@ -1,7 +1,6 @@
-export interface Notification {
-  category: string;
-  title: string;
+export interface NotificationItem {
+  id: number;
+  url: string;
   message: string;
-  image: string;
-  createdAt: string;
+  isRead: boolean;
 }

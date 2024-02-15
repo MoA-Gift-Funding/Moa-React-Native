@@ -1,3 +1,4 @@
+import {NotificationItem} from '../../types/Notification';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
 
@@ -6,9 +7,9 @@ export default class Notification {
     this.apiClient = apiClient;
   }
 
-  async isRead() {
+  async hasUnRead() {
     try {
-      const read = await this.apiClient.isNotificationRead();
+      const read = await this.apiClient.hasUnReadNotifications();
       return read.data;
     } catch (error: any) {
       console.error(error.response.data);
@@ -16,7 +17,7 @@ export default class Notification {
     }
   }
 
-  async getNotifications() {
+  async getNotifications(): Promise<NotificationItem[]> {
     try {
       const notis = await this.apiClient.getNotifications();
       return notis.data;

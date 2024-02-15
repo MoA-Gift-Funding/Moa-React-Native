@@ -122,7 +122,7 @@ export class FakeHttpClient {
   }
 
   // notification
-  isNotificationRead() {
+  hasUnReadNotifications() {
     return this.httpClient.get('');
   }
 

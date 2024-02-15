@@ -10,18 +10,24 @@ const useNotifications = () => {
   } = useUserContext();
   const noti = new Notification(client);
 
-  const {data: isNotificationReadQuery} = useQuery({
-    queryFn: () => noti.isRead(),
-    queryKey: ['notifications', user?.id],
+  const {data: hasUnReadQuery, refetch: refetchHasUnRead} = useQuery({
+    queryFn: () => noti.hasUnRead(),
+    queryKey: ['unRead', 'notifications', user?.id],
     select: data => data.hasUnread,
   });
 
-  const {data: notificationsQuery} = useQuery({
-    queryFn: () => noti.getNotifications(),
-    queryKey: ['notifications', user?.id],
-  });
+  const {data: notificationsQuery, refetch: refetchNotificationsQuery} =
+    useQuery({
+      queryFn: () => noti.getNotifications(),
+      queryKey: ['notifications', user?.id],
+    });
 
-  return {isNotificationReadQuery, notificationsQuery};
+  return {
+    hasUnReadQuery,
+    refetchHasUnRead,
+    notificationsQuery,
+    refetchNotificationsQuery,
+  };
 };
 
 export default useNotifications;

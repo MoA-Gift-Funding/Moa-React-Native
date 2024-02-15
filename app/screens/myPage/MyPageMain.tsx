@@ -13,6 +13,7 @@ import {getContactsInfo} from '../../utils/device';
 import LoadingBar from '../../components/bar/LoadingBar';
 import Notification from '../../components/svg/Notification';
 import useNotifications from '../../hooks/notification/useNotifications';
+import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 
 const MyPageMain = ({navigation}) => {
   const {
@@ -21,14 +22,13 @@ const MyPageMain = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
   const {myFundingsQuery} = useFunding(0, 100);
-  const {isNotificationReadQuery} = useNotifications();
+  const {hasUnReadQuery, refetchHasUnRead} = useNotifications();
+  useRefetchOnFocus(refetchHasUnRead);
 
   const syncFriends = async () => {
     try {
       setIsLoading(true);
       const organized = await getContactsInfo();
-      console.log(organized);
-
       syncContactsQuery(organized);
     } catch (error) {
       console.error(error);
@@ -45,9 +45,9 @@ const MyPageMain = ({navigation}) => {
           <Pressable
             className="mb-2 flex items-end mt-2"
             onPress={() =>
-              navigation.navigate('MyAlarm', {headerTitle: '알림'})
+              navigation.navigate('MyNotification', {headerTitle: '알림'})
             }>
-            <Notification hasUnRead={isNotificationReadQuery} color="black" />
+            <Notification hasUnRead={hasUnReadQuery} color="black" />
           </Pressable>
           <View className="flex flex-row mb-6">
             <Image

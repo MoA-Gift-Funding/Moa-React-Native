@@ -5,12 +5,14 @@ import TextRegular from '../../components/text/TextRegular';
 import {useUserContext} from '../../contexts/UserContext';
 import Notification from '../../components/svg/Notification';
 import useNotifications from '../../hooks/notification/useNotifications';
+import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 
 const HomeBanner = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
-  const {isNotificationReadQuery} = useNotifications();
+  const {hasUnReadQuery, refetchHasUnRead} = useNotifications();
+  useRefetchOnFocus(refetchHasUnRead);
 
   return (
     <ImageBackground
@@ -23,9 +25,9 @@ const HomeBanner = ({navigation}) => {
         <Pressable
           className="mb-2 w-[40px] h-[40px]"
           onPress={() =>
-            navigation.navigate('MyMessages', {headerTitle: '알림'})
+            navigation.navigate('MyNotification', {headerTitle: '알림'})
           }>
-          <Notification hasUnRead={isNotificationReadQuery} color="white" />
+          <Notification hasUnRead={hasUnReadQuery} color="white" />
         </Pressable>
         <TextBold
           title={`${user?.nickname}님`}

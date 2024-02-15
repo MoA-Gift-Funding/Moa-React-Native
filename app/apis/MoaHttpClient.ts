@@ -148,7 +148,7 @@ export default class MoaHttpClient {
   }
 
   // notifications
-  isNotificationRead() {
+  hasUnReadNotifications() {
     return this.httpClient.get('/notifications/check');
   }
 
