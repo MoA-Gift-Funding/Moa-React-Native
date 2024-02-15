@@ -1,13 +1,17 @@
 import React from 'react';
-import {Image, ImageBackground, Pressable, View} from 'react-native';
+import {ImageBackground, Pressable, View} from 'react-native';
 import TextBold from '../../components/text/TextBold';
 import TextRegular from '../../components/text/TextRegular';
 import {useUserContext} from '../../contexts/UserContext';
+import Notification from '../../components/svg/Notification';
+import useNotifications from '../../hooks/notification/useNotifications';
 
 const HomeBanner = ({navigation}) => {
   const {
     userState: {user},
   } = useUserContext();
+  const {isNotificationReadQuery} = useNotifications();
+
   return (
     <ImageBackground
       className="w-full h-[320px]"
@@ -21,12 +25,7 @@ const HomeBanner = ({navigation}) => {
           onPress={() =>
             navigation.navigate('MyMessages', {headerTitle: '알림'})
           }>
-          <Image
-            className="w-[40px] h-[40px] "
-            source={{
-              uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1701672813/moa-alarm_szvywe.png',
-            }}
-          />
+          <Notification hasUnRead={isNotificationReadQuery} color="white" />
         </Pressable>
         <TextBold
           title={`${user?.nickname}님`}

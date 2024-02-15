@@ -11,6 +11,8 @@ import {httpsUrlCorrector} from '../../utils/regex';
 import useFunding from '../../hooks/fundings/useFunding';
 import {getContactsInfo} from '../../utils/device';
 import LoadingBar from '../../components/bar/LoadingBar';
+import Notification from '../../components/svg/Notification';
+import useNotifications from '../../hooks/notification/useNotifications';
 
 const MyPageMain = ({navigation}) => {
   const {
@@ -19,6 +21,7 @@ const MyPageMain = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
   const {myFundingsQuery} = useFunding(0, 100);
+  const {isNotificationReadQuery} = useNotifications();
 
   const syncFriends = async () => {
     try {
@@ -44,13 +47,7 @@ const MyPageMain = ({navigation}) => {
             onPress={() =>
               navigation.navigate('MyAlarm', {headerTitle: '알림'})
             }>
-            <Image
-              source={{
-                uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704254786/image_gqjmje.png',
-              }}
-              width={40}
-              height={40}
-            />
+            <Notification hasUnRead={isNotificationReadQuery} color="black" />
           </Pressable>
           <View className="flex flex-row mb-6">
             <Image

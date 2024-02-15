@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import React from 'react';
 import {useUserContext} from '../../contexts/UserContext';
-import Notification from '../../apis/notification/notification';
+import Notification from '../../apis/notification/Notification';
 
 const useNotifications = () => {
   const {
@@ -13,6 +13,7 @@ const useNotifications = () => {
   const {data: isNotificationReadQuery} = useQuery({
     queryFn: () => noti.isRead(),
     queryKey: ['notifications', user?.id],
+    select: data => data.hasUnread,
   });
 
   const {data: notificationsQuery} = useQuery({
