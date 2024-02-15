@@ -10,10 +10,10 @@ import Contact from '../screens/Login/Contact';
 import JoinCompleted from '../screens/Login/JoinCompleted';
 import Join from '../screens/Login/Join';
 import BlankHeader from '../components/header/BlankHeader';
-import StoreMain from '../screens/store/StoreMain';
+import StoreMain from '../screens/products/StoreMain';
 import StoreHeader from '../components/header/StoreHeader';
-import ItemDetail from '../screens/store/ItemDetail';
-import ItemList from '../screens/store/ItemList';
+import ItemDetail from '../screens/products/ItemDetail';
+import ItemList from '../screens/products/ItemList';
 import TitleHeader from '../components/header/TitleHeader';
 import NewFund from '../screens/funding/new/NewFund';
 import NewFundShipping from '../screens/funding/new/NewFundShipping';
@@ -28,13 +28,13 @@ import MyPageDetail from '../screens/myPage/profile/MyPageDetail';
 import MyFunding from '../screens/myPage/fundings/MyFunding';
 import MyFriends from '../screens/myPage/friends/MyFriends';
 import MyMessages from '../screens/myPage/message/MyMessages';
-import MyAlarm from '../screens/myPage/notification/MyAlarm';
 import MyOrders from '../screens/myPage/order/MyOrders';
 import MyOrder from '../screens/myPage/order/MyOrder';
 import Notices from '../screens/myPage/cs/Notices';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 import MyInquiries from '../screens/myPage/cs/MyInquiries';
 import FriendFundList from '../screens/funding/FriendFundList';
+import MyNotification from '../screens/myPage/notification/MyNotification';
 
 const AuthRouter = () => {
   const {
@@ -139,8 +139,8 @@ const AuthRouter = () => {
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyAlarm"
-            component={MyAlarm}
+            name="MyNotification"
+            component={MyNotification}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen

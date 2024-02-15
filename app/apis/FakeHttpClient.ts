@@ -120,4 +120,13 @@ export class FakeHttpClient {
   sendFailPayment(message: string, code: string) {
     return this.httpClient.get('');
   }
+
+  // notification
+  isNotificationRead() {
+    return this.httpClient.get('');
+  }
+
+  getNotifications() {
+    return this.httpClient.get('');
+  }
 }

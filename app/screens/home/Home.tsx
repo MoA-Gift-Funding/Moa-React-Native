@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -16,12 +16,11 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
 import MyFund from '../funding/components/MyFund';
 import FundItem from '../funding/components/FundItem';
-import {PermissionsAndroid} from 'react-native';
-import messaging from '@react-native-firebase/messaging';
 import useFunding from '../../hooks/fundings/useFunding';
 import {FriendFundItem, MyFundItem} from '../../types/Funding';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getDeviceToken} from '../../utils/device';
 
 export default function Home({navigation}) {
   const {
@@ -37,46 +36,14 @@ export default function Home({navigation}) {
   useRefetchOnFocus(refetchFriendFudingQuery);
   useRefetchOnFocus(refetchMyFundingsQuery);
 
+  const deviceToken = useCallback(getDeviceToken, []);
+
   useEffect(() => {
-    const requestAOSPermit = async () => {
-      const authStatus = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      );
-      if (authStatus === 'granted') {
-        getFCMToken();
-      }
-      console.log(authStatus);
-    };
-
-    const requestiOSPermit = async () => {
-      const authStatus = await messaging().requestPermission();
-      const enabled =
-        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-      console.log(authStatus);
-      if (enabled) {
-        return getFCMToken();
-      }
-    };
-
-    const getFCMToken = async () => {
-      const fcmToken = await messaging()
-        .getToken()
-        .then(res => res)
-        .catch(error => console.log(error));
-      console.log('FCM토큰값:', fcmToken);
-    };
+    deviceToken();
     const ac = async () =>
       console.log(await AsyncStorage.getItem('accessToken'));
-
-    if (Platform.OS === 'android') {
-      requestAOSPermit();
-    }
-    if (Platform.OS === 'ios') {
-      requestiOSPermit();
-    }
     ac();
-  }, []);
+  }, [deviceToken]);
 
   return (
     <>

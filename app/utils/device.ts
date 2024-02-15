@@ -1,3 +1,4 @@
+import messaging from '@react-native-firebase/messaging';
 import Contacts from 'react-native-contacts';
 import {PermissionsAndroid, Platform} from 'react-native';
 import {UserContact} from '../types/User';
@@ -53,4 +54,33 @@ export const getContactsInfo = async () => {
       });
   }
   return organized;
+};
+
+export const getDeviceToken = async () => {
+  const getFCMToken = async () => {
+    const fcmToken = await messaging()
+      .getToken()
+      .then(res => res)
+      .catch(error => console.log(error));
+    console.log('FCM토큰값:', fcmToken);
+  };
+
+  if (Platform.OS === 'android') {
+    const authStatus = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+    if (authStatus === 'granted') {
+      getFCMToken();
+    }
+  }
+
+  if (Platform.OS === 'ios') {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    if (enabled) {
+      return getFCMToken();
+    }
+  }
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
-import AlarmItem from './AlarmItem';
+import NotificationItem from './NotificationItem';
 
-const MyAlarm = () => {
+const MyNotification = () => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       className="bg-white border-t-2 border-Gray-02">
       <View className="px-6">
-        <AlarmItem
+        <NotificationItem
           item={{
             category: 'fund',
             title: '친구의 새로운 펀딩',
@@ -19,7 +19,7 @@ const MyAlarm = () => {
               'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704337430/moa-pretty_b3ko90.png',
           }}
         />
-        <AlarmItem
+        <NotificationItem
           item={{
             category: 'completed',
             title: '펀딩 달성',
@@ -30,7 +30,7 @@ const MyAlarm = () => {
               'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1702543417/moa-nikeshoes_xodvda.png',
           }}
         />
-        <AlarmItem
+        <NotificationItem
           item={{
             category: 'message',
             title: '펀딩 메세지 도착',
@@ -41,7 +41,7 @@ const MyAlarm = () => {
               'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704337430/moa-mangom_usmbka.png',
           }}
         />
-        <AlarmItem
+        <NotificationItem
           item={{
             category: 'fund',
             title: '친구의 새로운 펀딩',
@@ -57,4 +57,4 @@ const MyAlarm = () => {
   );
 };
 
-export default MyAlarm;
+export default MyNotification;

@@ -2,14 +2,14 @@ import React from 'react';
 import {Image, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
-import {MyAlarm} from '../../../types/Alarm';
+import {MyAlarm} from '../../../types/Notification';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
 
-const AlarmItem = ({item}: {item: MyAlarm}) => {
+const NotificationItem = ({item}: {item: MyAlarm}) => {
   const {category, title, message, image, createdAt} = item;
   return (
     <View className="border-b-2 border-Gray-02 py-4">
@@ -62,4 +62,4 @@ const AlarmItem = ({item}: {item: MyAlarm}) => {
   );
 };
 
-export default AlarmItem;
+export default NotificationItem;

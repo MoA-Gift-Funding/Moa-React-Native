@@ -146,4 +146,13 @@ export default class MoaHttpClient {
       params: {code, message},
     });
   }
+
+  // notifications
+  isNotificationRead() {
+    return this.httpClient.get('/notifications/check');
+  }
+
+  getNotifications() {
+    return this.httpClient.get('/notifications');
+  }
 }

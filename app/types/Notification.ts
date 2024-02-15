@@ -1,4 +1,4 @@
-export interface MyAlarm {
+export interface Notification {
   category: string;
   title: string;
   message: string;
