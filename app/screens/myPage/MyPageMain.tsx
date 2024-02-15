@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Image, Pressable, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from 'react-native';
 import {useUserContext} from '../../contexts/UserContext';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
@@ -18,6 +25,7 @@ import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 const MyPageMain = ({navigation}) => {
   const {
     userState: {user},
+    dispatch,
   } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
@@ -47,7 +55,7 @@ const MyPageMain = ({navigation}) => {
             onPress={() =>
               navigation.navigate('MyNotification', {headerTitle: '알림'})
             }>
-            <Notification hasUnRead={hasUnReadQuery} color="black" />
+            <Notification hasUnRead={hasUnReadQuery} color="#424242" />
           </Pressable>
           <View className="flex flex-row mb-6">
             <Image
@@ -130,10 +138,18 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('MyInquiries', {headerTitle: '문의내역'})
           }
         />
-        <MenuCategory title="앱 설정" onPress={() => {}} />
+        <MenuCategory
+          title="앱 설정"
+          onPress={() =>
+            navigation.navigate('AppConfig', {headerTitle: '앱 설정'})
+          }
+        />
       </View>
       <View className="bg-white mt-3">
-        <MenuCategory title="로그아웃" onPress={() => {}} />
+        <MenuCategory
+          title="로그아웃"
+          onPress={() => dispatch({type: 'LOGOUT'})}
+        />
         <MenuCategory title="회원탈퇴" onPress={() => {}} />
       </View>
     </ScrollView>

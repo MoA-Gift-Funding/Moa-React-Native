@@ -39,7 +39,7 @@ const userReducer = (state: State, {type, payload}: Action) => {
     case 'LOGIN':
       return {...state, authenticated: true, user: payload};
     case 'LOGOUT':
-      AsyncStorage.clear(); // Logout 컴포넌트 생성시 해당부분 삭제
+      AsyncStorage.clear();
       return {...state, authenticated: false, user: undefined};
     case 'STOP_LOADING':
       return {...state, isLoading: false};

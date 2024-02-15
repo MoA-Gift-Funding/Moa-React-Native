@@ -17,8 +17,8 @@ export default function Login({navigation}) {
     setIsLoding(true);
     try {
       const user = await loginQuery(platform);
+      dispatch({type: 'LOGIN', payload: user});
       if (user?.status === 'PRESIGNED_UP') {
-        dispatch({type: 'LOGIN', payload: user});
         navigation.navigate('Join');
       }
     } catch (error) {

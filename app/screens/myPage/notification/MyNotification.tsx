@@ -18,6 +18,7 @@ const MyNotification = () => {
           {notificationsQuery.length > 0 &&
             notificationsQuery.map(noti => (
               <NotificationItem
+                key={noti.id}
                 item={{
                   category: 'fund',
                   title: '친구의 새로운 펀딩',

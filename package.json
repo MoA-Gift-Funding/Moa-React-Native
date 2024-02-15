@@ -30,6 +30,7 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-ui-datepicker": "^1.0.10",
     "react-native-vector-icons": "^10.0.3",
+    "react-native-version-check": "^3.4.7",
     "react-native-webview": "^13.6.3",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"

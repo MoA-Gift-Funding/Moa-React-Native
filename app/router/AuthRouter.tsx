@@ -35,6 +35,7 @@ import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 import MyInquiries from '../screens/myPage/cs/MyInquiries';
 import FriendFundList from '../screens/funding/FriendFundList';
 import MyNotification from '../screens/myPage/notification/MyNotification';
+import AppConfig from '../screens/myPage/appConfig/AppConfig';
 
 const AuthRouter = () => {
   const {
@@ -166,6 +167,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="MyInquiries"
             component={MyInquiries}
+            options={{header: () => <TitleHeader />}}
+          />
+          <Stack.Screen
+            name="AppConfig"
+            component={AppConfig}
             options={{header: () => <TitleHeader />}}
           />
         </>
