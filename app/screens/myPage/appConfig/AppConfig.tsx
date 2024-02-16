@@ -1,10 +1,32 @@
 import React, {useState} from 'react';
 import {Pressable, Switch, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
-import {getCurrentAppVersion, getLatestAppVersion} from '../../../utils/device';
+import {
+  getCurrentAppVersion,
+  getDeviceToken,
+  getLatestAppVersion,
+} from '../../../utils/device';
+import useNotifications from '../../../hooks/notification/useNotifications';
 
 const AppConfig = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const {
+    notificationStatusQuery,
+    permitNotificationQuery,
+    disallowNotificationQuery,
+  } = useNotifications();
+  const [allowed, setAllowed] = useState(notificationStatusQuery);
+
+  const handlePermitNotiBtn = async () => {
+    if (allowed) {
+      await disallowNotificationQuery();
+      setAllowed(false);
+    } else {
+      const token = await getDeviceToken();
+      await permitNotificationQuery(token!);
+      setAllowed(true);
+    }
+  };
+
   const currentVersion = getCurrentAppVersion();
   // const latestVersion = getLatestAppVersion();
   const handleUpdateBtn = async () => {};
@@ -24,8 +46,8 @@ const AppConfig = () => {
               trackColor={{false: '#9E9E9E', true: '#FF5414'}}
               thumbColor="white"
               ios_backgroundColor="#9E9E9E"
-              onValueChange={() => setIsEnabled(!isEnabled)}
-              value={isEnabled}
+              onValueChange={handlePermitNotiBtn}
+              value={notificationStatusQuery}
             />
           </View>
         </View>

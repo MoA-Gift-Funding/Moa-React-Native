@@ -31,7 +31,6 @@ const useNotifications = () => {
     });
 
   const {mutateAsync: permitNotificationQuery} = useMutation({
-    mutationKey: ['notifications', 'status', user?.id],
     mutationFn: (deviceToken: string) => noti.permitNotification(deviceToken),
     onSuccess: () =>
       queryClient.invalidateQueries({
@@ -39,9 +38,12 @@ const useNotifications = () => {
       }),
   });
 
-  const {data: disallowNotificationQuery} = useQuery({
-    queryKey: ['notifications', 'status', user?.id],
-    queryFn: () => noti.disallowNotification(),
+  const {mutate: disallowNotificationQuery} = useMutation({
+    mutationFn: () => noti.disallowNotification(),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ['notifications', 'status', user?.id],
+      }),
   });
 
   return {

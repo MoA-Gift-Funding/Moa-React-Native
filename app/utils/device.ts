@@ -64,6 +64,7 @@ export const getDeviceToken = async () => {
       .then(res => res)
       .catch(error => console.log(error));
     console.log('FCM토큰값:', fcmToken);
+    return fcmToken;
   };
 
   if (Platform.OS === 'android') {
@@ -71,7 +72,7 @@ export const getDeviceToken = async () => {
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
     if (authStatus === 'granted') {
-      getFCMToken();
+      return getFCMToken();
     }
   }
 
