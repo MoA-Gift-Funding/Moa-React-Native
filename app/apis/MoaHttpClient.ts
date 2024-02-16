@@ -155,4 +155,16 @@ export default class MoaHttpClient {
   getNotifications() {
     return this.httpClient.get('/notifications');
   }
+
+  getNotificationStatus() {
+    return this.httpClient.get('/members/notification');
+  }
+
+  permitNotification(deviceToken: string) {
+    return this.httpClient.post('/members/notification', {deviceToken});
+  }
+
+  disallowNotification() {
+    return this.httpClient.delete('/members/notification');
+  }
 }

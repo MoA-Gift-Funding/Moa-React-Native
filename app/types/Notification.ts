@@ -4,3 +4,7 @@ export interface NotificationItem {
   message: string;
   isRead: boolean;
 }
+
+export interface NotificationStatus {
+  isPermit: boolean;
+}

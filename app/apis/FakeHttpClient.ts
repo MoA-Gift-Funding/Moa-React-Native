@@ -129,4 +129,16 @@ export class FakeHttpClient {
   getNotifications() {
     return this.httpClient.get('');
   }
+
+  getNotificationStatus() {
+    return this.httpClient.get('');
+  }
+
+  permitNotification(deviceToken: string) {
+    return this.httpClient.get('');
+  }
+
+  disallowNotification() {
+    return this.httpClient.get('');
+  }
 }
