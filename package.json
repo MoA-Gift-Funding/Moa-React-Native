@@ -64,6 +64,7 @@
     "@tsconfig/react-native": "^3.0.2",
     "@types/jest": "^29.5.8",
     "@types/react": "^18.2.37",
+    "@types/react-native-version-check": "^3.4.8",
     "@types/react-test-renderer": "^18.0.6",
     "@types/uuid": "^9.0.8",
     "babel-jest": "^29.2.1",

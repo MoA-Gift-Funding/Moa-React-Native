@@ -1,8 +1,9 @@
 import messaging from '@react-native-firebase/messaging';
 import Contacts from 'react-native-contacts';
-import {PermissionsAndroid, Platform} from 'react-native';
+import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {UserContact} from '../types/User';
 import Toast from 'react-native-toast-message';
+import VersionCheck from 'react-native-version-check';
 
 export const getContactsInfo = async () => {
   const organized: UserContact = {contactList: []};
@@ -83,4 +84,40 @@ export const getDeviceToken = async () => {
       return getFCMToken();
     }
   }
+};
+
+export const getCurrentAppVersion = () => {
+  const currentVersion = VersionCheck.getCurrentVersion();
+  return currentVersion;
+};
+
+export const getLatestAppVersion = () => {
+  const storeVersion = VersionCheck.getLatestVersion();
+  return storeVersion;
+};
+
+export const updateAppVersion = async () => {
+  VersionCheck.needUpdate({
+    currentVersion: await getCurrentAppVersion(),
+    latestVersion: await getLatestAppVersion(),
+  }).then(res => {
+    if (res.isNeeded) {
+      Alert.alert(
+        '필수 업데이트 사항이 있어요',
+        '\n서비스 이용을 위해\n앱을 업데이트 해주세요🙏🏻',
+        [
+          {
+            text: '스토어로 이동',
+            onPress: () => {
+              if (Platform.OS == 'android') {
+                Linking.openURL('안드로이드 앱스토어 주소');
+              } else {
+                Linking.openURL('IOS 앱스토어 주소');
+              }
+            },
+          },
+        ],
+      );
+    }
+  });
 };

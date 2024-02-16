@@ -16,6 +16,7 @@ import FallbackUI from './app/components/handlers/fallbackUI';
 import Toast from 'react-native-toast-message';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';
+import {updateAppVersion} from './app/utils/device';
 
 export const App = () => {
   const {handleError} = useApiError();
@@ -32,6 +33,7 @@ export const App = () => {
     }),
   });
   const {reset} = useQueryErrorResetBoundary();
+  const appVersionCheck = React.useCallback(() => updateAppVersion(), []);
 
   React.useEffect(() => {
     const foreGroundMessage = async (title, body) => {
@@ -70,9 +72,14 @@ export const App = () => {
       // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
       const {
         notification: {body, title},
+        data,
       } = remoteMessage;
       foreGroundMessage(title, body);
     });
+
+    // 앱 배포 URL 적용 후, 코드 활성화 예정
+    // appVersionCheck();
+
     SplashScreen.hide();
 
     return unsubscribe;

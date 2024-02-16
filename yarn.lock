@@ -2088,6 +2088,14 @@
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/node-fetch@*":
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.11.tgz#9b39b78665dae0e82a08f02f4967d62c66f95d24"
+  integrity sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==
+  dependencies:
+    "@types/node" "*"
+    form-data "^4.0.0"
+
 "@types/node@*":
   version "20.9.2"
   resolved "https://registry.npmjs.org/@types/node/-/node-20.9.2.tgz"
@@ -2099,6 +2107,13 @@
   version "15.7.10"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.10.tgz"
   integrity sha512-mxSnDQxPqsZxmeShFH+uwQ4kO4gcJcGahjjMFeLbKE95IAZiiZyiEepGZjtXJ7hN/yfu0bu9xN2ajcU0JcxX6A==
+
+"@types/react-native-version-check@^3.4.8":
+  version "3.4.8"
+  resolved "https://registry.yarnpkg.com/@types/react-native-version-check/-/react-native-version-check-3.4.8.tgz#2534cda53004ccd4a8bda98e5731faf58b147230"
+  integrity sha512-SJEIGHRtYFvOusvT9F3xZVu08zaVES8gkmYOtw2f/75mEsucOMALr81zMEMyINCz2DczmIXkNxUZu1H/LWasWw==
+  dependencies:
+    "@types/node-fetch" "*"
 
 "@types/react-test-renderer@^18.0.6":
   version "18.0.6"
