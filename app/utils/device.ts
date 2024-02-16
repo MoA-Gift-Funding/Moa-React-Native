@@ -96,7 +96,13 @@ export const getLatestAppVersion = () => {
   return storeVersion;
 };
 
+export const getStoreUrl = () => {
+  const url = VersionCheck.getStoreUrl();
+  return url;
+};
+
 export const updateAppVersion = async () => {
+  const url = await getStoreUrl();
   VersionCheck.needUpdate({
     currentVersion: await getCurrentAppVersion(),
     latestVersion: await getLatestAppVersion(),
@@ -108,13 +114,7 @@ export const updateAppVersion = async () => {
         [
           {
             text: '스토어로 이동',
-            onPress: () => {
-              if (Platform.OS == 'android') {
-                Linking.openURL('안드로이드 앱스토어 주소');
-              } else {
-                Linking.openURL('IOS 앱스토어 주소');
-              }
-            },
+            onPress: () => Linking.openURL(url),
           },
         ],
       );

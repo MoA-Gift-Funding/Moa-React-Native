@@ -9,12 +9,11 @@ import {
 import {UserContextProvider} from './app/contexts/UserContext';
 import AuthRouter from './app/router/AuthRouter';
 import messaging from '@react-native-firebase/messaging';
-import {Alert} from 'react-native';
 import useApiError from './app/hooks/handlers/useApiError';
 import {ErrorBoundary} from 'react-error-boundary';
 import FallbackUI from './app/components/handlers/fallbackUI';
 import Toast from 'react-native-toast-message';
-import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import notifee, {AndroidImportance} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {updateAppVersion} from './app/utils/device';
 
