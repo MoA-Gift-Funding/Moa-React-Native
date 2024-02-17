@@ -202,7 +202,8 @@ const AuthRouter = () => {
             name="Profile"
             component={Profile}
             options={{
-              header: () => <BackHeader />,
+              header: () => <BlankHeader />,
+              gestureEnabled: false,
             }}
           />
           <Stack.Screen
@@ -217,6 +218,7 @@ const AuthRouter = () => {
             component={JoinCompleted}
             options={{
               header: () => <BlankHeader />,
+              gestureEnabled: false,
             }}
           />
         </>
