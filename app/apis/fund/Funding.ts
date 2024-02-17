@@ -17,7 +17,13 @@ export default class Funding {
       return addrs.data;
     } catch (error: any) {
       console.error(error.response.data);
-      throw error;
+      switch (error.response.status) {
+        case 404:
+          error.response.data.message = '배송지를 찾을 수 없어요🥲';
+          throw error;
+        default:
+          throw error;
+      }
     }
   }
 
@@ -58,7 +64,14 @@ export default class Funding {
       return fund.data;
     } catch (error: any) {
       console.error(error.response.data);
-      throw error;
+      switch (error.response.status) {
+        case 404:
+          error.response.data.message =
+            '상품이 존재하지 않아요. 고객센터로 문의해주세요😭';
+          throw error;
+        default:
+          throw error;
+      }
     }
   }
 
@@ -102,7 +115,13 @@ export default class Funding {
       return fund.data;
     } catch (error: any) {
       console.error(error.response.data);
-      throw error;
+      switch (error.response.status) {
+        case 403:
+          error.response.data.message = '펀딩이 존재하지 않아요😭';
+          throw error;
+        default:
+          throw error;
+      }
     }
   }
 
@@ -115,9 +134,15 @@ export default class Funding {
     try {
       const join = await this.apiClient.joinFund(data);
       return join.data;
-    } catch (error) {
+    } catch (error: any) {
       console.error(error.response.data);
-      throw error;
+      switch (error.response.status) {
+        case 400:
+          error.response.data.message = '진행이 종료된 펀딩이예요🫠';
+          throw error;
+        default:
+          throw error;
+      }
     }
   }
 }

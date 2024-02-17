@@ -68,7 +68,7 @@ export class Users {
       switch (error.response.status) {
         case 409:
           error.response.data.message =
-            '이미 존재하는 회원입니다. 가입하신 플랫폼으로 로그인해주세요.';
+            '이미 가입된 회원이예요. 가입하신 플랫폼으로 로그인해주세요🙏🏻';
           throw error;
         default:
           throw error;
@@ -83,15 +83,12 @@ export class Users {
     } catch (error: any) {
       console.error(error.response.data);
       switch (error.response.status) {
-        case 401:
-          Toast.show({type: 'error', text1: error.response.data.message});
-          return error;
         case 404:
-          Toast.show({type: 'error', text1: error.response.data.message});
-          return error;
+          error.response.data.message =
+            '회원 정보를 찾을 수 없어요. 문제가 지속시에는 고객센터로 연락해주세요🥲';
+          throw error;
         default:
-          Toast.show({type: 'error', text1: error.response.data.message});
-          return error;
+          throw error;
       }
     }
   }
@@ -139,7 +136,12 @@ export class Users {
           error.response.data.message = '인증번호가 일치하지 않아요🥲';
           throw error;
         case 409:
-          error.response.data.message = '이미 사용중인 번호예요🥲';
+          error.response.data.message =
+            '이미 가입된 번호예요. 가입하신 플랫폼으로 로그인해주세요🙏🏻';
+          throw error;
+        case 500:
+          error.response.data.message =
+            '정상적으로 처리되지 않았어요. 다시 시도해주세요🙏🏻';
           throw error;
         default:
           throw error;
@@ -154,9 +156,16 @@ export class Users {
     } catch (error: any) {
       console.log(error.response.data);
       switch (error.response.status) {
+        case 400:
+          error.response.data.message =
+            '인증시간이 만료되었어요. 인증을 다시 시도해주세요🙏🏻';
+          throw error;
+        case 401:
+          error.response.data.message = '인증번호가 일치하지 않아요🥲';
+          throw error;
         case 409:
           error.response.data.message =
-            '이미 사용중인 번호예요. 고객센터로 문의해주세요🙏🏻';
+            '이미 가입된 번호예요. 가입하신 플랫폼으로 로그인해주세요🙏🏻';
           throw error;
         default:
           throw error;
