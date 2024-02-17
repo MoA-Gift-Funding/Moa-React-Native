@@ -19,15 +19,17 @@ import {useForm} from 'react-hook-form';
 import TextInputGroupPlain from '../components/TextInputGroupPlain';
 import LoadingBar from '../../../components/bar/LoadingBar';
 import NextButton from '../../../components/button/NextButton';
+import useUser from '../../../hooks/user/useUser';
 
 const MyPageDetail = () => {
   const {
     userState: {user},
     dispatch,
   } = useUserContext();
-  const {nickname, phoneNumber, birthday, birthyear, email} = user;
+  const {updateProfileImageQuery, updateUserQuery} = useUser();
+  const {nickname, phoneNumber, birthday, birthyear, email} = user!;
   const [isLoading, setIsLoading] = useState(false);
-  const [imageURI, setImageURI] = useState(user?.profileImage);
+  const [imageURI, setImageURI] = useState(user?.profileImageUrl);
   const {
     formState: {errors},
     control,

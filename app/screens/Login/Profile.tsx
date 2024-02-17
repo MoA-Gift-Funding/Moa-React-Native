@@ -13,7 +13,7 @@ import LoadingBar from '../../components/bar/LoadingBar';
 import useUser from '../../hooks/user/useUser';
 import {httpsUrlCorrector} from '../../utils/regex';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
@@ -47,8 +47,13 @@ const Profile = () => {
     }
   };
   const handleButton = async () => {
-    const {birthday, birthyear, profileImageUrl, nickname} = user;
-    updateUserQuery({birthday, birthyear, profileImageUrl, nickname});
+    try {
+      const {birthday, birthyear, profileImageUrl, nickname} = user!;
+      updateUserQuery({birthday, birthyear, profileImageUrl, nickname});
+      navigation.navigate('Contact');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">

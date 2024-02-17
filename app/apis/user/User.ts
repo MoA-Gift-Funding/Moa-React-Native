@@ -85,7 +85,7 @@ export class Users {
       switch (error.response.status) {
         case 404:
           error.response.data.message =
-            '회원 정보를 찾을 수 없어요. 문제가 지속시에는 고객센터로 연락해주세요🥲';
+            '회원 정보를 찾을 수 없어요. 다시 로그인해주세요🥲';
           throw error;
         default:
           throw error;
