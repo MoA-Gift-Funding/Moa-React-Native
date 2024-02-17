@@ -21,7 +21,9 @@ export const getContactsInfo = async () => {
           .then(contacts => {
             contacts.forEach(contact => {
               const name = contact.displayName;
-              const phoneNumber = contact.phoneNumbers[0].number;
+              const phoneNumber = parsePhoneNumber(
+                contact.phoneNumbers[0].number,
+              );
               organized.contactList.push({name, phoneNumber});
             });
           })
@@ -42,11 +44,12 @@ export const getContactsInfo = async () => {
         contacts.forEach(contact => {
           if (contact.phoneNumbers[0]) {
             const name = `${contact.familyName}${contact.givenName}`;
-            const phoneNumber = contact.phoneNumbers[0].number;
+            const phoneNumber = parsePhoneNumber(
+              contact.phoneNumbers[0].number,
+            );
             organized.contactList.push({name, phoneNumber});
           }
         });
-        console.log(organized);
       })
       .then(() => organized)
       .catch(error => {
@@ -121,4 +124,15 @@ export const updateAppVersion = async () => {
       );
     }
   });
+};
+
+export const parsePhoneNumber = (phoneNumber: string) => {
+  phoneNumber = phoneNumber.replace(/\D/g, '');
+
+  if (phoneNumber.startsWith('82')) {
+    phoneNumber = phoneNumber.replace(/^82/, '0');
+  }
+
+  phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  return phoneNumber;
 };
