@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   Button,
   Image,
   Modal,
@@ -31,13 +32,16 @@ const ReportButton = () => {
   const handleReport = () => {};
   return (
     <>
-      <Pressable onPress={handleOnModal} className="px-2 py-2">
+      <Pressable onPress={handleOnModal} className="px-2 py-2 relative">
         <Image
           className="w-[4px] h-[16px]"
           source={{
             uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1708353354/moa-dots_yl6uwc.png',
           }}
         />
+        <View className="absolute w-[100px] h-[50px] -bottom-14 right-0 flex justify-center items-center">
+          <TextRegular title="신고하기" />
+        </View>
       </Pressable>
       {onModal && (
         <Modal>

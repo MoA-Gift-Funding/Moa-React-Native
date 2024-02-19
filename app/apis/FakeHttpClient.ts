@@ -141,4 +141,9 @@ export class FakeHttpClient {
   disallowNotification() {
     return this.httpClient.get('');
   }
+
+  // Report
+  reportPost(item: ReportItem) {
+    return this.httpClient.get('');
+  }
 }

@@ -2,7 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
-import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
+import {
+  FundRequestStatus,
+  NewFundItem,
+  ReportItem,
+  ShippingInfo,
+} from '../types/Funding';
 
 export default class MoaHttpClient {
   protected httpClient;
@@ -166,5 +171,10 @@ export default class MoaHttpClient {
 
   disallowNotification() {
     return this.httpClient.delete('/members/notification');
+  }
+
+  // Report
+  reportPost(item: ReportItem) {
+    return this.httpClient.post('/reports', item);
   }
 }

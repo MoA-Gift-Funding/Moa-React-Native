@@ -1,6 +1,7 @@
 import {
   FundRequestStatus,
   NewFundItem,
+  ReportItem,
   ShippingInfo,
 } from '../../types/Funding';
 import {FakeHttpClient} from '../FakeHttpClient';
@@ -140,6 +141,19 @@ export default class Funding {
         case 400:
           error.response.data.message = '진행이 종료된 펀딩이예요🫠';
           throw error;
+        default:
+          throw error;
+      }
+    }
+  }
+
+  async reportPost(item: ReportItem) {
+    try {
+      const reported = await this.apiClient.reportPost(item);
+      return reported.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
         default:
           throw error;
       }

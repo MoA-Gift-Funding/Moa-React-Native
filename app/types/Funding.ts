@@ -84,3 +84,9 @@ export interface FriendFundItem {
   productId: number;
   productImageUrl: string;
 }
+
+export interface ReportItem {
+  domainType: 'FUNDING' | 'FUNDING_ITEM';
+  domainId: number;
+  content: string;
+}
