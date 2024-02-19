@@ -2,8 +2,8 @@ import React, {useContext, useMemo} from 'react';
 import {Dispatch, createContext, useEffect, useReducer} from 'react';
 import {User} from '../types/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Users} from '../apis/user/User';
 import MoaHttpClient from '../apis/MoaHttpClient';
-import useUser from '../hooks/user/useUser';
 
 interface State {
   authenticated: boolean;
@@ -18,7 +18,7 @@ type Action =
 interface UserContextProps {
   userState: State;
   dispatch: Dispatch<Action>;
-  client: MoaHttpClient;
+  useApi: {useUserApi: Users; client: MoaHttpClient};
 }
 
 export const UserContext = createContext<UserContextProps>({
@@ -28,7 +28,10 @@ export const UserContext = createContext<UserContextProps>({
     isLoading: true,
   },
   dispatch: () => {},
-  client: new MoaHttpClient(),
+  useApi: {
+    client: new MoaHttpClient(),
+    useUserApi: new Users(new MoaHttpClient()),
+  },
 });
 
 const userReducer = (state: State, {type, payload}: Action) => {
@@ -59,29 +62,34 @@ export const UserContextProvider = ({
     defaultDispatch(action);
   };
 
-  const httpClient = useMemo(() => {
+  const useApi = useMemo(() => {
     const client = new MoaHttpClient();
-    return client;
+    const useUserApi = new Users(client);
+    return {useUserApi, client};
   }, []);
-
-  const {getUserQuery} = useUser();
 
   useEffect(() => {
     async function loadUser() {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      if (accessToken) {
-        const user = await getUserQuery();
-        dispatch({
-          type: 'LOGIN',
-          payload: user,
-        });
+      try {
+        if (accessToken) {
+          const user = await useApi.useUserApi.getUser();
+          dispatch({
+            type: 'LOGIN',
+            payload: user,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        dispatch({type: 'STOP_LOADING'});
       }
     }
     loadUser();
-  }, [getUserQuery]);
+  }, [useApi]);
 
   return (
-    <UserContext.Provider value={{userState, dispatch, client: httpClient}}>
+    <UserContext.Provider value={{userState, dispatch, useApi}}>
       {children}
     </UserContext.Provider>
   );

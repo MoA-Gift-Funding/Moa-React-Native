@@ -47,13 +47,9 @@ const Profile = ({navigation}) => {
     }
   };
   const handleButton = async () => {
-    try {
-      const {birthday, birthyear, profileImageUrl, nickname} = user!;
-      updateUserQuery({birthday, birthyear, profileImageUrl, nickname});
-      navigation.navigate('Contact');
-    } catch (error) {
-      console.log(error);
-    }
+    const {birthday, birthyear, profileImageUrl, nickname} = user!;
+    await updateUserQuery({birthday, birthyear, profileImageUrl, nickname});
+    navigation.navigate('Contact');
   };
   return (
     <View className="px-6 bg-white h-full flex flex-col justify-between">

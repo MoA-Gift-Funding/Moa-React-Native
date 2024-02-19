@@ -29,10 +29,7 @@ export const getContactsInfo = async () => {
           })
           .then(() => organized);
       })
-      .then(res => {
-        console.log(res);
-        return res;
-      })
+      .then(res => res)
       .catch(error => {
         console.error('Permission error: ', error);
         Toast.show({type: 'error', text1: '연락처 권한이 설정되지 못했어요🥲'});

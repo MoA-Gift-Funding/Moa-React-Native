@@ -20,6 +20,7 @@ import TextInputGroupPlain from '../components/TextInputGroupPlain';
 import LoadingBar from '../../../components/bar/LoadingBar';
 import NextButton from '../../../components/button/NextButton';
 import useUser from '../../../hooks/user/useUser';
+import {getImageBlob} from '../../../utils/aws';
 
 const MyPageDetail = () => {
   const {
@@ -49,16 +50,9 @@ const MyPageDetail = () => {
       setIsLoading(true);
       const {assets} = await launchImageLibrary({mediaType: 'photo'});
       if (assets) {
-        const file = assets[0];
-        const uri = file.uri;
-        const type = file.type;
-        const name = file.fileName;
-        const source = {
-          uri,
-          type,
-          name,
-        };
-        const {secure_url, message} = await uploadImage(source);
+        const {imgaeBlob, name} = getImageBlob(assets);
+
+        const {secure_url, message} = await updateProfileImageQuery(source);
         if (message) {
           return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
         }

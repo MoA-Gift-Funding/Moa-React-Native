@@ -112,7 +112,7 @@ const FundDetail = ({navigation, route}) => {
               <TextSemiBold title="메세지" style="text-Gray-10" />
             </Pressable>
           </View>
-          <View className="w-full py-6">
+          <View className="w-full min-h-[300px] py-6">
             {leftSelected && (
               <>
                 <View className="pb-4 mx-6">
