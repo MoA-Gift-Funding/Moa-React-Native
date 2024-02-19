@@ -55,16 +55,16 @@ export interface FundDetailItem {
   fundedAmount: number;
   participationCount: number;
   productImageUrl: string;
-  participants: [
-    {
-      memberId: number;
-      nickName: string;
-      profileImageUrl: string;
-      message: string;
-      createAt: string;
-    },
-  ];
+  participants: Participant[];
 }
+
+export type Participant = {
+  memberId: number;
+  nickName: string;
+  profileImageUrl: string;
+  message: string;
+  createAt: string;
+};
 
 export interface FundResponse {
   content: FriendFundItem[] | MyFundItem[];

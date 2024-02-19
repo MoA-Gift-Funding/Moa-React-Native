@@ -13,7 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import TextRegular from '../../../components/text/TextRegular';
 import FundDesc from './FundDesc';
-import FundMessage from '../new/FundMessage';
+import FundMessage from './FundMessage';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {FundDetailItem} from '../../../types/Funding';
 import {useUserContext} from '../../../contexts/UserContext';
@@ -112,10 +112,10 @@ const FundDetail = ({navigation, route}) => {
               <TextSemiBold title="메세지" style="text-Gray-10" />
             </Pressable>
           </View>
-          <View className="w-full min-h-[300px] py-6">
+          <View className="w-full py-6">
             {leftSelected && (
               <>
-                <View className="pb-4 mx-6">
+                <View className="pb-4 min-h-[100px] mx-6">
                   <TextRegular
                     title={description}
                     style="text-Gray-06 text-Body-2 leading-Body-2"
@@ -158,11 +158,19 @@ const FundDetail = ({navigation, route}) => {
                   participants.map(msg => (
                     <FundMessage
                       message={msg.message}
-                      name={msg.nickName}
-                      profileImage={msg.profileImageUrl}
-                      createdAt={msg.createAt}
+                      nickName={msg.nickName}
+                      profileImageUrl={msg.profileImageUrl}
+                      createAt={msg.createAt}
                     />
                   ))}
+                <FundMessage
+                  message={'비공개 메세지예요'}
+                  nickName={'비공개'}
+                  profileImageUrl={
+                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704337430/moa-dex_mkqh2e.png'
+                  }
+                  createAt={'2024-02-19T14:23:37.220Z'}
+                />
                 {participants.length < 1 && (
                   <View className="pt-8 pb-14">
                     <TextRegular

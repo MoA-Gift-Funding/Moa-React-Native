@@ -4,6 +4,7 @@ import TextRegular from '../../../components/text/TextRegular';
 import TextBold from '../../../components/text/TextBold';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../../utils/regex';
+import ReportButton from '../../../components/button/ReportButton';
 
 const FundDesc = ({
   userName,
@@ -20,16 +21,19 @@ const FundDesc = ({
     <View className="flex items-center bg-white">
       <View className="w-[312px]">
         <View className="flex flex-col py-4 border-b-[1px] border-b-Gray-02 mt-2">
-          <View>
-            <TextRegular
-              title={`${userName}님의 펀딩`}
-              style="text-Gray-06 text-Body-2 leading-Body-2"
-            />
-            <TextBold
-              numberOfLines={1}
-              title={title}
-              style="text-Gray-10 text-Heading-3 leading-Heading-3"
-            />
+          <View className="flex flex-row justify-between items-center">
+            <View>
+              <TextRegular
+                title={`${userName}님의 펀딩`}
+                style="text-Gray-06 text-Body-2 leading-Body-2"
+              />
+              <TextBold
+                numberOfLines={1}
+                title={title}
+                style="text-Gray-10 text-Heading-3 leading-Heading-3"
+              />
+            </View>
+            <ReportButton />
           </View>
           <View className="mt-4">
             <TextRegular
