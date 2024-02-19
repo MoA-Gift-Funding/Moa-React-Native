@@ -7,11 +7,13 @@ import {twoDP} from '../../../utils/regex';
 import ReportButton from '../../../components/button/ReportButton';
 
 const FundDesc = ({
+  id,
   userName,
   title,
   endDate,
   fundingRate,
 }: {
+  id: number;
   userName: string;
   title: string;
   endDate: string;
@@ -33,7 +35,7 @@ const FundDesc = ({
                 style="text-Gray-10 text-Heading-3 leading-Heading-3"
               />
             </View>
-            <ReportButton />
+            <ReportButton domainId={id} domainType="FUNDING" />
           </View>
           <View className="mt-4">
             <TextRegular

@@ -59,6 +59,7 @@ export interface FundDetailItem {
 }
 
 export type Participant = {
+  id: number;
   memberId: number;
   nickName: string;
   profileImageUrl: string;
@@ -86,7 +87,7 @@ export interface FriendFundItem {
 }
 
 export interface ReportItem {
-  domainType: 'FUNDING' | 'FUNDING_ITEM';
+  domainType: 'FUNDING' | 'FUNDING_MESSAGE';
   domainId: number;
   content: string;
 }

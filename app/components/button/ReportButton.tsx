@@ -11,6 +11,7 @@ import {
 import TextSemiBold from '../text/TextSemiBold';
 import TextBold from '../text/TextBold';
 import TextRegular from '../text/TextRegular';
+import useFunding from '../../hooks/fundings/useFunding';
 
 const ReportTextBtn = ({
   title,
@@ -26,10 +27,19 @@ const ReportTextBtn = ({
   </Pressable>
 );
 
-const ReportButton = () => {
+const ReportButton = ({
+  domainId,
+  domainType,
+}: {
+  domainId: number;
+  domainType: 'FUNDING' | 'FUNDING_MESSAGE';
+}) => {
   const handleOnModal = () => setOnModal(!onModal);
   const [onModal, setOnModal] = useState(false);
-  const handleReport = () => {};
+  const {reportPostQuery} = useFunding();
+  const handleReport = async (content: string) => {
+    await reportPostQuery({domainId, domainType, content});
+  };
   return (
     <>
       <Pressable onPress={handleOnModal} className="px-2 py-2 relative">
@@ -39,9 +49,9 @@ const ReportButton = () => {
             uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1708353354/moa-dots_yl6uwc.png',
           }}
         />
-        <View className="absolute w-[100px] h-[50px] -bottom-14 right-0 flex justify-center items-center">
+        {/* <View className="absolute w-[100px] h-[50px] -bottom-14 right-0 flex justify-center items-center">
           <TextRegular title="신고하기" />
-        </View>
+        </View> */}
       </Pressable>
       {onModal && (
         <Modal>
@@ -65,19 +75,21 @@ const ReportButton = () => {
                   <View className="flex flex-col mt-6">
                     <ReportTextBtn
                       title="스팸"
-                      onPress={() => setOnModal(!onModal)}
+                      onPress={() => handleReport('스팸')}
                     />
                     <ReportTextBtn
                       title="학대나 괴롭힘"
-                      onPress={() => setOnModal(!onModal)}
+                      onPress={() => handleReport('학대나 괴롭힘')}
                     />
                     <ReportTextBtn
                       title="해로운 허위 정보 및 폭력 미화"
-                      onPress={() => setOnModal(!onModal)}
+                      onPress={() =>
+                        handleReport('해로운 허위 정보 및 폭력 미화')
+                      }
                     />
                     <ReportTextBtn
                       title="기타"
-                      onPress={() => setOnModal(!onModal)}
+                      onPress={() => handleReport('기타')}
                     />
                   </View>
                 </View>

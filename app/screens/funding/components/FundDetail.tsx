@@ -41,6 +41,7 @@ const FundDetail = ({navigation, route}) => {
     productImageUrl: '',
     participants: [
       {
+        id: 0,
         memberId: 0,
         nickName: '',
         profileImageUrl: '',
@@ -88,6 +89,7 @@ const FundDetail = ({navigation, route}) => {
           }}
         />
         <FundDesc
+          id={id}
           userName={nickName}
           title={title}
           endDate={endDate}
@@ -157,6 +159,7 @@ const FundDetail = ({navigation, route}) => {
                 {participants.length > 0 &&
                   participants.map(msg => (
                     <FundMessage
+                      id={msg.id}
                       message={msg.message}
                       nickName={msg.nickName}
                       profileImageUrl={msg.profileImageUrl}

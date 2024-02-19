@@ -11,6 +11,7 @@ dayjs.extend(relativeTime);
 dayjs.locale(ko);
 
 const FundMessage = ({
+  id,
   message,
   nickName,
   createAt,
@@ -32,7 +33,7 @@ const FundMessage = ({
             style="text-Body-2 ml-2 text-Gray-06"
           />
         </View>
-        <ReportButton />
+        <ReportButton domainId={id!} domainType="FUNDING_MESSAGE" />
       </View>
       <TextRegular
         title={message}

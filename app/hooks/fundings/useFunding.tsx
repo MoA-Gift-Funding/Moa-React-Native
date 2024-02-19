@@ -11,6 +11,7 @@ import {
 import {
   FundRequestStatus,
   NewFundItem,
+  ReportItem,
   ShippingInfo,
 } from '../../types/Funding';
 import Toast from 'react-native-toast-message';
@@ -141,6 +142,13 @@ const useFunding = (
     },
   });
 
+  const {mutateAsync: reportPostQuery} = useMutation({
+    mutationFn: (item: ReportItem) => funding.reportPost(item),
+    onSuccess: () => {
+      Toast.show({type: 'success', text1: '신고가 처리 되었어요.'});
+    },
+  });
+
   return {
     addrsQuery,
     createAddrQuery,
@@ -159,6 +167,7 @@ const useFunding = (
     friendFundingInfiteFetchNextQuery,
     refetchFriendFundingInfiteQuery,
     joinFundQuery,
+    reportPostQuery,
   };
 };
 
