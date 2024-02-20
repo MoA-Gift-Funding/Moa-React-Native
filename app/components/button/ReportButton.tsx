@@ -34,11 +34,23 @@ const ReportButton = ({
   domainId: number;
   domainType: 'FUNDING' | 'FUNDING_MESSAGE';
 }) => {
-  const handleOnModal = () => setOnModal(!onModal);
+  const handleOnModal = () => {
+    Alert.alert(
+      domainType === 'FUNDING'
+        ? '펀딩을 신고하시겠어요?'
+        : '메세지를 신고하시겠어요?',
+      '',
+      [{text: '취소'}, {text: '신고하기', onPress: () => setOnModal(true)}],
+    );
+  };
   const [onModal, setOnModal] = useState(false);
   const {reportPostQuery} = useFunding();
   const handleReport = async (content: string) => {
-    await reportPostQuery({domainId, domainType, content});
+    try {
+      await reportPostQuery({domainId, domainType, content});
+    } finally {
+      setOnModal(false);
+    }
   };
   return (
     <>
@@ -49,9 +61,6 @@ const ReportButton = ({
             uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1708353354/moa-dots_yl6uwc.png',
           }}
         />
-        {/* <View className="absolute w-[100px] h-[50px] -bottom-14 right-0 flex justify-center items-center">
-          <TextRegular title="신고하기" />
-        </View> */}
       </Pressable>
       {onModal && (
         <Modal>
@@ -59,13 +68,17 @@ const ReportButton = ({
             <View>
               <Pressable
                 className="w-full flex flex-row justify-end px-4 py-2"
-                onPress={handleOnModal}>
+                onPress={() => setOnModal(false)}>
                 <TextBold title="X" style="text-Gray-08 text-Heading-3" />
               </Pressable>
               <View className="mt-10 flex flex-col justify-between">
                 <View className="flex flex-col items-center">
                   <TextSemiBold
-                    title="메세지 신고하기"
+                    title={
+                      domainType === 'FUNDING'
+                        ? '펀딩 신고하기'
+                        : '메세지 신고하기'
+                    }
                     style="text-Heading-3 leading-Heading-3"
                   />
                   <TextRegular
@@ -97,7 +110,7 @@ const ReportButton = ({
             </View>
             <Pressable
               className="w-[312px] h-[56px] flex items-center justify-center bg-Gray-08 rounded-lg mb-4"
-              onPress={handleOnModal}>
+              onPress={() => setOnModal(false)}>
               <TextSemiBold title="취소" style="text-Gray-02" />
             </Pressable>
           </SafeAreaView>

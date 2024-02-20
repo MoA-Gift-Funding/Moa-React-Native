@@ -166,14 +166,6 @@ const FundDetail = ({navigation, route}) => {
                       createAt={msg.createAt}
                     />
                   ))}
-                <FundMessage
-                  message={'비공개 메세지예요'}
-                  nickName={'비공개'}
-                  profileImageUrl={
-                    'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1704337430/moa-dex_mkqh2e.png'
-                  }
-                  createAt={'2024-02-19T14:23:37.220Z'}
-                />
                 {participants.length < 1 && (
                   <View className="pt-8 pb-14">
                     <TextRegular
