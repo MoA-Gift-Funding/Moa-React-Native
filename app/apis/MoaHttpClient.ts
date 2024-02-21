@@ -3,6 +3,7 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
 import {
+  FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
   NewFundItem,
@@ -128,6 +129,12 @@ export default class MoaHttpClient {
       paymentOrderId,
       message,
       visible,
+    });
+  }
+
+  finishFund({fundingId, paymentOrderId}: FinishFundItem) {
+    return this.httpClient.post(`/fundings/${fundingId}/finish`, {
+      paymentOrderId,
     });
   }
 

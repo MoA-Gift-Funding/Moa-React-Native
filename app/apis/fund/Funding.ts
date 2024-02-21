@@ -1,4 +1,5 @@
 import {
+  FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
   NewFundItem,
@@ -137,6 +138,19 @@ export default class Funding {
         case 400:
           error.response.data.message = '진행이 종료된 펀딩이예요🫠';
           throw error;
+        default:
+          throw error;
+      }
+    }
+  }
+
+  async finishFunding(data: FinishFundItem) {
+    try {
+      const finished = await this.apiClient.finishFund(data);
+      return finished.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
         default:
           throw error;
       }

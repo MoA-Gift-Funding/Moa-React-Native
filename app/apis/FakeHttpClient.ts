@@ -103,6 +103,10 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  finishFund({fundingId, paymentOrderId}: FinishFundItem) {
+    return this.httpClient.ge('');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');
