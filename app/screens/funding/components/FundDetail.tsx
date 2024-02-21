@@ -222,6 +222,8 @@ const FundDetail = ({navigation, route}) => {
                 price: remainAmount,
                 id,
                 title,
+                nickName,
+                isFundOwner: true,
               })
             }>
             <TextSemiBold

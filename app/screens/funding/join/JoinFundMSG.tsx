@@ -93,6 +93,7 @@ const JoinFundMSG = ({navigation, route}) => {
                 ...route.params,
                 ...getValues(),
                 visible: checked ? 'PRIVATE' : 'PUBLIC',
+                isFundOwner: false,
               })
             }
             handleSubmit={handleSubmit}

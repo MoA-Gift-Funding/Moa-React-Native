@@ -103,9 +103,11 @@ export interface JoinFundItem {
   paymentOrderId: string;
   message?: string;
   visible?: MessageStatus;
+  nickName?: string;
 }
 
 export interface FinishFundItem {
   fundingId: number;
   paymentOrderId: string;
+  nickName?: string;
 }

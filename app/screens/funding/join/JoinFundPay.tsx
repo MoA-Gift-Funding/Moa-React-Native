@@ -17,7 +17,8 @@ import usePayment from '../../../hooks/payments/usePayment';
 import {MessageStatus} from '../../../types/Funding';
 
 const JoinFundPay = ({route}) => {
-  const {price, id, title, visible, message} = route.params;
+  const {price, id, title, visible, message, nickName, isFundOwner} =
+    route.params;
   return (
     <View className="px-6 bg-white h-full">
       <View className="mt-4">
@@ -39,6 +40,8 @@ const JoinFundPay = ({route}) => {
           fundingId={id}
           message={message}
           visible={visible}
+          nickName={nickName}
+          isFundOwner={isFundOwner}
         />
       </PaymentWidgetProvider>
     </View>
@@ -48,12 +51,16 @@ function CheckoutPage({
   price,
   orderName,
   fundingId,
+  nickName,
+  isFundOwner,
   message,
   visible,
 }: {
   price: string;
   orderName: string;
   fundingId: number;
+  nickName: string;
+  isFundOwner: boolean;
   message?: string;
   visible?: MessageStatus;
 }) {
@@ -65,7 +72,7 @@ function CheckoutPage({
   const {handleSubmit} = useForm();
   const orderId = createOrderId();
 
-  const {prePayQuery, successPaymentQuery} = usePayment();
+  const {prePayQuery, successPaymentQuery} = usePayment({nickName});
   return (
     <View className="h-full flex flex-col justify-between">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -135,6 +142,7 @@ function CheckoutPage({
                     fundingId,
                     message,
                     visible,
+                    isFundOwner,
                   });
                 } else if (result?.fail) {
                   const {message, code} = result.fail;

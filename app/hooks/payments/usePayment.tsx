@@ -6,12 +6,12 @@ import Toast from 'react-native-toast-message';
 import useFunding from '../fundings/useFunding';
 import {MessageStatus} from '../../types/Funding';
 
-const usePayment = () => {
+const usePayment = ({nickName}: {nickName: string}) => {
   const {
     useApi: {client},
   } = useUserContext();
   const payment = new Payment(client);
-  const {joinFundQuery} = useFunding();
+  const {joinFundQuery, finishFundQuery} = useFunding();
 
   const {mutate: prePayQuery} = useMutation({
     mutationFn: (data: {orderId: string; amount: number}) =>
@@ -32,6 +32,7 @@ const usePayment = () => {
       fundingId,
       message,
       visible,
+      isFundOwner,
     }: {
       paymentKey: string;
       orderId: string;
@@ -39,14 +40,20 @@ const usePayment = () => {
       fundingId: number;
       message?: string;
       visible?: MessageStatus;
+      isFundOwner: boolean;
     }) => payment.sendSuccessPayment(paymentKey, orderId, amount),
-    onSuccess: (data, {orderId, fundingId, message, visible}) => {
-      joinFundQuery({
-        fundingId,
-        paymentOrderId: orderId,
-        message,
-        visible,
-      });
+    onSuccess: (data, {orderId, fundingId, message, visible, isFundOwner}) => {
+      if (isFundOwner) {
+        finishFundQuery({fundingId, paymentOrderId: orderId, nickName});
+      } else {
+        joinFundQuery({
+          fundingId,
+          paymentOrderId: orderId,
+          message,
+          visible,
+          nickName,
+        });
+      }
     },
   });
 

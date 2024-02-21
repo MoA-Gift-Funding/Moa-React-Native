@@ -9,6 +9,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
   NewFundItem,
@@ -137,8 +138,15 @@ const useFunding = (
 
   const {mutateAsync: joinFundQuery} = useMutation({
     mutationFn: (data: JoinFundItem) => funding.joinFund(data),
-    onSuccess: async () => {
-      navigation.navigate('JoinFundCompleted');
+    onSuccess: async (data, {nickName}) => {
+      navigation.navigate('JoinFundCompleted', {nickName});
+    },
+  });
+
+  const {mutateAsync: finishFundQuery} = useMutation({
+    mutationFn: (data: FinishFundItem) => funding.finishFunding(data),
+    onSuccess: async (data, {nickName}) => {
+      navigation.navigate('JoinFundCompleted', {nickName});
     },
   });
 
@@ -168,6 +176,7 @@ const useFunding = (
     refetchFriendFundingInfiteQuery,
     joinFundQuery,
     reportPostQuery,
+    finishFundQuery,
   };
 };
 

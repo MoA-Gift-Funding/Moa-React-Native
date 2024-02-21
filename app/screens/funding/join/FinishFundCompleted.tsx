@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 
-const JoinFundCompleted = ({navigation, route}) => {
+const FinishFundCompleted = ({navigation, route}) => {
   const {nickName} = route.params;
   const {handleSubmit} = useForm();
   return (
@@ -66,4 +66,4 @@ const JoinFundCompleted = ({navigation, route}) => {
   );
 };
 
-export default JoinFundCompleted;
+export default FinishFundCompleted;
