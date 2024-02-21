@@ -20,7 +20,7 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
-type FundStatus = '진행중' | '배달완료' | '배송대기' | '취소';
+type FundStatus = '진행중' | '수령 대기' | '수령 완료' | '취소';
 
 export type FundRequestStatus =
   | 'PROCESSING'

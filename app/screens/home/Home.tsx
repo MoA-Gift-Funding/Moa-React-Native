@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Image,
   Platform,
@@ -79,14 +79,14 @@ export default function Home({navigation}) {
             />
           </Pressable>
         </View>
-        {myFundingsQuery && (
+        {myFundingsQuery?.all && (
           <View className="bg-white flex flex-col py-10 justify-center">
             <View className="flex flex-row justify-between items-center mx-6">
               <TextSemiBold
                 title={`${user?.nickname}님의 펀딩`}
                 style="text-Heading-4"
               />
-              {myFundingsQuery.length > 0 && (
+              {myFundingsQuery.all.length > 0 && (
                 <Pressable
                   onPress={() =>
                     navigation.navigate('MyFunding', {
@@ -104,41 +104,39 @@ export default function Home({navigation}) {
               className="py-4 pl-6 flex flex-row"
               horizontal={true}
               showsHorizontalScrollIndicator={true}>
-              {myFundingsQuery.length > 0 &&
+              {myFundingsQuery.inProgress.length > 0 &&
                 activated &&
-                myFundingsQuery
-                  .filter((fund: MyFundItem) => fund.status === '진행중')
-                  .map((fund: MyFundItem) => (
-                    <MyFund
-                      key={fund.id}
-                      item={{
-                        ...fund,
-                      }}
-                    />
-                  ))}
-              {myFundingsQuery.length < 1 &&
+                myFundingsQuery.inProgress.map((fund: MyFundItem) => (
+                  <MyFund
+                    key={fund.id}
+                    item={{
+                      ...fund,
+                    }}
+                  />
+                ))}
+              {myFundingsQuery.completed.length > 0 &&
                 !activated &&
-                myFundingsQuery
-                  .filter((fund: MyFundItem) => fund.status !== '진행중')
-                  .map((fund: MyFundItem) => (
-                    <MyFund
-                      key={fund.id}
-                      item={{
-                        ...fund,
-                      }}
-                    />
-                  ))}
-              {myFundingsQuery.length > 0 && !activated && (
-                <TextRegular
-                  title="아직 완료된 펀딩이 없어요🎁"
-                  style="text-Body-2 mt-4"
-                />
+                myFundingsQuery.completed.map((fund: MyFundItem) => (
+                  <MyFund
+                    key={fund.id}
+                    item={{
+                      ...fund,
+                    }}
+                  />
+                ))}
+              {myFundingsQuery.completed.length < 1 && !activated && (
+                <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
+                  <TextRegular
+                    title="아직 완료된 펀딩이 없어요🎁"
+                    style="text-Body-2 text-center"
+                  />
+                </View>
               )}
-              {myFundingsQuery.length < 1 && (
+              {myFundingsQuery.inProgress.length < 1 && (
                 <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
                   <TextRegular
                     title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
-                    style="text-Body-2 text-Gray-06"
+                    style="text-Body-2 text-Gray-06 text-center"
                   />
                 </View>
               )}

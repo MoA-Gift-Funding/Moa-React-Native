@@ -12,6 +12,7 @@ import {
   FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
+  MyFundItem,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -83,7 +84,17 @@ const useFunding = (
 
   const {data: myFundingsQuery, refetch: refetchMyFundingsQuery} = useQuery({
     queryKey: ['myfunds', user?.id],
-    select: data => data.content,
+    select: data => {
+      return {
+        all: data.content,
+        completed: data.content.filter(
+          (fund: MyFundItem) => fund.status !== '진행중',
+        ),
+        inProgress: data.content.filter(
+          (fund: MyFundItem) => fund.status === '진행중',
+        ),
+      };
+    },
     queryFn: () => funding.findMyFundings(page, size, sort),
   });
 
