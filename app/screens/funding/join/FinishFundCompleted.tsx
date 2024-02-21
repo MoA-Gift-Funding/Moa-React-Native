@@ -25,7 +25,7 @@ const FinishFundCompleted = ({navigation, route}) => {
             />
           </View>
           <TextBold
-            title="선물 펀딩에 참여했어요!"
+            title="펀딩이 완료되었어요!"
             style="text-white text-Heading-3 leading-Heading-3"
           />
         </View>
@@ -37,28 +37,18 @@ const FinishFundCompleted = ({navigation, route}) => {
             className="w-[260px] h-[197px]"
           />
           <TextRegular
-            title="펀딩 참여가 완료되었어요."
+            title="펀딩 금액을 달성했어요."
             style="text-white text-Body-2 leading-Body-2 mt-16"
           />
           <TextRegular
-            title="친구에게 공유해 참여 소식을 알려줄 수 있어요!"
+            title="내 펀딩에서 상품수령하기 버튼을 눌러주세요!"
             style="text-white text-Body-2 leading-Body-2"
           />
-          <Pressable
-            className="bg-white rounded-full w-[149px] h-[38px] flex justify-center items-center mt-6"
-            onPress={async () =>
-              await Share.share({message: '모아로부터 온 메세지'})
-            }>
-            <TextSemiBold
-              title="친구에게 참여소식 알리기"
-              style="text-Detail-1"
-            />
-          </Pressable>
         </View>
       </View>
       <NextButton
         title="확인"
-        onSubmit={() => navigation.navigate('Home')}
+        onSubmit={() => navigation.navigate('MyFunding')}
         handleSubmit={handleSubmit}
         style="mb-8"
       />

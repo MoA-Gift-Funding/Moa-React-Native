@@ -146,7 +146,7 @@ const useFunding = (
   const {mutateAsync: finishFundQuery} = useMutation({
     mutationFn: (data: FinishFundItem) => funding.finishFunding(data),
     onSuccess: async (data, {nickName}) => {
-      navigation.navigate('JoinFundCompleted', {nickName});
+      navigation.navigate('FinishFundCompleted', {nickName});
     },
   });
 

@@ -36,6 +36,7 @@ import MyInquiries from '../screens/myPage/cs/MyInquiries';
 import FriendFundList from '../screens/funding/FriendFundList';
 import MyNotification from '../screens/myPage/notification/MyNotification';
 import AppConfig from '../screens/myPage/appConfig/AppConfig';
+import FinishFundCompleted from '../screens/funding/join/FinishFundCompleted';
 
 const AuthRouter = () => {
   const {
@@ -112,6 +113,11 @@ const AuthRouter = () => {
           <Stack.Screen
             name="JoinFundCompleted"
             component={JoinFundCompleted}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="FinishFundCompleted"
+            component={FinishFundCompleted}
             options={{headerShown: false}}
           />
           <Stack.Screen
