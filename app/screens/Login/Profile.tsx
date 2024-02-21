@@ -27,15 +27,21 @@ const Profile = ({navigation}) => {
   const {handleSubmit} = useForm();
   const handleProfileImageBtn = async () => {
     setIsLoading(true);
-    const {assets} = await launchImageLibrary({mediaType: 'photo'});
-    if (assets) {
-      const {imageBody, name} = await getImageBlob(assets);
-      const profileImageUrl = await updateProfileImageQuery({imageBody, name});
-      setImageURI(profileImageUrl || imageURI);
-      dispatch({
-        type: 'LOGIN',
-        payload: {...user!, profileImageUrl},
-      });
+    try {
+      const {assets} = await launchImageLibrary({mediaType: 'photo'});
+      if (assets) {
+        const {imageBody, name} = await getImageBlob(assets);
+        const profileImageUrl = await updateProfileImageQuery({
+          imageBody,
+          name,
+        });
+        setImageURI(profileImageUrl || imageURI);
+        dispatch({
+          type: 'LOGIN',
+          payload: {...user!, profileImageUrl},
+        });
+      }
+    } finally {
       setIsLoading(false);
     }
   };
