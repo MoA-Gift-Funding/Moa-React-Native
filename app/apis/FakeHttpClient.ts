@@ -99,12 +99,7 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
-  joinFund(data: {
-    orderId: number;
-    paymentOrderId: string;
-    message: string;
-    visible: 'PUBLIC' | 'PRIVATE';
-  }) {
+  joinFund(data: JoinFundItem) {
     return this.httpClient.get('');
   }
 

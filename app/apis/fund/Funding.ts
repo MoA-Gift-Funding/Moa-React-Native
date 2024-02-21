@@ -1,5 +1,6 @@
 import {
   FundRequestStatus,
+  JoinFundItem,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -126,12 +127,7 @@ export default class Funding {
     }
   }
 
-  async joinFund(data: {
-    orderId: number;
-    paymentOrderId: string;
-    message: string;
-    visible: 'PUBLIC' | 'PRIVATE';
-  }) {
+  async joinFund(data: JoinFundItem) {
     try {
       const join = await this.apiClient.joinFund(data);
       return join.data;

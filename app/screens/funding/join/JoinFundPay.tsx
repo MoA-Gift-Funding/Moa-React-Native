@@ -14,9 +14,10 @@ import {useForm} from 'react-hook-form';
 import {autoCurrency, createOrderId} from '../../../utils/regex';
 import Toast from 'react-native-toast-message';
 import usePayment from '../../../hooks/payments/usePayment';
+import {MessageStatus} from '../../../types/Funding';
 
 const JoinFundPay = ({route}) => {
-  const {price, id, title, nickName} = route.params;
+  const {price, id, title, visible, message} = route.params;
   return (
     <View className="px-6 bg-white h-full">
       <View className="mt-4">
@@ -32,7 +33,13 @@ const JoinFundPay = ({route}) => {
       <PaymentWidgetProvider
         clientKey={'test_ck_6BYq7GWPVvgR5JAOJbPwrNE5vbo1'}
         customerKey={'test_gsk_LkKEypNArW26726WYYYQVlmeaxYG'}>
-        <CheckoutPage price={price} orderName={title} nickName={nickName} />
+        <CheckoutPage
+          price={price}
+          orderName={title}
+          fundingId={id}
+          message={message}
+          visible={visible}
+        />
       </PaymentWidgetProvider>
     </View>
   );
@@ -40,11 +47,15 @@ const JoinFundPay = ({route}) => {
 function CheckoutPage({
   price,
   orderName,
-  nickName,
+  fundingId,
+  message,
+  visible,
 }: {
   price: string;
   orderName: string;
-  nickName: string;
+  fundingId: number;
+  message?: string;
+  visible?: MessageStatus;
 }) {
   const paymentWidgetControl = usePaymentWidget();
   const [paymentMethodWidgetControl, setPaymentMethodWidgetControl] =
@@ -54,8 +65,7 @@ function CheckoutPage({
   const {handleSubmit} = useForm();
   const orderId = createOrderId();
 
-  const {prePayQuery, successPaymentQuery, failPaymentQuery} =
-    usePayment(nickName);
+  const {prePayQuery, successPaymentQuery} = usePayment();
   return (
     <View className="h-full flex flex-col justify-between">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -122,10 +132,16 @@ function CheckoutPage({
                     orderId,
                     amount,
                     paymentKey,
+                    fundingId,
+                    message,
+                    visible,
                   });
                 } else if (result?.fail) {
                   const {message, code} = result.fail;
-                  await failPaymentQuery({message, code});
+                  Toast.show({
+                    type: 'error',
+                    text1: '결제가 이루어지지 않았어요. 다시 시도해주세요.',
+                  });
                 }
               });
           }}

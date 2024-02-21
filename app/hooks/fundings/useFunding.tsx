@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-query';
 import {
   FundRequestStatus,
+  JoinFundItem,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -135,13 +136,8 @@ const useFunding = (
   });
 
   const {mutateAsync: joinFundQuery} = useMutation({
-    mutationFn: (data: {
-      orderId: number;
-      paymentOrderId: string;
-      message: string;
-      visible: 'PUBLIC' | 'PRIVATE';
-    }) => funding.joinFund(data),
-    onSuccess: () => {
+    mutationFn: (data: JoinFundItem) => funding.joinFund(data),
+    onSuccess: async () => {
       navigation.navigate('JoinFundCompleted');
     },
   });

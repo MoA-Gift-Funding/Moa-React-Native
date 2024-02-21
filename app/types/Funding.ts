@@ -95,3 +95,12 @@ export interface ReportItem {
   domainId: number;
   content: string;
 }
+
+export type MessageStatus = 'PUBLIC' | 'PRIVATE';
+
+export interface JoinFundItem {
+  fundingId: number;
+  paymentOrderId: string;
+  message?: string;
+  visible?: MessageStatus;
+}

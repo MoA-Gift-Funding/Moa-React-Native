@@ -4,6 +4,7 @@ import Config from 'react-native-config';
 import {Contact, User} from '../types/User';
 import {
   FundRequestStatus,
+  JoinFundItem,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -118,17 +119,12 @@ export default class MoaHttpClient {
   }
 
   joinFund({
-    orderId,
+    fundingId,
     paymentOrderId,
-    message,
-    visible,
-  }: {
-    orderId: number;
-    paymentOrderId: string;
-    message: string;
-    visible: 'PUBLIC' | 'PRIVATE';
-  }) {
-    return this.httpClient.post(`/fundings/${orderId}/participate`, {
+    message = '',
+    visible = 'PRIVATE',
+  }: JoinFundItem) {
+    return this.httpClient.post(`/fundings/${fundingId}/participate`, {
       paymentOrderId,
       message,
       visible,
@@ -140,7 +136,12 @@ export default class MoaHttpClient {
     return this.httpClient.post('/payments/toss/prepay', data);
   }
 
-  sendSuccessPayment(paymentKey: string, orderId: string, amount: number) {
+  sendSuccessPayment(
+    paymentKey: string,
+    orderId: string,
+    amount: number,
+    fundingId?: number,
+  ) {
     return this.httpClient.get('/payments/toss/success', {
       params: {paymentKey, orderId, amount},
     });

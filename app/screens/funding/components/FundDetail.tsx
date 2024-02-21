@@ -117,10 +117,10 @@ const FundDetail = ({navigation, route}) => {
           <View className="w-full py-6">
             {leftSelected && (
               <>
-                <View className="pb-4 min-h-[100px] mx-6">
+                <View className="mt-2 min-h-[100px] mx-6">
                   <TextRegular
                     title={description}
-                    style="text-Gray-06 text-Body-2 leading-Body-2"
+                    style="text-Gray-08 text-Body-2 leading-Body-2"
                   />
                 </View>
                 <Pressable
@@ -159,6 +159,7 @@ const FundDetail = ({navigation, route}) => {
                 {participants.length > 0 &&
                   participants.map(msg => (
                     <FundMessage
+                      key={msg.id}
                       id={msg.id}
                       message={msg.message}
                       nickName={msg.nickName}
@@ -167,10 +168,10 @@ const FundDetail = ({navigation, route}) => {
                     />
                   ))}
                 {participants.length < 1 && (
-                  <View className="pt-8 pb-14">
+                  <View className="min-h-[100px]">
                     <TextRegular
                       title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
-                      style="text-center"
+                      style="text-center mt-4"
                     />
                   </View>
                 )}
@@ -216,7 +217,13 @@ const FundDetail = ({navigation, route}) => {
         {memberId === user?.id && (
           <Pressable
             className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-            onPress={() => navigation.navigate('JoinFund')}>
+            onPress={() =>
+              navigation.navigate('JoinFundPay', {
+                price: remainAmount,
+                id,
+                title,
+              })
+            }>
             <TextSemiBold
               style="text-white text-Body-1 ml-[14px]"
               title="펀딩 채우기"
