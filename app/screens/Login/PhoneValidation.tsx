@@ -27,7 +27,7 @@ const PhoneValidation = () => {
     userState: {user},
   } = useUserContext();
 
-  const {requestMobileQuery, verifyMobileQuery, signUpQuery} = useUser();
+  const {requestMobileQuery, verifyMobileQuery} = useUser();
 
   const {
     control,
@@ -48,11 +48,13 @@ const PhoneValidation = () => {
   }: {
     verificationNumber: string;
   }) => {
-    setIsLoading(true);
     setPressed(true);
-    verifyMobileQuery(verificationNumber);
-    signUpQuery(user!);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await verifyMobileQuery(verificationNumber);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleMSGButton = async ({recipientNo}: {recipientNo: string}) => {
@@ -62,7 +64,7 @@ const PhoneValidation = () => {
       return;
     }
     setSent(true);
-    requestMobileQuery(recipientNo);
+    await requestMobileQuery(recipientNo);
     setIsLoading(false);
   };
 

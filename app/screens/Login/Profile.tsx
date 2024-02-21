@@ -12,6 +12,7 @@ import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useUser from '../../hooks/user/useUser';
 import {httpsUrlCorrector} from '../../utils/regex';
+import {getImageBlob} from '../../utils/aws';
 
 const Profile = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,26 +25,18 @@ const Profile = ({navigation}) => {
   );
   const {updateProfileImageQuery, updateUserQuery} = useUser();
   const {handleSubmit} = useForm();
-  const onPress = async () => {
+  const handleProfileImageBtn = async () => {
     setIsLoading(true);
     const {assets} = await launchImageLibrary({mediaType: 'photo'});
     if (assets) {
-      const file = assets[0];
-      const uri = file.uri;
-      const name = file.fileName!;
-      const getBlob = async (fileUri: string) => {
-        const resp = await fetch(fileUri);
-        const imageBody = await resp.blob();
-        return imageBody;
-      };
-      const imageBody = await getBlob(uri!);
+      const {imageBody, name} = await getImageBlob(assets);
       const profileImageUrl = await updateProfileImageQuery({imageBody, name});
-      setIsLoading(false);
       setImageURI(profileImageUrl || imageURI);
       dispatch({
         type: 'LOGIN',
         payload: {...user!, profileImageUrl},
       });
+      setIsLoading(false);
     }
   };
   const handleButton = async () => {
@@ -71,7 +64,7 @@ const Profile = ({navigation}) => {
           />
           <Pressable
             className="absolute flex items-center justify-center bottom-3 right-16 w-[60px] h-[60px] bg-Gray-10 opacity-70 rounded-full"
-            onPress={onPress}>
+            onPress={handleProfileImageBtn}>
             <FontAwesomeIcon icon={faCamera} color="white" size={25} />
           </Pressable>
         </View>

@@ -191,15 +191,12 @@ export class Users {
     name: string;
   }): Promise<string> {
     try {
-      const {presignedUrl} = await this.getPresignedUrl(name);
-      const res = await fetch(presignedUrl, {
+      const {presignedUrl, fileName} = await this.getPresignedUrl(name);
+      await fetch(presignedUrl, {
         method: 'PUT',
         body: imageBody,
       });
-      const fileName = res.url.substring(
-        res.url.indexOf('images/') + 7,
-        res.url.indexOf('?'),
-      );
+
       return `https://image.giftmoa.co.kr/images/${fileName}`;
     } catch (error) {
       console.log(error);

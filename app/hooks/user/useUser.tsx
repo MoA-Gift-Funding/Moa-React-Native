@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function useUser() {
   const {
+    userState: {user},
     useApi: {useUserApi},
   } = useUserContext();
   const queryClient = useQueryClient();
@@ -33,6 +34,7 @@ export default function useUser() {
   const {mutate: verifyMobileQuery} = useMutation({
     mutationFn: (verificationNumber: string) =>
       useUserApi.verifyPhoneNumber(verificationNumber),
+    onSuccess: () => signUpQuery(user!),
   });
 
   const navigation = useNavigation();

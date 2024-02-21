@@ -21,8 +21,9 @@ import LoadingBar from '../../../components/bar/LoadingBar';
 import NextButton from '../../../components/button/NextButton';
 import useUser from '../../../hooks/user/useUser';
 import {getImageBlob} from '../../../utils/aws';
+import Toast from 'react-native-toast-message';
 
-const MyPageDetail = () => {
+const MyPageDetail = ({navigation}) => {
   const {
     userState: {user},
     dispatch,
@@ -45,26 +46,21 @@ const MyPageDetail = () => {
       fullBirthday: autoSlashBirthday(`${birthyear}${birthday}`),
     },
   });
-  const onPress = async () => {
-    try {
-      setIsLoading(true);
-      const {assets} = await launchImageLibrary({mediaType: 'photo'});
-      if (assets) {
-        const {imgaeBlob, name} = getImageBlob(assets);
-
-        const {secure_url, message} = await updateProfileImageQuery(source);
-        if (message) {
-          return Alert.alert('네트워크 오류', message, [{text: '확인'}]);
-        }
-        setImageURI(secure_url);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
+  const handleProfileImageBtn = async () => {
+    setIsLoading(true);
+    const {assets} = await launchImageLibrary({mediaType: 'photo'});
+    if (assets) {
+      const {imageBody, name} = await getImageBlob(assets);
+      const profileImageUrl = await updateProfileImageQuery({imageBody, name});
+      setImageURI(profileImageUrl || imageURI);
+      dispatch({
+        type: 'LOGIN',
+        payload: {...user!, profileImageUrl},
+      });
       setIsLoading(false);
     }
   };
-  const onSubmit = async (data: {
+  const handleUpdateProfileBtn = async (data: {
     birthday: string;
     birthyear: string;
     nickname: string;
@@ -73,18 +69,24 @@ const MyPageDetail = () => {
     setIsLoading(true);
     try {
       const bdayList = data.fullBirthday.split('/');
-      const updated = await updateUserProfile({
+      await updateUserQuery({
         ...data,
         birthyear: bdayList[0],
         birthday: `${bdayList[1]}${bdayList[2]}`,
+        profileImageUrl: imageURI,
       });
       dispatch({
         type: 'LOGIN',
-        payload: {...updated},
+        payload: {
+          ...user!,
+          ...data,
+          birthyear: bdayList[0],
+          birthday: `${bdayList[1]}${bdayList[2]}`,
+          profileImageUrl: imageURI,
+        },
       });
-      Alert.alert('', '회원 정보가 변경되었습니다!');
-    } catch (error) {
-      Alert.alert('네트워크 에러', '다시 시도해주세요.');
+      Toast.show({type: 'success', text1: '정보가 변경되었어요😃'});
+      navigation.navigate('MyPageMain');
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +109,7 @@ const MyPageDetail = () => {
             />
             <Pressable
               className="absolute flex items-center justify-center bottom-7 right-[134px] w-[32px] h-[32px] bg-Gray-10 opacity-70 rounded-full"
-              onPress={onPress}>
+              onPress={handleProfileImageBtn}>
               <FontAwesomeIcon icon={faCamera} color="#F0F0F0" size={15} />
             </Pressable>
           </View>
@@ -170,7 +172,7 @@ const MyPageDetail = () => {
           <NextButton
             title="저장"
             handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
+            onSubmit={handleUpdateProfileBtn}
           />
         </View>
       </KeyboardAvoidingView>
