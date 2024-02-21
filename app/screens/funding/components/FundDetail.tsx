@@ -75,6 +75,7 @@ const FundDetail = ({navigation, route}) => {
     memberId,
     maximumAmount,
     remainAmount,
+    status,
   } = data;
 
   return (
@@ -180,59 +181,61 @@ const FundDetail = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
-      <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
-        <Pressable
-          className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
-          onPress={async () => {
-            Platform.OS === 'ios'
-              ? Share.share({
-                  url: 'https://www.giftmoa.co.kr/',
-                  message: '이 상품 어때요?',
+      {status === '진행중' && (
+        <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
+          <Pressable
+            className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
+            onPress={async () => {
+              Platform.OS === 'ios'
+                ? Share.share({
+                    url: 'https://www.giftmoa.co.kr/',
+                    message: '이 상품 어때요?',
+                  })
+                : Share.share({
+                    title: '이 상품 어때요?',
+                    message: 'https://www.giftmoa.co.kr/',
+                  });
+            }}>
+            <TextSemiBold title="공유" style="text-white text-Body-1" />
+          </Pressable>
+          {memberId !== user?.id && (
+            <Pressable
+              className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+              onPress={() =>
+                navigation.navigate('JoinFund', {
+                  maximumAmount,
+                  remainAmount,
+                  id,
+                  title,
+                  nickName,
                 })
-              : Share.share({
-                  title: '이 상품 어때요?',
-                  message: 'https://www.giftmoa.co.kr/',
-                });
-          }}>
-          <TextSemiBold title="공유" style="text-white text-Body-1" />
-        </Pressable>
-        {memberId !== user?.id && (
-          <Pressable
-            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-            onPress={() =>
-              navigation.navigate('JoinFund', {
-                maximumAmount,
-                remainAmount,
-                id,
-                title,
-                nickName,
-              })
-            }>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title="선물 펀딩하기"
-            />
-          </Pressable>
-        )}
-        {memberId === user?.id && (
-          <Pressable
-            className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-            onPress={() =>
-              navigation.navigate('JoinFundPay', {
-                price: remainAmount,
-                id,
-                title,
-                nickName,
-                isFundOwner: true,
-              })
-            }>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title="펀딩 채우기"
-            />
-          </Pressable>
-        )}
-      </View>
+              }>
+              <TextSemiBold
+                style="text-white text-Body-1 ml-[14px]"
+                title="선물 펀딩하기"
+              />
+            </Pressable>
+          )}
+          {memberId === user?.id && (
+            <Pressable
+              className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
+              onPress={() =>
+                navigation.navigate('JoinFundPay', {
+                  price: remainAmount,
+                  id,
+                  title,
+                  nickName,
+                  isFundOwner: true,
+                })
+              }>
+              <TextSemiBold
+                style="text-white text-Body-1 ml-[14px]"
+                title="펀딩 채우기"
+              />
+            </Pressable>
+          )}
+        </View>
+      )}
     </>
   );
 };
