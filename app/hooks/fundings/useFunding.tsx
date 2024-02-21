@@ -116,7 +116,11 @@ const useFunding = (
   } = useInfiniteQuery({
     queryKey: ['friendsFundList', user?.id],
     queryFn: ({pageParam = 0}) =>
-      funding.findFriendFundings('PROCESSING, COMPLETED', pageParam, 10),
+      funding.findFriendFundings(
+        'PROCESSING, WAITING_ORDER, COMPLETE_ORDER, EXPIRED',
+        pageParam,
+        10,
+      ),
     getNextPageParam: lastPage => {
       if (lastPage.hasNext) {
         return lastPage.currentPage + 1;

@@ -17,7 +17,6 @@ const Contact = ({navigation}) => {
     try {
       setIsLoading(true);
       const organized = await getContactsInfo();
-      console.log(organized);
       syncContactsQuery(organized);
     } catch (error) {
       console.error(error);

@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  Button,
-  Image,
-  Modal,
-  Pressable,
-  SafeAreaView,
-  View,
-} from 'react-native';
+import {Alert, Image, Modal, Pressable, SafeAreaView, View} from 'react-native';
 import TextSemiBold from '../text/TextSemiBold';
 import TextBold from '../text/TextBold';
 import TextRegular from '../text/TextRegular';
