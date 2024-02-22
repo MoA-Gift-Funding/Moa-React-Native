@@ -50,11 +50,15 @@ const JoinFundMSG = ({navigation, route}) => {
                 label=""
                 control={control}
                 error={errors.message}
-                placeholder="메세지 입력(최대 300자)"
+                placeholder="메세지 입력(최소 1자, 최대 300자)"
                 custom="h-[220px]"
                 textAlignVertical="top"
                 multiline={true}
                 rules={{
+                  required: {
+                    value: true,
+                    message: '메세지를 입력해주세요.',
+                  },
                   maxLength: {
                     value: 300,
                     message: '최대 300자까지 입력 가능해요.',

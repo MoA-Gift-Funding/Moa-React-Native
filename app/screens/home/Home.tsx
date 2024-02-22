@@ -128,7 +128,7 @@ export default function Home({navigation}) {
                 <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
                   <TextRegular
                     title="아직 완료된 펀딩이 없어요🎁"
-                    style="text-Body-2 text-center"
+                    style="text-Body-2 text-Gray-06 text-center"
                   />
                 </View>
               )}
@@ -195,7 +195,7 @@ export default function Home({navigation}) {
               {friendFundingsQuery.length < 1 && (
                 <View className="pt-10 pb-14 w-[340px] flex justify-center items-center">
                   <TextRegular
-                    title="앗, 진행중인 펀딩이 없어요🤫"
+                    title="앗, 진행중인 펀딩이 없네요🤫"
                     style="text-Gray-06"
                   />
                 </View>
