@@ -115,6 +115,22 @@ const useFunding = (
     initialPageParam: 0,
   });
 
+  const {
+    data: participatedFundsQuery,
+    fetchNextPage: participatedNextQuery,
+    refetch: refetchParticipatedFundsInfinityQuery,
+  } = useInfiniteQuery({
+    queryKey: ['participatedFunds', user.id],
+    queryFn: ({pageParam = 0}) => funding.getParticipatedFunds(pageParam),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+  });
+
   const {data: friendFundingsQuery, refetch: refetchFriendFudingQuery} =
     useQuery({
       queryKey: ['friendsFunds', user?.id],
@@ -188,6 +204,9 @@ const useFunding = (
     joinFundQuery,
     reportPostQuery,
     finishFundQuery,
+    participatedFundsQuery,
+    participatedNextQuery,
+    refetchParticipatedFundsInfinityQuery,
   };
 };
 
