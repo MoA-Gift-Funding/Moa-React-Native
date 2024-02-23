@@ -88,10 +88,10 @@ const useFunding = (
       return {
         all: data.content,
         completed: data.content.filter(
-          (fund: MyFundItem) => fund.status !== '진행중',
+          (fund: MyFundItem) => fund.status !== 'PROCESSING',
         ),
         inProgress: data.content.filter(
-          (fund: MyFundItem) => fund.status === '진행중',
+          (fund: MyFundItem) => fund.status === 'PROCESSING',
         ),
       };
     },
@@ -120,7 +120,7 @@ const useFunding = (
     fetchNextPage: participatedNextQuery,
     refetch: refetchParticipatedFundsInfinityQuery,
   } = useInfiniteQuery({
-    queryKey: ['participatedFunds', user.id],
+    queryKey: ['participatedFunds', user?.id],
     queryFn: ({pageParam = 0}) => funding.getParticipatedFunds(pageParam),
     getNextPageParam: lastPage => {
       if (lastPage.hasNext) {

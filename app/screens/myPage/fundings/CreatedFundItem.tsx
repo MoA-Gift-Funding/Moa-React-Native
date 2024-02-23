@@ -44,8 +44,11 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       <Pressable onPress={() => navigation.navigate('FundDetail', {id})}>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold title={endDate} style="text-Body-2" />
-          {status === '진행중' && <ColoredFundLabel label="펀딩중" />}
-          {status === '수령 대기' && <GrayFundLabel label="수령 대기" />}
+          {status === 'PROCESSING' && <ColoredFundLabel label="펀딩중" />}
+          {status === 'COMPLETE' && <GrayFundLabel label="펀딩 달성" />}
+          {status === 'CANCELLED' && <GrayFundLabel label="펀딩 취소" />}
+          {status === 'STOPPED' && <GrayFundLabel label="상품 중단" />}
+          {status === 'EXPIRED' && <GrayFundLabel label="펀딩 만료" />}
         </View>
         <View className="flex flex-row items-center mt-2">
           <Image
@@ -76,8 +79,8 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
         </View>
       </Pressable>
       <View className="mt-3">
-        {status === '진행중' && <CancelFundButton />}
-        {status === '수령 대기' && <AcquireGiftButton />}
+        {status === 'PROCESSING' && <CancelFundButton />}
+        {/* {status === 'WAITING_ORDER' && <AcquireGiftButton />} */}
       </View>
     </View>
   );

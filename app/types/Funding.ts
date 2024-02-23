@@ -20,18 +20,21 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
-type FundStatus = '진행중' | '수령 대기' | '수령 완료' | '취소';
+type FundStatus =
+  | 'PROCESSING'
+  | 'CANCELLED'
+  | 'STOPPED'
+  | 'COMPLETE'
+  | 'EXPIRED';
 
 export type FundRequestStatus =
   | 'PROCESSING'
-  | 'WAITING_ORDER'
-  | 'COMPLETE_ORDER'
   | 'CANCELLED'
   | 'STOPPED'
+  | 'COMPLETE'
   | 'EXPIRED'
-  | 'PROCESSING, WAITING_ORDER, COMPLETE_ORDER, CANCELLED, STOPPED, EXPIRED'
-  | 'PROCESSING, WAITING_ORDER, COMPLETE_ORDER, EXPIRED'
-  | 'WAITING_ORDER, COMPLETE_ORDER, CANCELLED, STOPPED, EXPIRED';
+  | 'PROCESSING, CANCELLED, STOPPED, COMPLETE, EXPIRED'
+  | 'PROCESSING, CANCELLED, COMPLETE, EXPIRED';
 
 export interface MyFundItem {
   endDate: string;

@@ -14,8 +14,14 @@ import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
-  const {myInfiteQuery, myInfiteFetchNextQuery, refetchMyInfiniteQuery} =
-    useFunding();
+  const {
+    myInfiteQuery,
+    myInfiteFetchNextQuery,
+    refetchMyInfiniteQuery,
+    participatedFundsQuery,
+    participatedNextQuery,
+    refetchParticipatedFundsInfinityQuery,
+  } = useFunding();
 
   useRefetchOnFocus(refetchMyInfiniteQuery);
 
@@ -57,9 +63,16 @@ const MyFunding = () => {
               onEndReachedThreshold={0.6}
             />
           )}
+        </View>
+      )}
+      {/* // 앱에서 결제좀 하고오겠습니다 */}
+      {participatedFundsQuery && (
+        <View>
           {!createdFunds && (
             <FlatList
-              data={myInfiteQuery.pages.flatMap(page => page.content.flat())}
+              data={participatedFundsQuery.pages.flatMap(page =>
+                page.content.flat(),
+              )}
               renderItem={fund => <CreatedFundItem content={fund.item} />}
               keyExtractor={fund => fund.id}
               showsVerticalScrollIndicator={false}

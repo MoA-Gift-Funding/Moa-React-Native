@@ -29,7 +29,9 @@ const FriendFundList = () => {
               <FlatList
                 data={friendFundingInfiteQuery.pages.flatMap(page =>
                   page.content
-                    .filter((fund: FriendFundItem) => fund.status === '진행중')
+                    .filter(
+                      (fund: FriendFundItem) => fund.status === 'PROCESSING',
+                    )
                     .flat(),
                 )}
                 renderItem={fund => <FundItem item={fund.item} />}
@@ -46,7 +48,9 @@ const FriendFundList = () => {
               <FlatList
                 data={friendFundingInfiteQuery.pages.flatMap(page =>
                   page.content
-                    .filter((fund: FriendFundItem) => fund.status !== '진행중')
+                    .filter(
+                      (fund: FriendFundItem) => fund.status !== 'PROCESSING',
+                    )
                     .flat(),
                 )}
                 renderItem={fund => <FundItem item={fund.item} />}

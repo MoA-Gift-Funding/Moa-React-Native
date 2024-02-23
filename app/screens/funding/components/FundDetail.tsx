@@ -50,6 +50,7 @@ const FundDetail = ({navigation, route}) => {
       },
     ],
   });
+
   const {fundDetailQuery} = useFunding();
 
   useEffect(() => {
@@ -181,7 +182,7 @@ const FundDetail = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
-      {status === '진행중' && (
+      {status === 'PROCESSING' && (
         <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
           <Pressable
             className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"

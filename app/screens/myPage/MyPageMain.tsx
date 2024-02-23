@@ -87,7 +87,7 @@ const MyPageMain = ({navigation}) => {
           </View>
           <View className="flex flex-row items-center justify-around py-6 border-t-2 border-Gray-01">
             <MenuCategoryTop
-              dataLength={myFundingsQuery?.length || 0}
+              dataLength={myFundingsQuery?.all.length || 0}
               title="펀딩"
               onPress={() =>
                 navigation.navigate('MyFunding', {headerTitle: '펀딩'})
