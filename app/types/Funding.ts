@@ -111,3 +111,21 @@ export interface FinishFundItem {
   paymentOrderId: string;
   nickName?: string;
 }
+
+type ParticipateStatus = 'PARTICIPATING' | 'CANCEL';
+
+export interface ParticipatedFundItem {
+  fundingId: number;
+  fundingImageUrl: string;
+  title: string;
+  endDate: string;
+  status: FundStatus;
+  memberId: number;
+  nickName: string;
+  profileImageUrl: string;
+  productId: number;
+  productImageUrl: string;
+  participatedDate: string;
+  amount: number;
+  participateStatus: ParticipateStatus;
+}

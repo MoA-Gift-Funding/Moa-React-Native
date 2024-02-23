@@ -151,7 +151,7 @@ const NewFund = ({navigation, route}) => {
                 mode="date"
                 selectedItemColor={'#FF5414'}
                 displayFullDays={true}
-                minimumDate={dayjs()}
+                minimumDate={dayjs().add(-1, 'day')}
                 maximumDate={dayjs().add(28, 'day')}
               />
             </View>

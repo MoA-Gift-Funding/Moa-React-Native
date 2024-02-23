@@ -107,6 +107,14 @@ export class FakeHttpClient {
     return this.httpClient.ge('');
   }
 
+  getParticipatedFunds(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');

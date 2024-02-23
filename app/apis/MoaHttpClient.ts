@@ -132,6 +132,16 @@ export default class MoaHttpClient {
     });
   }
 
+  getParticipatedFunds(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('/fundings/participated', {
+      params: {page, size, sort},
+    });
+  }
+
   finishFund({fundingId, paymentOrderId}: FinishFundItem) {
     return this.httpClient.post(`/fundings/${fundingId}/finish`, {
       paymentOrderId,

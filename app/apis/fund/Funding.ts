@@ -157,6 +157,23 @@ export default class Funding {
     }
   }
 
+  async getParticipatedFunds(page?: number, size?: number, sort?: string) {
+    try {
+      const participated = await this.apiClient.getParticipatedFunds(
+        page,
+        size,
+        sort,
+      );
+      return participated.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
+
   async reportPost(item: ReportItem) {
     try {
       const reported = await this.apiClient.reportPost(item);

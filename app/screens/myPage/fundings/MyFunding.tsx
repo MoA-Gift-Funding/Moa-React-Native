@@ -10,7 +10,6 @@ import TextSemiBold from '../../../components/text/TextSemiBold';
 import cls from 'classnames';
 import CreatedFundItem from './CreatedFundItem';
 import useFunding from '../../../hooks/fundings/useFunding';
-import {MyFundItem} from '../../../types/Funding';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 
 const MyFunding = () => {
@@ -50,11 +49,7 @@ const MyFunding = () => {
         <View className="px-6 pb-10">
           {createdFunds && (
             <FlatList
-              data={myInfiteQuery.pages.flatMap(page =>
-                page.content
-                  .filter((fund: MyFundItem) => fund.status === '진행중')
-                  .flat(),
-              )}
+              data={myInfiteQuery.pages.flatMap(page => page.content.flat())}
               renderItem={fund => <CreatedFundItem content={fund.item} />}
               keyExtractor={fund => fund.id}
               showsVerticalScrollIndicator={false}
@@ -64,11 +59,7 @@ const MyFunding = () => {
           )}
           {!createdFunds && (
             <FlatList
-              data={myInfiteQuery.pages.flatMap(page =>
-                page.content
-                  .filter((fund: MyFundItem) => fund.status !== '진행중')
-                  .flat(),
-              )}
+              data={myInfiteQuery.pages.flatMap(page => page.content.flat())}
               renderItem={fund => <CreatedFundItem content={fund.item} />}
               keyExtractor={fund => fund.id}
               showsVerticalScrollIndicator={false}
