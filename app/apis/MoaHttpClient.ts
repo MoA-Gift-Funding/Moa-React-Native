@@ -195,4 +195,9 @@ export default class MoaHttpClient {
   reportPost(item: ReportItem) {
     return this.httpClient.post('/reports', item);
   }
+
+  // Announce
+  getAnnouncements() {
+    return this.httpClient.get('/announcements');
+  }
 }

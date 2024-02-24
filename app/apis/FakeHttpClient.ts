@@ -153,4 +153,9 @@ export class FakeHttpClient {
   reportPost(item: ReportItem) {
     return this.httpClient.get('');
   }
+
+  // Annoucements
+  getAnnouncements() {
+    return this.httpClient.get('');
+  }
 }
