@@ -146,7 +146,7 @@ const useFunding = (
     queryKey: ['friendsFundList', user?.id],
     queryFn: ({pageParam = 0}) =>
       funding.findFriendFundings(
-        'PROCESSING, WAITING_ORDER, COMPLETE_ORDER, EXPIRED',
+        'PROCESSING, CANCELLED, COMPLETE, EXPIRED',
         pageParam,
         10,
       ),
