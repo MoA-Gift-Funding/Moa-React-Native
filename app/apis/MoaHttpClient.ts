@@ -149,6 +149,16 @@ export default class MoaHttpClient {
     });
   }
 
+  getRecievedMessages(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('/fundings/messages', {
+      params: {page, size, sort},
+    });
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/payments/toss/prepay', data);

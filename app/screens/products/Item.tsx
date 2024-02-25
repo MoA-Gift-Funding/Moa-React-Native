@@ -3,7 +3,7 @@ import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
-import {Product} from '../../types/Store';
+import {autoCurrency} from '../../utils/regex';
 
 const Item = ({
   item,
@@ -55,7 +55,7 @@ const Item = ({
             />
           )}
           <TextSemiBold
-            title={`${price}원`}
+            title={`${autoCurrency(price)}원`}
             style="text-Body-2 text-Gray-10 leading-Body-2"
           />
         </View>

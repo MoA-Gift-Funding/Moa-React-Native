@@ -1,10 +1,9 @@
-import React, {useEffect} from 'react';
-import {FlatList, Image, ScrollView, View} from 'react-native';
+import React from 'react';
+import {FlatList, Image, View} from 'react-native';
 import Categories from './Categories';
 import TextBold from '../../components/text/TextBold';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
-import {autoCurrency} from '../../utils/regex';
 import useProducts from '../../hooks/products/useProducts';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 

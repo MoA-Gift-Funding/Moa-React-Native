@@ -186,4 +186,21 @@ export default class Funding {
       }
     }
   }
+
+  async getFundMessages(page?: number, size?: number, sort?: string) {
+    try {
+      const messages = await this.apiClient.getRecievedMessages(
+        page,
+        size,
+        sort,
+      );
+      return messages.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
 }
