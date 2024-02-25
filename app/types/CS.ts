@@ -1,6 +1,6 @@
-export type Notice = {
+export type AnnounceItem = {
+  id: number;
   title: string;
   content: string;
-  label: string;
-  category: '공지사항 내용' | '고객센터 답변';
+  createdDate: string;
 };

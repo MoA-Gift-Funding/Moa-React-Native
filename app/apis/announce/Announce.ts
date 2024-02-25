@@ -1,3 +1,4 @@
+import {AnnounceItem} from '../../types/CS';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
 
@@ -6,7 +7,7 @@ export default class Announce {
     this.apiClient = apiClient;
   }
 
-  async getAnnouncements() {
+  async getAnnouncements(): Promise<AnnounceItem[]> {
     try {
       const announces = await this.apiClient.getAnnouncements();
       return announces.data;
