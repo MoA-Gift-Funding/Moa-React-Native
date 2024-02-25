@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 import {Pressable, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
-import {AnnounceItem} from '../../../types/CS';
 
 const ToggleListItem = ({
   title,
   content,
   category,
-  createdDate,
+  label,
 }: {
   title: string;
   content: string;
   category?: string;
-  createdDate: string;
+  label: string;
 }) => {
   const [toggled, setToggled] = useState(false);
   return (
@@ -21,7 +20,7 @@ const ToggleListItem = ({
       <Pressable
         className="p-5 border-b-2 border-Gray-02"
         onPress={() => setToggled(!toggled)}>
-        <TextRegular title={createdDate} style="text-Gray-06 text-Detail-1" />
+        <TextRegular title={label} style="text-Gray-06 text-Detail-1" />
         {toggled && <TextSemiBold title={title} style="text-Body-2 mt-2" />}
         {!toggled && <TextRegular title={title} style="text-Body-2 mt-2" />}
       </Pressable>

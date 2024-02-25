@@ -16,9 +16,7 @@ const Announces = () => {
             <ToggleListItem
               key={annouce.id}
               title={annouce.title}
-              createdDate={annouce.createdDate
-                .substring(0, 10)
-                .replaceAll('-', '.')}
+              label={annouce.createdDate.substring(0, 10).replaceAll('-', '.')}
               content={annouce.content}
             />
           ))}

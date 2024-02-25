@@ -123,7 +123,7 @@ const MyPageMain = ({navigation}) => {
         <MenuCategory
           title="공지사항"
           onPress={() =>
-            navigation.navigate('Notices', {headerTitle: '공지사항'})
+            navigation.navigate('Announces', {headerTitle: '공지사항'})
           }
         />
         <MenuCategory
