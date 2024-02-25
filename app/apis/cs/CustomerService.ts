@@ -1,4 +1,4 @@
-import {CSCategories} from '../../types/CS';
+import {CSCategories, CustomerServicePostItem} from '../../types/CS';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
 
@@ -7,7 +7,7 @@ export default class CustomerService {
     this.apiClient = apiClient;
   }
 
-  async getFaqs() {
+  async getFaqs(): Promise<CustomerServicePostItem[]> {
     try {
       const faqs = await this.apiClient.getFaqs();
       return faqs.data;
@@ -20,7 +20,7 @@ export default class CustomerService {
     }
   }
 
-  async getPersonalInquiries() {
+  async getPersonalInquiries(): Promise<CustomerServicePostItem[]> {
     try {
       const inquiries = await this.apiClient.getPersonalInquiries();
       return inquiries.data;

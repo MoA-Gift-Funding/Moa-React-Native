@@ -13,7 +13,7 @@ export type CSCategories =
   | 'MEMBER'
   | 'ETC';
 
-export const categoryList = {
+export const categoryList: {[key: string]: string} = {
   CREATE_FUNDING: '펀딩 생성',
   PARTICIPATE_FUNDING: '펀딩 참여',
   DELIVERY: '배송',
@@ -21,3 +21,10 @@ export const categoryList = {
   MEMBER: '회원',
   ETC: '기타',
 };
+
+export interface CustomerServicePostItem {
+  id: number;
+  category: string;
+  content: string;
+  answer: string;
+}
