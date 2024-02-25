@@ -159,6 +159,29 @@ const useFunding = (
     initialPageParam: 0,
   });
 
+  const {data: recievedMessagesQuery, refetch: refetchRecievedMessagesQuery} =
+    useQuery({
+      queryKey: ['messageList', user?.id],
+      queryFn: () => funding.getFundMessages(page, size),
+      select: data => data.content,
+    });
+
+  const {
+    data: recievedMessagesInfiniteQuery,
+    fetchNextPage: recievedMessagesNextPageQuery,
+    refetch: refecthRecievedMessagesInfiniteQuery,
+  } = useInfiniteQuery({
+    queryKey: ['messages', user?.id],
+    queryFn: ({pageParam = 0}) => funding.getFundMessages(pageParam, size),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+  });
+
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
   });
@@ -207,6 +230,11 @@ const useFunding = (
     participatedFundsQuery,
     participatedNextQuery,
     refetchParticipatedFundsInfinityQuery,
+    recievedMessagesQuery,
+    refetchRecievedMessagesQuery,
+    recievedMessagesInfiniteQuery,
+    recievedMessagesNextPageQuery,
+    refecthRecievedMessagesInfiniteQuery,
   };
 };
 
