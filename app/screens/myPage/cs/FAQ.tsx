@@ -5,6 +5,7 @@ import TextSemiBold from '../../../components/text/TextSemiBold';
 import cls from 'classnames';
 import useCS from '../../../hooks/cs/useCS';
 import {categoryList} from '../../../types/CS';
+import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 
 const LabelButton = ({
   state,
@@ -67,7 +68,8 @@ const FAQ = () => {
     MEMBER,
     ETC,
   } = categories;
-  const {faqsQuery} = useCS();
+  const {faqsQuery, refetchFaqQuery} = useCS();
+  useRefetchOnFocus(refetchFaqQuery);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
