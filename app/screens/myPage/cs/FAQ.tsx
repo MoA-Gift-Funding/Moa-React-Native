@@ -116,6 +116,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'CREATE_FUNDING')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -127,6 +128,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'PARTICIPATE_FUNDING')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -138,6 +140,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'DELIVERY')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -149,6 +152,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'CANCEL_REFUND')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -160,6 +164,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'MEMBER')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -171,6 +176,7 @@ const FAQ = () => {
               .filter(faq => faq.category === 'ETC')
               .map(faq => (
                 <ToggleListItem
+                  key={faq.id}
                   title={faq.content}
                   label={categoryList[faq.category]}
                   category="고객센터 답변"
@@ -185,6 +191,7 @@ const FAQ = () => {
             !ETC &&
             faqsQuery.map(faq => (
               <ToggleListItem
+                key={faq.id}
                 title={faq.content}
                 label={categoryList[faq.category]}
                 category="고객센터 답변"

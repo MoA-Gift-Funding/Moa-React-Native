@@ -16,6 +16,8 @@ import TextInputGroup from '../../../components/text/TextInputGroup';
 import NextButton from '../../../components/button/NextButton';
 import SelectButton from '../../../components/button/SelectButton';
 import {categoryList} from '../../../types/CS';
+import useCS from '../../../hooks/cs/useCS';
+import {useNavigation} from '@react-navigation/native';
 const MakeInquiry = ({
   setInquiryListSelected,
 }: {
@@ -23,12 +25,17 @@ const MakeInquiry = ({
 }) => {
   const {
     control,
-    getValues,
     formState: {errors},
     handleSubmit,
-  } = useForm({defaultValues: {message: '', category: ''}});
+  } = useForm({defaultValues: {content: '', category: ''}});
+  const {updatePersonalInquiryquery, refetchPersonalInquiresQuery} = useCS();
 
-  const onSubmit = () => {};
+  const onSubmit = async data => {
+    console.log(data);
+    await updatePersonalInquiryquery(data);
+    refetchPersonalInquiresQuery();
+    setInquiryListSelected(true);
+  };
   return (
     <TouchableWithoutFeedback
       onPress={Keyboard.dismiss}
@@ -77,10 +84,10 @@ const MakeInquiry = ({
                 error={errors.category}
               />
               <TextInputGroup
-                name="message"
+                name="content"
                 label=""
                 control={control}
-                error={errors.message}
+                error={errors.content}
                 placeholder="문의 내용을 입력해주세요."
                 custom="h-[220px]"
                 textAlignVertical="top"

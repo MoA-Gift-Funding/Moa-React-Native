@@ -30,6 +30,7 @@ const MyInquiries = () => {
                 personalInquiresQuery.length > 0 &&
                 personalInquiresQuery.map(inquiry => (
                   <ToggleListItem
+                    key={inquiry.id}
                     title={inquiry.content}
                     label={inquiry.answer ? '답변 완료' : '답변 대기'}
                     category="고객센터 답변"

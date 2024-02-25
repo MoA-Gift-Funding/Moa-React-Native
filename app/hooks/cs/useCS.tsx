@@ -3,6 +3,7 @@ import {useUserContext} from '../../contexts/UserContext';
 import CustomerService from '../../apis/cs/CustomerService';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {CSCategories} from '../../types/CS';
+import Toast from 'react-native-toast-message';
 
 const useCS = () => {
   const {
@@ -28,6 +29,7 @@ const useCS = () => {
       csCenter.postPersonalInquiry(data),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['inquires', user?.id]});
+      Toast.show({type: 'success', text1: '문의가 등록되었어요🤗'});
     },
   });
 
