@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Pressable, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
-import TextSemiBold from '../../../components/text/TextSemiBold';
 
 const ToggleListItem = ({
   title,
@@ -21,10 +20,10 @@ const ToggleListItem = ({
         className="p-5 border-b-2 border-Gray-02"
         onPress={() => setToggled(!toggled)}>
         <TextRegular title={label} style="text-Gray-06 text-Detail-1" />
-        {toggled && <TextSemiBold title={title} style="text-Body-2 mt-2" />}
+        {toggled && <TextRegular title={title} style="text-Body-2 mt-2" />}
         {!toggled && <TextRegular title={title} style="text-Body-2 mt-2" />}
       </Pressable>
-      {toggled && (
+      {toggled && content && (
         <View className="bg-Gray-02 p-5">
           {category && (
             <TextRegular title={category} style="text-Body-2 mt-2" />

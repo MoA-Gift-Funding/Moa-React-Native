@@ -3,6 +3,7 @@ import {
   Image,
   Platform,
   Pressable,
+  RefreshControl,
   ScrollView,
   Share,
   View,
@@ -27,6 +28,7 @@ export default function Home({navigation}) {
     userState: {user},
   } = useUserContext();
   const [activated, setActivated] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const {
     myFundingsQuery,
     friendFundingsQuery,
@@ -35,6 +37,11 @@ export default function Home({navigation}) {
   } = useFunding(0, 3);
   useRefetchOnFocus(refetchFriendFudingQuery);
   useRefetchOnFocus(refetchMyFundingsQuery);
+
+  const onRefresh = () => {
+    refetchFriendFudingQuery();
+    refetchMyFundingsQuery();
+  };
 
   const deviceToken = useCallback(getDeviceToken, []);
 
@@ -47,7 +54,12 @@ export default function Home({navigation}) {
 
   return (
     <>
-      <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="h-full"
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <HomeBanner navigation={navigation} />
         <View className="flex flex-row h-[40px] bg-white justify-around border-b-2 border-Gray-02">
           <Pressable
