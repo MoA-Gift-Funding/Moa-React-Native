@@ -215,4 +215,13 @@ export default class MoaHttpClient {
   postPersonalInquiry(data: {category: CSCategories; content: string}) {
     return this.httpClient.post('/personal-inquiries', data);
   }
+
+  // Products
+  getProducts(page: number = 0, size: number = 10, sort: string = 'id,ASC') {
+    return this.httpClient.get('products', {params: {page, size, sort}});
+  }
+
+  getProductDetail(productId: number) {
+    return this.httpClient.get(`products/${productId}`);
+  }
 }

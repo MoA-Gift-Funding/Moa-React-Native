@@ -173,4 +173,13 @@ export class FakeHttpClient {
   postPersonalInquiry(data: {category: CSCategories; content: string}) {
     return this.httpClient.get('');
   }
+
+  // Products
+  getProducts() {
+    return this.httpClient.get('products');
+  }
+
+  getProductDetail(productId: number) {
+    return this.httpClient.get(`products/${productId}`);
+  }
 }
