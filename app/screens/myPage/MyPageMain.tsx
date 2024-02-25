@@ -29,7 +29,7 @@ const MyPageMain = ({navigation}) => {
   } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
-  const {myFundingsQuery} = useFunding(0, 100);
+  const {myFundingsQuery, recievedMessagesQuery} = useFunding(0, 100);
   const {hasUnReadQuery, refetchHasUnRead} = useNotifications();
   useRefetchOnFocus(refetchHasUnRead);
 
@@ -101,7 +101,7 @@ const MyPageMain = ({navigation}) => {
               }
             />
             <MenuCategoryTop
-              dataLength={53}
+              dataLength={recievedMessagesQuery?.length || 0}
               title="메세지"
               onPress={() =>
                 navigation.navigate('MyMessages', {headerTitle: '메세지'})

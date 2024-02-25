@@ -132,3 +132,18 @@ export interface ParticipatedFundItem {
   amount: number;
   participateStatus: ParticipateStatus;
 }
+
+export interface FundMessageItem {
+  profileImageUrl: string;
+  nickName: string;
+  message: string;
+  memberId: number;
+  createdDate: string;
+}
+
+export interface FundMessagesResponse {
+  content: FundDetailItem[];
+  hasNext: boolean;
+  currentPage: number;
+  pageSize: number;
+}

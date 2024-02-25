@@ -65,7 +65,6 @@ const MyFunding = () => {
           )}
         </View>
       )}
-      {/* // 앱에서 결제좀 하고오겠습니다 */}
       {participatedFundsQuery && (
         <View>
           {!createdFunds && (

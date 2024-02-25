@@ -1,5 +1,6 @@
 import {
   FinishFundItem,
+  FundMessagesResponse,
   FundRequestStatus,
   JoinFundItem,
   NewFundItem,
@@ -187,7 +188,11 @@ export default class Funding {
     }
   }
 
-  async getFundMessages(page?: number, size?: number, sort?: string) {
+  async getFundMessages(
+    page?: number,
+    size?: number,
+    sort?: string,
+  ): Promise<FundMessagesResponse> {
     try {
       const messages = await this.apiClient.getRecievedMessages(
         page,
