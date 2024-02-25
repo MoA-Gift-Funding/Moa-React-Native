@@ -1,18 +1,26 @@
-export interface Category {
-  id?: number;
-  name: string;
-  image: string;
-  categoryType: string;
-}
+export type ProductStatus = 'SALES' | 'SALES_DISCONTINUED';
 
 export interface Product {
   id: number;
-  image: string;
+  productId: {
+    productId: string;
+    productProvider: string;
+  };
+  imageUrl: string;
   brand: string;
-  name: string;
-  price: string;
-  salesNumber?: string;
-  categoryType?: string;
+  category: string;
+  productName: string;
+  price: number;
+  discountRate: number;
+  limitDate: number;
+  status: ProductStatus;
+}
+
+export interface ProductsResponse {
+  content: Product[];
+  hasNext: true;
+  currentPage: 0;
+  pageSize: 0;
 }
 
 export interface ProductDetail {

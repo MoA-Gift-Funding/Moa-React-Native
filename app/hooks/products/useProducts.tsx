@@ -10,7 +10,7 @@ export default function useProducts(loadingCallback?: () => void) {
   const products = new Products(client);
 
   const {
-    data: productsQuery,
+    data: productsInfiniteQuery,
     fetchNextPage: productsFetchNextQuery,
     refetch: productsRefetchQuery,
   } = useInfiniteQuery({
@@ -30,7 +30,7 @@ export default function useProducts(loadingCallback?: () => void) {
   });
 
   return {
-    productsQuery,
+    productsInfiniteQuery,
     productsFetchNextQuery,
     productsRefetchQuery,
     productDetailQuery,

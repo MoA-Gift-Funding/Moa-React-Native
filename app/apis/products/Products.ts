@@ -1,3 +1,4 @@
+import {Product, ProductsResponse} from '../../types/Store';
 import {FakeHttpClient} from '../FakeHttpClient';
 import MoaHttpClient from '../MoaHttpClient';
 
@@ -6,7 +7,11 @@ export class Products {
     this.apiClient = apiClient;
   }
 
-  async getProducts(page?: number, size?: number, sort?: string) {
+  async getProducts(
+    page?: number,
+    size?: number,
+    sort?: string,
+  ): Promise<ProductsResponse> {
     try {
       const products = await this.apiClient.getProducts(page, size, sort);
       return products.data;

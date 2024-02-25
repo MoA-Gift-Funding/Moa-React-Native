@@ -5,25 +5,37 @@ import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../types/Store';
 
-const Item = ({id, image, brand, name, price, salesNumber}: Product) => {
+const Item = ({
+  item,
+}: {
+  item: {
+    id: number;
+    imageUrl: string;
+    brand: string;
+    productName: string;
+    price: number;
+    discountRate: number;
+  };
+}) => {
   const navigation = useNavigation();
+  const {id, imageUrl, brand, productName, price, discountRate} = item;
   return (
     <Pressable
       className="flex w-[152px] mb-[30px]"
       onPress={() =>
         navigation.navigate('ItemDetail', {
           id,
-          image,
+          imageUrl,
           brand,
-          name,
+          productName,
           price,
-          salesNumber,
+          discountRate,
         })
       }>
       <Image
         className="w-[152px] h-[152px]"
         source={{
-          uri: image,
+          uri: imageUrl,
         }}
       />
       <View className="flex flex-col mt-2">
@@ -32,13 +44,13 @@ const Item = ({id, image, brand, name, price, salesNumber}: Product) => {
           style="text-Detail-1 text-Gray-06 leading-Detail-1"
         />
         <TextRegular
-          title={name}
+          title={productName}
           style="text-Body-2 text-Gray-10 leading-Body-2 break-word"
         />
         <View className="flex flex-row">
-          {salesNumber && (
+          {discountRate && (
             <TextSemiBold
-              title={`${salesNumber}%`}
+              title={`${discountRate}%`}
               style="text-Body-2 text-Main-01 leading-Body-2"
             />
           )}
