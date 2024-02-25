@@ -10,6 +10,7 @@ import {
   ReportItem,
   ShippingInfo,
 } from '../types/Funding';
+import {CSCategories} from '../types/CS';
 
 export default class MoaHttpClient {
   protected httpClient;
@@ -199,5 +200,19 @@ export default class MoaHttpClient {
   // Announce
   getAnnouncements() {
     return this.httpClient.get('/announcements');
+  }
+
+  // FAQ-CS
+  getFaqs() {
+    return this.httpClient.get('/faqs');
+  }
+
+  // 1:1-CS
+  getPersonalInquiries() {
+    return this.httpClient.get('/personal-inquiries/my');
+  }
+
+  postPersonalInquiry(data: {category: CSCategories; content: string}) {
+    return this.httpClient.post('/personal-inquiries', data);
   }
 }

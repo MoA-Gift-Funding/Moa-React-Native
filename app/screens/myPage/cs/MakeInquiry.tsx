@@ -37,21 +37,21 @@ const MakeInquiry = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="h-full px-4 flex items-center bg-white">
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View className="mt-10">
+          <View className="mt-8">
             <TextBold
               title="1:1 문의"
               style="text-Heading-3 leading-Heading-3"
             />
             <TextRegular
               title="문의하신 내용은 빠르게 검토하여,"
-              style="text-Gray-06 leading-Body-2 mt-3"
+              style="text-Gray-06 leading-Body-2 mt-2"
             />
             <TextRegular
               title="카카오톡과 문의 내역을 통해 신속하게 답변 드리겠습니다."
               style="text-Gray-06 leading-Body-2"
             />
             <Pressable
-              className="w-[83px] h-[32px] border border-Main-01 rounded flex items-center justify-center mt-4"
+              className="w-[83px] h-[32px] border border-Main-01 rounded flex items-center justify-center mt-2"
               onPress={() => setInquiryListSelected(true)}>
               <TextSemiBold
                 title="문의 내역 →"

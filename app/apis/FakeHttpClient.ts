@@ -1,3 +1,4 @@
+import {CSCategories} from './../types/CS';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
@@ -156,6 +157,20 @@ export class FakeHttpClient {
 
   // Annoucements
   getAnnouncements() {
+    return this.httpClient.get('');
+  }
+
+  // FAQ-CS
+  getFaqs() {
+    return this.httpClient.get('');
+  }
+
+  // 1:1-CS
+  getPersonalInquiries() {
+    return this.httpClient.get('');
+  }
+
+  postPersonalInquiry(data: {category: CSCategories; content: string}) {
     return this.httpClient.get('');
   }
 }
