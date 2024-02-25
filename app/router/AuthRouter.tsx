@@ -30,13 +30,13 @@ import MyFriends from '../screens/myPage/friends/MyFriends';
 import MyMessages from '../screens/myPage/message/MyMessages';
 import MyOrders from '../screens/myPage/order/MyOrders';
 import MyOrder from '../screens/myPage/order/MyOrder';
-import Notices from '../screens/myPage/cs/Notices';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
 import MyInquiries from '../screens/myPage/cs/MyInquiries';
 import FriendFundList from '../screens/funding/FriendFundList';
 import MyNotification from '../screens/myPage/notification/MyNotification';
 import AppConfig from '../screens/myPage/appConfig/AppConfig';
 import FinishFundCompleted from '../screens/funding/join/FinishFundCompleted';
+import Announces from '../screens/myPage/cs/Announces';
 
 const AuthRouter = () => {
   const {
@@ -161,8 +161,8 @@ const AuthRouter = () => {
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="Notices"
-            component={Notices}
+            name="Announces"
+            component={Announces}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen

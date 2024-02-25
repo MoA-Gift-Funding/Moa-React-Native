@@ -1,5 +1,5 @@
 import React from 'react';
-import Announce from '../../apis/announce/Announce';
+import Announce from '../../apis/cs/Announce';
 import {useUserContext} from '../../contexts/UserContext';
 import {useQuery} from '@tanstack/react-query';
 

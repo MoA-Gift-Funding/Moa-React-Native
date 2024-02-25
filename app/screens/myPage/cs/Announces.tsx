@@ -1,11 +1,11 @@
 import React from 'react';
 import {ScrollView, View} from 'react-native';
 import ToggleListItem from './ToggleListItem';
-import useAnnounce from '../../../hooks/announce/useAnnounce';
+import useAnnounce from '../../../hooks/cs/useAnnounce';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 import TextRegular from '../../../components/text/TextRegular';
 
-const Notices = () => {
+const Announces = () => {
   const {AnnouncesQuery, refetchAnnouncesQuery} = useAnnounce();
   useRefetchOnFocus(refetchAnnouncesQuery);
   return (
@@ -33,4 +33,4 @@ const Notices = () => {
   );
 };
 
-export default Notices;
+export default Announces;
