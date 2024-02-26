@@ -11,9 +11,9 @@ export const getContactsInfo = async () => {
     await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
       {
-        title: 'Contacts',
-        message: 'This app would like to view your contacts.',
-        buttonPositive: 'Please accept bare mortal',
+        title: '연락처 권한 요청',
+        message: '친구를 추가하기 위하여 주소록 권한 허용이 필요합니다.',
+        buttonPositive: '허용하기',
       },
     )
       .then(async () => {

@@ -45,7 +45,7 @@ const HomeBanner = ({navigation}) => {
           className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
           // Store로 추후 변경해야함
           onPress={() =>
-            navigation.navigate('NewFund', {id: 1, headerTitle: '펀딩개설하기'})
+            navigation.navigate('NewFund', {id: 6, headerTitle: '펀딩개설하기'})
           }>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
