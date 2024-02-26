@@ -1,6 +1,7 @@
 import {
   FinishFundItem,
   FundMessagesResponse,
+  FundPolicyResponse,
   FundRequestStatus,
   JoinFundItem,
   NewFundItem,
@@ -200,6 +201,19 @@ export default class Funding {
         sort,
       );
       return messages.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
+
+  async getPolicies(): Promise<FundPolicyResponse> {
+    try {
+      const policies = await this.apiClient.getPolicies();
+      return policies.data;
     } catch (error: any) {
       console.error(error.response.data);
       switch (error.response.status) {

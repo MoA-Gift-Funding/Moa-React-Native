@@ -159,6 +159,10 @@ export default class MoaHttpClient {
     });
   }
 
+  getPolicies() {
+    return this.httpClient.get('/fundings/exchange-refund-policy');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/payments/toss/prepay', data);

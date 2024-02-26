@@ -124,6 +124,10 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  getPolicies() {
+    return this.httpClient.get('/fundings/exchange-refund-policy');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');

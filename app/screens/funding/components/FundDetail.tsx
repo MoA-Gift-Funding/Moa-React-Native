@@ -115,43 +115,12 @@ const FundDetail = ({navigation, route}) => {
           </View>
           <View className="w-full py-6">
             {leftSelected && (
-              <>
-                <View className="mt-2 min-h-[100px] mx-6">
-                  <TextRegular
-                    title={description}
-                    style="text-Gray-08 text-Body-2 leading-Body-2"
-                  />
-                </View>
-                <Pressable
-                  className="w-full border-y-[1px] border-Gray-02 flex items-center"
-                  onPress={() => setCaution(!caution)}>
-                  <View className="w-[312px] h-[60px] flex flex-row justify-between items-center">
-                    <TextSemiBold
-                      title="펀딩 취소 규정"
-                      style="text-Body-2 text-Gray-10"
-                    />
-                    <FontAwesomeIcon
-                      icon={caution ? faChevronDown : faChevronUp}
-                    />
-                  </View>
-                  {caution && (
-                    <View className="w-full bg-Gray-02 flex items-center py-4">
-                      <TextRegular
-                        title="- 펀딩 참여자의 결제 취소는 펀딩이 종료되기 전까지, 결제일로부터 7일 이내, 마이페이지 펀딩에서 결제 취소가 가능합니다."
-                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
-                      />
-                      <TextRegular
-                        title="- 단, 아래의 경우는 결제 취소가 불가합니다."
-                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
-                      />
-                      <TextRegular
-                        title="- 제품을 사용 또는 훼손한 경우, 사은품 누락, 상품 TAG, 보증서, 상품 부자재가 제거 혹은 분실된 경우 밀봉 포장을 개봉했거나 내부 포장재를 훼손 또는 분실한 경우(단, 제품확인을 위한 개봉 제외), 시간이 경과되어 재판매가 어려울 정도로 상품가치가 상실된 경우, 기타 전자상거래 등에서의 소비자보호에 관한 법률이 정하는 청약철회 제한사유에 해당하는 경우 결제 취소가 불가능합니다."
-                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
-                      />
-                    </View>
-                  )}
-                </Pressable>
-              </>
+              <View className="mt-2 min-h-[150px] pb-10 mx-6">
+                <TextRegular
+                  title={description}
+                  style="text-Gray-08 text-Body-2 leading-Body-2"
+                />
+              </View>
             )}
             {!leftSelected && (
               <View>
@@ -167,15 +136,42 @@ const FundDetail = ({navigation, route}) => {
                     />
                   ))}
                 {participants.length < 1 && (
-                  <View className="min-h-[100px]">
+                  <View className="min-h-[150px] pb-12">
                     <TextRegular
-                      title="선물 펀딩하고 친구에게 메세지를 남겨보세요🎁"
+                      title="선물 펀딩하기로 친구에게 메세지를 남겨보세요🎁"
                       style="text-center mt-4"
                     />
                   </View>
                 )}
               </View>
             )}
+            <Pressable
+              className="w-full border-y-[1px] border-Gray-02 flex items-center"
+              onPress={() => setCaution(!caution)}>
+              <View className="w-[312px] h-[60px] flex flex-row justify-between items-center">
+                <TextSemiBold
+                  title="펀딩 취소 규정"
+                  style="text-Body-2 text-Gray-10"
+                />
+                <FontAwesomeIcon icon={caution ? faChevronDown : faChevronUp} />
+              </View>
+              {caution && (
+                <View className="w-full bg-Gray-02 flex items-center py-4">
+                  <TextRegular
+                    title="- 펀딩 참여자의 결제 취소는 펀딩이 종료되기 전까지, 결제일로부터 7일 이내, 마이페이지 펀딩에서 결제 취소가 가능합니다."
+                    style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                  />
+                  <TextRegular
+                    title="- 단, 아래의 경우는 결제 취소가 불가합니다."
+                    style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                  />
+                  <TextRegular
+                    title="- 제품을 사용 또는 훼손한 경우, 사은품 누락, 상품 TAG, 보증서, 상품 부자재가 제거 혹은 분실된 경우 밀봉 포장을 개봉했거나 내부 포장재를 훼손 또는 분실한 경우(단, 제품확인을 위한 개봉 제외), 시간이 경과되어 재판매가 어려울 정도로 상품가치가 상실된 경우, 기타 전자상거래 등에서의 소비자보호에 관한 법률이 정하는 청약철회 제한사유에 해당하는 경우 결제 취소가 불가능합니다."
+                    style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                  />
+                </View>
+              )}
+            </Pressable>
           </View>
         </View>
       </ScrollView>

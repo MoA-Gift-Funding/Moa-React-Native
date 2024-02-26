@@ -149,3 +149,12 @@ export interface FundMessagesResponse {
   currentPage: number;
   pageSize: number;
 }
+
+export type FundPolicy = {
+  title: string;
+  content: string[];
+};
+
+export interface FundPolicyResponse {
+  policies: FundPolicy[];
+}
