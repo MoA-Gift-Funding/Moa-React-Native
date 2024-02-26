@@ -1,12 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {
-  Alert,
-  Image,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  View,
-} from 'react-native';
+import {Image, Pressable, SafeAreaView, ScrollView, View} from 'react-native';
 import {useUserContext} from '../../contexts/UserContext';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
@@ -127,7 +120,7 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('MyOrders', {headerTitle: '주문 · 배송'})
           }
         />
-        <MenuCategory title="친구 불러오기" onPress={syncFriends} />
+        <MenuCategory title="친구 불러오기" onPress={() => syncFriends()} />
       </View>
       <View className="bg-white mt-3">
         <MenuCategory

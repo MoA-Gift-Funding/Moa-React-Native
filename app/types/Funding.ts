@@ -42,11 +42,11 @@ export interface MyFundItem {
   endDate: string;
   fundedAmount: number;
   fundingRate: number;
-  fundingImageUrl: string | null;
+  fundingImageUrl: string;
   status: FundResponseStatus;
   id: number;
   participationCount: number;
-  productImageUrl: string | null;
+  productImageUrl: string;
   title: string;
 }
 

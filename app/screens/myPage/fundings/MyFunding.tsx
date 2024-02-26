@@ -12,6 +12,7 @@ import CreatedFundItem from './CreatedFundItem';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 import TextRegular from '../../../components/text/TextRegular';
+import ParticipatedFund from './ParticipatedFundItem';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
@@ -79,7 +80,7 @@ const MyFunding = () => {
         </View>
       )}
       {!createdFunds && (
-        <View>
+        <View className="px-6 pb-10">
           {participatedFundsQuery && (
             <>
               {participatedFundsQuery.pages[0].content.length > 0 && (
@@ -87,8 +88,8 @@ const MyFunding = () => {
                   data={participatedFundsQuery.pages.flatMap(page =>
                     page.content.flat(),
                   )}
-                  renderItem={fund => <CreatedFundItem content={fund.item} />}
-                  keyExtractor={fund => fund.id}
+                  renderItem={fund => <ParticipatedFund item={fund.item} />}
+                  keyExtractor={fund => fund.fundingId}
                   showsVerticalScrollIndicator={false}
                   onEndReached={async () => await myInfiteFetchNextQuery()}
                   onEndReachedThreshold={0.6}
