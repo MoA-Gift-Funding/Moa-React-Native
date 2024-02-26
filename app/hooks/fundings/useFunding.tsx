@@ -207,6 +207,11 @@ const useFunding = (
     },
   });
 
+  const {data: FundPolicyQuery} = useQuery({
+    queryKey: ['fund', 'policy'],
+    queryFn: () => funding.getPolicies(),
+  });
+
   return {
     addrsQuery,
     createAddrQuery,
@@ -235,6 +240,7 @@ const useFunding = (
     recievedMessagesInfiniteQuery,
     recievedMessagesNextPageQuery,
     refecthRecievedMessagesInfiniteQuery,
+    FundPolicyQuery,
   };
 };
 
