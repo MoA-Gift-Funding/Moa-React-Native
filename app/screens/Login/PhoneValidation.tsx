@@ -53,6 +53,7 @@ const PhoneValidation = () => {
       setIsLoading(true);
       await verifyMobileQuery(verificationNumber);
     } finally {
+      setPressed(false);
       setIsLoading(false);
     }
   };
@@ -127,7 +128,10 @@ const PhoneValidation = () => {
         {sent && (
           <Countdown
             date={date + 1000 * 60 * 3 - 1000}
-            onComplete={() => setSent(false)}
+            onComplete={() => {
+              setSent(false);
+              setPressed(false);
+            }}
             renderer={({minutes, seconds, completed}) => {
               if (completed) {
                 return (

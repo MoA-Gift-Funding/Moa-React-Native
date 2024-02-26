@@ -44,8 +44,9 @@ const Item = ({
           style="text-Detail-1 text-Gray-06 leading-Detail-1"
         />
         <TextRegular
-          title={productName}
-          style="text-Body-2 text-Gray-10 break-word"
+          title={productName + ' '}
+          style="text-Body-2 text-Gray-10 leading-Body-2"
+          numberOfLines={1}
         />
         <View className="flex flex-row">
           {!!discountRate && (
