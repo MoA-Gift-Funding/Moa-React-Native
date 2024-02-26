@@ -16,15 +16,10 @@ import {ProductDetail} from '../../types/Store';
 const ItemDetail = ({route, navigation}) => {
   const {id, imageUrl, brand, productName, price, discountRate} = route.params;
   const [product, setProduct] = useState<ProductDetail | undefined>(undefined);
-  const [productInfo, setProductInfo] = useState(true);
+  const [productInfoSelected, setProductInfoSelected] = useState(true);
   const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
-  const [loading, setLoading] = useState(true);
 
-  const handleSelection = () => {
-    setProductInfo(!productInfo);
-    setInstruction(!instruction);
-  };
   const {handleSubmit} = useForm();
 
   const {productDetailQuery} = useProducts();
@@ -41,7 +36,6 @@ const ItemDetail = ({route, navigation}) => {
       <ScrollView
         className="flex flex-col"
         showsVerticalScrollIndicator={false}>
-        {loading && <LoadingBar />}
         <Image
           className="w-[360px] h-[360px]"
           source={{
@@ -59,37 +53,30 @@ const ItemDetail = ({route, navigation}) => {
             <Pressable
               className={cls(
                 'w-[156px] h-[48px] flex items-center justify-center',
-                {'border-b-Main-01 border-b-2': productInfo},
+                {'border-b-Main-01 border-b-2': productInfoSelected},
               )}
-              onPress={handleSelection}>
+              onPress={() => setProductInfoSelected(true)}>
               <TextSemiBold title="상품 정보" style="text-Gray-10" />
             </Pressable>
             <Pressable
               className={cls(
                 'w-[156px] h-[48px] flex items-center justify-center',
-                {'border-b-Main-01 border-b-2': instruction},
+                {'border-b-Main-01 border-b-2': !productInfoSelected},
               )}
-              onPress={handleSelection}>
+              onPress={() => setProductInfoSelected(false)}>
               <TextSemiBold title="이용 안내" style="text-Gray-10" />
             </Pressable>
           </View>
-          <View className="w-[312px] py-6">
-            {productInfo && (
+          <View className="w-[312px] min-h-[200px] py-6">
+            {productInfoSelected && (
               <>
                 <TextRegular
                   title={product?.description}
                   style="text-Gray-06 text-Body-2 leading-Body-2"
                 />
-                <Image
-                  source={{
-                    uri: 'https://img.29cm.co.kr/next_product/2022/08/18/19d97ec4-a1b9-484f-9180-26eb32abf8a7_20220818122618.jpg?width=1000',
-                  }}
-                  className={'w-[312px] h-[2000px]'}
-                  resizeMode="cover"
-                />
               </>
             )}
-            {instruction && (
+            {!productInfoSelected && (
               <TextRegular
                 title={product?.directions}
                 style="text-Gray-06 text-Body-2 leading-Body-2"

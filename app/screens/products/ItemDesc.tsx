@@ -24,8 +24,9 @@ const ItemDesc = ({
             style="text-Gray-06 text-Body-2 leading-Body-2"
           />
           <TextRegular
-            title={productName}
+            title={productName + ' '}
             style="text-Gray-10 text-Body-1 leading-Body-1"
+            numberOfLines={1}
           />
           <View className="flex flex-row mt-2">
             {!!discountRate && (
