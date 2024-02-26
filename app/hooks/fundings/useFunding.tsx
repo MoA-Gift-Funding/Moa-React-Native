@@ -210,6 +210,7 @@ const useFunding = (
   const {data: FundPolicyQuery} = useQuery({
     queryKey: ['fund', 'policy'],
     queryFn: () => funding.getPolicies(),
+    select: data => data.policies,
   });
 
   return {
