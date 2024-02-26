@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Alert,
   Image,
@@ -29,11 +29,18 @@ const MyPageMain = ({navigation}) => {
   } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
-  const {myFundingsQuery, recievedMessagesQuery} = useFunding(0, 100);
+  const {
+    myFundingsQuery,
+    recievedMessagesQuery,
+    myParticipatedFundingsQuery,
+    refetchMyParticipatedFundingsQuery,
+  } = useFunding(0, 100);
+
   const {hasUnReadQuery, refetchHasUnRead} = useNotifications();
   useRefetchOnFocus(refetchHasUnRead);
+  useRefetchOnFocus(refetchMyParticipatedFundingsQuery);
 
-  const syncFriends = async () => {
+  const syncFriends = useCallback(async () => {
     try {
       setIsLoading(true);
       const organized = await getContactsInfo();
@@ -43,7 +50,7 @@ const MyPageMain = ({navigation}) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [syncContactsQuery]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -87,7 +94,10 @@ const MyPageMain = ({navigation}) => {
           </View>
           <View className="flex flex-row items-center justify-around py-6 border-t-2 border-Gray-01">
             <MenuCategoryTop
-              dataLength={myFundingsQuery?.all.length || 0}
+              dataLength={
+                myFundingsQuery?.all.length +
+                  myParticipatedFundingsQuery?.length || 0
+              }
               title="펀딩"
               onPress={() =>
                 navigation.navigate('MyFunding', {headerTitle: '펀딩'})

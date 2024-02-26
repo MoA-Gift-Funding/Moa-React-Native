@@ -9,7 +9,6 @@ import cls from 'classnames';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
-import LoadingBar from '../../components/bar/LoadingBar';
 import useProducts from '../../hooks/products/useProducts';
 import {ProductDetail} from '../../types/Store';
 
@@ -17,7 +16,6 @@ const ItemDetail = ({route, navigation}) => {
   const {id, imageUrl, brand, productName, price, discountRate} = route.params;
   const [product, setProduct] = useState<ProductDetail | undefined>(undefined);
   const [productInfoSelected, setProductInfoSelected] = useState(true);
-  const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
 
   const {handleSubmit} = useForm();

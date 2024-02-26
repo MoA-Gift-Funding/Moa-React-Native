@@ -2,7 +2,6 @@ import React from 'react';
 import {useUserContext} from '../../contexts/UserContext';
 import Funding from '../../apis/fund/Funding';
 import {
-  keepPreviousData,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -116,6 +115,15 @@ const useFunding = (
   });
 
   const {
+    data: myParticipatedFundingsQuery,
+    refetch: refetchMyParticipatedFundingsQuery,
+  } = useQuery({
+    queryKey: ['participatedFundsQuery', user?.id],
+    select: data => data.content,
+    queryFn: () => funding.getParticipatedFunds(page, size, sort),
+  });
+
+  const {
     data: participatedFundsQuery,
     fetchNextPage: participatedNextQuery,
     refetch: refetchParticipatedFundsInfinityQuery,
@@ -224,6 +232,8 @@ const useFunding = (
     friendFundingsQuery,
     refetchMyFundingsQuery,
     refetchFriendFudingQuery,
+    myParticipatedFundingsQuery,
+    refetchMyParticipatedFundingsQuery,
     myInfiteQuery,
     myInfiteFetchNextQuery,
     refetchMyInfiniteQuery,
