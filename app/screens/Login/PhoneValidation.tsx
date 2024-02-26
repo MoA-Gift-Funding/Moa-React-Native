@@ -22,7 +22,7 @@ const PhoneValidation = () => {
   const [sent, setSent] = useState(false);
   const [date, setDate] = useState(Date.now());
   const [pressed, setPressed] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     userState: {user},
   } = useUserContext();
@@ -65,7 +65,7 @@ const PhoneValidation = () => {
       setIsLoading(true);
       setDate(Date.now());
       setSent(true);
-      // await requestMobileQuery(recipientNo);
+      await requestMobileQuery(recipientNo);
     } finally {
       setIsLoading(false);
     }
@@ -111,11 +111,11 @@ const PhoneValidation = () => {
                   required: '인증번호를 입력해주세요.',
                   minLength: {
                     value: 6,
-                    message: '6자리 수를 입력해주세요.',
+                    message: '올바른 인증번호 형식을 입력해주세요.',
                   },
                   maxLength: {
                     value: 6,
-                    message: '6자리 수까지 입력 가능해요.',
+                    message: '올바른 인증번호 형식을 입력해주세요.',
                   },
                 }}
               />
@@ -125,52 +125,39 @@ const PhoneValidation = () => {
       </ScrollView>
       <KeyboardAvoidingView className="mb-8 items-center">
         {sent && (
-          <Pressable
-            className={cls(
-              'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
-              {
-                'bg-Gray-08': !isValid,
-                'bg-Main-01': isValid,
-              },
-            )}
-            onPress={handleSubmit(onSubmit)}>
-            <TextSemiBold
-              style="text-white text-Body-1 ml-[14px]"
-              title={`${twoDP(12)}:${twoDP(12)}`}
-            />
-          </Pressable>
-          // <Countdown
-          //   date={date + 1000 * 60 * 3 - 1000}
-          //   renderer={({minutes, seconds, completed}) => {
-          //     if (completed) {
-          //       return (
-          //         <NextButton
-          //           title="인증하기"
-          //           handleSubmit={handleSubmit}
-          //           onSubmit={handleMSGButton}
-          //         />
-          //       );
-          //     } else {
-          //       return (
-          //         <Pressable
-          //           className={cls(
-          //             'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
-          //             {
-          //               'bg-Gray-08': Object.keys(touchedFields).length === 0,
-          //               'bg-Main-01': Object.keys(touchedFields).length !== 0,
-          //             },
-          //           )}
-          //           disabled={pressed}
-          //           onPress={handleSubmit(onSubmit)}>
-          //           <TextSemiBold
-          //             style="text-white text-Body-1 ml-[14px]"
-          //             title={`${twoDP(minutes)}:${twoDP(seconds)}`}
-          //           />
-          //         </Pressable>
-          //       );
-          //     }
-          //   }}
-          // />
+          <Countdown
+            date={date + 1000 * 60 * 3 - 1000}
+            onComplete={() => setSent(false)}
+            renderer={({minutes, seconds, completed}) => {
+              if (completed) {
+                return (
+                  <NextButton
+                    title="인증문자 받기"
+                    handleSubmit={handleSubmit}
+                    onSubmit={getVerificationCode}
+                  />
+                );
+              } else {
+                return (
+                  <Pressable
+                    className={cls(
+                      'h-[56px] w-[312px]  rounded-lg flex items-center justify-center',
+                      {
+                        'bg-Gray-08': !isValid,
+                        'bg-Main-01': isValid,
+                      },
+                    )}
+                    disabled={pressed}
+                    onPress={handleSubmit(onSubmit)}>
+                    <TextSemiBold
+                      style="text-white text-Body-1 ml-[14px]"
+                      title={`${twoDP(minutes)}:${twoDP(seconds)}`}
+                    />
+                  </Pressable>
+                );
+              }
+            }}
+          />
         )}
         {!sent && (
           <NextButton

@@ -49,13 +49,6 @@ const AuthRouter = () => {
       {user?.status === 'SIGNED_UP' ? (
         <>
           <Stack.Screen
-            name="PhoneValidation"
-            component={PhoneValidation}
-            options={{
-              header: () => <BackHeader />,
-            }}
-          />
-          <Stack.Screen
             name="Home"
             component={Home}
             options={{
@@ -204,13 +197,13 @@ const AuthRouter = () => {
               header: () => <BackHeader />,
             }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="PhoneValidation"
             component={PhoneValidation}
             options={{
               header: () => <BackHeader />,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="Profile"
             component={Profile}
