@@ -43,18 +43,19 @@ const ItemList = ({route}) => {
         <View className="flex items-center mt-3">
           <View className="w-[320px] flex flex-row flex-wrap gap-2">
             {products?.map(product => {
-              const {id, image, brand, name, price, salesNumber} = product;
-              console.log(product);
-
+              const {id, imageUrl, brand, productName, price, discountRate} =
+                product;
               return (
                 <View key={id}>
                   <Item
-                    id={id}
-                    image={image}
-                    brand={brand}
-                    name={name}
-                    price={autoCurrency(price)}
-                    salesNumber={salesNumber}
+                    item={{
+                      id,
+                      imageUrl,
+                      brand,
+                      productName,
+                      price,
+                      discountRate,
+                    }}
                   />
                 </View>
               );

@@ -58,8 +58,6 @@ const FundDetail = ({navigation, route}) => {
       const fund = await fundDetailQuery(id);
       setData({
         ...fund,
-        productImageUrl:
-          'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1707655783/moa-ssg_tzh1mo.jpg',
       });
     };
     getFundDetail();

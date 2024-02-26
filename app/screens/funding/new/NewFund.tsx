@@ -11,7 +11,7 @@ import NextButton from '../../../components/button/NextButton';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 
 const NewFund = ({navigation, route}) => {
-  const {id} = route.params;
+  const {id, price} = route.params;
   const [endDate, setEndDate] = useState(dayjs());
   const [dateError, setDateError] = useState(false);
   const {
@@ -35,7 +35,7 @@ const NewFund = ({navigation, route}) => {
     endDate: string;
   }) => {
     if (!data.maximumAmount) {
-      setValue('maximumAmount', '50000');
+      setValue('maximumAmount', price);
     }
     if (endDate.day === dayjs().day) {
       return setDateError(true);

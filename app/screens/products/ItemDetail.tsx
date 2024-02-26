@@ -11,9 +11,11 @@ import {useForm} from 'react-hook-form';
 import Footer from '../../components/footer/Footer';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useProducts from '../../hooks/products/useProducts';
+import {ProductDetail} from '../../types/Store';
 
 const ItemDetail = ({route, navigation}) => {
-  const {id, image, brand, name, price, salesNumber} = route.params;
+  const {id, imageUrl, brand, productName, price, discountRate} = route.params;
+  const [product, setProduct] = useState<ProductDetail | undefined>(undefined);
   const [productInfo, setProductInfo] = useState(true);
   const [instruction, setInstruction] = useState(false);
   const [caution, setCaution] = useState(true);
@@ -25,12 +27,14 @@ const ItemDetail = ({route, navigation}) => {
   };
   const {handleSubmit} = useForm();
 
-  const {
-    productDetailQuery: {data: product, mutate},
-  } = useProducts(() => setLoading(false));
+  const {productDetailQuery} = useProducts();
   useEffect(() => {
-    mutate(id);
-  }, [mutate, id]);
+    async function getProduct() {
+      const prod = await productDetailQuery(id);
+      setProduct(prod);
+    }
+    getProduct();
+  }, [productDetailQuery, id]);
 
   return (
     <>
@@ -41,14 +45,14 @@ const ItemDetail = ({route, navigation}) => {
         <Image
           className="w-[360px] h-[360px]"
           source={{
-            uri: image,
+            uri: imageUrl,
           }}
         />
         <ItemDesc
           brand={brand}
-          name={name}
+          productName={productName}
           price={price}
-          salesNumber={salesNumber}
+          discountRate={discountRate}
         />
         <View className="mt-4 bg-white flex flex-col items-center">
           <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
@@ -121,6 +125,7 @@ const ItemDetail = ({route, navigation}) => {
                 headerTitle: '펀딩개설하기',
                 search: false,
                 id,
+                price,
               })
             }
           />

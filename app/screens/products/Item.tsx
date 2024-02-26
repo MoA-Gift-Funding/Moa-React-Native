@@ -45,13 +45,13 @@ const Item = ({
         />
         <TextRegular
           title={productName}
-          style="text-Body-2 text-Gray-10 leading-Body-2 break-word"
+          style="text-Body-2 text-Gray-10 break-word"
         />
         <View className="flex flex-row">
-          {discountRate && (
+          {!!discountRate && (
             <TextSemiBold
               title={`${discountRate}%`}
-              style="text-Body-2 text-Main-01 leading-Body-2"
+              style="text-Body-2 text-Main-01 leading-Body-2 mr-1"
             />
           )}
           <TextSemiBold

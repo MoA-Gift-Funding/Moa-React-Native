@@ -2,17 +2,18 @@ import React from 'react';
 import {View} from 'react-native';
 import TextRegular from '../../components/text/TextRegular';
 import TextBold from '../../components/text/TextBold';
+import {autoCurrency} from '../../utils/regex';
 
 const ItemDesc = ({
   brand,
-  name,
-  salesNumber,
+  productName,
+  discountRate,
   price,
 }: {
   brand: string;
-  name: string;
-  price: string;
-  salesNumber?: string;
+  productName: string;
+  price: number;
+  discountRate?: number;
 }) => {
   return (
     <View className="flex items-center bg-white">
@@ -23,18 +24,18 @@ const ItemDesc = ({
             style="text-Gray-06 text-Body-2 leading-Body-2"
           />
           <TextRegular
-            title={name}
+            title={productName}
             style="text-Gray-10 text-Body-1 leading-Body-1"
           />
           <View className="flex flex-row mt-2">
-            {salesNumber && (
+            {!!discountRate && (
               <TextBold
-                title={`${salesNumber}%`}
+                title={`${discountRate}%`}
                 style="text-Main-01 text-Heading-4 leading-Heading-4 mr-2"
               />
             )}
             <TextBold
-              title={`${price}원`}
+              title={`${autoCurrency(price)}원`}
               style="text-Gray-10 text-Heading-4 leading-Heading-4"
             />
           </View>
