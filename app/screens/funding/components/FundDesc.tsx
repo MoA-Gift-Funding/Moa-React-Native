@@ -5,6 +5,7 @@ import TextBold from '../../../components/text/TextBold';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../../utils/regex';
 import ReportButton from '../../../components/button/ReportButton';
+import {FundStatus} from '../../../types/Funding';
 
 const FundDesc = ({
   id,
@@ -12,12 +13,14 @@ const FundDesc = ({
   title,
   endDate,
   fundingRate,
+  status,
 }: {
   id: number;
   userName: string;
   title: string;
   endDate: string;
   fundingRate: number;
+  status: FundStatus;
 }) => {
   return (
     <View className="flex items-center bg-white">
@@ -43,7 +46,7 @@ const FundDesc = ({
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
             <Countdown
-              date={new Date(endDate + ' 23:59:59')}
+              date={endDate + ' 23:59:59'}
               renderer={({days, hours, minutes, seconds, completed}) => {
                 if (completed) {
                   return (

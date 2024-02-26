@@ -10,7 +10,7 @@ import {useUserContext} from '../../../contexts/UserContext';
 import {httpsUrlCorrector} from '../../../utils/regex';
 
 const MyFund = ({item}: {item: MyFundItem}) => {
-  const {title, endDate, fundingRate, participationCount, id} = item;
+  const {title, endDate, fundingRate, participationCount, id, status} = item;
   const {
     userState: {user},
   } = useUserContext();
@@ -19,13 +19,13 @@ const MyFund = ({item}: {item: MyFundItem}) => {
     <Pressable
       className="w-[285px] rounded-2xl mr-4 mb-2"
       style={{elevation: 3, backgroundColor: 'transparent'}}
-      onPress={() => navigation.navigate('FundDetail', {id})}>
+      onPress={() => navigation.navigate('FundDetail', {id, title, endDate})}>
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <Countdown
-            date={new Date(endDate + ' 23:59:59')}
+            date={endDate + ' 23:59:59'}
             renderer={({days, completed}) => {
-              if (completed) {
+              if (completed || status !== '진행중') {
                 return <TextBold title={'펀딩 종료'} style="text-Body-1" />;
               } else {
                 return <TextBold title={`D-${days}`} style="text-Body-1" />;

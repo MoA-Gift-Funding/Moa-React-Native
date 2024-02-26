@@ -11,6 +11,7 @@ import cls from 'classnames';
 import CreatedFundItem from './CreatedFundItem';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
+import TextRegular from '../../../components/text/TextRegular';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
@@ -51,33 +52,55 @@ const MyFunding = () => {
           />
         </Pressable>
       </View>
-      {myInfiteQuery && (
+      {createdFunds && (
         <View className="px-6 pb-10">
-          {createdFunds && (
-            <FlatList
-              data={myInfiteQuery.pages.flatMap(page => page.content.flat())}
-              renderItem={fund => <CreatedFundItem content={fund.item} />}
-              keyExtractor={fund => fund.id}
-              showsVerticalScrollIndicator={false}
-              onEndReached={async () => await myInfiteFetchNextQuery()}
-              onEndReachedThreshold={0.6}
-            />
+          {myInfiteQuery && (
+            <>
+              {myInfiteQuery.pages[0].content.length > 0 && (
+                <FlatList
+                  data={myInfiteQuery.pages.flatMap(page =>
+                    page.content.flat(),
+                  )}
+                  renderItem={fund => <CreatedFundItem content={fund.item} />}
+                  keyExtractor={fund => fund.id}
+                  showsVerticalScrollIndicator={false}
+                  onEndReached={async () => await myInfiteFetchNextQuery()}
+                  onEndReachedThreshold={0.6}
+                />
+              )}
+              {myInfiteQuery.pages[0].content.length < 1 && (
+                <TextRegular
+                  title="펀딩을 만들어볼까요?🎁"
+                  style="text-Gray-06 py-10 text-center"
+                />
+              )}
+            </>
           )}
         </View>
       )}
-      {participatedFundsQuery && (
+      {!createdFunds && (
         <View>
-          {!createdFunds && (
-            <FlatList
-              data={participatedFundsQuery.pages.flatMap(page =>
-                page.content.flat(),
+          {participatedFundsQuery && (
+            <>
+              {participatedFundsQuery.pages[0].content.length > 0 && (
+                <FlatList
+                  data={participatedFundsQuery.pages.flatMap(page =>
+                    page.content.flat(),
+                  )}
+                  renderItem={fund => <CreatedFundItem content={fund.item} />}
+                  keyExtractor={fund => fund.id}
+                  showsVerticalScrollIndicator={false}
+                  onEndReached={async () => await myInfiteFetchNextQuery()}
+                  onEndReachedThreshold={0.6}
+                />
               )}
-              renderItem={fund => <CreatedFundItem content={fund.item} />}
-              keyExtractor={fund => fund.id}
-              showsVerticalScrollIndicator={false}
-              onEndReached={async () => await myInfiteFetchNextQuery()}
-              onEndReachedThreshold={0.6}
-            />
+              {participatedFundsQuery.pages[0].content.length < 1 && (
+                <TextRegular
+                  title="친구들의 펀딩에 참여해봐요🤗"
+                  style="text-Gray-06 py-10 text-center"
+                />
+              )}
+            </>
           )}
         </View>
       )}

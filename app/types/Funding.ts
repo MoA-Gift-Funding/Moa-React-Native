@@ -20,7 +20,7 @@ export interface NewFundItem {
   deliveryRequestMessage: string;
 }
 
-type FundStatus =
+export type FundStatus =
   | 'PROCESSING'
   | 'CANCELLED'
   | 'STOPPED'

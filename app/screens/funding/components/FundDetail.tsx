@@ -19,7 +19,7 @@ import {FundDetailItem} from '../../../types/Funding';
 import {useUserContext} from '../../../contexts/UserContext';
 
 const FundDetail = ({navigation, route}) => {
-  const {id} = route.params;
+  const {id, title, endDate} = route.params;
   const [leftSelected, setLeftSelected] = useState(true);
   const [caution, setCaution] = useState(true);
   const {
@@ -29,13 +29,13 @@ const FundDetail = ({navigation, route}) => {
     id: 0,
     nickName: '',
     memberId: 0,
-    title: '',
+    title,
     description: '',
-    endDate: '',
+    endDate,
     maximumAmount: 0,
     remainAmount: 0,
     fundingRate: 0,
-    status: '',
+    status: 'PROCESSING',
     fundedAmount: 0,
     participationCount: 0,
     productImageUrl: '',
@@ -65,8 +65,6 @@ const FundDetail = ({navigation, route}) => {
 
   const {
     nickName,
-    title,
-    endDate,
     fundingRate,
     productImageUrl,
     description,
@@ -94,6 +92,7 @@ const FundDetail = ({navigation, route}) => {
           title={title}
           endDate={endDate}
           fundingRate={fundingRate}
+          status={status}
         />
         <View className="mt-4 bg-white flex flex-col items-center">
           <View className="w-full flex flex-row justify-center border-b-[1px] border-b-Gray-03">
