@@ -28,13 +28,13 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
   } = content;
   const navigation = useNavigation();
   return (
-    <View className="py-6 border-b-2 border-Gray-02 flex items-center">
+    <View className="py-5 border-b-2 border-Gray-02 flex items-center">
       <Pressable
         className="mb-1 w-[314px]"
         onPress={() => navigation.navigate('FundDetail', {id})}>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold title={endDate} style="text-Body-2" />
-          {status === '진행중' && <ColoredFundLabel label="펀딩중" />}
+          {status === 'PROCESSING' && <ColoredFundLabel label="펀딩중" />}
           {status === 'COMPLETE' && <GrayFundLabel label="펀딩 달성" />}
           {status === 'CANCELLED' && <GrayFundLabel label="펀딩 취소" />}
           {status === 'STOPPED' && <GrayFundLabel label="상품 중단" />}
@@ -66,7 +66,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
           </View>
         </View>
       </Pressable>
-      {status === '진행중' && (
+      {status === 'PROCESSING' && (
         <Pressable className="w-[314px] h-[44px] flex justify-center items-center bg-Gray-02 rounded-lg">
           <TextRegular title="펀딩 취소하기" style="text-Gray-06 text-center" />
         </Pressable>

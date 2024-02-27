@@ -123,7 +123,7 @@ const FundDetail = ({navigation, route}) => {
               </View>
             )}
             {!leftSelected && (
-              <View>
+              <View className="min-h-[150px] pb-10">
                 {participants.length > 0 &&
                   participants.map(msg => (
                     <FundMessage

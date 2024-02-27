@@ -87,10 +87,10 @@ const useFunding = (
       return {
         all: data.content,
         completed: data.content.filter(
-          (fund: MyFundItem) => fund.status !== '진행중',
+          (fund: MyFundItem) => fund.status !== 'PROCESSING',
         ),
         inProgress: data.content.filter(
-          (fund: MyFundItem) => fund.status === '진행중',
+          (fund: MyFundItem) => fund.status === 'PROCESSING',
         ),
       };
     },

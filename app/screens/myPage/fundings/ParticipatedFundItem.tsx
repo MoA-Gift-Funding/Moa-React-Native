@@ -16,13 +16,14 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
     participateStatus,
     nickName,
     amount,
+    fundingParticipantId,
   } = item;
   const navigation = useNavigation();
 
   const isRefundable = useCallback(() => {
     const today = new Date();
-    const purchasedDate = new Date(participatedDate.substring(0, 10));
-    const timeDiff = purchasedDate.getTime() - today.getTime();
+    const purchasedDate = new Date(participatedDate);
+    const timeDiff = today.getTime() - purchasedDate.getTime();
     const days = Math.round(timeDiff / (1000 * 3600 * 24));
     if (days < 8) {
       return true;
@@ -31,7 +32,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
   }, [participatedDate]);
 
   return (
-    <View className="py-6 flex items-center border-b-2 border-Gray-02">
+    <View className="py-5 flex items-center border-b-2 border-Gray-02">
       <Pressable
         className="mb-1 w-[314px]"
         onPress={() => navigation.navigate('FundDetail', {id: fundingId})}>

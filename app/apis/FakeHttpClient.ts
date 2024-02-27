@@ -128,6 +128,20 @@ export class FakeHttpClient {
     return this.httpClient.get('/fundings/exchange-refund-policy');
   }
 
+  cancelCreatedFund(id: number) {
+    return this.httpClient.get('');
+  }
+
+  cancelParticipatedFund({
+    id,
+    fundingParticipantId,
+  }: {
+    id: number;
+    fundingParticipantId: number;
+  }) {
+    return this.httpClient.get('');
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');

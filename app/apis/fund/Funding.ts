@@ -222,4 +222,33 @@ export default class Funding {
       }
     }
   }
+
+  async cancelCreatedFund(id: number) {
+    try {
+      const canceled = await this.apiClient.cancelCreatedFund(id);
+      return canceled.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
+
+  async cancelPaticipatedFund(data: {
+    id: number;
+    fundingParticipantId: number;
+  }) {
+    try {
+      const canceled = await this.apiClient.cancelParticipatedFund(data);
+      return canceled.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
 }

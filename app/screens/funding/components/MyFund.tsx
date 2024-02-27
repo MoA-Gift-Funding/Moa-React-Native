@@ -25,7 +25,7 @@ const MyFund = ({item}: {item: MyFundItem}) => {
           <Countdown
             date={endDate + ' 23:59:59'}
             renderer={({days, completed}) => {
-              if (completed || status !== '진행중') {
+              if (completed || status !== 'PROCESSING') {
                 return <TextBold title={'펀딩 종료'} style="text-Body-1" />;
               } else {
                 return <TextBold title={`D-${days}`} style="text-Body-1" />;

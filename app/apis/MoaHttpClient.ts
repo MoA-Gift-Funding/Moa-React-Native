@@ -163,6 +163,22 @@ export default class MoaHttpClient {
     return this.httpClient.get('/fundings/exchange-refund-policy');
   }
 
+  cancelCreatedFund(id: number) {
+    return this.httpClient.post(`/fundings/${id}/cancel`);
+  }
+
+  cancelParticipatedFund({
+    id,
+    fundingParticipantId,
+  }: {
+    id: number;
+    fundingParticipantId: number;
+  }) {
+    return this.httpClient.post(`/fundings/${id}/cancel-participate`, {
+      fundingParticipantId,
+    });
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/payments/toss/prepay', data);

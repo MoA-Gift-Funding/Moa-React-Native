@@ -27,8 +27,6 @@ export type FundStatus =
   | 'COMPLETE'
   | 'EXPIRED';
 
-type FundResponseStatus = '진행중' | '취소' | '중단' | '완료' | '만료';
-
 export type FundRequestStatus =
   | 'PROCESSING'
   | 'CANCELLED'
@@ -43,7 +41,7 @@ export interface MyFundItem {
   fundedAmount: number;
   fundingRate: number;
   fundingImageUrl: string;
-  status: FundResponseStatus;
+  status: FundStatus;
   id: number;
   participationCount: number;
   productImageUrl: string;
@@ -130,6 +128,7 @@ export interface ParticipatedFundItem {
   profileImageUrl: string;
   productId: number;
   productImageUrl: string;
+  fundingParticipantId: number;
   participatedDate: string;
   amount: number;
   participateStatus: ParticipateStatus;
