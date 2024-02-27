@@ -192,6 +192,10 @@ const useFunding = (
 
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
+    onError: error => {
+      navigation.goBack();
+      Toast.show({type: 'error', text1: '펀딩이 존재하지 않아요😭'});
+    },
   });
 
   const {mutateAsync: joinFundQuery} = useMutation({

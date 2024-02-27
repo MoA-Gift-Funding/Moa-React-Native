@@ -161,7 +161,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
         participateStatus === 'PARTICIPATING' &&
         isRefundable() && (
           <Pressable
-            className="flex items-center justify-center bg-Gray-02 w-[314px] h-[56px] rounded-lg"
+            className="flex items-center justify-center bg-Gray-02 w-[314px] h-[44px] rounded-lg"
             onPress={handleCancelBtn}>
             <TextRegular title="취소 요청" style="text-Gray-08" />
           </Pressable>

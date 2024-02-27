@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  RefreshControl,
   View,
 } from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
@@ -16,6 +17,7 @@ import ParticipatedFund from './ParticipatedFundItem';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const {
     myInfiteQuery,
     myInfiteFetchNextQuery,
@@ -68,6 +70,12 @@ const MyFunding = () => {
                   showsVerticalScrollIndicator={false}
                   onEndReached={async () => await myInfiteFetchNextQuery()}
                   onEndReachedThreshold={0.6}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={refetchMyInfiniteQuery}
+                    />
+                  }
                 />
               )}
               {myInfiteQuery.pages[0].content.length < 1 && (
@@ -90,10 +98,18 @@ const MyFunding = () => {
                     page.content.flat(),
                   )}
                   renderItem={fund => <ParticipatedFund item={fund.item} />}
-                  keyExtractor={fund => fund.fundingId}
+                  keyExtractor={fund =>
+                    fund.fundingId + fund.fundingParticipantId
+                  }
                   showsVerticalScrollIndicator={false}
                   onEndReached={async () => await participatedNextQuery()}
                   onEndReachedThreshold={0.6}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={refetchParticipatedFundsInfinityQuery}
+                    />
+                  }
                 />
               )}
               {participatedFundsQuery.pages[0].content.length < 1 && (
