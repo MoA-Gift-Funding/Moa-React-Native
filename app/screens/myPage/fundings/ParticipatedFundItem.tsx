@@ -1,10 +1,12 @@
-import React, {useCallback} from 'react';
-import {Image, Pressable, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Alert, Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
 import {autoCurrency} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import {ParticipatedFundItem} from '../../../types/Funding';
+import useFunding from '../../../hooks/fundings/useFunding';
+import LoadingBar from '../../../components/bar/LoadingBar';
 
 const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
   const {
@@ -17,6 +19,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
     nickName,
     amount,
     fundingParticipantId,
+    endDate,
   } = item;
   const navigation = useNavigation();
 
@@ -30,12 +33,42 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
     }
     return false;
   }, [participatedDate]);
+  const [isLoading, setIsLoading] = useState(false);
+  const {cancelParticipatedFundQuery} = useFunding();
+  const handleCancelBtn = async () => {
+    Alert.alert(
+      '펀딩 참여를 취소하시겠어요?',
+      '결제 취소는 3-5 영업일이 소요될 예정입니다.',
+      [
+        {
+          text: '펀딩 취소',
+          onPress: async () => {
+            try {
+              setIsLoading(true);
+              await cancelParticipatedFundQuery({
+                id: fundingId,
+                fundingParticipantId,
+              });
+            } finally {
+              setIsLoading(false);
+            }
+          },
+        },
+        {
+          text: '닫기',
+        },
+      ],
+    );
+  };
 
   return (
     <View className="py-5 flex items-center border-b-2 border-Gray-02">
+      {isLoading && <LoadingBar />}
       <Pressable
-        className="mb-1 w-[314px]"
-        onPress={() => navigation.navigate('FundDetail', {id: fundingId})}>
+        className="w-[314px]"
+        onPress={() =>
+          navigation.navigate('FundDetail', {id: fundingId, title, endDate})
+        }>
         {participateStatus === 'PARTICIPATING' ? (
           <>
             <View className="flex flex-row justify-between items-center">
@@ -78,11 +111,6 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
                 </View>
               </View>
             </View>
-            {status === 'PROCESSING' && isRefundable() && (
-              <Pressable className="flex items-center justify-center bg-Gray-02 w-[314px] h-[56px] rounded-lg">
-                <TextRegular title="취소 요청" style="text-Gray-08" />
-              </Pressable>
-            )}
           </>
         ) : (
           <>
@@ -129,6 +157,15 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
           </>
         )}
       </Pressable>
+      {status === 'PROCESSING' &&
+        participateStatus === 'PARTICIPATING' &&
+        isRefundable() && (
+          <Pressable
+            className="flex items-center justify-center bg-Gray-02 w-[314px] h-[56px] rounded-lg"
+            onPress={handleCancelBtn}>
+            <TextRegular title="취소 요청" style="text-Gray-08" />
+          </Pressable>
+        )}
     </View>
   );
 };
