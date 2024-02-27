@@ -7,6 +7,8 @@ import {
   getLatestAppVersion,
 } from '../../../utils/device';
 import useNotifications from '../../../hooks/notification/useNotifications';
+import useUser from '../../../hooks/user/useUser';
+import LoadingBar from '../../../components/bar/LoadingBar';
 
 const AppConfig = () => {
   const {
@@ -15,6 +17,8 @@ const AppConfig = () => {
     disallowNotificationQuery,
   } = useNotifications();
   const [allowed, setAllowed] = useState(notificationStatusQuery);
+  const [isLoading, setIsLoading] = useState(false);
+  const {deactivateUserQuery} = useUser();
 
   const handlePermitNotiBtn = async () => {
     if (allowed) {
@@ -30,9 +34,19 @@ const AppConfig = () => {
   const currentVersion = getCurrentAppVersion();
   // const latestVersion = getLatestAppVersion();
   const handleUpdateBtn = async () => {};
+
+  const handleDeactivateUser = async () => {
+    try {
+      setIsLoading(true);
+      await deactivateUserQuery();
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <View className="h-full justify-between">
       <View>
+        {isLoading && <LoadingBar />}
         <View className="border-Gray-02 border-t-2 bg-white">
           <View className="h-[62px] px-6 flex justify-center border-b-2 border-Gray-02">
             <TextRegular title="알림 설정" style="text-Gray-06" />
@@ -85,7 +99,9 @@ const AppConfig = () => {
           </View>
         </View>
       </View>
-      <Pressable className="mb-8 flex items-center justify-center">
+      <Pressable
+        className="mb-8 flex items-center justify-center"
+        onPress={handleDeactivateUser}>
         <TextRegular title="회원 탈퇴" style="text-Gray-06 underline" />
       </Pressable>
     </View>

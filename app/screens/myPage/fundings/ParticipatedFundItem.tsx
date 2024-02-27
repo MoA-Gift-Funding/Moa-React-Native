@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {Alert, Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
-import {autoCurrency} from '../../../utils/regex';
+import {autoCurrency, isRefundable} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import {ParticipatedFundItem} from '../../../types/Funding';
 import useFunding from '../../../hooks/fundings/useFunding';
@@ -23,16 +23,11 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
   } = item;
   const navigation = useNavigation();
 
-  const isRefundable = useCallback(() => {
-    const today = new Date();
-    const purchasedDate = new Date(participatedDate);
-    const timeDiff = today.getTime() - purchasedDate.getTime();
-    const days = Math.round(timeDiff / (1000 * 3600 * 24));
-    if (days < 8) {
-      return true;
-    }
-    return false;
+  const isWithin7days = useCallback(() => {
+    const refundable = isRefundable(participatedDate);
+    return refundable;
   }, [participatedDate]);
+
   const [isLoading, setIsLoading] = useState(false);
   const {cancelParticipatedFundQuery} = useFunding();
   const handleCancelBtn = async () => {
@@ -159,7 +154,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
       </Pressable>
       {status === 'PROCESSING' &&
         participateStatus === 'PARTICIPATING' &&
-        isRefundable() && (
+        isWithin7days() && (
           <Pressable
             className="flex items-center justify-center bg-Gray-02 w-[314px] h-[44px] rounded-lg"
             onPress={handleCancelBtn}>

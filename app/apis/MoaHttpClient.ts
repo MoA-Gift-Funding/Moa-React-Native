@@ -185,6 +185,15 @@ export default class MoaHttpClient {
     });
   }
 
+  // order
+  getOrders() {
+    return this.httpClient.get('/orders');
+  }
+
+  getOrderDetail(orderId: number) {
+    return this.httpClient.get(`/orders/${orderId}`);
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/payments/toss/prepay', data);

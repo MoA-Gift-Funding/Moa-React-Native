@@ -31,6 +31,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const {cancelCreatedFundQuery} = useFunding();
+
   const handleCancelBtn = async () => {
     Alert.alert(
       '펀딩을 취소하시겠어요?',

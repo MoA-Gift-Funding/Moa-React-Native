@@ -207,7 +207,41 @@ export class Users {
     }
   }
 
-  async deactivateUser(accessToken: string) {
+  async deactivateUser(platform: OauthProvider) {
+    switch (platform) {
+      case 'KAKAO':
+        const {accessToken} = await KaKaoLogin.login();
+        await this.deactivateMoaUser(accessToken);
+        break;
+      case 'NAVER':
+        const {isSuccess, successResponse} = await NaverLogin.login({
+          appName: 'MoA',
+          consumerKey: Config.NAVER_CLIENT_KEY!,
+          consumerSecret: Config.NAVER_SECERT_KEY!,
+          serviceUrlScheme:
+            Platform.OS === 'ios'
+              ? Config.NAVER_URL_SCHEME_IOS
+              : Config.NAVER_URL_SCHEME_AOS,
+        });
+        if (isSuccess && successResponse) {
+          await this.deactivateMoaUser(successResponse?.accessToken);
+        }
+        break;
+      case 'APPLE':
+        const {authorizationCode} = await appleAuth.performRequest({
+          requestedOperation: appleAuth.Operation.LOGIN,
+          requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+        });
+        if (authorizationCode) {
+          await this.deactivateMoaUser(authorizationCode);
+        }
+        break;
+      default:
+        throw new Error('유효하지않은 OAuth 플랫폼');
+    }
+  }
+
+  async deactivateMoaUser(accessToken: string) {
     try {
       const deactivated = await this.apiClient.deactivateUser(accessToken);
       return deactivated.data;

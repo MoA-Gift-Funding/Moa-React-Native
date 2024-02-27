@@ -51,7 +51,7 @@ export default function useUser() {
   });
 
   const {mutateAsync: deactivateUserQuery} = useMutation({
-    mutationFn: (accessToken: string) => useUserApi.deactivateUser(accessToken),
+    mutationFn: () => useUserApi.deactivateUser(user?.oauthProvider!),
     onSuccess: async () => {
       Toast.show({
         type: 'success',

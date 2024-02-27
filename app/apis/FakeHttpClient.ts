@@ -146,6 +146,15 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  // order
+  getOrders() {
+    return this.httpClient.get('/orders');
+  }
+
+  getOrderDetail(orderId: number) {
+    return this.httpClient.get(`/orders/${orderId}`);
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.get('');

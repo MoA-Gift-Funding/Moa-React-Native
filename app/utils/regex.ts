@@ -36,3 +36,14 @@ export const createOrderId = () => {
   const random = Math.floor(Math.random() * Number(date));
   return `MOA${year}${month}${day}-${random}`;
 };
+
+export const isRefundable = (participatedDate: string) => {
+  const today = new Date();
+  const purchasedDate = new Date(participatedDate);
+  const timeDiff = today.getTime() - purchasedDate.getTime();
+  const days = Math.round(timeDiff / (1000 * 3600 * 24));
+  if (days < 8) {
+    return true;
+  }
+  return false;
+};
