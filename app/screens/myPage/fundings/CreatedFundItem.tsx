@@ -1,9 +1,11 @@
-import React from 'react';
-import {Image, Pressable, View} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
 import {MyFundItem} from '../../../types/Funding';
 import {useNavigation} from '@react-navigation/native';
+import useFunding from '../../../hooks/fundings/useFunding';
+import LoadingBar from '../../../components/bar/LoadingBar';
 
 const ColoredFundLabel = ({label}: {label: string}) => (
   <View className="bg-Sub-01 rounded-xl px-2 h-[22px] flex flex-col justify-center items-center">
@@ -26,9 +28,34 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
     productImageUrl,
     participationCount,
   } = content;
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
+  const {cancelCreatedFundQuery} = useFunding();
+  const handleCancelBtn = async () => {
+    Alert.alert(
+      '펀딩을 취소하시겠어요?',
+      '펀딩에 참여한 모든 참가자들에게 결제 취소가 이루어집니다. 결제 취소는 3-5 영업일이 소요될 예정입니다.',
+      [
+        {
+          text: '펀딩 취소',
+          onPress: async () => {
+            try {
+              setIsLoading(true);
+              await cancelCreatedFundQuery(id!);
+            } finally {
+              setIsLoading(false);
+            }
+          },
+        },
+        {
+          text: '닫기',
+        },
+      ],
+    );
+  };
   return (
     <View className="py-5 border-b-2 border-Gray-02 flex items-center">
+      {isLoading && <LoadingBar />}
       <Pressable
         className="mb-1 w-[314px]"
         onPress={() => navigation.navigate('FundDetail', {id})}>
@@ -67,7 +94,9 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
         </View>
       </Pressable>
       {status === 'PROCESSING' && (
-        <Pressable className="w-[314px] h-[44px] flex justify-center items-center bg-Gray-02 rounded-lg">
+        <Pressable
+          className="w-[314px] h-[44px] flex justify-center items-center bg-Gray-02 rounded-lg"
+          onPress={handleCancelBtn}>
           <TextRegular title="펀딩 취소하기" style="text-Gray-06 text-center" />
         </Pressable>
       )}

@@ -32,7 +32,7 @@ const ReportButton = ({
         ? '펀딩을 신고하시겠어요?'
         : '메세지를 신고하시겠어요?',
       '',
-      [{text: '취소'}, {text: '신고하기', onPress: () => setOnModal(true)}],
+      [{text: '신고하기', onPress: () => setOnModal(true)}, {text: '취소'}],
     );
   };
   const [onModal, setOnModal] = useState(false);

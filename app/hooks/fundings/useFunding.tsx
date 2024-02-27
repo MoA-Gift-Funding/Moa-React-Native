@@ -226,18 +226,22 @@ const useFunding = (
     onSuccess: () => {
       Toast.show({
         type: 'success',
-        text1: '취소되었어요. 결제 금액은 3-5 영업일 이내에 취소될 예정이예요.',
+        text1: '취소가 완료되었어요🥹',
+        visibilityTime: 5000,
       });
+      refetchMyInfiniteQuery();
     },
   });
+
   const {mutateAsync: cancelParticipatedFundQuery} = useMutation({
     mutationFn: (data: {id: number; fundingParticipantId: number}) =>
       funding.cancelPaticipatedFund(data),
     onSuccess: () => {
       Toast.show({
         type: 'success',
-        text1: '취소되었어요. 결제 금액은 3-5 영업일 이내에 취소될 예정이예요',
+        text1: '취소가 완료되었어요🥹',
       });
+      refetchParticipatedFundsInfinityQuery();
     },
   });
 

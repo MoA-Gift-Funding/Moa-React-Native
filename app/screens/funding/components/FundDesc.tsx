@@ -45,28 +45,35 @@ const FundDesc = ({
               title="남은 시간"
               style="text-Gray-06 text-Body-2 leading-Body-2"
             />
-            <Countdown
-              date={endDate + ' 23:59:59'}
-              renderer={({days, hours, minutes, seconds, completed}) => {
-                if (completed) {
-                  return (
-                    <TextBold
-                      title={'펀딩 종료'}
-                      style="text-Gray-10 text-Heading-3 leading-Heading-3"
-                    />
-                  );
-                } else {
-                  return (
-                    <TextBold
-                      title={`${days}일 ${twoDP(hours)}:${twoDP(
-                        minutes,
-                      )}:${twoDP(seconds)}`}
-                      style="text-Gray-10 text-Heading-3 leading-Heading-3"
-                    />
-                  );
-                }
-              }}
-            />
+            {status === 'PROCESSING' ? (
+              <Countdown
+                date={endDate + ' 23:59:59'}
+                renderer={({days, hours, minutes, seconds, completed}) => {
+                  if (completed) {
+                    return (
+                      <TextBold
+                        title={'펀딩 종료'}
+                        style="text-Gray-10 text-Heading-3 leading-Heading-3"
+                      />
+                    );
+                  } else {
+                    return (
+                      <TextBold
+                        title={`${days}일 ${twoDP(hours)}:${twoDP(
+                          minutes,
+                        )}:${twoDP(seconds)}`}
+                        style="text-Gray-10 text-Heading-3 leading-Heading-3"
+                      />
+                    );
+                  }
+                }}
+              />
+            ) : (
+              <TextBold
+                title={'펀딩 종료'}
+                style="text-Gray-10 text-Heading-3 leading-Heading-3"
+              />
+            )}
           </View>
           <View className="mt-4">
             <TextRegular
