@@ -5,6 +5,8 @@ export interface OrderResponse {
   pageSize: number;
 }
 
+export type OrderStatus = 'WAITING_RECEIVE' | 'COMPLETE_RECEIVE' | 'REFUND';
+
 export type Order = {
   orderId: number;
   productId: {
@@ -15,6 +17,7 @@ export type Order = {
   brand: string;
   category: string;
   productName: string;
+  status: OrderStatus;
   price: number;
   orderDate: string;
 };
@@ -32,6 +35,7 @@ export interface OrderDetailItem {
   productName: string;
   price: number;
   possibleReissueCouponCount: number;
+  status: OrderStatus;
   address: {
     zonecode: string;
     roadAddress: string;
