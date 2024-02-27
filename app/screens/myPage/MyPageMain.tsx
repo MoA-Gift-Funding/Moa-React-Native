@@ -135,12 +135,6 @@ const MyPageMain = ({navigation}) => {
             navigation.navigate('CustomerCenter', {headerTitle: '고객센터'})
           }
         />
-        {/* <MenuCategory
-          title="1:1 문의"
-          onPress={() =>
-            navigation.navigate('MyInquiries', {headerTitle: '문의내역'})
-          }
-        /> */}
         <MenuCategory
           title="앱 설정"
           onPress={() =>
@@ -150,10 +144,14 @@ const MyPageMain = ({navigation}) => {
       </View>
       <View className="bg-white mt-3">
         <MenuCategory
+          title="도움말"
+          onPress={() => navigation.navigate('MoA', {headerTitle: '도움말'})}
+        />
+        <MenuCategory
           title="로그아웃"
           onPress={() => dispatch({type: 'LOGOUT'})}
         />
-        <MenuCategory title="회원탈퇴" onPress={() => {}} />
+        {/* <MenuCategory title="회원탈퇴" onPress={() => {}} /> */}
       </View>
     </ScrollView>
   );

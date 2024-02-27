@@ -31,12 +31,12 @@ import MyMessages from '../screens/myPage/message/MyMessages';
 import MyOrders from '../screens/myPage/order/MyOrders';
 import MyOrder from '../screens/myPage/order/MyOrder';
 import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
-import MyInquiries from '../screens/myPage/cs/MyInquiries';
 import FriendFundList from '../screens/funding/FriendFundList';
 import MyNotification from '../screens/myPage/notification/MyNotification';
 import AppConfig from '../screens/myPage/appConfig/AppConfig';
 import FinishFundCompleted from '../screens/funding/join/FinishFundCompleted';
 import Announces from '../screens/myPage/cs/Announces';
+import MoA from '../screens/myPage/moa/MoA';
 
 const AuthRouter = () => {
   const {
@@ -171,13 +171,13 @@ const AuthRouter = () => {
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyInquiries"
-            component={MyInquiries}
+            name="AppConfig"
+            component={AppConfig}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="AppConfig"
-            component={AppConfig}
+            name="MoA"
+            component={MoA}
             options={{header: () => <TitleHeader />}}
           />
         </>
