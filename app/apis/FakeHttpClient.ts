@@ -147,7 +147,11 @@ export class FakeHttpClient {
   }
 
   // order
-  getOrders() {
+  getOrders(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
     return this.httpClient.get('/orders');
   }
 

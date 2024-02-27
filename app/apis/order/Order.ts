@@ -7,9 +7,13 @@ export class Order {
     this.apiClient = apiClient;
   }
 
-  async getOrders(): Promise<OrderResponse> {
+  async getOrders(
+    page?: number,
+    size?: number,
+    sort?: string,
+  ): Promise<OrderResponse> {
     try {
-      const orders = await this.apiClient.getOrders();
+      const orders = await this.apiClient.getOrders(page, size, sort);
       return orders.data;
     } catch (error: any) {
       console.error(error.response.data);

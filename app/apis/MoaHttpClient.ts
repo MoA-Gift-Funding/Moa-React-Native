@@ -186,8 +186,12 @@ export default class MoaHttpClient {
   }
 
   // order
-  getOrders() {
-    return this.httpClient.get('/orders');
+  getOrders(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdDate,DESC',
+  ) {
+    return this.httpClient.get('/orders', {params: {page, size, sort}});
   }
 
   getOrderDetail(orderId: number) {

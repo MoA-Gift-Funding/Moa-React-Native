@@ -1,5 +1,5 @@
 import React from 'react';
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {useUserContext} from '../../contexts/UserContext';
 import {Order} from '../../apis/order/Order';
 
@@ -10,16 +10,32 @@ const useOrder = () => {
   } = useUserContext();
   const order = new Order(client);
 
-  const {data: ordersQuery} = useQuery({
+  const {
+    data: orderInfiniteQuery,
+    fetchNextPage: orderFetchNextPageQuery,
+    refetch: refetchOrderInfiniteQuery,
+  } = useInfiniteQuery({
     queryKey: ['orders', user?.id],
-    queryFn: () => order.getOrders(),
+    queryFn: ({pageParam = 0}) => order.getOrders(pageParam),
+    getNextPageParam: lastPage => {
+      if (lastPage.hasNext) {
+        return lastPage.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
   });
 
   const {mutateAsync: orderDetailQuery} = useMutation({
     mutationFn: (orderId: number) => order.getOrderDetail(orderId),
   });
 
-  return {ordersQuery, orderDetailQuery};
+  return {
+    orderInfiniteQuery,
+    orderFetchNextPageQuery,
+    refetchOrderInfiniteQuery,
+    orderDetailQuery,
+  };
 };
 
 export default useOrder;
