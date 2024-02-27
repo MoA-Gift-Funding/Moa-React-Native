@@ -26,6 +26,7 @@ const MyFunding = () => {
   } = useFunding();
 
   useRefetchOnFocus(refetchMyInfiniteQuery);
+  useRefetchOnFocus(refetchParticipatedFundsInfinityQuery);
 
   return (
     <KeyboardAvoidingView
@@ -91,7 +92,7 @@ const MyFunding = () => {
                   renderItem={fund => <ParticipatedFund item={fund.item} />}
                   keyExtractor={fund => fund.fundingId}
                   showsVerticalScrollIndicator={false}
-                  onEndReached={async () => await myInfiteFetchNextQuery()}
+                  onEndReached={async () => await participatedNextQuery()}
                   onEndReachedThreshold={0.6}
                 />
               )}
