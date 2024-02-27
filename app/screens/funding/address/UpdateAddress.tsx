@@ -52,30 +52,16 @@ const UpdateAddress = ({
       zonecode: updatedAddress?.zonecode || '',
     },
   });
-  const {
-    roadAddress,
-    jibunAddress,
-    name,
-    recipientName,
-    detailAddress,
-    phoneNumber,
-    zonecode,
-  } = getValues();
+  const {roadAddress, jibunAddress} = getValues();
   const {addrsQuery, createAddrQuery, updateAddressQuery} = useFunding();
   const onSubmit = async (data: Omit<ShippingInfo, 'id' | 'isDefault'>) => {
     await createAddrQuery({...data, isDefault: checked});
     setLeftPressed(true);
   };
-  const onUpdateSubmit = async () => {
+  const onUpdateSubmit = async data => {
     await updateAddressQuery({
       data: {
-        roadAddress,
-        jibunAddress,
-        name,
-        recipientName,
-        detailAddress,
-        phoneNumber,
-        zonecode,
+        ...data,
         isDefault: checked,
       },
       id: updatedAddress!.id,
