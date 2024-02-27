@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import NextButton from '../../../components/button/NextButton';
 import TextSemiBold from '../../../components/text/TextSemiBold';
+import {autoCurrency} from '../../../utils/regex';
 
 const NewFund = ({navigation, route}) => {
   const {id, price} = route.params;
@@ -116,15 +117,14 @@ const NewFund = ({navigation, route}) => {
               error={errors.maximumAmount}
               desc="펀딩에 참여할 친구의 1인당 최대 펀딩 가능 금액을 설정할 수 있어요. 입력 칸을 비워두면 금액 제한 없이 펀딩이 가능해요."
               keyboardType={'number-pad'}
-              // regex={autoCurrency}
               rules={{
                 min: {
-                  value: 10000,
-                  message: '최소 1만원부터 설정 가능해요.',
+                  value: 5000,
+                  message: '최소 5천원부터 설정 가능해요.',
                 },
                 max: {
-                  value: 10000000,
-                  message: '최대 1천만원까지 설정 가능해요.',
+                  value: price,
+                  message: `최대 ${autoCurrency(price)}원까지 설정 가능해요.`,
                 },
               }}
             />
