@@ -196,7 +196,6 @@ export class Users {
         method: 'PUT',
         body: imageBody,
       });
-
       return `https://image.giftmoa.co.kr/images/${fileName}`;
     } catch (error) {
       console.log(error);
@@ -205,6 +204,19 @@ export class Users {
         text1: '등록에 실패했어요. 다시 시도해주세요🥲',
       });
       throw error;
+    }
+  }
+
+  async deactivateUser(accessToken: string) {
+    try {
+      const deactivated = await this.apiClient.deactivateUser(accessToken);
+      return deactivated.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
     }
   }
 }

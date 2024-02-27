@@ -41,6 +41,10 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  deactivateUser(accessToken: string) {
+    return this.httpClient.get('');
+  }
+
   // friends
   async getFriends() {
     return this.httpClient.get('');

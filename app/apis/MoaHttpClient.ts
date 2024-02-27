@@ -59,6 +59,12 @@ export default class MoaHttpClient {
     });
   }
 
+  deactivateUser(accessToken: string) {
+    return this.httpClient.delete('/members', {
+      headers: {OAuthAccessToken: accessToken},
+    });
+  }
+
   // friends
   async getFriends() {
     return this.httpClient.get('/friends');
