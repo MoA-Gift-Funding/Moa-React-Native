@@ -3,10 +3,12 @@ import {OauthProvider, User} from '../../types/User';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {useUserContext} from '../../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 export default function useUser() {
   const {
     userState: {user},
+    dispatch,
     useApi: {useUserApi},
   } = useUserContext();
   const queryClient = useQueryClient();
@@ -48,6 +50,17 @@ export default function useUser() {
       useUserApi.updateProfileImage(data),
   });
 
+  const {mutateAsync: deactivateUserQuery} = useMutation({
+    mutationFn: (accessToken: string) => useUserApi.deactivateUser(accessToken),
+    onSuccess: async () => {
+      Toast.show({
+        type: 'success',
+        text1: '탈퇴가 완료되었습니다. 다음에 또 만나요🥹',
+      });
+      await dispatch({type: 'LOGOUT'});
+    },
+  });
+
   return {
     loginQuery,
     requestMobileQuery,
@@ -56,5 +69,6 @@ export default function useUser() {
     updateUserQuery,
     updateProfileImageQuery,
     getUserQuery,
+    deactivateUserQuery,
   };
 }
