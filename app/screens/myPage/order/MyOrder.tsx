@@ -73,7 +73,7 @@ const MyOrder = ({navigation, route}) => {
             title="쿠폰 재발급 요청"
             onSubmit={() =>
               navigation.navigate('CustomerCenter', {
-                headerTitle: '고객센터',
+                headerTitle: '고객 센터',
                 personalInquiry: true,
               })
             }

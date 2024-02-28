@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, Image, Pressable, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
-import {MyFundItem} from '../../../types/Funding';
+import {FundDetailItem, MyFundItem} from '../../../types/Funding';
 import {useNavigation} from '@react-navigation/native';
 import useFunding from '../../../hooks/fundings/useFunding';
 import LoadingBar from '../../../components/bar/LoadingBar';
 import {throttle} from '../../../utils/device';
+import NextButton from '../../../components/button/NextButton';
+import {useForm} from 'react-hook-form';
 
 const ColoredFundLabel = ({label}: {label: string}) => (
   <View className="bg-Sub-01 rounded-xl px-2 h-[22px] flex flex-col justify-center items-center">
@@ -30,8 +32,10 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
     participationCount,
   } = content;
   const [isLoading, setIsLoading] = useState(false);
+  const [detailFund, setDetailFund] = useState<FundDetailItem | undefined>();
   const navigation = useNavigation();
-  const {cancelCreatedFundQuery} = useFunding();
+  const {cancelCreatedFundQuery, fundDetailQuery} = useFunding();
+  const {handleSubmit} = useForm();
 
   const handleCancelBtn = async () => {
     Alert.alert(
@@ -55,6 +59,16 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       ],
     );
   };
+
+  useEffect(() => {
+    if (id && status === 'EXPIRED') {
+      const getDetailedFund = async () => {
+        const fund = await fundDetailQuery(id);
+        setDetailFund(fund);
+      };
+      getDetailedFund();
+    }
+  }, [fundDetailQuery, status, id]);
   return (
     <View className="py-5 border-b-2 border-Gray-02 flex items-center">
       {isLoading && <LoadingBar />}
@@ -104,6 +118,36 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
           onPress={throttle(handleCancelBtn, 1000)}>
           <TextRegular title="펀딩 취소하기" style="text-Gray-06 text-center" />
         </Pressable>
+      )}
+      {status === 'STOPPED' && (
+        <Pressable
+          className="w-[314px] h-[44px] flex justify-center items-center bg-Sub-01 rounded-lg"
+          onPress={throttle(() => {
+            navigation.navigate('CustomerCenter', {
+              headerTitle: '고객센터',
+              personalInquiry: true,
+            });
+          }, 1000)}>
+          <TextRegular
+            title="상품 중단 문의하기"
+            style="text-Main-01 text-center"
+          />
+        </Pressable>
+      )}
+      {status === 'EXPIRED' && detailFund && (
+        <NextButton
+          title="펀딩 채우기"
+          onSubmit={() =>
+            navigation.navigate('JoinFundPay', {
+              price: detailFund.remainAmount,
+              id: detailFund.id,
+              title: detailFund.title,
+              nickName: detailFund.nickName,
+              isFundOwner: true,
+            })
+          }
+          handleSubmit={handleSubmit}
+        />
       )}
       {/* {status === 'WAITING_ORDER' && <AcquireGiftButton />} */}
     </View>
