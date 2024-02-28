@@ -1,11 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import SideToggle from '../../../components/button/SideToggle';
 import MyInquiries from './MyInquiries';
 import FAQ from './FAQ';
 
-const CustomerCenter = () => {
+const CustomerCenter = ({route}) => {
+  const {personalInquiry} = route.params;
   const [faqSelected, setFaqSelected] = useState(true);
+  useEffect(() => {
+    if (personalInquiry) {
+      return setFaqSelected(false);
+    }
+  }, [personalInquiry]);
   return (
     <View className="h-full bg-white border-t-2 border-Gray-02">
       <SideToggle
