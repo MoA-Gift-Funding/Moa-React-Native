@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ParticipatedFundItem} from '../../../types/Funding';
 import useFunding from '../../../hooks/fundings/useFunding';
 import LoadingBar from '../../../components/bar/LoadingBar';
+import {throttle} from '../../../utils/device';
 
 const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
   const {
@@ -61,9 +62,11 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
       {isLoading && <LoadingBar />}
       <Pressable
         className="w-[314px]"
-        onPress={() =>
-          navigation.navigate('FundDetail', {id: fundingId, title, endDate})
-        }>
+        onPress={throttle(
+          () =>
+            navigation.navigate('FundDetail', {id: fundingId, title, endDate}),
+          1000,
+        )}>
         {participateStatus === 'PARTICIPATING' ? (
           <>
             <View className="flex flex-row justify-between items-center">
@@ -157,7 +160,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
         isWithin7days() && (
           <Pressable
             className="flex items-center justify-center bg-Gray-02 w-[314px] h-[44px] rounded-lg"
-            onPress={handleCancelBtn}>
+            onPress={throttle(handleCancelBtn, 1000)}>
             <TextRegular title="취소 요청" style="text-Gray-08" />
           </Pressable>
         )}

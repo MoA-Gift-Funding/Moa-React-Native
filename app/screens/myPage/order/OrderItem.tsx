@@ -7,6 +7,7 @@ import {autoCurrency} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import NextButton from '../../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
+import {throttle} from '../../../utils/device';
 
 const OrderItem = ({item}: {item: Order}) => {
   const {orderDate, orderId, brand, productName, price, imageUrl, status} =
@@ -19,9 +20,14 @@ const OrderItem = ({item}: {item: Order}) => {
   return (
     <View className="border-b-2 border-Gray-02 py-4">
       <Pressable
-        onPress={() =>
-          navigation.navigate('MyOrder', {headerTitle: '주문 · 배송', orderId})
-        }>
+        onPress={throttle(
+          () =>
+            navigation.navigate('MyOrder', {
+              headerTitle: '주문 · 배송',
+              orderId,
+            }),
+          1000,
+        )}>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold
             title={orderDate.substring(0, 10)}

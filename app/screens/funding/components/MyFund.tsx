@@ -8,6 +8,7 @@ import Countdown from 'react-countdown';
 import {MyFundItem} from '../../../types/Funding';
 import {useUserContext} from '../../../contexts/UserContext';
 import {httpsUrlCorrector} from '../../../utils/regex';
+import {throttle} from '../../../utils/device';
 
 const MyFund = ({item}: {item: MyFundItem}) => {
   const {title, endDate, fundingRate, participationCount, id, status} = item;
@@ -19,7 +20,10 @@ const MyFund = ({item}: {item: MyFundItem}) => {
     <Pressable
       className="w-[285px] rounded-2xl mr-4 mb-2"
       style={{elevation: 3, backgroundColor: 'transparent'}}
-      onPress={() => navigation.navigate('FundDetail', {id, title, endDate})}>
+      onPress={throttle(
+        () => navigation.navigate('FundDetail', {id, title, endDate}),
+        1000,
+      )}>
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">
         <View className="flex flex-col">
           <Countdown

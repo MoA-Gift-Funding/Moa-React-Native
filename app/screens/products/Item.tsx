@@ -4,6 +4,7 @@ import TextRegular from '../../components/text/TextRegular';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import {useNavigation} from '@react-navigation/native';
 import {autoCurrency} from '../../utils/regex';
+import {throttle} from '../../utils/device';
 
 const Item = ({
   item,
@@ -22,16 +23,18 @@ const Item = ({
   return (
     <Pressable
       className="flex w-[152px] mb-[30px]"
-      onPress={() =>
-        navigation.navigate('ItemDetail', {
-          id,
-          imageUrl,
-          brand,
-          productName,
-          price,
-          discountRate,
-        })
-      }>
+      onPress={throttle(
+        () =>
+          navigation.navigate('ItemDetail', {
+            id,
+            imageUrl,
+            brand,
+            productName,
+            price,
+            discountRate,
+          }),
+        1000,
+      )}>
       <Image
         className="w-[152px] h-[152px]"
         source={{

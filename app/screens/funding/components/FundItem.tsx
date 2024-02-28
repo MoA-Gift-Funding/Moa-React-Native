@@ -6,6 +6,7 @@ import Countdown from 'react-countdown';
 import {httpsUrlCorrector, twoDP} from '../../../utils/regex';
 import {useNavigation} from '@react-navigation/native';
 import {FriendFundItem} from '../../../types/Funding';
+import {throttle} from '../../../utils/device';
 
 const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
   const {
@@ -22,9 +23,11 @@ const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
   return (
     <Pressable
       className="flex flex-col my-4 ml-1"
-      onPress={() =>
-        navigation.navigate('FundDetail', {id: fundingId, title, endDate})
-      }>
+      onPress={throttle(
+        () =>
+          navigation.navigate('FundDetail', {id: fundingId, title, endDate}),
+        1000,
+      )}>
       <View className="relative rounded-lg mr-2">
         <Image
           source={{

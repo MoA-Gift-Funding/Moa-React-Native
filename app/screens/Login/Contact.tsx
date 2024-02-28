@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import ProgressBar from '../../components/bar/ProgressBar';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useFriends from '../../hooks/friends/useFriends';
-import {getContactsInfo} from '../../utils/device';
+import {getContactsInfo, throttle} from '../../utils/device';
 
 const Contact = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,9 +52,9 @@ const Contact = ({navigation}) => {
       </View>
       <View className="mb-8 flex flex-col items-center">
         <Pressable
-          onPress={async () => {
+          onPress={throttle(async () => {
             navigation.navigate('JoinCompleted');
-          }}>
+          }, 1000)}>
           <TextRegular
             style="mb-10 text-Body-2 text-Gray-06 underline"
             title="건너뛰기"

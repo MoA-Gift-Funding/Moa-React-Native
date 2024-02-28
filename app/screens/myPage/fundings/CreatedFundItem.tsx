@@ -6,6 +6,7 @@ import {MyFundItem} from '../../../types/Funding';
 import {useNavigation} from '@react-navigation/native';
 import useFunding from '../../../hooks/fundings/useFunding';
 import LoadingBar from '../../../components/bar/LoadingBar';
+import {throttle} from '../../../utils/device';
 
 const ColoredFundLabel = ({label}: {label: string}) => (
   <View className="bg-Sub-01 rounded-xl px-2 h-[22px] flex flex-col justify-center items-center">
@@ -59,7 +60,10 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       {isLoading && <LoadingBar />}
       <Pressable
         className="mb-1 w-[314px]"
-        onPress={() => navigation.navigate('FundDetail', {id, title, endDate})}>
+        onPress={throttle(
+          () => navigation.navigate('FundDetail', {id, title, endDate}),
+          1000,
+        )}>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold title={endDate} style="text-Body-2" />
           {status === 'PROCESSING' && <ColoredFundLabel label="펀딩중" />}
@@ -97,7 +101,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       {status === 'PROCESSING' && (
         <Pressable
           className="w-[314px] h-[44px] flex justify-center items-center bg-Gray-02 rounded-lg"
-          onPress={handleCancelBtn}>
+          onPress={throttle(handleCancelBtn, 1000)}>
           <TextRegular title="펀딩 취소하기" style="text-Gray-06 text-center" />
         </Pressable>
       )}

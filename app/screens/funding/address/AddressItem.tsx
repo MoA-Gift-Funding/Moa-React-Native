@@ -6,6 +6,7 @@ import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {useNavigation} from '@react-navigation/native';
+import {throttle} from '../../../utils/device';
 
 const AddressItem = ({
   item,
@@ -47,10 +48,10 @@ const AddressItem = ({
     <View className="flex flex-row items-center w-[360px]">
       <Pressable
         className="w-4 h-4 rounded-full border border-Gray-06 flex justify-center items-center"
-        onPress={() => {
+        onPress={throttle(() => {
           onPress(id);
           setToggled(false);
-        }}>
+        }, 1000)}>
         {selected === id && (
           <View className="bg-Main-01 w-4 h-4 rounded-full flex justify-center items-center">
             <View className="bg-white w-2 h-2 rounded-full" />
@@ -68,13 +69,13 @@ const AddressItem = ({
           <View className="flex flex-row">
             <Pressable
               className="bg-Sub-01 rounded-full px-2 py-1"
-              onPress={handleUpdateBtn}>
+              onPress={throttle(handleUpdateBtn, 1000)}>
               <TextSemiBold title="수정" style="text-Main-01 text-Detail-1" />
             </Pressable>
             {!isDefault && (
               <Pressable
                 className="bg-Gray-02 rounded-full px-2 py-1 ml-1"
-                onPress={handleDeleteBtn}>
+                onPress={throttle(handleDeleteBtn, 1000)}>
                 <TextSemiBold title="삭제" style="text-Gray-06 text-Detail-1" />
               </Pressable>
             )}

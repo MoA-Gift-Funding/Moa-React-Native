@@ -9,7 +9,7 @@ import MenuCategoryTop from './components/MenuCategoryTop';
 import useFriends from '../../hooks/friends/useFriends';
 import {httpsUrlCorrector} from '../../utils/regex';
 import useFunding from '../../hooks/fundings/useFunding';
-import {getContactsInfo} from '../../utils/device';
+import {getContactsInfo, throttle} from '../../utils/device';
 import LoadingBar from '../../components/bar/LoadingBar';
 import Notification from '../../components/svg/Notification';
 import useNotifications from '../../hooks/notification/useNotifications';
@@ -52,9 +52,11 @@ const MyPageMain = ({navigation}) => {
           {isLoading && <LoadingBar />}
           <Pressable
             className="mb-2 flex items-end mt-2"
-            onPress={() =>
-              navigation.navigate('MyNotification', {headerTitle: '알림'})
-            }>
+            onPress={throttle(
+              () =>
+                navigation.navigate('MyNotification', {headerTitle: '알림'}),
+              1000,
+            )}>
             <Notification hasUnRead={hasUnReadQuery} color="#424242" />
           </Pressable>
           <View className="flex flex-row mb-6">
@@ -67,9 +69,13 @@ const MyPageMain = ({navigation}) => {
             <View className="flex flex-col ml-3 justify-center">
               <Pressable
                 className="flex flex-row items-center"
-                onPress={() =>
-                  navigation.navigate('MyPageDetail', {headerTitle: '내 정보'})
-                }>
+                onPress={throttle(
+                  () =>
+                    navigation.navigate('MyPageDetail', {
+                      headerTitle: '내 정보',
+                    }),
+                  1000,
+                )}>
                 <View className="w-[17px] h-[17px] bg-Kakao flex items-center justify-center rounded-sm">
                   <TextBold title="K" style="text-center text-Detail-1" />
                 </View>

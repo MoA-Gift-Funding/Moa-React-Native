@@ -22,6 +22,7 @@ import NextButton from '../../../components/button/NextButton';
 import useUser from '../../../hooks/user/useUser';
 import {getImageBlob} from '../../../utils/aws';
 import Toast from 'react-native-toast-message';
+import {throttle} from '../../../utils/device';
 
 const MyPageDetail = ({navigation}) => {
   const {
@@ -115,7 +116,7 @@ const MyPageDetail = ({navigation}) => {
             />
             <Pressable
               className="absolute flex items-center justify-center bottom-7 right-[134px] w-[32px] h-[32px] bg-Gray-10 opacity-70 rounded-full"
-              onPress={handleProfileImageBtn}>
+              onPress={throttle(handleProfileImageBtn, 1000)}>
               <FontAwesomeIcon icon={faCamera} color="#F0F0F0" size={15} />
             </Pressable>
           </View>

@@ -17,6 +17,7 @@ import Countdown from 'react-countdown';
 import cls from 'classnames';
 import {twoDP} from '../../utils/regex';
 import useUser from '../../hooks/user/useUser';
+import {throttle} from '../../utils/device';
 
 const PhoneValidation = () => {
   const [sent, setSent] = useState(false);
@@ -152,7 +153,7 @@ const PhoneValidation = () => {
                       },
                     )}
                     disabled={pressed}
-                    onPress={handleSubmit(onSubmit)}>
+                    onPress={throttle(handleSubmit(onSubmit), 1000)}>
                     <TextSemiBold
                       style="text-white text-Body-1 ml-[14px]"
                       title={`${twoDP(minutes)}:${twoDP(seconds)}`}

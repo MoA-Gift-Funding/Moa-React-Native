@@ -5,6 +5,7 @@ import {
   getCurrentAppVersion,
   getDeviceToken,
   getLatestAppVersion,
+  throttle,
 } from '../../../utils/device';
 import useNotifications from '../../../hooks/notification/useNotifications';
 import useUser from '../../../hooks/user/useUser';
@@ -101,7 +102,7 @@ const AppConfig = () => {
       </View>
       <Pressable
         className="mb-8 flex items-center justify-center"
-        onPress={handleDeactivateUser}>
+        onPress={throttle(handleDeactivateUser, 1000)}>
         <TextRegular title="회원 탈퇴" style="text-Gray-06 underline" />
       </Pressable>
     </View>

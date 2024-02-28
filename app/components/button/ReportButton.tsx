@@ -4,6 +4,7 @@ import TextSemiBold from '../text/TextSemiBold';
 import TextBold from '../text/TextBold';
 import TextRegular from '../text/TextRegular';
 import useFunding from '../../hooks/fundings/useFunding';
+import {throttle} from '../../utils/device';
 
 const ReportTextBtn = ({
   title,
@@ -14,7 +15,7 @@ const ReportTextBtn = ({
 }) => (
   <Pressable
     className="w-[312px] h-[56px] bg-Gray-02 flex justify-center rounded-lg mb-2"
-    onPress={onPress}>
+    onPress={throttle(onPress, 1000)}>
     <TextSemiBold title={title} style="ml-4 text-Gray-06" />
   </Pressable>
 );

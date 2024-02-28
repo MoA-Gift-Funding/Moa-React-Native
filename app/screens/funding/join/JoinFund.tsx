@@ -12,6 +12,7 @@ import TextBold from '../../../components/text/TextBold';
 import TextRegular from '../../../components/text/TextRegular';
 import {Controller, useForm} from 'react-hook-form';
 import NextButton from '../../../components/button/NextButton';
+import {throttle} from '../../../utils/device';
 
 const JoinFund = ({navigation, route}) => {
   const {
@@ -97,17 +98,17 @@ const JoinFund = ({navigation, route}) => {
             <View className="flex flex-row justify-around mt-2 w-[312px]">
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() => handleAddedPrice(5000)}>
+                onPress={throttle(() => handleAddedPrice(5000), 1000)}>
                 <TextRegular title="+5천원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() => handleAddedPrice(10000)}>
+                onPress={throttle(() => handleAddedPrice(10000), 1000)}>
                 <TextRegular title="+1만원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable
                 className="w-[61px] h-[42px] flex justify-center items-center bg-Gray-02 rounded-lg"
-                onPress={() => handleAddedPrice(50000)}>
+                onPress={throttle(() => handleAddedPrice(50000), 1000)}>
                 <TextRegular title="+5만원" style="text-Gray-06 text-Body-2" />
               </Pressable>
               <Pressable

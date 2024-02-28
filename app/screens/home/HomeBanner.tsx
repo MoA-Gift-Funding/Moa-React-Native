@@ -6,6 +6,7 @@ import {useUserContext} from '../../contexts/UserContext';
 import Notification from '../../components/svg/Notification';
 import useNotifications from '../../hooks/notification/useNotifications';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
+import {throttle} from '../../utils/device';
 
 const HomeBanner = ({navigation}) => {
   const {
@@ -24,9 +25,10 @@ const HomeBanner = ({navigation}) => {
       <View className="h-[250px] flex flex-col ml-4 mt-12">
         <Pressable
           className="mb-2 w-[40px] h-[40px]"
-          onPress={() =>
-            navigation.navigate('MyNotification', {headerTitle: '알림'})
-          }>
+          onPress={throttle(
+            () => navigation.navigate('MyNotification', {headerTitle: '알림'}),
+            1000,
+          )}>
           <Notification hasUnRead={hasUnReadQuery} color="white" />
         </Pressable>
         <TextBold
@@ -43,7 +45,7 @@ const HomeBanner = ({navigation}) => {
         />
         <Pressable
           className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
-          onPress={() => navigation.navigate('StoreMain')}>
+          onPress={throttle(() => navigation.navigate('StoreMain'), 1000)}>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
       </View>

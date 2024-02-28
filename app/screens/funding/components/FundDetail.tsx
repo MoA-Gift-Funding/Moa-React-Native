@@ -17,6 +17,7 @@ import FundMessage from './FundMessage';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {FundDetailItem} from '../../../types/Funding';
 import {useUserContext} from '../../../contexts/UserContext';
+import {throttle} from '../../../utils/device';
 
 const FundDetail = ({navigation, route}) => {
   const {id, title, endDate} = route.params;
@@ -182,7 +183,7 @@ const FundDetail = ({navigation, route}) => {
         <View className="bg-white flex flex-row items-center py-6 px-2 justify-evenly">
           <Pressable
             className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
-            onPress={async () => {
+            onPress={throttle(async () => {
               Platform.OS === 'ios'
                 ? Share.share({
                     url: 'https://www.giftmoa.co.kr/',
@@ -192,21 +193,23 @@ const FundDetail = ({navigation, route}) => {
                     title: '친구의 펀딩이예요!',
                     message: 'https://www.giftmoa.co.kr/',
                   });
-            }}>
+            }, 1000)}>
             <TextSemiBold title="공유" style="text-white text-Body-1" />
           </Pressable>
           {memberId !== user?.id && (
             <Pressable
               className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-              onPress={() =>
-                navigation.navigate('JoinFund', {
-                  maximumAmount,
-                  remainAmount,
-                  id,
-                  title,
-                  nickName,
-                })
-              }>
+              onPress={throttle(
+                () =>
+                  navigation.navigate('JoinFund', {
+                    maximumAmount,
+                    remainAmount,
+                    id,
+                    title,
+                    nickName,
+                  }),
+                1000,
+              )}>
               <TextSemiBold
                 style="text-white text-Body-1 ml-[14px]"
                 title="선물 펀딩하기"
@@ -216,15 +219,17 @@ const FundDetail = ({navigation, route}) => {
           {memberId === user?.id && (
             <Pressable
               className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-              onPress={() =>
-                navigation.navigate('JoinFundPay', {
-                  price: remainAmount,
-                  id,
-                  title,
-                  nickName,
-                  isFundOwner: true,
-                })
-              }>
+              onPress={throttle(
+                () =>
+                  navigation.navigate('JoinFundPay', {
+                    price: remainAmount,
+                    id,
+                    title,
+                    nickName,
+                    isFundOwner: true,
+                  }),
+                1000,
+              )}>
               <TextSemiBold
                 style="text-white text-Body-1 ml-[14px]"
                 title="펀딩 채우기"

@@ -21,7 +21,7 @@ import useFunding from '../../hooks/fundings/useFunding';
 import {FriendFundItem, MyFundItem} from '../../types/Funding';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getDeviceToken} from '../../utils/device';
+import {getDeviceToken, throttle} from '../../utils/device';
 
 export default function Home({navigation}) {
   const {
@@ -100,11 +100,13 @@ export default function Home({navigation}) {
               />
               {myFundingsQuery.all.length > 0 && (
                 <Pressable
-                  onPress={() =>
-                    navigation.navigate('MyFunding', {
-                      headerTitle: '펀딩',
-                    })
-                  }>
+                  onPress={throttle(
+                    () =>
+                      navigation.navigate('MyFunding', {
+                        headerTitle: '펀딩',
+                      }),
+                    1000,
+                  )}>
                   <TextSemiBold
                     title="모두보기 >"
                     style="text-Detail-1 text-Gray-06"
@@ -168,11 +170,13 @@ export default function Home({navigation}) {
               </View>
               {friendFundingsQuery.length > 0 && (
                 <Pressable
-                  onPress={() =>
-                    navigation.navigate('FriendFundList', {
-                      headerTitle: '펀딩',
-                    })
-                  }>
+                  onPress={throttle(
+                    () =>
+                      navigation.navigate('FriendFundList', {
+                        headerTitle: '펀딩',
+                      }),
+                    1000,
+                  )}>
                   <TextSemiBold
                     title="모두보기 >"
                     style="text-Detail-1 text-Gray-06"
@@ -215,7 +219,7 @@ export default function Home({navigation}) {
             </ScrollView>
             <Pressable
               className="mt-10 bg-white rounded-xl"
-              onPress={async () => {
+              onPress={throttle(async () => {
                 Platform.OS === 'ios'
                   ? Share.share({
                       url: 'https://www.giftmoa.co.kr/',
@@ -225,7 +229,7 @@ export default function Home({navigation}) {
                       title: '새로운 선물 경험을 선사하는 플랫폼, 모아',
                       message: 'https://www.giftmoa.co.kr/',
                     });
-              }}>
+              }, 1000)}>
               <Image
                 className="w-full h-[136px] rounded-xl"
                 source={{

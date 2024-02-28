@@ -21,6 +21,7 @@ import CheckBox from '../../../components/button/CheckBox';
 import TextRegular from '../../../components/text/TextRegular';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {ShippingInfo} from '../../../types/Funding';
+import {throttle} from '../../../utils/device';
 
 const UpdateAddress = ({
   setLeftPressed,
@@ -149,7 +150,7 @@ const UpdateAddress = ({
             />
             <Pressable
               className="relative w-[312px] h-[56px] flex justify-center placeholder:text-[#858585] bg-Gray-02 border-[1px] border-[#D9D9D9] rounded-md text-Body-1"
-              onPress={() => setOnPostModal(true)}>
+              onPress={throttle(() => setOnPostModal(true), 1000)}>
               <Controller
                 control={control}
                 rules={{required: '주소를 검색해주세요🚚'}}
@@ -194,10 +195,10 @@ const UpdateAddress = ({
                   <View className="w-full flex items-end">
                     <Pressable
                       className="p-2"
-                      onPress={() => {
+                      onPress={throttle(() => {
                         setOnPostModal(false);
                         setIsLoading(false);
-                      }}>
+                      }, 1000)}>
                       <FontAwesomeIcon icon={faClose} size={24} />
                     </Pressable>
                   </View>

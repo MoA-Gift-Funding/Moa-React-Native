@@ -3,6 +3,7 @@ import {Image, Pressable, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 import useFriends from '../../../hooks/friends/useFriends';
 import {httpsUrlCorrector} from '../../../utils/regex';
+import {throttle} from '../../../utils/device';
 
 const FriendItem = ({
   item,
@@ -45,7 +46,7 @@ const FriendItem = ({
       {item.isBlocked && (
         <Pressable
           className="bg-Gray-06 flex px-2 py-1 rounded-md"
-          onPress={handleUnblock}>
+          onPress={throttle(handleUnblock, 1000)}>
           <TextRegular
             title="차단 해제"
             style="text-Detail-1 leading-Detail-1 text-white"
@@ -55,7 +56,7 @@ const FriendItem = ({
       {!item.isBlocked && (
         <Pressable
           className="bg-Sub-01 flex px-2 py-1 rounded-md"
-          onPress={handleBlock}>
+          onPress={throttle(handleBlock, 1000)}>
           <TextRegular
             title="차단"
             style="text-Detail-1 text-Main-01 leading-Detail-1"

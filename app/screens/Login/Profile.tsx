@@ -13,6 +13,7 @@ import LoadingBar from '../../components/bar/LoadingBar';
 import useUser from '../../hooks/user/useUser';
 import {httpsUrlCorrector} from '../../utils/regex';
 import {getImageBlob} from '../../utils/aws';
+import {throttle} from '../../utils/device';
 
 const Profile = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +71,7 @@ const Profile = ({navigation}) => {
           />
           <Pressable
             className="absolute flex items-center justify-center bottom-3 right-16 w-[60px] h-[60px] bg-Gray-10 opacity-70 rounded-full"
-            onPress={handleProfileImageBtn}>
+            onPress={throttle(handleProfileImageBtn, 1000)}>
             <FontAwesomeIcon icon={faCamera} color="white" size={25} />
           </Pressable>
         </View>
