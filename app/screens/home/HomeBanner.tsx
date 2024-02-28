@@ -45,7 +45,7 @@ const HomeBanner = ({navigation}) => {
         />
         <Pressable
           className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
-          onPress={throttle(() => navigation.navigate('StoreMain'), 1000)}>
+          onPress={() => navigation.navigate('StoreMain')}>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
       </View>

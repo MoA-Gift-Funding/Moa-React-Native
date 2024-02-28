@@ -9,9 +9,7 @@ const StoreHeader = () => {
   return (
     <SafeAreaView>
       <View className="flex flex-row justify-between h-14 items-center bg-white px-1">
-        <Pressable
-          className="ml-6"
-          onPress={throttle(() => navigation.navigate('Home'), 1000)}>
+        <Pressable className="ml-6" onPress={() => navigation.navigate('Home')}>
           <Svg width={35} height={35} viewBox="0 0 35 35" fill={'none'}>
             <Path
               d="M14.3375 34.6035H1.81092C1.18459 34.6035 0.714844 34.0933 0.714844 33.5045V27.2246C0.714844 23.1426 4.00307 19.8456 8.0742 19.8456C12.1453 19.8456 15.4336 23.1426 15.4336 27.2246V33.5045C15.4336 34.0933 14.9638 34.6035 14.3375 34.6035Z"

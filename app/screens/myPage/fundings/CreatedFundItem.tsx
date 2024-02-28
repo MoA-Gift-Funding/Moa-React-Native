@@ -122,12 +122,12 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       {status === 'STOPPED' && (
         <Pressable
           className="w-[314px] h-[44px] flex justify-center items-center bg-Sub-01 rounded-lg"
-          onPress={throttle(() => {
+          onPress={() => {
             navigation.navigate('CustomerCenter', {
               headerTitle: '고객센터',
               personalInquiry: true,
             });
-          }, 1000)}>
+          }}>
           <TextRegular
             title="상품 중단 문의하기"
             style="text-Main-01 text-center"
