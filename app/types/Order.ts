@@ -22,6 +22,16 @@ export type Order = {
   orderDate: string;
 };
 
+export type AddressItem = {
+  zonecode: string;
+  roadAddress: string;
+  jibunAddress: string;
+  detailAddress: string;
+  name: string;
+  recipientName: string;
+  phoneNumber: string;
+};
+
 export interface OrderDetailItem {
   orderId: number;
   orderDate: string;
@@ -36,15 +46,7 @@ export interface OrderDetailItem {
   price: number;
   possibleReissueCouponCount: number;
   status: OrderStatus;
-  address: {
-    zonecode: string;
-    roadAddress: string;
-    jibunAddress: string;
-    detailAddress: string;
-    name: string;
-    recipientName: string;
-    phoneNumber: string;
-  };
+  address: AddressItem;
   deliveryRequestMessage: string;
   payment: {
     participantPayments: [

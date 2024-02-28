@@ -1,5 +1,5 @@
 import React from 'react';
-import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery, useMutation} from '@tanstack/react-query';
 import {Products} from '../../apis/products/Products';
 import {useUserContext} from '../../contexts/UserContext';
 
@@ -24,7 +24,7 @@ export default function useProducts(
     fetchNextPage: productsFetchNextQuery,
     refetch: productsRefetchQuery,
   } = useInfiniteQuery({
-    queryKey: ['products'],
+    queryKey: ['products', category],
     queryFn: ({pageParam = 0}) =>
       products.getProducts(pageParam, 14, undefined, category),
     getNextPageParam: lastPage => {

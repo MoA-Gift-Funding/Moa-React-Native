@@ -24,7 +24,7 @@ const OrderItem = ({item}: {item: Order}) => {
           () =>
             navigation.navigate('MyOrder', {
               headerTitle: '주문 · 배송',
-              orderId,
+              ...item,
             }),
           1000,
         )}>

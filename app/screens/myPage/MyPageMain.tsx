@@ -23,7 +23,8 @@ const MyPageMain = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {friendsQuery, syncContactsQuery} = useFriends();
   const {
-    myFundingsQuery,
+    myProcessingFundingsQuery,
+    myCompletedFundingsQuery,
     recievedMessagesQuery,
     myParticipatedFundingsQuery,
     refetchMyParticipatedFundingsQuery,
@@ -94,8 +95,8 @@ const MyPageMain = ({navigation}) => {
           <View className="flex flex-row items-center justify-around py-6 border-t-2 border-Gray-01">
             <MenuCategoryTop
               dataLength={
-                myFundingsQuery?.all.length +
-                  myParticipatedFundingsQuery?.length || 0
+                myProcessingFundingsQuery?.length +
+                  myCompletedFundingsQuery?.length || 0
               }
               title="펀딩"
               onPress={() =>

@@ -1,46 +1,63 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, ScrollView, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
 import OrderPayment from './OrderPayment';
 import OrderDelivery from './OrderDelivery';
+import useOrder from '../../../hooks/order/useOrder';
+import {OrderDetailItem} from '../../../types/Order';
+import {autoCurrency} from '../../../utils/regex';
 
 const MyOrder = ({navigation, route}) => {
-  const {orderId} = route.params;
+  const {orderId, imageUrl, brand, productName, price} = route.params;
+  const {orderDetailQuery} = useOrder();
+  const [order, setOrder] = useState<OrderDetailItem | undefined>(undefined);
+  useEffect(() => {
+    const getDetailedInfo = async () => {
+      const detail = await orderDetailQuery(orderId);
+      setOrder(detail);
+    };
+    getDetailedInfo();
+  }, [orderId, orderDetailQuery]);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View className="flex flex-col border-t-2 border-Gray-02">
         <View className="flex flex-row justify-between items-center bg-white px-6 py-5">
           <TextSemiBold title="23.12.24" style="text-Body-2" />
-          <TextRegular title="주문번호 20032384877" style="text-Body-2" />
+          <TextRegular title={`주문번호 ${orderId}`} style="text-Body-2" />
         </View>
         <View className="flex flex-row items-center bg-white px-6 py-4 mt-4">
           <Image
             source={{
-              uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703223350/moa-fund-img2_dnu8xk.png',
+              uri: imageUrl,
             }}
             className="w-[70px] h-[70px] rounded-xl"
           />
           <View className="flex flex-col ml-3 justify-around">
-            <TextRegular title="Apple" style="text-Detail-1 text-Gray-06" />
+            <TextRegular title={brand} style="text-Detail-1 text-Gray-06" />
             <TextRegular
-              title="에어팟 맥스 실버"
+              title={productName}
               style="text-Body-2 w-[234px]"
               numberOfLines={1}
             />
-            <TextSemiBold title="750,000원" style="text-Body-2" />
+            <TextSemiBold
+              title={`${autoCurrency(price)}원`}
+              style="text-Body-2"
+            />
           </View>
         </View>
-        <OrderDelivery
-          item={{
-            recipientName: '이수진',
-            phoneNumber: '010-4558-9598',
-            roadAddress: '서울특별시 영등포구 버드나루로 12길 8',
-            detailedAddress: '1102호',
-            zonecode: '12345',
-            deliveryStatus: '배송중',
-          }}
-        />
+        {order && (
+          <OrderDelivery
+            item={{
+              recipientName: order.address.recipientName,
+              phoneNumber: order.address.phoneNumber,
+              roadAddress: order.address.roadAddress,
+              detailAddress: order.address.detailAddress,
+              deliveryStatus: order.status,
+              deliveryRequestMessage: order.deliveryRequestMessage,
+            }}
+          />
+        )}
         <OrderPayment
           item={[
             {price: '45000'},
