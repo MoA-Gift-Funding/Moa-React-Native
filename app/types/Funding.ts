@@ -66,10 +66,10 @@ export interface FundDetailItem {
 }
 
 export type Participant = {
-  id: number;
   memberId: number;
   nickName: string;
   profileImageUrl: string;
+  messageId: number;
   message: string;
   createAt: string;
 };
@@ -135,6 +135,7 @@ export interface ParticipatedFundItem {
 }
 
 export interface FundMessageItem {
+  messageId: number;
   profileImageUrl: string;
   nickName: string;
   message: string;

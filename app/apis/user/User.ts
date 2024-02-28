@@ -196,7 +196,7 @@ export class Users {
         method: 'PUT',
         body: imageBody,
       });
-      return `https://image.giftmoa.co.kr/images/${fileName}`;
+      return `https://image.giftmoa.co.kr/images/prod/${fileName}`;
     } catch (error) {
       console.log(error);
       Toast.show({

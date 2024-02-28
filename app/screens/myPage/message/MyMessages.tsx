@@ -22,7 +22,7 @@ const MyMessages = () => {
               page.content.flat(),
             )}
             renderItem={message => <MessageItem item={message.item} />}
-            keyExtractor={message => message.memberId}
+            keyExtractor={message => message.messageId}
             showsVerticalScrollIndicator={false}
             onEndReached={async () => await recievedMessagesNextPageQuery()}
             onEndReachedThreshold={0.6}

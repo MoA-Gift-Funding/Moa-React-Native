@@ -128,8 +128,8 @@ const FundDetail = ({navigation, route}) => {
                 {participants.length > 0 &&
                   participants.map(msg => (
                     <FundMessage
-                      key={msg.id}
-                      id={msg.id}
+                      key={msg.messageId}
+                      messageId={msg.messageId}
                       message={msg.message}
                       nickName={msg.nickName}
                       profileImageUrl={msg.profileImageUrl}
