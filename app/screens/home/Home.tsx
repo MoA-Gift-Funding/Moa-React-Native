@@ -30,17 +30,21 @@ export default function Home({navigation}) {
   const [activated, setActivated] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const {
-    myFundingsQuery,
+    myProcessingFundingsQuery,
+    refetchMyProcessingFundingsQuery,
+    myCompletedFundingsQuery,
+    refetchMyCompletedFundingsQuery,
     friendFundingsQuery,
     refetchFriendFudingQuery,
-    refetchMyFundingsQuery,
   } = useFunding(0, 3);
   useRefetchOnFocus(refetchFriendFudingQuery);
-  useRefetchOnFocus(refetchMyFundingsQuery);
+  useRefetchOnFocus(refetchMyProcessingFundingsQuery);
+  useRefetchOnFocus(refetchMyCompletedFundingsQuery);
 
   const onRefresh = () => {
     refetchFriendFudingQuery();
-    refetchMyFundingsQuery();
+    refetchMyProcessingFundingsQuery();
+    refetchMyCompletedFundingsQuery();
   };
 
   const deviceToken = useCallback(getDeviceToken, []);
@@ -91,14 +95,14 @@ export default function Home({navigation}) {
             />
           </Pressable>
         </View>
-        {myFundingsQuery?.all && (
+        {myProcessingFundingsQuery && (
           <View className="bg-white flex flex-col py-10 justify-center">
             <View className="flex flex-row justify-between items-center mx-6">
               <TextSemiBold
                 title={`${user?.nickname}님의 펀딩`}
                 style="text-Heading-4"
               />
-              {myFundingsQuery.all.length > 0 && (
+              {myProcessingFundingsQuery.length > 0 && (
                 <Pressable
                   onPress={throttle(
                     () =>
@@ -118,9 +122,9 @@ export default function Home({navigation}) {
               className="py-4 pl-6 flex flex-row"
               horizontal={true}
               showsHorizontalScrollIndicator={true}>
-              {myFundingsQuery.inProgress.length > 0 &&
+              {myProcessingFundingsQuery.length > 0 &&
                 activated &&
-                myFundingsQuery.inProgress.map((fund: MyFundItem) => (
+                myProcessingFundingsQuery.map((fund: MyFundItem) => (
                   <MyFund
                     key={fund.id}
                     item={{
@@ -128,9 +132,9 @@ export default function Home({navigation}) {
                     }}
                   />
                 ))}
-              {myFundingsQuery.completed.length > 0 &&
+              {myCompletedFundingsQuery.length > 0 &&
                 !activated &&
-                myFundingsQuery.completed.map((fund: MyFundItem) => (
+                myCompletedFundingsQuery.map((fund: MyFundItem) => (
                   <MyFund
                     key={fund.id}
                     item={{
@@ -138,7 +142,7 @@ export default function Home({navigation}) {
                     }}
                   />
                 ))}
-              {myFundingsQuery.completed.length < 1 && !activated && (
+              {myCompletedFundingsQuery.length < 1 && !activated && (
                 <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
                   <TextRegular
                     title="아직 완료된 펀딩이 없어요🎁"
@@ -146,7 +150,7 @@ export default function Home({navigation}) {
                   />
                 </View>
               )}
-              {myFundingsQuery.inProgress.length < 1 && activated && (
+              {myProcessingFundingsQuery.length < 1 && activated && (
                 <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
                   <TextRegular
                     title="바로가기를 통해 펀딩을 만들어볼까요?🎁"

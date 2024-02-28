@@ -107,8 +107,11 @@ export default class MoaHttpClient {
     page: number = 0,
     size: number = 10,
     sort: string = 'endDate,ASC',
+    statuses: FundRequestStatus = 'PROCESSING, CANCELLED, STOPPED, COMPLETE, EXPIRED',
   ) {
-    return this.httpClient.get('/fundings/my', {params: {page, size, sort}});
+    return this.httpClient.get('/fundings/my', {
+      params: {page, size, sort, statuses},
+    });
   }
 
   findFriendFundings(

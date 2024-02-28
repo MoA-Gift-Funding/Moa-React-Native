@@ -84,9 +84,15 @@ export default class Funding {
     page: number = 0,
     size: number = 10,
     sort: string = 'endDate,ASC',
+    statuses: FundRequestStatus = 'PROCESSING, CANCELLED, STOPPED, COMPLETE, EXPIRED',
   ) {
     try {
-      const funds = await this.apiClient.findMyFundings(page, size, sort);
+      const funds = await this.apiClient.findMyFundings(
+        page,
+        size,
+        sort,
+        statuses,
+      );
       return funds.data;
     } catch (error: any) {
       console.error(error.response.data);

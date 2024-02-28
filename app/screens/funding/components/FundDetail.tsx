@@ -42,7 +42,7 @@ const FundDetail = ({navigation, route}) => {
     productImageUrl: '',
     participants: [
       {
-        id: 0,
+        messageId: 0,
         memberId: 0,
         nickName: '',
         profileImageUrl: '',

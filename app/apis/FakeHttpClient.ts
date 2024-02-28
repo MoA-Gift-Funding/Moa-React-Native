@@ -87,6 +87,7 @@ export class FakeHttpClient {
     page: number = 0,
     size: number = 10,
     sort: string = 'endDate,ASC',
+    statuses: FundRequestStatus = 'PROCESSING, CANCELLED, STOPPED, COMPLETE, EXPIRED',
   ) {
     return this.httpClient.get('');
   }

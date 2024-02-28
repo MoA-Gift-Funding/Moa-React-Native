@@ -81,20 +81,28 @@ const useFunding = (
     },
   });
 
-  const {data: myFundingsQuery, refetch: refetchMyFundingsQuery} = useQuery({
-    queryKey: ['myfunds', user?.id],
-    select: data => {
-      return {
-        all: data.content,
-        completed: data.content.filter(
-          (fund: MyFundItem) => fund.status !== 'PROCESSING',
-        ),
-        inProgress: data.content.filter(
-          (fund: MyFundItem) => fund.status === 'PROCESSING',
-        ),
-      };
-    },
-    queryFn: () => funding.findMyFundings(page, size, sort),
+  const {
+    data: myProcessingFundingsQuery,
+    refetch: refetchMyProcessingFundingsQuery,
+  } = useQuery({
+    queryKey: ['myfunds', 'processing', user?.id],
+    select: data => data.content,
+    queryFn: () => funding.findMyFundings(page, size, sort, 'PROCESSING'),
+  });
+
+  const {
+    data: myCompletedFundingsQuery,
+    refetch: refetchMyCompletedFundingsQuery,
+  } = useQuery({
+    queryKey: ['myfunds', 'completed', user?.id],
+    select: data => data.content,
+    queryFn: () =>
+      funding.findMyFundings(
+        page,
+        size,
+        sort,
+        'CANCELLED, STOPPED, COMPLETE, EXPIRED',
+      ),
   });
 
   const {
@@ -248,17 +256,18 @@ const useFunding = (
       refetchParticipatedFundsInfinityQuery();
     },
   });
-
   return {
     addrsQuery,
     createAddrQuery,
     createFundingQuery,
     deleteAddressQuery,
     updateAddressQuery,
-    myFundingsQuery,
+    myProcessingFundingsQuery,
+    refetchMyProcessingFundingsQuery,
+    myCompletedFundingsQuery,
+    refetchMyCompletedFundingsQuery,
     fundDetailQuery,
     friendFundingsQuery,
-    refetchMyFundingsQuery,
     refetchFriendFudingQuery,
     myParticipatedFundingsQuery,
     refetchMyParticipatedFundingsQuery,
