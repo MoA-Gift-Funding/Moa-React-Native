@@ -74,12 +74,29 @@ const ItemDetail = ({route, navigation}) => {
                 />
               </>
             )}
-            {!productInfoSelected && (
-              <TextRegular
-                title={product?.directions}
-                style="text-Gray-06 text-Body-2 leading-Body-2"
-              />
-            )}
+            {!productInfoSelected &&
+              product &&
+              product.productExchangeRefundPolicy.policies.map(
+                (policy, index) => {
+                  if (index === 4) {
+                    return;
+                  }
+                  return (
+                    <View key={policy.title}>
+                      <TextRegular
+                        title={`▶ ${policy.title}`}
+                        style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                      />
+                      {policy.content.map(text => (
+                        <TextRegular
+                          title={`· ${text}`}
+                          style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                        />
+                      ))}
+                    </View>
+                  );
+                },
+              )}
           </View>
           <Pressable
             className="w-full border-y-[1px] border-Gray-02 flex items-center"
@@ -93,10 +110,27 @@ const ItemDetail = ({route, navigation}) => {
             </View>
             {caution && (
               <View className="w-full bg-Gray-02 flex items-center py-4">
-                <TextRegular
-                  title={product?.notes}
-                  style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
-                />
+                {product?.productExchangeRefundPolicy.policies.map(
+                  (policy, index) => {
+                    if (index !== 4) {
+                      return;
+                    }
+                    return (
+                      <View key={policy.title + 'caution'}>
+                        <TextRegular
+                          title={`▶ ${policy.title}`}
+                          style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                        />
+                        {policy.content.map(text => (
+                          <TextRegular
+                            title={`· ${text}`}
+                            style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
+                          />
+                        ))}
+                      </View>
+                    );
+                  },
+                )}
               </View>
             )}
           </Pressable>

@@ -19,22 +19,11 @@ const Item = ({
   };
 }) => {
   const navigation = useNavigation();
-  const {id, imageUrl, brand, productName, price, discountRate} = item;
+  const {imageUrl, brand, productName, price, discountRate} = item;
   return (
     <Pressable
       className="flex w-[152px] mb-[30px]"
-      onPress={throttle(
-        () =>
-          navigation.navigate('ItemDetail', {
-            id,
-            imageUrl,
-            brand,
-            productName,
-            price,
-            discountRate,
-          }),
-        1000,
-      )}>
+      onPress={throttle(() => navigation.navigate('ItemDetail', item), 1000)}>
       <Image
         className="w-[152px] h-[152px]"
         source={{

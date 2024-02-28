@@ -19,19 +19,40 @@ export interface Product {
 export interface ProductsResponse {
   content: Product[];
   hasNext: true;
-  currentPage: 0;
-  pageSize: 0;
+  currentPage: number;
+  pageSize: number;
 }
 
 export interface ProductDetail {
-  id?: number;
-  image: string;
+  id: number;
+  productId: {
+    productId: string;
+    productProvider: string;
+  };
+  imageUrl: string;
   brand: string;
-  name: string;
-  price: string;
-  salesNumber?: string;
+  category: string;
+  productName: string;
+  price: number;
   description: string;
-  notes: string;
-  directions: string;
-  categoryType?: string;
+  saleEndDate: string;
+  discountRate: number;
+  limitDate: number;
+  status: 'SALES' | 'SALES_DISCONTINUED';
+  options: [
+    {
+      id: number;
+      optionName: string;
+      code: string;
+      status: 'SUPPORTED';
+    },
+  ];
+  productExchangeRefundPolicy: {
+    policies: [
+      {
+        title: string;
+        content: string[];
+      },
+    ];
+  };
 }
