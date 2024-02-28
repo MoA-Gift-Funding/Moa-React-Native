@@ -95,14 +95,14 @@ export default function Home({navigation}) {
             />
           </Pressable>
         </View>
-        {myProcessingFundingsQuery && (
-          <View className="bg-white flex flex-col py-10 justify-center">
-            <View className="flex flex-row justify-between items-center mx-6">
-              <TextSemiBold
-                title={`${user?.nickname}님의 펀딩`}
-                style="text-Heading-4"
-              />
-              {myProcessingFundingsQuery.length > 0 && (
+        <View className="bg-white flex flex-col py-10 justify-center">
+          <View className="flex flex-row justify-between items-center mx-6">
+            <TextSemiBold
+              title={`${user?.nickname}님의 펀딩`}
+              style="text-Heading-4"
+            />
+            {myProcessingFundingsQuery &&
+              myProcessingFundingsQuery.length > 0 && (
                 <Pressable
                   onPress={throttle(
                     () =>
@@ -117,50 +117,57 @@ export default function Home({navigation}) {
                   />
                 </Pressable>
               )}
-            </View>
-            <ScrollView
-              className="py-4 pl-6 flex flex-row"
-              horizontal={true}
-              showsHorizontalScrollIndicator={true}>
-              {myProcessingFundingsQuery.length > 0 &&
-                activated &&
-                myProcessingFundingsQuery.map((fund: MyFundItem) => (
-                  <MyFund
-                    key={fund.id}
-                    item={{
-                      ...fund,
-                    }}
-                  />
-                ))}
-              {myCompletedFundingsQuery.length > 0 &&
-                !activated &&
-                myCompletedFundingsQuery.map((fund: MyFundItem) => (
-                  <MyFund
-                    key={fund.id}
-                    item={{
-                      ...fund,
-                    }}
-                  />
-                ))}
-              {myCompletedFundingsQuery.length < 1 && !activated && (
-                <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
-                  <TextRegular
-                    title="아직 완료된 펀딩이 없어요🎁"
-                    style="text-Body-2 text-Gray-06 text-center"
-                  />
-                </View>
-              )}
-              {myProcessingFundingsQuery.length < 1 && activated && (
-                <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
-                  <TextRegular
-                    title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
-                    style="text-Body-2 text-Gray-06 text-center"
-                  />
-                </View>
-              )}
-            </ScrollView>
           </View>
-        )}
+          <ScrollView
+            className="py-4 pl-6 flex flex-row"
+            horizontal={true}
+            showsHorizontalScrollIndicator={true}>
+            {myProcessingFundingsQuery && (
+              <>
+                {myProcessingFundingsQuery.length > 0 &&
+                  activated &&
+                  myProcessingFundingsQuery.map((fund: MyFundItem) => (
+                    <MyFund
+                      key={fund.id}
+                      item={{
+                        ...fund,
+                      }}
+                    />
+                  ))}
+                {myProcessingFundingsQuery.length < 1 && activated && (
+                  <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
+                    <TextRegular
+                      title="바로가기를 통해 펀딩을 만들어볼까요?🎁"
+                      style="text-Body-2 text-Gray-06 text-center"
+                    />
+                  </View>
+                )}
+              </>
+            )}
+            {myCompletedFundingsQuery && (
+              <>
+                {myCompletedFundingsQuery.length > 0 &&
+                  !activated &&
+                  myCompletedFundingsQuery.map((fund: MyFundItem) => (
+                    <MyFund
+                      key={fund.id}
+                      item={{
+                        ...fund,
+                      }}
+                    />
+                  ))}
+                {myCompletedFundingsQuery.length < 1 && !activated && (
+                  <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
+                    <TextRegular
+                      title="아직 완료된 펀딩이 없어요🎁"
+                      style="text-Body-2 text-Gray-06 text-center"
+                    />
+                  </View>
+                )}
+              </>
+            )}
+          </ScrollView>
+        </View>
         {friendFundingsQuery && (
           <View className="bg-white my-4 py-10 flex flex-col">
             <View className="flex flex-row justify-between mx-6">

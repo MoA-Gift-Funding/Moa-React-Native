@@ -273,7 +273,15 @@ export default class MoaHttpClient {
     page: number = 0,
     size: number = 10,
     sort: string = 'id,ASC',
-    category?: string,
+    category?:
+      | '상품권'
+      | '피자/치킨'
+      | '뷰티'
+      | '식품/건강'
+      | '편의점'
+      | '리빙/잡화'
+      | '영화'
+      | undefined,
   ) {
     return this.httpClient.get('products', {
       params: {category, page, size, sort},

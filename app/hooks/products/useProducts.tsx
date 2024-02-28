@@ -3,7 +3,17 @@ import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
 import {Products} from '../../apis/products/Products';
 import {useUserContext} from '../../contexts/UserContext';
 
-export default function useProducts(loadingCallback?: () => void) {
+export default function useProducts(
+  category?:
+    | '상품권'
+    | '피자/치킨'
+    | '뷰티'
+    | '식품/건강'
+    | '편의점'
+    | '리빙/잡화'
+    | '영화'
+    | undefined,
+) {
   const {
     useApi: {client},
   } = useUserContext();
@@ -15,7 +25,8 @@ export default function useProducts(loadingCallback?: () => void) {
     refetch: productsRefetchQuery,
   } = useInfiniteQuery({
     queryKey: ['products'],
-    queryFn: ({pageParam = 0}) => products.getProducts(pageParam, 14),
+    queryFn: ({pageParam = 0}) =>
+      products.getProducts(pageParam, 14, undefined, category),
     getNextPageParam: lastPage => {
       if (lastPage.hasNext) {
         return lastPage.currentPage + 1;

@@ -11,9 +11,23 @@ export class Products {
     page?: number,
     size?: number,
     sort?: string,
+    category?:
+      | '상품권'
+      | '피자/치킨'
+      | '뷰티'
+      | '식품/건강'
+      | '편의점'
+      | '리빙/잡화'
+      | '영화'
+      | undefined,
   ): Promise<ProductsResponse> {
     try {
-      const products = await this.apiClient.getProducts(page, size, sort);
+      const products = await this.apiClient.getProducts(
+        page,
+        size,
+        sort,
+        category,
+      );
       return products.data;
     } catch (error: any) {
       console.error(error.response.data);

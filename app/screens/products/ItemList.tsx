@@ -1,68 +1,45 @@
-import React, {useEffect, useState} from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
-import TextRegular from '../../components/text/TextRegular';
+import React, {useState} from 'react';
+import {FlatList, View} from 'react-native';
 import Item from './Item';
 import Footer from '../../components/footer/Footer';
-import {autoCurrency} from '../../utils/regex';
 import LoadingBar from '../../components/bar/LoadingBar';
 import useProducts from '../../hooks/products/useProducts';
+import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 const ItemList = ({route}) => {
-  const {categoryType} = route.params;
-  const [loading, setLoading] = useState(true);
-  const {
-    categoryProductsQuery: {data: products, mutate},
-  } = useProducts(() => setLoading(false));
-  useEffect(() => {
-    mutate({categoryType, page: 0});
-  }, [mutate, categoryType]);
+  const {category} = route.params;
+  const [loading, setLoading] = useState(false);
+  const {productsInfiniteQuery, productsFetchNextQuery, productsRefetchQuery} =
+    useProducts(category);
+  useRefetchOnFocus(productsRefetchQuery);
   return (
     <>
-      <ScrollView showsVerticalScrollIndicator={false} className="bg-white">
+      <View className="bg-white h-full">
         {loading && <LoadingBar />}
-        <View className="flex flex-row justify-center mt-6">
-          <View className="flex flex-row justify-between w-[312px]">
-            <TextRegular
-              title={`상품 ${
-                products ? autoCurrency(products?.length) : '0'
-              }개`}
-              style="text-Gray-08 text-Detail-1"
-            />
-            <Pressable className="flex flex-row items-center">
-              {/* <TextRegular
-              title={filter}
-              style="text-Gray-08 text-Detail-1 mr-1"
-            />
-            <FontAwesomeIcon
-              icon={faArrowUpShortWide}
-              color="#616161"
-              size={12}
-            /> */}
-            </Pressable>
+        {productsInfiniteQuery && (
+          <View className="flex items-center mt-3">
+            <View className="w-[320px] flex flex-row flex-wrap gap-2">
+              <FlatList
+                data={productsInfiniteQuery.pages.flatMap(page =>
+                  page.content.flat(),
+                )}
+                renderItem={({item}) => <Item item={item} />}
+                keyExtractor={product => product.productId.productId}
+                showsVerticalScrollIndicator={false}
+                onEndReached={async () => {
+                  try {
+                    setLoading(true);
+                    await productsFetchNextQuery();
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+                onEndReachedThreshold={0.6}
+                numColumns={2}
+              />
+            </View>
           </View>
-        </View>
-        <View className="flex items-center mt-3">
-          <View className="w-[320px] flex flex-row flex-wrap gap-2">
-            {products?.map(product => {
-              const {id, imageUrl, brand, productName, price, discountRate} =
-                product;
-              return (
-                <View key={id}>
-                  <Item
-                    item={{
-                      id,
-                      imageUrl,
-                      brand,
-                      productName,
-                      price,
-                      discountRate,
-                    }}
-                  />
-                </View>
-              );
-            })}
-          </View>
-        </View>
-      </ScrollView>
+        )}
+      </View>
       <Footer screen="Store" />
     </>
   );
