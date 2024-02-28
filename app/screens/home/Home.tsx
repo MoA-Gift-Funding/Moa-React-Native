@@ -144,7 +144,7 @@ export default function Home({navigation}) {
                   />
                 </View>
               )}
-              {myFundingsQuery.inProgress.length < 1 && (
+              {myFundingsQuery.inProgress.length < 1 && activated && (
                 <View className="w-[310px] flex items-center justify-center pt-5 pb-12">
                   <TextRegular
                     title="바로가기를 통해 펀딩을 만들어볼까요?🎁"

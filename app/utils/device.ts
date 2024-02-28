@@ -133,3 +133,20 @@ export const parsePhoneNumber = (phoneNumber: string) => {
   phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   return phoneNumber;
 };
+
+export const throttle = <T extends (...args: any[]) => any>(
+  func: T,
+  delay: number,
+): ((...args: Parameters<T>) => void) => {
+  let throttling: boolean = false;
+
+  return (...args: Parameters<T>): void => {
+    if (!throttling) {
+      throttling = true;
+      func(...args);
+      setTimeout(() => {
+        throttling = false;
+      }, delay);
+    }
+  };
+};

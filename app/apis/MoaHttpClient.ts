@@ -266,8 +266,15 @@ export default class MoaHttpClient {
   }
 
   // Products
-  getProducts(page: number = 0, size: number = 10, sort: string = 'id,ASC') {
-    return this.httpClient.get('products', {params: {page, size, sort}});
+  getProducts(
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'id,ASC',
+    category?: string,
+  ) {
+    return this.httpClient.get('products', {
+      params: {category, page, size, sort},
+    });
   }
 
   getProductDetail(productId: number) {

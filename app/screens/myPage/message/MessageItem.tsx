@@ -3,6 +3,11 @@ import {Image, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import {FundMessageItem} from '../../../types/Funding';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import ko from 'dayjs/locale/ko';
+dayjs.extend(relativeTime);
+dayjs.locale(ko);
 
 const MessageItem = ({item}: {item: Partial<FundMessageItem>}) => {
   const {message, nickName, createdDate, profileImageUrl} = item;
@@ -27,7 +32,7 @@ const MessageItem = ({item}: {item: Partial<FundMessageItem>}) => {
             />
           </View>
           <TextRegular
-            title={createdDate}
+            title={dayjs().to(createdDate)}
             style="text-Gray-06 text-Detail-1 mr-1"
           />
         </View>

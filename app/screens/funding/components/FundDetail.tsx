@@ -35,7 +35,7 @@ const FundDetail = ({navigation, route}) => {
     maximumAmount: 0,
     remainAmount: 0,
     fundingRate: 0,
-    status: 'PROCESSING',
+    status: 'COMPLETE',
     fundedAmount: 0,
     participationCount: 0,
     productImageUrl: '',

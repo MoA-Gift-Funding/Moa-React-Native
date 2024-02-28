@@ -35,7 +35,7 @@ const FriendFundList = () => {
                     .flat(),
                 )}
                 renderItem={fund => <FundItem item={fund.item} />}
-                keyExtractor={fund => fund.id}
+                keyExtractor={fund => fund.fundingId}
                 showsVerticalScrollIndicator={false}
                 onEndReached={async () =>
                   await friendFundingInfiteFetchNextQuery()
@@ -54,12 +54,13 @@ const FriendFundList = () => {
                     .flat(),
                 )}
                 renderItem={fund => <FundItem item={fund.item} />}
-                keyExtractor={fund => fund.id}
+                keyExtractor={fund => fund.fundingId}
                 showsVerticalScrollIndicator={false}
                 onEndReached={async () =>
                   await friendFundingInfiteFetchNextQuery()
                 }
                 onEndReachedThreshold={0.6}
+                numColumns={2}
               />
             )}
           </View>

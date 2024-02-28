@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, ScrollView, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import OrderItem from './OrderItem';
 import useOrder from '../../../hooks/order/useOrder';
 import {RefreshControl} from 'react-native';

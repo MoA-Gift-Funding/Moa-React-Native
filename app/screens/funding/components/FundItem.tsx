@@ -43,10 +43,12 @@ const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
               />
             </Svg>
           </View>
-          <TextRegular
-            title="마감 시간"
-            style="text-white mr-1 text-Detail-1"
-          />
+          {status === 'PROCESSING' && (
+            <TextRegular
+              title="마감 시간"
+              style="text-white mr-1 text-Detail-1"
+            />
+          )}
           <Countdown
             date={endDate + ' 23:59:59'}
             renderer={({days, hours, minutes, seconds, completed}) => {
