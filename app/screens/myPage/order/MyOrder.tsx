@@ -47,29 +47,20 @@ const MyOrder = ({navigation, route}) => {
           </View>
         </View>
         {order && (
-          <OrderDelivery
-            item={{
-              recipientName: order.address.recipientName,
-              phoneNumber: order.address.phoneNumber,
-              roadAddress: order.address.roadAddress,
-              detailAddress: order.address.detailAddress,
-              deliveryStatus: order.status,
-              deliveryRequestMessage: order.deliveryRequestMessage,
-            }}
-          />
+          <>
+            <OrderDelivery
+              item={{
+                recipientName: order.address.recipientName,
+                phoneNumber: order.address.phoneNumber,
+                roadAddress: order.address.roadAddress,
+                detailAddress: order.address.detailAddress,
+                deliveryStatus: order.status,
+                deliveryRequestMessage: order.deliveryRequestMessage,
+              }}
+            />
+            <OrderPayment item={order.payment} price={price} />
+          </>
         )}
-        <OrderPayment
-          item={[
-            {price: '45000'},
-            {price: '15000'},
-            {price: '20000'},
-            {price: '30000'},
-            {price: '250000'},
-            {price: '15000'},
-            {price: '350000'},
-            {price: '25000'},
-          ]}
-        />
       </View>
     </ScrollView>
   );

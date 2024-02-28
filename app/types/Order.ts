@@ -48,17 +48,19 @@ export interface OrderDetailItem {
   status: OrderStatus;
   address: AddressItem;
   deliveryRequestMessage: string;
-  payment: {
-    participantPayments: [
-      {
-        memberId: number;
-        customNickname: string;
-        realNickname: string;
-        amount: number;
-      },
-    ];
-    myPayment: {
-      amount: number;
-    };
-  };
+  payment: PaymentItem;
 }
+
+export type PaymentItem = {
+  participantPayments: friendPaymentInfo[];
+  myPayment: {
+    amount: number;
+  };
+};
+
+export type friendPaymentInfo = {
+  memberId: number;
+  customNickname: string;
+  realNickname: string;
+  amount: number;
+};
