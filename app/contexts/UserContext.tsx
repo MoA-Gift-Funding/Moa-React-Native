@@ -79,8 +79,6 @@ export const UserContextProvider = ({
             payload: user,
           });
         }
-      } catch (error) {
-        console.error(error);
       } finally {
         dispatch({type: 'STOP_LOADING'});
       }

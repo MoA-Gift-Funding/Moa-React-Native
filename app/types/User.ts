@@ -10,6 +10,7 @@ export interface User {
   birthyear?: string;
   phoneNumber?: string;
   status: 'PRESIGNED_UP' | 'SIGNED_UP';
+  customerKey: string;
 }
 
 export type UserFormData = {

@@ -7,6 +7,7 @@ import {autoCurrency} from '../../utils/regex';
 
 const Item = ({
   item,
+  isIndexOdd,
 }: {
   item: {
     id: number;
@@ -16,12 +17,17 @@ const Item = ({
     price: number;
     discountRate: number;
   };
+  isIndexOdd: boolean;
 }) => {
   const navigation = useNavigation();
   const {imageUrl, brand, productName, price, discountRate} = item;
   return (
     <Pressable
-      className="flex w-[152px] mb-[30px]"
+      className={
+        isIndexOdd
+          ? 'flex w-[152px] mb-[30px] ml-1'
+          : 'flex w-[152px] mb-[30px] mr-1'
+      }
       onPress={() => navigation.navigate('ItemDetail', item)}>
       <Image
         className="w-[152px] h-[152px]"

@@ -82,7 +82,13 @@ export class Users {
       return user.data;
     } catch (error: any) {
       console.error(error.response.data);
+      console.error(error.response.status);
       switch (error.response.status) {
+        case 401:
+          await AsyncStorage.clear();
+          error.response.data.message =
+            '회원 정보를 찾을 수 없어요. 다시 로그인해주세요🥲';
+          throw error;
         case 404:
           error.response.data.message =
             '회원 정보를 찾을 수 없어요. 다시 로그인해주세요🥲';

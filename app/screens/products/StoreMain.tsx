@@ -8,8 +8,7 @@ import useProducts from '../../hooks/products/useProducts';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 
 const StoreMain = () => {
-  const {productsInfiniteQuery, productsRefetchQuery, productsFetchNextQuery} =
-    useProducts();
+  const {productsInfiniteQuery, productsRefetchQuery} = useProducts();
   useRefetchOnFocus(productsRefetchQuery);
 
   return (
@@ -17,6 +16,7 @@ const StoreMain = () => {
       <FlatList
         data={[]}
         renderItem={null}
+        showsVerticalScrollIndicator={false}
         className="bg-white"
         ListEmptyComponent={
           <>
@@ -40,10 +40,11 @@ const StoreMain = () => {
                       data={productsInfiniteQuery.pages.flatMap(page =>
                         page.content.flat(),
                       )}
-                      renderItem={({item}) => <Item item={item} />}
+                      renderItem={({item, index}) => (
+                        <Item item={item} isIndexOdd={index % 2 !== 0} />
+                      )}
                       keyExtractor={product => product.productId.productId}
                       showsVerticalScrollIndicator={false}
-                      onEndReached={async () => await productsFetchNextQuery()}
                       onEndReachedThreshold={0.6}
                       numColumns={2}
                     />

@@ -82,7 +82,7 @@ const ItemDetail = ({route, navigation}) => {
                     return;
                   }
                   return (
-                    <View key={policy.title}>
+                    <View key={policy.title + index}>
                       <TextRegular
                         title={`▶ ${policy.title}`}
                         style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
@@ -116,7 +116,7 @@ const ItemDetail = ({route, navigation}) => {
                       return;
                     }
                     return (
-                      <View key={policy.title + 'caution'}>
+                      <View key={policy.title + index}>
                         <TextRegular
                           title={`▶ ${policy.title}`}
                           style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
