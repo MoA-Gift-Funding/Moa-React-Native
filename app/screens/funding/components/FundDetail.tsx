@@ -187,10 +187,10 @@ const FundDetail = ({navigation, route}) => {
               Platform.OS === 'ios'
                 ? Share.share({
                     url: 'https://www.giftmoa.co.kr/',
-                    message: '친구의 펀딩이예요!',
+                    message: `${nickName}님의 펀딩이예요!`,
                   })
                 : Share.share({
-                    title: '친구의 펀딩이예요!',
+                    title: `${nickName}님의 펀딩이예요!`,
                     message: 'https://www.giftmoa.co.kr/',
                   });
             }, 1000)}>

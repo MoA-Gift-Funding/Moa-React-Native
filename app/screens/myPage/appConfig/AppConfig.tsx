@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Pressable, Switch, View} from 'react-native';
+import {Alert, Pressable, Switch, View} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
 import {
   getCurrentAppVersion,
@@ -33,16 +33,29 @@ const AppConfig = () => {
   };
 
   const currentVersion = getCurrentAppVersion();
-  // const latestVersion = getLatestAppVersion();
+  const latestVersion = getLatestAppVersion();
+
   const handleUpdateBtn = async () => {};
 
   const handleDeactivateUser = async () => {
-    try {
-      setIsLoading(true);
-      await deactivateUserQuery();
-    } finally {
-      setIsLoading(false);
-    }
+    Alert.alert(
+      '회원 탈퇴 하시겠습니까?',
+      '회원 탈퇴시, 주문, 결제 정보 조회 및 취소가 불가합니다. 동의하시면 탈퇴 버튼을 눌러주세요.',
+      [
+        {
+          text: '탈퇴 하기',
+          onPress: async () => {
+            try {
+              setIsLoading(true);
+              await deactivateUserQuery();
+            } finally {
+              setIsLoading(false);
+            }
+          },
+        },
+        {text: '취소'},
+      ],
+    );
   };
   return (
     <View className="h-full justify-between">
@@ -92,7 +105,7 @@ const AppConfig = () => {
                   />
                 </Pressable>
                 <TextRegular
-                  title={'1.1'}
+                  title={typeof latestVersion === 'object' || currentVersion}
                   style="text-Gray-06 ml-1 text-Body-1"
                 />
               </View>

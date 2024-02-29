@@ -82,7 +82,6 @@ export class Users {
       return user.data;
     } catch (error: any) {
       console.error(error.response.data);
-      console.error(error.response.status);
       switch (error.response.status) {
         case 401:
           await AsyncStorage.clear();
