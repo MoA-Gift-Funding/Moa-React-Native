@@ -18,8 +18,6 @@ const Contact = ({navigation}) => {
       setIsLoading(true);
       const organized = await getContactsInfo();
       syncContactsQuery(organized);
-    } catch (error) {
-      console.error(error);
     } finally {
       setIsLoading(false);
       navigation.navigate('JoinCompleted');

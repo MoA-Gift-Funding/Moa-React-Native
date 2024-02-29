@@ -26,7 +26,6 @@ const MyPageMain = ({navigation}) => {
     myProcessingFundingsQuery,
     myCompletedFundingsQuery,
     recievedMessagesQuery,
-    myParticipatedFundingsQuery,
     refetchMyParticipatedFundingsQuery,
   } = useFunding(0, 100);
 
@@ -39,8 +38,6 @@ const MyPageMain = ({navigation}) => {
       setIsLoading(true);
       const organized = await getContactsInfo();
       syncContactsQuery(organized);
-    } catch (error) {
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
