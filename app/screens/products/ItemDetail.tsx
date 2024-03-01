@@ -34,12 +34,14 @@ const ItemDetail = ({route, navigation}) => {
       <ScrollView
         className="flex flex-col"
         showsVerticalScrollIndicator={false}>
-        <Image
-          className="w-[360px] h-[360px]"
-          source={{
-            uri: imageUrl,
-          }}
-        />
+        <View className="flex items-center">
+          <Image
+            className="w-full h-[360px]"
+            source={{
+              uri: imageUrl,
+            }}
+          />
+        </View>
         <ItemDesc
           brand={brand}
           productName={productName}
