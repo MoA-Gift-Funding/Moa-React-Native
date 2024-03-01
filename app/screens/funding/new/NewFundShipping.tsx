@@ -43,18 +43,23 @@ const NewFundShipping = ({navigation, route}) => {
   }, [addrsQuery]);
 
   const onSubmit = async () => {
-    setIsLoading(true);
-
-    createFundingQuery({
-      productId,
-      title,
-      description,
-      endDate,
-      maximumAmount,
-      deliveryAddressId: selectedAddr,
-      deliveryRequestMessage,
-    });
-    setIsLoading(false);
+    if (addrsQuery.length === 0) {
+      return;
+    }
+    try {
+      setIsLoading(true);
+      createFundingQuery({
+        productId,
+        title,
+        description,
+        endDate,
+        maximumAmount,
+        deliveryAddressId: selectedAddr,
+        deliveryRequestMessage,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

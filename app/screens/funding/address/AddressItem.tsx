@@ -5,7 +5,6 @@ import {ShippingInfo} from '../../../types/Funding';
 import TextRegular from '../../../components/text/TextRegular';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import useFunding from '../../../hooks/fundings/useFunding';
-import {useNavigation} from '@react-navigation/native';
 import {throttle} from '../../../utils/device';
 
 const AddressItem = ({
@@ -59,14 +58,14 @@ const AddressItem = ({
         )}
       </Pressable>
       <View className="flex flex-col py-5 ml-3">
-        <View className="flex flex-row items-center mb-1 justify-between w-[285px]">
-          <View className="flex flex-row">
+        <View className="flex flex-row items-center mb-2 justify-between w-[300px]">
+          <View className="flex flex-row items-center">
             <TextBold title={name} style="text-Body-2" />
             <TextRegular title=" / " style="text-Body-2" />
             <TextBold title={recipientName} style="text-Body-2" />
             {isDefault && <TextSemiBold title=" (기본)" style="text-Main-01" />}
           </View>
-          <View className="flex flex-row">
+          <View className="flex flex-row items-center">
             <Pressable
               className="bg-Sub-01 rounded-full px-2 py-1"
               onPress={throttle(handleUpdateBtn, 1000)}>
