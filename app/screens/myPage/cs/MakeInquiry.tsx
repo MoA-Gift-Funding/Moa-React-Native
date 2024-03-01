@@ -43,7 +43,12 @@ const MakeInquiry = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="h-full px-4 flex items-center bg-white">
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            justifyContent: 'space-between',
+            flexGrow: 1,
+          }}>
           <View className="mt-8">
             <TextBold
               title="1:1 문의"
@@ -109,14 +114,14 @@ const MakeInquiry = ({
               />
             </View>
           </View>
+          <KeyboardAvoidingView className="flex items-center justify-center mb-20">
+            <NextButton
+              title="1:1 문의 등록하기"
+              onSubmit={onSubmit}
+              handleSubmit={handleSubmit}
+            />
+          </KeyboardAvoidingView>
         </ScrollView>
-        <View className="flex items-center justify-center mb-20">
-          <NextButton
-            title="1:1 문의 등록하기"
-            onSubmit={onSubmit}
-            handleSubmit={handleSubmit}
-          />
-        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
