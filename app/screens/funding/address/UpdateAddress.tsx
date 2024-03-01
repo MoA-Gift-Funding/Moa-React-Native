@@ -2,6 +2,7 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -81,10 +82,15 @@ const UpdateAddress = ({
     }
   }, [addrsQuery, updatedAddress]);
   return (
-    <View className="h-full flex flex-col justify-between mt-8">
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      className="h-full bg-white flex items-center">
       {isLoading && <LoadingBar />}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{justifyContent: 'space-between', flexGrow: 1}}
+        className="h-full">
+        <View className="pt-8">
           <View>
             <TextInputGroupWhite
               name="name"
@@ -173,19 +179,17 @@ const UpdateAddress = ({
               />
             )}
             {(roadAddress || jibunAddress) && (
-              <>
-                <TextInputGroupWhite
-                  name="detailAddress"
-                  label=""
-                  custom="-mt-4"
-                  control={control}
-                  error={errors.detailAddress}
-                  placeholder="상세 주소를 입력해주세요."
-                  rules={{
-                    required: '상세 주소를 입력해주세요.',
-                  }}
-                />
-              </>
+              <TextInputGroupWhite
+                name="detailAddress"
+                label=""
+                custom="-mt-4"
+                control={control}
+                error={errors.detailAddress}
+                placeholder="상세 주소를 입력해주세요."
+                rules={{
+                  required: '상세 주소를 입력해주세요.',
+                }}
+              />
             )}
             {onPostModal && (
               <Modal
@@ -195,10 +199,10 @@ const UpdateAddress = ({
                   <View className="w-full flex items-end">
                     <Pressable
                       className="p-2"
-                      onPress={throttle(() => {
+                      onPress={() => {
                         setOnPostModal(false);
                         setIsLoading(false);
-                      }, 1000)}>
+                      }}>
                       <FontAwesomeIcon icon={faClose} size={24} />
                     </Pressable>
                   </View>
@@ -220,38 +224,38 @@ const UpdateAddress = ({
               </Modal>
             )}
           </View>
-        </View>
-        <View className="mt-6 flex flex-row items-center">
-          <CheckBox
-            checked={checked}
-            setChecked={() => setChecked(!checked)}
-            disabled={diabled}
-          />
-          <Pressable onPress={() => setChecked(!checked)}>
-            <TextRegular
-              title="기본 배송지로 등록"
-              style="ml-2 text-Gray-08 text-Body-2"
+          <View className="mt-4 flex flex-row items-center">
+            <CheckBox
+              checked={checked}
+              setChecked={() => setChecked(!checked)}
+              disabled={diabled}
             />
-          </Pressable>
+            <Pressable onPress={() => setChecked(!checked)}>
+              <TextRegular
+                title="기본 배송지로 등록"
+                style="ml-2 text-Gray-08 text-Body-2"
+              />
+            </Pressable>
+          </View>
         </View>
+        <KeyboardAvoidingView className="mb-32">
+          {!updatedAddress && (
+            <NextButton
+              title="배송지 추가하기"
+              onSubmit={onSubmit}
+              handleSubmit={handleSubmit}
+            />
+          )}
+          {updatedAddress && (
+            <NextButton
+              title="배송지 수정하기"
+              onSubmit={onUpdateSubmit}
+              handleSubmit={handleSubmit}
+            />
+          )}
+        </KeyboardAvoidingView>
       </ScrollView>
-      <KeyboardAvoidingView className="mb-48 flex justify-end items-center">
-        {!updatedAddress && (
-          <NextButton
-            title="배송지 추가하기"
-            onSubmit={onSubmit}
-            handleSubmit={handleSubmit}
-          />
-        )}
-        {updatedAddress && (
-          <NextButton
-            title="배송지 수정하기"
-            onSubmit={onUpdateSubmit}
-            handleSubmit={handleSubmit}
-          />
-        )}
-      </KeyboardAvoidingView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
