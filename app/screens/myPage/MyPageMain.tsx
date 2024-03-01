@@ -26,6 +26,7 @@ const MyPageMain = ({navigation}) => {
     myProcessingFundingsQuery,
     myCompletedFundingsQuery,
     recievedMessagesQuery,
+    myParticipatedFundingsQuery,
     refetchMyParticipatedFundingsQuery,
   } = useFunding(0, 100);
 
@@ -92,8 +93,9 @@ const MyPageMain = ({navigation}) => {
           <View className="flex flex-row items-center justify-around py-6 border-t-2 border-Gray-01">
             <MenuCategoryTop
               dataLength={
-                myProcessingFundingsQuery?.length +
-                  myCompletedFundingsQuery?.length || 0
+                (myProcessingFundingsQuery?.length || 0) +
+                (myCompletedFundingsQuery?.length || 0) +
+                (myParticipatedFundingsQuery?.length || 0)
               }
               title="펀딩"
               onPress={() =>

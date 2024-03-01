@@ -6,6 +6,7 @@ import {FundMessageItem} from '../../../types/Funding';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
+import {httpsUrlCorrector} from '../../../utils/regex';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
 
@@ -15,7 +16,7 @@ const MessageItem = ({item}: {item: Partial<FundMessageItem>}) => {
     <View className="flex flex-row py-4 border-b-2  border-Gray-01">
       <Image
         source={{
-          uri: profileImageUrl,
+          uri: httpsUrlCorrector(profileImageUrl),
         }}
         className="w-[56px] h-[56px] rounded-full"
       />

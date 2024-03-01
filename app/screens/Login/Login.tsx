@@ -18,8 +18,6 @@ export default function Login({navigation}) {
     try {
       const user = await loginQuery(platform);
       dispatch({type: 'LOGIN', payload: user});
-      console.log(user);
-
       if (user?.status === 'PRESIGNED_UP') {
         navigation.navigate('Join');
       }

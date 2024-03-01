@@ -51,7 +51,7 @@ const JoinFundMSG = ({navigation, route}) => {
                 control={control}
                 error={errors.message}
                 placeholder="메세지 입력(최소 1자, 최대 300자)"
-                custom="h-[220px]"
+                custom="h-[220px] py-3"
                 textAlignVertical="top"
                 multiline={true}
                 rules={{

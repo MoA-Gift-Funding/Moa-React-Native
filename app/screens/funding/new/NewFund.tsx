@@ -93,7 +93,7 @@ const NewFund = ({navigation, route}) => {
               error={errors.description}
               placeholder="메세지 입력(최소 10자, 최대 500자)"
               desc="개설하고자하는 펀딩에 대해 소개해주세요.(최대 500자)"
-              custom="h-[200px]"
+              custom="h-[200px] py-3"
               textAlignVertical="top"
               multiline={true}
               rules={{
@@ -124,7 +124,13 @@ const NewFund = ({navigation, route}) => {
                 },
                 max: {
                   value: price,
-                  message: `최대 ${autoCurrency(price)}원까지 설정 가능해요.`,
+                  message: `상품 가격인 ${autoCurrency(
+                    price,
+                  )}원을 초과할 수 없어요.`,
+                },
+                pattern: {
+                  value: /^[0-9]+$/,
+                  message: '숫자만 입력가능해요.',
                 },
               }}
             />

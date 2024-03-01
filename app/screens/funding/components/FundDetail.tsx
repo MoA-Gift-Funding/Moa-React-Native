@@ -39,7 +39,7 @@ const FundDetail = ({navigation, route}) => {
     status: 'COMPLETE',
     fundedAmount: 0,
     participationCount: 0,
-    productImageUrl: '',
+    productImageUrl: undefined,
     participants: [
       {
         messageId: 0,
@@ -159,8 +159,8 @@ const FundDetail = ({navigation, route}) => {
               {caution && (
                 <View className="w-full bg-Gray-02 flex items-center py-4">
                   {FundPolicyQuery &&
-                    FundPolicyQuery.map(policy => (
-                      <>
+                    FundPolicyQuery.map((policy, index) => (
+                      <View key={policy.title + index}>
                         <TextRegular
                           title={`▶ ${policy.title}`}
                           style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
@@ -171,7 +171,7 @@ const FundDetail = ({navigation, route}) => {
                             style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                           />
                         ))}
-                      </>
+                      </View>
                     ))}
                 </View>
               )}
