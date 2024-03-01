@@ -1,5 +1,12 @@
 import React, {useCallback, useState} from 'react';
-import {Image, Pressable, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from 'react-native';
 import {useUserContext} from '../../contexts/UserContext';
 import TextSemiBold from '../../components/text/TextSemiBold';
 import TextRegular from '../../components/text/TextRegular';
@@ -44,6 +51,13 @@ const MyPageMain = ({navigation}) => {
       setIsLoading(false);
     }
   }, [syncContactsQuery]);
+
+  const handleLogout = () => {
+    Alert.alert('로그아웃 하시겠습니까?', '', [
+      {text: '로그아웃', onPress: () => dispatch({type: 'LOGOUT'})},
+      {text: '취소'},
+    ]);
+  };
 
   return (
     <>
@@ -161,10 +175,7 @@ const MyPageMain = ({navigation}) => {
             title="도움말"
             onPress={() => navigation.navigate('MoA', {headerTitle: '도움말'})}
           />
-          <MenuCategory
-            title="로그아웃"
-            onPress={() => dispatch({type: 'LOGOUT'})}
-          />
+          <MenuCategory title="로그아웃" onPress={handleLogout} />
           {/* <MenuCategory title="회원탈퇴" onPress={() => {}} /> */}
         </View>
       </ScrollView>
