@@ -141,6 +141,7 @@ const MyPageDetail = ({navigation}) => {
               error={errors.email}
               control={control}
               editable={false}
+              custom="text-Gray-06"
             />
             <TextInputGroupPlain
               label="전화번호"
@@ -148,6 +149,7 @@ const MyPageDetail = ({navigation}) => {
               error={errors.phoneNumber}
               control={control}
               editable={false}
+              custom="text-Gray-06"
             />
             <TextInputGroupPlain
               label="생년월일"
