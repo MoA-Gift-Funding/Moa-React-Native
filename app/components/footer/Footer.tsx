@@ -3,9 +3,8 @@ import {Platform, Pressable, View} from 'react-native';
 import {Path, Svg} from 'react-native-svg';
 import TextRegular from '../text/TextRegular';
 import {useNavigation} from '@react-navigation/native';
-import {throttle} from '../../utils/device';
 
-const Footer = ({screen}: {screen: string}) => {
+const Footer = ({screen}: {screen: 'MyPage' | 'Home' | 'Store'}) => {
   const navigation = useNavigation();
   return (
     <View
@@ -56,10 +55,17 @@ const Footer = ({screen}: {screen: string}) => {
         <Svg width="24" height="25" viewBox="0 0 24 25" fill="none">
           <Path
             d="M11.9996 2.8999C10.7266 2.8999 9.50567 3.40562 8.6055 4.30579C7.70532 5.20596 7.19961 6.42686 7.19961 7.6999C7.19961 8.97294 7.70532 10.1938 8.6055 11.094C9.50567 11.9942 10.7266 12.4999 11.9996 12.4999C13.2726 12.4999 14.4935 11.9942 15.3937 11.094C16.2939 10.1938 16.7996 8.97294 16.7996 7.6999C16.7996 6.42686 16.2939 5.20596 15.3937 4.30579C14.4935 3.40562 13.2726 2.8999 11.9996 2.8999ZM6.01041 13.6999C5.69437 13.6986 5.3812 13.7598 5.08884 13.8798C4.79648 13.9998 4.53069 14.1764 4.30672 14.3994C4.08275 14.6223 3.90499 14.8873 3.78365 15.1791C3.66231 15.471 3.59976 15.7839 3.59961 16.0999C3.59961 18.1291 4.59921 19.6591 6.16161 20.6563C7.70001 21.6367 9.77361 22.0999 11.9996 22.0999C14.2256 22.0999 16.2992 21.6367 17.8376 20.6563C19.4 19.6603 20.3996 18.1279 20.3996 16.0999C20.3996 15.4634 20.1468 14.8529 19.6967 14.4028C19.2466 13.9528 18.6361 13.6999 17.9996 13.6999H6.01041Z"
-            fill="#9E9E9E"
+            fill={screen === 'MyPage' ? '#212121' : '#9E9E9E'}
           />
         </Svg>
-        <TextRegular title="마이페이지" style="text-Gray-06 text-Detail-1" />
+        <TextRegular
+          title="마이페이지"
+          style={
+            screen === 'MyPage'
+              ? 'text-Gray-10 text-Detail-1'
+              : 'text-Gray-06 text-Detail-1'
+          }
+        />
       </Pressable>
     </View>
   );
