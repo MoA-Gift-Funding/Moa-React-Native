@@ -39,7 +39,7 @@ const FundDetail = ({navigation, route}) => {
     status: 'COMPLETE',
     fundedAmount: 0,
     participationCount: 0,
-    productImageUrl: undefined,
+    productImageUrl: 'https://',
     participants: [
       {
         messageId: 0,
@@ -81,12 +81,14 @@ const FundDetail = ({navigation, route}) => {
       <ScrollView
         className="flex flex-col"
         showsVerticalScrollIndicator={false}>
-        <Image
-          className="w-[360px] h-[360px]"
-          source={{
-            uri: productImageUrl,
-          }}
-        />
+        <View className="flex items-center">
+          <Image
+            className="w-full h-[360px]"
+            source={{
+              uri: productImageUrl,
+            }}
+          />
+        </View>
         <FundDesc
           id={id}
           userName={nickName}
@@ -165,8 +167,9 @@ const FundDetail = ({navigation, route}) => {
                           title={`▶ ${policy.title}`}
                           style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                         />
-                        {policy.content.map(text => (
+                        {policy.content.map((text, index) => (
                           <TextRegular
+                            key={index}
                             title={`· ${text}`}
                             style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                           />
@@ -199,17 +202,15 @@ const FundDetail = ({navigation, route}) => {
           {memberId !== user?.id && (
             <Pressable
               className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-              onPress={throttle(
-                () =>
-                  navigation.navigate('JoinFund', {
-                    maximumAmount,
-                    remainAmount,
-                    id,
-                    title,
-                    nickName,
-                  }),
-                1000,
-              )}>
+              onPress={() =>
+                navigation.navigate('JoinFund', {
+                  maximumAmount,
+                  remainAmount,
+                  id,
+                  title,
+                  nickName,
+                })
+              }>
               <TextSemiBold
                 style="text-white text-Body-1 ml-[14px]"
                 title="선물 펀딩하기"
@@ -219,17 +220,15 @@ const FundDetail = ({navigation, route}) => {
           {memberId === user?.id && (
             <Pressable
               className="h-[56px] w-[234px] bg-Main-01 rounded-lg flex items-center justify-center"
-              onPress={throttle(
-                () =>
-                  navigation.navigate('JoinFundPay', {
-                    price: remainAmount,
-                    id,
-                    title,
-                    nickName,
-                    isFundOwner: true,
-                  }),
-                1000,
-              )}>
+              onPress={() =>
+                navigation.navigate('JoinFundPay', {
+                  price: remainAmount,
+                  id,
+                  title,
+                  nickName,
+                  isFundOwner: true,
+                })
+              }>
               <TextSemiBold
                 style="text-white text-Body-1 ml-[14px]"
                 title="펀딩 채우기"

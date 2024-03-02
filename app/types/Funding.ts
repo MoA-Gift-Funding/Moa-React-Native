@@ -62,7 +62,7 @@ export interface FundDetailItem {
   status: FundStatus;
   fundedAmount: number;
   participationCount: number;
-  productImageUrl: string | undefined;
+  productImageUrl: string;
   participants: Participant[];
 }
 

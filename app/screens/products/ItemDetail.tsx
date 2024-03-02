@@ -8,7 +8,6 @@ import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import cls from 'classnames';
 import NextButton from '../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
-import Footer from '../../components/footer/Footer';
 import useProducts from '../../hooks/products/useProducts';
 import {ProductDetail} from '../../types/Store';
 
@@ -89,8 +88,9 @@ const ItemDetail = ({route, navigation}) => {
                         title={`▶ ${policy.title}`}
                         style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                       />
-                      {policy.content.map(text => (
+                      {policy.content.map((text, index) => (
                         <TextRegular
+                          key={index}
                           title={`· ${text}`}
                           style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                         />
@@ -123,8 +123,9 @@ const ItemDetail = ({route, navigation}) => {
                           title={`▶ ${policy.title}`}
                           style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                         />
-                        {policy.content.map(text => (
+                        {policy.content.map((text, index) => (
                           <TextRegular
+                            key={index}
                             title={`· ${text}`}
                             style="text-Body-2 text-Gray-06 w-[312px] leading-Body-2"
                           />
