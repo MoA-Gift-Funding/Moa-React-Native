@@ -229,7 +229,7 @@ export default function Home({navigation}) {
               )}
             </ScrollView>
             <Pressable
-              className="mt-10 bg-white rounded-xl"
+              className="mt-10 bg-white "
               onPress={throttle(async () => {
                 Platform.OS === 'ios'
                   ? Share.share({
@@ -242,9 +242,9 @@ export default function Home({navigation}) {
                     });
               }, 1000)}>
               <Image
-                className="w-full h-[136px] rounded-xl"
+                className="w-full h-[150px] bg-white"
                 source={{
-                  uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1703226051/moa-banner2_atc4su.png',
+                  uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1709355155/moa-%E1%84%92%E1%85%A9%E1%86%B7%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5_zlehl7.png',
                 }}
               />
             </Pressable>

@@ -74,10 +74,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       {isLoading && <LoadingBar />}
       <Pressable
         className="mb-1 w-[314px]"
-        onPress={throttle(
-          () => navigation.navigate('FundDetail', {id, title, endDate}),
-          1000,
-        )}>
+        onPress={() => navigation.navigate('FundDetail', {id, title, endDate})}>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold title={endDate} style="text-Body-2" />
           {status === 'PROCESSING' && <ColoredFundLabel label="펀딩중" />}
