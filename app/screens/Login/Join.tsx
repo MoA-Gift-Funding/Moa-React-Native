@@ -164,7 +164,9 @@ export default function Join({navigation}) {
             />
           </View>
           <View>
-            <View className="flex flex-row items-center pt-2">
+            <Pressable
+              className="flex flex-row items-center pt-2"
+              onPress={() => setChecked(!checked)}>
               <Pressable
                 className="border border-Gray-05 w-4 h-4 flex justify-center items-center rounded"
                 onPress={() => setChecked(!checked)}>
@@ -187,7 +189,7 @@ export default function Join({navigation}) {
                 />
                 <TextRegular title="에 동의합니다." style="text-Detail-1" />
               </View>
-            </View>
+            </Pressable>
             <View>
               {error && !checked && (
                 <TextRegular
