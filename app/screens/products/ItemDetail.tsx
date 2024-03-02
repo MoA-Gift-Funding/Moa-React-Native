@@ -137,22 +137,21 @@ const ItemDetail = ({route, navigation}) => {
             )}
           </Pressable>
         </View>
-        <View className="bg-white flex items-center py-6">
-          <NextButton
-            title="펀딩 개설하기"
-            handleSubmit={handleSubmit}
-            onSubmit={() =>
-              navigation.navigate('NewFund', {
-                headerTitle: '펀딩개설하기',
-                search: false,
-                id,
-                price,
-              })
-            }
-          />
-        </View>
       </ScrollView>
-      <Footer screen="Store" />
+      <View className="bg-white flex items-center p-6">
+        <NextButton
+          title="펀딩 개설하기"
+          handleSubmit={handleSubmit}
+          onSubmit={() =>
+            navigation.navigate('NewFund', {
+              headerTitle: '펀딩개설하기',
+              search: false,
+              id,
+              price,
+            })
+          }
+        />
+      </View>
     </>
   );
 };

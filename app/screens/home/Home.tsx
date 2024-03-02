@@ -229,22 +229,23 @@ export default function Home({navigation}) {
               )}
             </ScrollView>
             <Pressable
-              className="mt-10 bg-white "
+              className="pt-10 bg-white "
+              ㅇ
               onPress={throttle(async () => {
                 Platform.OS === 'ios'
                   ? Share.share({
                       url: 'https://www.giftmoa.co.kr/',
-                      message: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                      message: '모두가 행복한 새로운 선물 경험, 기프트모아',
                     })
                   : Share.share({
-                      title: '새로운 선물 경험을 선사하는 플랫폼, 모아',
+                      title: '모두가 행복한 새로운 선물 경험, 기프트모아',
                       message: 'https://www.giftmoa.co.kr/',
                     });
               }, 1000)}>
               <Image
                 className="w-full h-[150px] bg-white"
                 source={{
-                  uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1709355155/moa-%E1%84%92%E1%85%A9%E1%86%B7%E1%84%87%E1%85%A2%E1%84%82%E1%85%A5_zlehl7.png',
+                  uri: 'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1709357319/7681c195-64c5-4c6e-b31e-ae94b9b58169.png',
                 }}
               />
             </Pressable>
