@@ -1,28 +1,18 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
-import {
-  Image,
-  Keyboard,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  View,
-} from 'react-native';
+import {Image, Modal, Pressable, SafeAreaView, View} from 'react-native';
 import TextSemiBold from '../text/TextSemiBold';
 import TextRegular from '../text/TextRegular';
 import useFunding from '../../hooks/fundings/useFunding';
 import {throttle} from '../../utils/device';
 import {useUserContext} from '../../contexts/UserContext';
 import cls from 'classnames';
-import TextInputGroup from '../text/TextInputGroup';
 import {useForm} from 'react-hook-form';
 import NextButton from './NextButton';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
-import TextInputGroupWhite from '../text/textInputGroupWhite';
 import TextInputGroupPlain from '../../screens/myPage/components/TextInputGroupPlain';
+import LoadingBar from '../bar/LoadingBar';
+import {MessageStatus} from '../../types/Funding';
 
 const ReportTextBtn = ({
   state,
@@ -58,14 +48,14 @@ const ReportAndEditButton = ({
   memberId,
   message,
   messageId,
-  visible,
+  visibility,
 }: {
   domainId: number;
   domainType: 'FUNDING' | 'FUNDING_MESSAGE';
   memberId?: number;
   message?: string;
   messageId?: number;
-  visible?: boolean;
+  visibility?: MessageStatus;
 }) => {
   const handleReportModal = () => {
     setOnPressed(false);
@@ -81,14 +71,17 @@ const ReportAndEditButton = ({
   const [onReportModal, setOnReportModal] = useState(false);
   const [onEditModal, setOnEditModal] = useState(false);
   const [onPressed, setOnPressed] = useState(false);
-  const [checked, setChecked] = useState(!visible);
+  const [checked, setChecked] = useState(visibility === 'PRIVATE');
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedContent, setSelectedContent] = useState('');
   const {reportPostQuery} = useFunding();
+
   const {
     handleSubmit,
     formState: {errors},
     control,
   } = useForm({defaultValues: {message}});
+  const {updateFundMessageQuery} = useFunding();
   const handleReport = async (content: string) => {
     if (!selectedContent) {
       return;
@@ -98,6 +91,20 @@ const ReportAndEditButton = ({
     } finally {
       setSelectedContent('');
       setOnReportModal(false);
+    }
+  };
+
+  const handleUpdate = async data => {
+    try {
+      setIsLoading(true);
+      updateFundMessageQuery({
+        messageId,
+        message: data.message,
+        visibility: checked ? 'PRIVATE' : 'PUBLIC',
+      });
+    } finally {
+      setIsLoading(false);
+      setOnEditModal(false);
     }
   };
   return (
@@ -147,6 +154,7 @@ const ReportAndEditButton = ({
           onPress={() => setOnEditModal(false)}
         />
         <View className="h-fit bg-white flex items-center justify-center px-4 py-6">
+          {isLoading && <LoadingBar />}
           <View className="w-[315px]">
             <TextInputGroupPlain
               name="message"
@@ -180,7 +188,7 @@ const ReportAndEditButton = ({
             <NextButton
               title="수정하기"
               handleSubmit={handleSubmit}
-              onSubmit={() => {}}
+              onSubmit={handleUpdate}
             />
           </View>
         </View>

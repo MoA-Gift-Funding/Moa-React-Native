@@ -4,6 +4,7 @@ import {
   FundPolicyResponse,
   FundRequestStatus,
   JoinFundItem,
+  MessageStatus,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -219,7 +220,7 @@ export default class Funding {
   async updateFundMessage(data: {
     messageId: number;
     message: string;
-    visible: boolean;
+    visibility: MessageStatus;
   }) {
     try {
       const updated = await this.apiClient.updateFundMessage(data);

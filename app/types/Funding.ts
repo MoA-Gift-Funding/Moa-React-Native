@@ -73,7 +73,7 @@ export type Participant = {
   messageId: number;
   message: string;
   createAt: string;
-  visible: boolean;
+  visibility: MessageStatus;
 };
 
 export interface FundResponse {

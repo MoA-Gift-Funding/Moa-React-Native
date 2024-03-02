@@ -1,7 +1,12 @@
 import {CSCategories} from './../types/CS';
 import axios from 'axios';
 import Config from 'react-native-config';
-import {FundRequestStatus, NewFundItem, ShippingInfo} from '../types/Funding';
+import {
+  FundRequestStatus,
+  MessageStatus,
+  NewFundItem,
+  ShippingInfo,
+} from '../types/Funding';
 import {Contact, User} from '../types/User';
 
 export class FakeHttpClient {
@@ -132,7 +137,7 @@ export class FakeHttpClient {
   updateFundMessage(data: {
     messageId: number;
     message: string;
-    visible: boolean;
+    visibility: MessageStatus;
   }) {
     return this.httpClient.get('');
   }

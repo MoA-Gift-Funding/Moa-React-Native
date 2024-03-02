@@ -6,6 +6,7 @@ import {
   FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
+  MessageStatus,
   NewFundItem,
   ReportItem,
   ShippingInfo,
@@ -171,15 +172,15 @@ export default class MoaHttpClient {
   updateFundMessage({
     messageId,
     message,
-    visible,
+    visibility,
   }: {
     messageId: number;
     message: string;
-    visible: boolean;
+    visibility: MessageStatus;
   }) {
-    return this.httpClient.post(`/fundings/messages/${messageId}`, {
+    return this.httpClient.put(`/fundings/messages/${messageId}`, {
       message,
-      visible,
+      visibility,
     });
   }
 

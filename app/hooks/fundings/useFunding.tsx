@@ -11,6 +11,7 @@ import {
   FinishFundItem,
   FundRequestStatus,
   JoinFundItem,
+  MessageStatus,
   MyFundItem,
   NewFundItem,
   ReportItem,
@@ -198,6 +199,18 @@ const useFunding = (
     initialPageParam: 0,
   });
 
+  const {mutateAsync: updateFundMessageQuery} = useMutation({
+    mutationFn: (data: {
+      messageId: number;
+      message: string;
+      visibility: MessageStatus;
+    }) => funding.updateFundMessage(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['messageList']});
+      Toast.show({type: 'success', text1: '메세지가 변경되었어요🤗'});
+    },
+  });
+
   const {mutateAsync: fundDetailQuery} = useMutation({
     mutationFn: (id: number) => funding.getFundDetail(id),
     onError: () => {
@@ -291,6 +304,7 @@ const useFunding = (
     FundPolicyQuery,
     cancelCreatedFundQuery,
     cancelParticipatedFundQuery,
+    updateFundMessageQuery,
   };
 };
 

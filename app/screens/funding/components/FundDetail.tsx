@@ -48,6 +48,7 @@ const FundDetail = ({navigation, route}) => {
         profileImageUrl: '',
         message: '',
         createAt: '',
+        visibility: 'PUBLIC',
       },
     ],
   });
@@ -137,6 +138,7 @@ const FundDetail = ({navigation, route}) => {
                       nickName={msg.nickName}
                       profileImageUrl={msg.profileImageUrl}
                       createAt={msg.createAt}
+                      visibility={msg.visibility}
                     />
                   ))}
                 {participants.length < 1 && (
