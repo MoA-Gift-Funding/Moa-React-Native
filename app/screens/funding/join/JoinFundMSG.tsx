@@ -23,7 +23,20 @@ const JoinFundMSG = ({navigation, route}) => {
     getValues,
     formState: {errors},
     handleSubmit,
+    setValue,
   } = useForm({defaultValues: {message: ''}});
+
+  const handleNextBtn = data => {
+    if (!data.message.trim()) {
+      return setValue('message', '');
+    }
+    navigation.navigate('JoinFundPay', {
+      ...route.params,
+      ...getValues(),
+      visible: checked ? 'PRIVATE' : 'PUBLIC',
+      isFundOwner: false,
+    });
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -92,14 +105,7 @@ const JoinFundMSG = ({navigation, route}) => {
         <KeyboardAvoidingView className="py-8 flex justify-center items-center">
           <NextButton
             title="다음"
-            onSubmit={() =>
-              navigation.navigate('JoinFundPay', {
-                ...route.params,
-                ...getValues(),
-                visible: checked ? 'PRIVATE' : 'PUBLIC',
-                isFundOwner: false,
-              })
-            }
+            onSubmit={handleNextBtn}
             handleSubmit={handleSubmit}
           />
         </KeyboardAvoidingView>

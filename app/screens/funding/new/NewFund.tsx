@@ -35,6 +35,12 @@ const NewFund = ({navigation, route}) => {
     maximumAmount: string;
     endDate: string;
   }) => {
+    if (!data.title.trim()) {
+      return setValue('title', '');
+    }
+    if (!data.description.trim()) {
+      return setValue('description', '');
+    }
     if (!data.maximumAmount) {
       setValue('maximumAmount', price);
     }
