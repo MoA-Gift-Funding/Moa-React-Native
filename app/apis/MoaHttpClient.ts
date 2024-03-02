@@ -168,6 +168,21 @@ export default class MoaHttpClient {
     });
   }
 
+  updateFundMessage({
+    messageId,
+    message,
+    visible,
+  }: {
+    messageId: number;
+    message: string;
+    visible: boolean;
+  }) {
+    return this.httpClient.post(`/fundings/messages/${messageId}`, {
+      message,
+      visible,
+    });
+  }
+
   getPolicies() {
     return this.httpClient.get('/fundings/exchange-refund-policy');
   }

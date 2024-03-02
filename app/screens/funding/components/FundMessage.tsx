@@ -18,6 +18,7 @@ const FundMessage = ({
   createAt,
   profileImageUrl,
   memberId,
+  visible,
 }: Partial<Participant>) => {
   return (
     <View className="flex flex-col border-b-2 border-Gray-01 py-4 px-6">
@@ -53,6 +54,9 @@ const FundMessage = ({
           domainId={messageId!}
           domainType="FUNDING_MESSAGE"
           memberId={memberId}
+          message={message}
+          messageId={messageId}
+          visible={visible}
         />
       </View>
       {message ? (

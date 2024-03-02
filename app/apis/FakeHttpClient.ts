@@ -129,6 +129,14 @@ export class FakeHttpClient {
     return this.httpClient.get('');
   }
 
+  updateFundMessage(data: {
+    messageId: number;
+    message: string;
+    visible: boolean;
+  }) {
+    return this.httpClient.get('');
+  }
+
   getPolicies() {
     return this.httpClient.get('/fundings/exchange-refund-policy');
   }

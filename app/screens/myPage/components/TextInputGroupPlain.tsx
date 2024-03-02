@@ -24,6 +24,7 @@ interface TextInputGroupProps {
   custom?: string;
   textAlignVertical?: 'top' | 'auto' | 'bottom' | 'center';
   client?: string;
+  autoFocus?: boolean;
 }
 
 const TextInputGroupPlain: React.FC<TextInputGroupProps> = ({
@@ -40,6 +41,7 @@ const TextInputGroupPlain: React.FC<TextInputGroupProps> = ({
   custom,
   textAlignVertical,
   client,
+  autoFocus,
 }) => {
   return (
     <View className="mb-4">
@@ -57,6 +59,7 @@ const TextInputGroupPlain: React.FC<TextInputGroupProps> = ({
               </View>
             )}
             <TextInput
+              autoFocus={autoFocus}
               editable={editable}
               className={`h-[50px] w-[300px] text-Body-1 text-black ${custom}`}
               placeholder={placeholder}

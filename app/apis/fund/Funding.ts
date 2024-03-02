@@ -216,6 +216,23 @@ export default class Funding {
     }
   }
 
+  async updateFundMessage(data: {
+    messageId: number;
+    message: string;
+    visible: boolean;
+  }) {
+    try {
+      const updated = await this.apiClient.updateFundMessage(data);
+      return updated.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      switch (error.response.status) {
+        default:
+          throw error;
+      }
+    }
+  }
+
   async getPolicies(): Promise<FundPolicyResponse> {
     try {
       const policies = await this.apiClient.getPolicies();

@@ -1,11 +1,28 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
-import {Image, Modal, Pressable, SafeAreaView, View} from 'react-native';
+import {
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from 'react-native';
 import TextSemiBold from '../text/TextSemiBold';
 import TextRegular from '../text/TextRegular';
 import useFunding from '../../hooks/fundings/useFunding';
 import {throttle} from '../../utils/device';
 import {useUserContext} from '../../contexts/UserContext';
 import cls from 'classnames';
+import TextInputGroup from '../text/TextInputGroup';
+import {useForm} from 'react-hook-form';
+import NextButton from './NextButton';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCheckCircle, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
+import TextInputGroupWhite from '../text/textInputGroupWhite';
+import TextInputGroupPlain from '../../screens/myPage/components/TextInputGroupPlain';
 
 const ReportTextBtn = ({
   state,
@@ -39,22 +56,39 @@ const ReportAndEditButton = ({
   domainId,
   domainType,
   memberId,
+  message,
+  messageId,
+  visible,
 }: {
   domainId: number;
   domainType: 'FUNDING' | 'FUNDING_MESSAGE';
   memberId?: number;
+  message?: string;
+  messageId?: number;
+  visible?: boolean;
 }) => {
   const handleReportModal = () => {
     setOnPressed(false);
-    setOnModal(true);
+    setOnReportModal(true);
+  };
+  const handleEditModal = () => {
+    setOnPressed(false);
+    setOnEditModal(true);
   };
   const {
     userState: {user},
   } = useUserContext();
-  const [onModal, setOnModal] = useState(false);
+  const [onReportModal, setOnReportModal] = useState(false);
+  const [onEditModal, setOnEditModal] = useState(false);
   const [onPressed, setOnPressed] = useState(false);
+  const [checked, setChecked] = useState(!visible);
   const [selectedContent, setSelectedContent] = useState('');
   const {reportPostQuery} = useFunding();
+  const {
+    handleSubmit,
+    formState: {errors},
+    control,
+  } = useForm({defaultValues: {message}});
   const handleReport = async (content: string) => {
     if (!selectedContent) {
       return;
@@ -62,7 +96,8 @@ const ReportAndEditButton = ({
     try {
       await reportPostQuery({domainId, domainType, content});
     } finally {
-      setOnModal(false);
+      setSelectedContent('');
+      setOnReportModal(false);
     }
   };
   return (
@@ -93,7 +128,7 @@ const ReportAndEditButton = ({
           <>
             {memberId === user?.id && (
               <Pressable
-                onPress={() => {}}
+                onPress={handleEditModal}
                 className="w-full flex flex-row items-center justify-around bg-white h-20">
                 <TextRegular title="수정" style="text-Heading-4 text-Gray-10" />
               </Pressable>
@@ -106,7 +141,55 @@ const ReportAndEditButton = ({
           </>
         )}
       </Modal>
-      <Modal visible={onModal}>
+      <Modal visible={onEditModal} transparent={true} animationType="slide">
+        <Pressable
+          className="flex justify-center items-center flex-1 bg-Gray-08 opacity-70"
+          onPress={() => setOnEditModal(false)}
+        />
+        <View className="h-fit bg-white flex items-center justify-center px-4 py-6">
+          <View className="w-[315px]">
+            <TextInputGroupPlain
+              name="message"
+              label="수정 메세지"
+              placeholder={message}
+              error={errors.message}
+              control={control}
+              autoFocus={true}
+            />
+            <Pressable
+              onPress={() => setChecked(!checked)}
+              className="flex flex-row items-center -mt-4 mb-6">
+              {checked ? (
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  color="#212121"
+                  size={20}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  color="#E0E0E0"
+                  size={20}
+                />
+              )}
+              <TextRegular
+                title="친구만 볼 수 있게"
+                style="text-Gray-06 text-Body-2 ml-2"
+              />
+            </Pressable>
+            <NextButton
+              title="수정하기"
+              handleSubmit={handleSubmit}
+              onSubmit={() => {}}
+            />
+          </View>
+        </View>
+        <Pressable
+          className="h-2/5 justify-center items-center bg-Gray-08 opacity-70"
+          onPress={() => setOnEditModal(false)}
+        />
+      </Modal>
+      <Modal visible={onReportModal} animationType="slide">
         <SafeAreaView className="h-full flex flex-col items-center justify-between">
           <View className="mt-10 flex flex-col justify-between">
             <View className="flex flex-col items-center">
@@ -146,17 +229,17 @@ const ReportAndEditButton = ({
           </View>
           <View className="flex flex-row mb-4 items-center">
             <Pressable
-              className="w-[210px] h-[56px] flex items-center justify-center bg-Gray-04 rounded-lg"
-              onPress={throttle(() => handleReport(selectedContent), 1000)}>
-              <TextSemiBold title="신고하기" style="text-Gray-07 text-Body-1" />
-            </Pressable>
-            <Pressable
-              className="w-[110px] h-[56px] flex items-center justify-center bg-Gray-03 rounded-lg ml-2"
+              className="w-[110px] h-[56px] flex items-center justify-center bg-Gray-03 rounded-lg"
               onPress={() => {
                 setSelectedContent('');
-                setOnModal(false);
+                setOnReportModal(false);
               }}>
               <TextSemiBold title="취소" style="text-Gray-07 text-Body-1" />
+            </Pressable>
+            <Pressable
+              className="w-[210px] h-[56px] flex items-center justify-center bg-Gray-08 rounded-lg ml-2"
+              onPress={throttle(() => handleReport(selectedContent), 1000)}>
+              <TextSemiBold title="신고하기" style="text-Gray-02 text-Body-1" />
             </Pressable>
           </View>
         </SafeAreaView>
