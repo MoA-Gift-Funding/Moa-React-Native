@@ -132,6 +132,7 @@ const FundDetail = ({navigation, route}) => {
                     <FundMessage
                       key={msg.messageId}
                       messageId={msg.messageId}
+                      memberId={msg.memberId}
                       message={msg.message}
                       nickName={msg.nickName}
                       profileImageUrl={msg.profileImageUrl}

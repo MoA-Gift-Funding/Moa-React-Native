@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
 import {Participant} from '../../../types/Funding';
-import ReportButton from '../../../components/button/ReportButton';
+import ReportAndEditButton from '../../../components/button/ReportAndEditButton';
 import {httpsUrlCorrector} from '../../../utils/regex';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
@@ -17,6 +17,7 @@ const FundMessage = ({
   nickName,
   createAt,
   profileImageUrl,
+  memberId,
 }: Partial<Participant>) => {
   return (
     <View className="flex flex-col border-b-2 border-Gray-01 py-4 px-6">
@@ -48,7 +49,11 @@ const FundMessage = ({
             style="text-Body-2 ml-2 text-Gray-06"
           />
         </View>
-        <ReportButton domainId={messageId!} domainType="FUNDING_MESSAGE" />
+        <ReportAndEditButton
+          domainId={messageId!}
+          domainType="FUNDING_MESSAGE"
+          memberId={memberId}
+        />
       </View>
       {message ? (
         <TextRegular

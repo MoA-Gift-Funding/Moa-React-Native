@@ -39,7 +39,7 @@ const JoinFund = ({navigation, route}) => {
         <View className="mt-4">
           <View className="flex flex-row">
             <TextBold
-              title="그리니야"
+              title={nickName}
               style="text-Heading-3 leading-Heading-3 text-Main-01"
             />
             <TextBold

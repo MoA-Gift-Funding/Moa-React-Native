@@ -4,7 +4,7 @@ import TextRegular from '../../../components/text/TextRegular';
 import TextBold from '../../../components/text/TextBold';
 import Countdown from 'react-countdown';
 import {twoDP} from '../../../utils/regex';
-import ReportButton from '../../../components/button/ReportButton';
+import ReportAndEditButton from '../../../components/button/ReportAndEditButton';
 import {FundStatus} from '../../../types/Funding';
 
 const FundDesc = ({
@@ -38,7 +38,7 @@ const FundDesc = ({
                 style="text-Gray-10 text-Heading-3 leading-Heading-3"
               />
             </View>
-            <ReportButton domainId={id} domainType="FUNDING" />
+            <ReportAndEditButton domainId={id} domainType="FUNDING" />
           </View>
           <View className="mt-4">
             <TextRegular
