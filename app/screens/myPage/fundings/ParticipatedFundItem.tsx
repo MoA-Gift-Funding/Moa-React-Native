@@ -16,7 +16,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
     status,
     productImageUrl,
     participatedDate,
-    participateStatus,
+    participantStatus,
     nickName,
     amount,
     fundingParticipantId,
@@ -67,7 +67,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
             navigation.navigate('FundDetail', {id: fundingId, title, endDate}),
           1000,
         )}>
-        {participateStatus === 'PARTICIPATING' ? (
+        {participantStatus === 'PARTICIPATING' ? (
           <>
             <View className="flex flex-row justify-between items-center">
               <TextSemiBold
@@ -156,7 +156,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
         )}
       </Pressable>
       {status === 'PROCESSING' &&
-        participateStatus === 'PARTICIPATING' &&
+        participantStatus === 'PARTICIPATING' &&
         isWithin7days() && (
           <Pressable
             className="flex items-center justify-center bg-Gray-02 w-[314px] h-[44px] rounded-lg"

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {Image, View} from 'react-native';
 import TextSemiBold from '../../../components/text/TextSemiBold';
 import TextRegular from '../../../components/text/TextRegular';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
-import {Participant} from '../../../types/Funding';
+import {MessageStatus, Participant} from '../../../types/Funding';
 import ReportAndEditButton from '../../../components/button/ReportAndEditButton';
 import {httpsUrlCorrector} from '../../../utils/regex';
 dayjs.extend(relativeTime);
@@ -19,7 +19,17 @@ const FundMessage = ({
   profileImageUrl,
   memberId,
   visibility,
-}: Partial<Participant>) => {
+  setMsgUpdated,
+}: {
+  memberId: number;
+  nickName: string;
+  profileImageUrl: string;
+  messageId: number;
+  message: string;
+  createAt: string;
+  visibility: MessageStatus;
+  setMsgUpdated: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
     <View className="flex flex-col border-b-2 border-Gray-01 py-4 px-6">
       <View className="flex flex-row items-center justify-between">
@@ -57,6 +67,7 @@ const FundMessage = ({
           message={message}
           messageId={messageId}
           visibility={visibility}
+          setMsgUpdated={setMsgUpdated}
         />
       </View>
       {message ? (

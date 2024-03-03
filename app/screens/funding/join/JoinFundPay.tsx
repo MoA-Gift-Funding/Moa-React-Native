@@ -15,10 +15,14 @@ import {autoCurrency, createOrderId} from '../../../utils/regex';
 import Toast from 'react-native-toast-message';
 import usePayment from '../../../hooks/payments/usePayment';
 import {MessageStatus} from '../../../types/Funding';
+import {useUserContext} from '../../../contexts/UserContext';
 
 const JoinFundPay = ({route}) => {
-  const {price, id, title, visible, message, nickName, isFundOwner} =
+  const {price, id, title, visibility, message, nickName, isFundOwner} =
     route.params;
+  const {
+    userState: {user},
+  } = useUserContext();
   return (
     <View className="px-6 bg-white h-full">
       <View className="mt-4">
@@ -33,13 +37,13 @@ const JoinFundPay = ({route}) => {
       </View>
       <PaymentWidgetProvider
         clientKey={'test_ck_6BYq7GWPVvgR5JAOJbPwrNE5vbo1'}
-        customerKey={'test_gsk_LkKEypNArW26726WYYYQVlmeaxYG'}>
+        customerKey={user?.customerKey!}>
         <CheckoutPage
           price={price}
           orderName={title}
           fundingId={id}
           message={message}
-          visible={visible}
+          visibility={visibility}
           nickName={nickName}
           isFundOwner={isFundOwner}
         />
@@ -54,7 +58,7 @@ function CheckoutPage({
   nickName,
   isFundOwner,
   message,
-  visible,
+  visibility,
 }: {
   price: string;
   orderName: string;
@@ -62,7 +66,7 @@ function CheckoutPage({
   nickName: string;
   isFundOwner: boolean;
   message?: string;
-  visible?: MessageStatus;
+  visibility?: MessageStatus;
 }) {
   const paymentWidgetControl = usePaymentWidget();
   const [paymentMethodWidgetControl, setPaymentMethodWidgetControl] =
@@ -141,7 +145,7 @@ function CheckoutPage({
                     paymentKey,
                     fundingId,
                     message,
-                    visible,
+                    visibility,
                     isFundOwner,
                   });
                 } else if (result?.fail) {

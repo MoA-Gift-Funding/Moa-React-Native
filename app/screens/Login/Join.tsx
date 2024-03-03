@@ -143,6 +143,7 @@ export default function Join({navigation}) {
               label="생년월일"
               error={errors.fullBirthday}
               control={control}
+              placeholder="2000/08/24"
               regex={autoSlashBirthday}
               rules={{
                 required: '생년월일은 필수 입력 사항이예요.',

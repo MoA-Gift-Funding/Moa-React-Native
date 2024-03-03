@@ -107,7 +107,7 @@ export interface JoinFundItem {
   fundingId: number;
   paymentOrderId: string;
   message?: string;
-  visible?: MessageStatus;
+  visibility?: MessageStatus;
   nickName?: string;
 }
 
@@ -117,7 +117,7 @@ export interface FinishFundItem {
   nickName?: string;
 }
 
-type ParticipateStatus = 'PARTICIPATING' | 'CANCEL';
+type ParticipantStatus = 'PARTICIPATING' | 'CANCEL';
 
 export interface ParticipatedFundItem {
   fundingId: number;
@@ -133,7 +133,7 @@ export interface ParticipatedFundItem {
   fundingParticipantId: number;
   participatedDate: string;
   amount: number;
-  participateStatus: ParticipateStatus;
+  participantStatus: ParticipantStatus;
 }
 
 export interface FundMessageItem {

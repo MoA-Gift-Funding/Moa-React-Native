@@ -10,9 +10,9 @@ import {useForm} from 'react-hook-form';
 import NextButton from './NextButton';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle, faCircleCheck} from '@fortawesome/free-solid-svg-icons';
-import TextInputGroupPlain from '../../screens/myPage/components/TextInputGroupPlain';
 import LoadingBar from '../bar/LoadingBar';
 import {MessageStatus} from '../../types/Funding';
+import TextInputGroup from '../text/TextInputGroup';
 
 const ReportTextBtn = ({
   state,
@@ -49,6 +49,7 @@ const ReportAndEditButton = ({
   message,
   messageId,
   visibility,
+  setMsgUpdated,
 }: {
   domainId: number;
   domainType: 'FUNDING' | 'FUNDING_MESSAGE';
@@ -56,6 +57,7 @@ const ReportAndEditButton = ({
   message?: string;
   messageId?: number;
   visibility?: MessageStatus;
+  setMsgUpdated?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const handleReportModal = () => {
     setOnPressed(false);
@@ -95,16 +97,19 @@ const ReportAndEditButton = ({
   };
 
   const handleUpdate = async data => {
-    try {
-      setIsLoading(true);
-      updateFundMessageQuery({
-        messageId,
-        message: data.message,
-        visibility: checked ? 'PRIVATE' : 'PUBLIC',
-      });
-    } finally {
-      setIsLoading(false);
-      setOnEditModal(false);
+    if (setMsgUpdated && messageId) {
+      try {
+        setIsLoading(true);
+        updateFundMessageQuery({
+          messageId,
+          message: data.message,
+          visibility: checked ? 'PRIVATE' : 'PUBLIC',
+        });
+      } finally {
+        setIsLoading(false);
+        setOnEditModal(false);
+        setMsgUpdated(true);
+      }
     }
   };
   return (
@@ -156,17 +161,19 @@ const ReportAndEditButton = ({
         <View className="h-fit bg-white flex items-center justify-center px-4 py-6">
           {isLoading && <LoadingBar />}
           <View className="w-[315px]">
-            <TextInputGroupPlain
+            <TextInputGroup
               name="message"
               label="수정 메세지"
               placeholder={message}
               error={errors.message}
               control={control}
               autoFocus={true}
+              custom="h-[150px]"
+              multiline={true}
             />
             <Pressable
               onPress={() => setChecked(!checked)}
-              className="flex flex-row items-center -mt-4 mb-6">
+              className="flex flex-row items-center -mt-2 mb-6">
               {checked ? (
                 <FontAwesomeIcon
                   icon={faCircleCheck}
@@ -188,7 +195,7 @@ const ReportAndEditButton = ({
             <NextButton
               title="수정하기"
               handleSubmit={handleSubmit}
-              onSubmit={handleUpdate}
+              onSubmit={throttle(handleUpdate, 1000)}
             />
           </View>
         </View>

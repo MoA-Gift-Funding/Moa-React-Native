@@ -180,6 +180,7 @@ const UpdateAddress = ({
             )}
             {(roadAddress || jibunAddress) && (
               <TextInputGroupWhite
+                autoFocus={true}
                 name="detailAddress"
                 label=""
                 custom="-mt-4"

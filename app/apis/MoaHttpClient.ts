@@ -134,12 +134,12 @@ export default class MoaHttpClient {
     fundingId,
     paymentOrderId,
     message = '',
-    visible = 'PRIVATE',
+    visibility = 'PRIVATE',
   }: JoinFundItem) {
     return this.httpClient.post(`/fundings/${fundingId}/participate`, {
       paymentOrderId,
       message,
-      visible,
+      visibility,
     });
   }
 

@@ -22,6 +22,7 @@ interface TextInputGroupProps {
   multiline?: boolean;
   custom?: string;
   textAlignVertical?: 'top' | 'auto' | 'bottom' | 'center';
+  autoFocus?: boolean;
 }
 
 const TextInputGroup: React.FC<TextInputGroupProps> = ({
@@ -37,6 +38,7 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
   multiline,
   custom,
   textAlignVertical,
+  autoFocus,
 }) => {
   return (
     <>
@@ -48,8 +50,9 @@ const TextInputGroup: React.FC<TextInputGroupProps> = ({
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
+            autoFocus={autoFocus}
             editable={editable}
-            className={`w-[312px] h-[56px] rounded-md px-3 text-Body-1 text-black placeholder:text-[#858585] bg-Gray-02 ${custom}`}
+            className={`w-[312px] h-[56px] rounded-md px-3 py-3 text-Body-1 text-black placeholder:text-[#858585] bg-Gray-02 ${custom}`}
             placeholder={placeholder}
             onBlur={onBlur}
             textAlignVertical={textAlignVertical}

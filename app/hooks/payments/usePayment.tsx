@@ -31,7 +31,7 @@ const usePayment = ({nickName}: {nickName: string}) => {
       amount,
       fundingId,
       message,
-      visible,
+      visibility,
       isFundOwner,
     }: {
       paymentKey: string;
@@ -39,10 +39,13 @@ const usePayment = ({nickName}: {nickName: string}) => {
       amount: number;
       fundingId: number;
       message?: string;
-      visible?: MessageStatus;
+      visibility?: MessageStatus;
       isFundOwner: boolean;
     }) => payment.sendSuccessPayment(paymentKey, orderId, amount),
-    onSuccess: (data, {orderId, fundingId, message, visible, isFundOwner}) => {
+    onSuccess: (
+      data,
+      {orderId, fundingId, message, visibility, isFundOwner},
+    ) => {
       if (isFundOwner) {
         finishFundQuery({fundingId, paymentOrderId: orderId, nickName});
       } else {
@@ -50,7 +53,7 @@ const usePayment = ({nickName}: {nickName: string}) => {
           fundingId,
           paymentOrderId: orderId,
           message,
-          visible,
+          visibility,
           nickName,
         });
       }

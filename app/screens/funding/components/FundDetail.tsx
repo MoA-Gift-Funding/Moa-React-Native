@@ -22,6 +22,7 @@ import {throttle} from '../../../utils/device';
 const FundDetail = ({navigation, route}) => {
   const {id, title, endDate} = route.params;
   const [leftSelected, setLeftSelected] = useState(true);
+  const [msgUpdated, setMsgUpdated] = useState(false);
   const [caution, setCaution] = useState(true);
   const {
     userState: {user},
@@ -61,9 +62,10 @@ const FundDetail = ({navigation, route}) => {
       setData({
         ...fund,
       });
+      setMsgUpdated(false);
     };
     getFundDetail();
-  }, [fundDetailQuery, id]);
+  }, [fundDetailQuery, id, msgUpdated]);
 
   const {
     nickName,
@@ -139,6 +141,7 @@ const FundDetail = ({navigation, route}) => {
                       profileImageUrl={msg.profileImageUrl}
                       createAt={msg.createAt}
                       visibility={msg.visibility}
+                      setMsgUpdated={setMsgUpdated}
                     />
                   ))}
                 {participants.length < 1 && (

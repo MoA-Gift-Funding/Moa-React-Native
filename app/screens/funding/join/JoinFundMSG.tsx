@@ -33,7 +33,7 @@ const JoinFundMSG = ({navigation, route}) => {
     navigation.navigate('JoinFundPay', {
       ...route.params,
       ...getValues(),
-      visible: checked ? 'PRIVATE' : 'PUBLIC',
+      visibility: checked ? 'PRIVATE' : 'PUBLIC',
       isFundOwner: false,
     });
   };
@@ -64,7 +64,7 @@ const JoinFundMSG = ({navigation, route}) => {
                 control={control}
                 error={errors.message}
                 placeholder="메세지 입력(최소 1자, 최대 300자)"
-                custom="h-[220px] py-3"
+                custom="h-[220px]"
                 textAlignVertical="top"
                 multiline={true}
                 rules={{
