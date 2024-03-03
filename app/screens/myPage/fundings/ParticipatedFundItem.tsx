@@ -37,6 +37,9 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
       '결제 취소는 3-5 영업일이 소요될 예정입니다.',
       [
         {
+          text: '닫기',
+        },
+        {
           text: '펀딩 취소',
           onPress: async () => {
             try {
@@ -49,9 +52,6 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
               setIsLoading(false);
             }
           },
-        },
-        {
-          text: '닫기',
         },
       ],
     );

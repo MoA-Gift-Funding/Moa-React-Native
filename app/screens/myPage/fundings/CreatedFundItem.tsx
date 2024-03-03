@@ -43,6 +43,9 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       '펀딩에 참여한 모든 참가자들에게 결제 취소가 이루어집니다. 결제 취소는 3-5 영업일이 소요될 예정입니다.',
       [
         {
+          text: '닫기',
+        },
+        {
           text: '펀딩 취소',
           onPress: async () => {
             try {
@@ -52,9 +55,6 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
               setIsLoading(false);
             }
           },
-        },
-        {
-          text: '닫기',
         },
       ],
     );

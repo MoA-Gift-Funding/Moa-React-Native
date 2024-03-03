@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import TextBold from '../../../components/text/TextBold';
 import {useForm} from 'react-hook-form';
@@ -57,9 +57,12 @@ const NewFund = ({navigation, route}) => {
 
   return (
     <KeyboardAvoidingView
-      className="px-6 bg-white h-full mx-auto"
+      className="px-6 bg-white mx-auto"
+      keyboardVerticalOffset={70}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{justifyContent: 'center'}}>
         <View className="mt-8">
           <TextBold
             title="펀딩 개설을 위해 정보를"
