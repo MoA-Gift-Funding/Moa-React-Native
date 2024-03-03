@@ -38,19 +38,23 @@ export default function Join({navigation}) {
       setError(true);
       return;
     }
-    setIsLoading(true);
-    const bdayList = data.fullBirthday.split('/');
-    dispatch({
-      type: 'LOGIN',
-      payload: {
-        ...user!,
-        ...data,
-        birthyear: bdayList[0],
-        birthday: `${bdayList[1]}${bdayList[2]}`,
-      },
-    });
-    setIsLoading(false);
-    navigation.navigate('PhoneValidation');
+
+    try {
+      setIsLoading(true);
+      const bdayList = data.fullBirthday.split('/');
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          ...user!,
+          ...data,
+          birthyear: bdayList[0],
+          birthday: `${bdayList[1]}${bdayList[2]}`,
+        },
+      });
+    } finally {
+      setIsLoading(false);
+      navigation.navigate('PhoneValidation');
+    }
   };
 
   const {

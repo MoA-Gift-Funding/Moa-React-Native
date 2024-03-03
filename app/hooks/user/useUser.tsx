@@ -31,6 +31,17 @@ export default function useUser() {
   const {mutate: requestMobileQuery} = useMutation({
     mutationFn: (phoneNumber: string) =>
       useUserApi.requestVerification(phoneNumber),
+    onError: err => {
+      if (err.message === 'Request failed with status code 409') {
+        navigation.navigate('Login');
+        Toast.show({
+          type: 'error',
+          text1: '이미 가입된 번호예요. 가입하신 플랫폼으로 로그인해주세요🙏🏻',
+          visibilityTime: 5000,
+        });
+      }
+      throw err;
+    },
   });
 
   const {mutate: verifyMobileQuery} = useMutation({
