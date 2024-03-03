@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-firebase/dynamic-links": "^19.0.0",
     "axios": "^1.6.2",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",

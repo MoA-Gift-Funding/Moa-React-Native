@@ -13,6 +13,9 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.72.7)
   - Firebase/CoreOnly (10.19.0):
     - FirebaseCore (= 10.19.0)
+  - Firebase/DynamicLinks (10.19.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 10.19.0)
   - Firebase/Messaging (10.19.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 10.19.0)
@@ -24,6 +27,8 @@ PODS:
     - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.19.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseDynamicLinks (10.19.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseInstallations (10.19.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
@@ -596,6 +601,11 @@ PODS:
   - RNFBApp (18.7.3):
     - Firebase/CoreOnly (= 10.19.0)
     - React-Core
+  - RNFBDynamicLinks (19.0.0):
+    - Firebase/DynamicLinks (= 10.19.0)
+    - GoogleUtilities/AppDelegateSwizzler
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (18.7.3):
     - Firebase/Messaging (= 10.19.0)
     - FirebaseCoreExtension (= 10.19.0)
@@ -704,6 +714,7 @@ DEPENDENCIES:
   - "RNAppleAuthentication (from `../node_modules/@invertase/react-native-apple-authentication`)"
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNNaverLogin (from `../node_modules/@react-native-seoul/naver-login`)"
@@ -722,6 +733,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseMessaging
     - Flipper
@@ -846,6 +858,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBDynamicLinks:
+    :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -876,6 +890,7 @@ SPEC CHECKSUMS:
   FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
   FirebaseCoreExtension: c08d14c7b22e07994e876d837e6f58642f340087
   FirebaseCoreInternal: b444828ea7cfd594fca83046b95db98a2be4f290
+  FirebaseDynamicLinks: bd0455c62de367bb46605692af35e423fd7b3b69
   FirebaseInstallations: 033d199474164db20c8350736842a94fe717b960
   FirebaseMessaging: d322bd030a0e97398bf134746e087b88e6ba0074
   Flipper: 6edb735e6c3e332975d1b17956bcc584eccf5818
@@ -942,6 +957,7 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNCAsyncStorage: 687bb9e85dd3d45b966662440dcfc0cd962347e6
   RNFBApp: c21258de1485419a845efbba9c09ec946c89891d
+  RNFBDynamicLinks: 8c53e14e37fc62a11fa0a7467240ecc26e7e6d4a
   RNFBMessaging: e52a76a97ec5ff75e186c150e2bfab86c9e655d1
   RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
   RNNaverLogin: dc2758a157dafaa1ffca63079cad4d4c75208a30

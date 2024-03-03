@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {
   QueryCache,
   QueryClient,
@@ -7,6 +7,7 @@ import {
   useQueryErrorResetBoundary,
 } from '@tanstack/react-query';
 import {UserContextProvider} from './app/contexts/UserContext';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import AuthRouter from './app/router/AuthRouter';
 import messaging from '@react-native-firebase/messaging';
 import useApiError from './app/hooks/handlers/useApiError';
@@ -15,7 +16,11 @@ import FallbackUI from './app/components/handlers/fallbackUI';
 import Toast from 'react-native-toast-message';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import SplashScreen from 'react-native-splash-screen';
-import {updateAppVersion} from './app/utils/device';
+import {
+  getPathname,
+  handleDynamicLink,
+  updateAppVersion,
+} from './app/utils/device';
 
 export const App = () => {
   const {handleError} = useApiError();
@@ -49,7 +54,6 @@ export const App = () => {
         body,
         android: {
           channelId,
-          // smallIcon: 'ic_launcher',
           pressAction: {
             id: 'MoA',
           },
@@ -75,6 +79,10 @@ export const App = () => {
       } = remoteMessage;
       foreGroundMessage(title, body);
     });
+
+    const unsubscribe2 = dynamicLinks().onLink(handleDynamicLink);
+    // When the component is unmounted, remove the listener
+    // return () => unsubscribe();
 
     // 앱 배포 URL 적용 후, 코드 활성화 예정
     // appVersionCheck();

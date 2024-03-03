@@ -17,7 +17,7 @@ import FundMessage from './FundMessage';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {FundDetailItem} from '../../../types/Funding';
 import {useUserContext} from '../../../contexts/UserContext';
-import {throttle} from '../../../utils/device';
+import {makeDynamicLink, throttle} from '../../../utils/device';
 
 const FundDetail = ({navigation, route}) => {
   const {id, title, endDate} = route.params;
@@ -193,14 +193,15 @@ const FundDetail = ({navigation, route}) => {
           <Pressable
             className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
             onPress={throttle(async () => {
+              const dynamicUrl = await makeDynamicLink('FundDetail', id);
               Platform.OS === 'ios'
                 ? Share.share({
-                    url: 'https://www.giftmoa.co.kr/',
-                    message: `${nickName}님의 펀딩이예요!`,
+                    url: dynamicUrl,
+                    message: `${nickName}님의 선물 펀딩이예요!`,
                   })
                 : Share.share({
-                    title: `${nickName}님의 펀딩이예요!`,
-                    message: 'https://www.giftmoa.co.kr/',
+                    title: `${nickName}님의 선물 펀딩이예요!`,
+                    message: dynamicUrl,
                   });
             }, 1000)}>
             <TextSemiBold title="공유" style="text-white text-Body-1" />

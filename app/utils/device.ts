@@ -4,6 +4,8 @@ import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 import {UserContact} from '../types/User';
 import Toast from 'react-native-toast-message';
 import VersionCheck from 'react-native-version-check';
+import Config from 'react-native-config';
+import axios from 'axios';
 
 export const getContactsInfo = async () => {
   const organized: UserContact = {contactList: []};
@@ -154,4 +156,45 @@ export const throttle = <T extends (...args: any[]) => any>(
       }, delay);
     }
   };
+};
+
+export const makeDynamicLink = async (domain: string, domainId: string) => {
+  const uriKey = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${Config.FIREBASE_WEB_KEY}`;
+  const {data} = await axios({
+    method: 'post',
+    url: uriKey,
+    data: {
+      dynamicLinkInfo: {
+        domainUriPrefix: 'https://giftmoa.page.link',
+        link: `https://giftmoa.page.link/${domain}=${domainId}`,
+        androidInfo: {
+          androidPackageName: 'com.runko.moa',
+        },
+        iosInfo: {
+          iosBundleId: 'com.runkoRN.MoA',
+          iosAppStoreId: '6473087422',
+        },
+        socialMetaTagInfo: {
+          socialTitle: '모두가 행복한 새로운 선물 문화, 모아',
+          socialDescription: '친구들은 이 선물을 갖고 싶대요!',
+          socialImageLink:
+            'https://res.cloudinary.com/dkjk8h8zd/image/upload/v1700223551/moa-og_pxzqkl.png',
+        },
+      },
+      suffix: {
+        option: 'SHORT',
+      },
+    },
+  });
+
+  return data.shortLink;
+};
+
+export const handleDynamicLink = link => {
+  console.log(link, '여기는 핸들다이나믹스');
+
+  // Handle dynamic link inside your own application
+  if (link.url === 'https://invertase.io/offer') {
+    // ...navigate to your offers screen
+  }
 };
