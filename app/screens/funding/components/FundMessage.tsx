@@ -5,9 +5,11 @@ import TextRegular from '../../../components/text/TextRegular';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import ko from 'dayjs/locale/ko';
-import {MessageStatus, Participant} from '../../../types/Funding';
+import {MessageStatus} from '../../../types/Funding';
 import ReportAndEditButton from '../../../components/button/ReportAndEditButton';
 import {httpsUrlCorrector} from '../../../utils/regex';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faLock} from '@fortawesome/free-solid-svg-icons';
 dayjs.extend(relativeTime);
 dayjs.locale(ko);
 
@@ -57,8 +59,11 @@ const FundMessage = ({
           )}
           <TextSemiBold
             title={`· ${dayjs().to(createAt)}`}
-            style="text-Body-2 ml-2 text-Gray-06"
+            style="text-Body-2 mx-2 text-Gray-06"
           />
+          {message && visibility === 'PRIVATE' && (
+            <FontAwesomeIcon icon={faLock} color="#BDBDBD" size={14} />
+          )}
         </View>
         <ReportAndEditButton
           domainId={messageId!}
@@ -73,12 +78,12 @@ const FundMessage = ({
       {message ? (
         <TextRegular
           title={message}
-          style="text-Gray-06 text-Body-2 leading-Body-2 mt-2 mx-1"
+          style="text-Gray-08 text-Body-2 leading-Body-2 mt-2 mx-1"
         />
       ) : (
         <TextRegular
           title="펀딩 개설자에게만 보이는 비밀 메세지예요."
-          style="text-Gray-06 text-Body-2 leading-Body-2 mt-2 mx-1"
+          style="text-Gray-08 text-Body-2 leading-Body-2 mt-2 mx-1"
         />
       )}
     </View>
