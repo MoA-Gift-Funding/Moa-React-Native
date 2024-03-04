@@ -1,7 +1,8 @@
 import React from 'react';
-import {useInfiniteQuery, useMutation, useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery, useMutation} from '@tanstack/react-query';
 import {useUserContext} from '../../contexts/UserContext';
 import {Order} from '../../apis/order/Order';
+import Toast from 'react-native-toast-message';
 
 const useOrder = () => {
   const {
@@ -30,11 +31,19 @@ const useOrder = () => {
     mutationFn: (orderId: number) => order.getOrderDetail(orderId),
   });
 
+  const {mutateAsync: cancelOrderQuery} = useMutation({
+    mutationFn: (orderId: number) => order.cancelOrder(orderId),
+    onSuccess: () => {
+      Toast.show({type: 'success', text1: '쿠폰 발행이 취소되었어요🙆🏻‍♀️'});
+    },
+  });
+
   return {
     orderInfiniteQuery,
     orderFetchNextPageQuery,
     refetchOrderInfiniteQuery,
     orderDetailQuery,
+    cancelOrderQuery,
   };
 };
 
