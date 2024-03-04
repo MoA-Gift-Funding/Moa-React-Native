@@ -2,18 +2,9 @@ import React from 'react';
 import {useInfiniteQuery, useMutation} from '@tanstack/react-query';
 import {Products} from '../../apis/products/Products';
 import {useUserContext} from '../../contexts/UserContext';
+import {Categories} from '../../types/Store';
 
-export default function useProducts(
-  category?:
-    | '상품권'
-    | '피자/치킨'
-    | '뷰티'
-    | '식품/건강'
-    | '편의점'
-    | '리빙/잡화'
-    | '영화'
-    | undefined,
-) {
+export default function useProducts(category?: Categories) {
   const {
     useApi: {client},
   } = useUserContext();

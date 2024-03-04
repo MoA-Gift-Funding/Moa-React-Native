@@ -158,7 +158,7 @@ export const throttle = <T extends (...args: any[]) => any>(
   };
 };
 
-export const makeDynamicLink = async (domain: string, domainId: string) => {
+export const makeDynamicLink = async (domain: string, domainId?: number) => {
   const uriKey = `https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=${Config.FIREBASE_WEB_KEY}`;
   const {data} = await axios({
     method: 'post',
@@ -166,7 +166,9 @@ export const makeDynamicLink = async (domain: string, domainId: string) => {
     data: {
       dynamicLinkInfo: {
         domainUriPrefix: 'https://giftmoa.page.link',
-        link: `https://giftmoa.page.link/${domain}=${domainId}`,
+        link: domainId
+          ? `https://giftmoa.page.link/${domain}/:${domainId}`
+          : `https://giftmoa.page.link/${domain}`,
         androidInfo: {
           androidPackageName: 'com.runko.moa',
         },
@@ -191,10 +193,6 @@ export const makeDynamicLink = async (domain: string, domainId: string) => {
 };
 
 export const handleDynamicLink = link => {
-  console.log(link, '여기는 핸들다이나믹스');
-
-  // Handle dynamic link inside your own application
-  if (link.url === 'https://invertase.io/offer') {
-    // ...navigate to your offers screen
-  }
+  const url = link.url;
+  console.log(url);
 };

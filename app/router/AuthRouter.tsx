@@ -37,12 +37,13 @@ import AppConfig from '../screens/myPage/appConfig/AppConfig';
 import FinishFundCompleted from '../screens/funding/join/FinishFundCompleted';
 import Announces from '../screens/myPage/cs/Announces';
 import MoA from '../screens/myPage/moa/MoA';
+import {RootStackParamList} from '../types/router';
 
 const AuthRouter = () => {
   const {
     userState: {user},
   } = useUserContext();
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <Stack.Navigator>

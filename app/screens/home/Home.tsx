@@ -21,7 +21,7 @@ import useFunding from '../../hooks/fundings/useFunding';
 import {FriendFundItem, MyFundItem} from '../../types/Funding';
 import {useRefetchOnFocus} from '../../hooks/handlers/useRefetchOnFocus';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getDeviceToken, throttle} from '../../utils/device';
+import {getDeviceToken, makeDynamicLink, throttle} from '../../utils/device';
 
 export default function Home({navigation}) {
   const {
@@ -230,16 +230,16 @@ export default function Home({navigation}) {
             </ScrollView>
             <Pressable
               className="pt-10 bg-white "
-              ㅇ
               onPress={throttle(async () => {
+                const dynamicUrl = await makeDynamicLink('Home');
                 Platform.OS === 'ios'
                   ? Share.share({
-                      url: 'https://www.giftmoa.co.kr/',
+                      url: dynamicUrl,
                       message: '모두가 행복한 새로운 선물 경험, 기프트모아',
                     })
                   : Share.share({
                       title: '모두가 행복한 새로운 선물 경험, 기프트모아',
-                      message: 'https://www.giftmoa.co.kr/',
+                      message: dynamicUrl,
                     });
               }, 1000)}>
               <Image

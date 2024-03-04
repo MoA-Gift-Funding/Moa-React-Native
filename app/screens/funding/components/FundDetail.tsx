@@ -95,8 +95,8 @@ const FundDetail = ({navigation, route}) => {
         <FundDesc
           id={id}
           userName={nickName}
-          title={title}
-          endDate={endDate}
+          title={data.title}
+          endDate={data.endDate}
           fundingRate={fundingRate}
           status={status}
         />
@@ -231,7 +231,7 @@ const FundDetail = ({navigation, route}) => {
                 navigation.navigate('JoinFundPay', {
                   price: remainAmount,
                   id,
-                  title,
+                  title: data.title,
                   nickName,
                   isFundOwner: true,
                 })
