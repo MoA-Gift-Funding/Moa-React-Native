@@ -55,7 +55,7 @@ const NewFundShipping = ({navigation, route}) => {
         endDate,
         maximumAmount,
         deliveryAddressId: selectedAddr,
-        deliveryRequestMessage,
+        deliveryRequestMessage: deliveryRequestMessage || '배송 전 연락주세요',
       });
     } finally {
       setIsLoading(false);

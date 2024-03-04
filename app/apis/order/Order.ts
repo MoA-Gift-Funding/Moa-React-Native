@@ -30,4 +30,14 @@ export class Order {
       throw error;
     }
   }
+
+  async cancelOrder(orderId: number) {
+    try {
+      const canceled = await this.apiClient.cancelOrder(orderId);
+      return canceled.data;
+    } catch (error: any) {
+      console.error(error.response.data);
+      throw error;
+    }
+  }
 }

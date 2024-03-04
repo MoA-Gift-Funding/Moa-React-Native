@@ -217,6 +217,10 @@ export default class MoaHttpClient {
     return this.httpClient.get(`/orders/${orderId}`);
   }
 
+  cancelOrder(orderId: number) {
+    return this.httpClient.post(`/orders/${orderId}/cancel-coupon`);
+  }
+
   // payment
   sendPayInfo(data: {orderId: string; amount: number}) {
     return this.httpClient.post('/payments/toss/prepay', data);
