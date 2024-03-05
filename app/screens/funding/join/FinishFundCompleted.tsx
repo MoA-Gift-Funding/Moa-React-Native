@@ -47,7 +47,7 @@ const FinishFundCompleted = ({navigation, route}) => {
       </View>
       <NextButton
         title="확인"
-        onSubmit={() => navigation.navigate('MyFunding', {headerTitle: '펀딩'})}
+        onSubmit={() => navigation.navigate('Home')}
         handleSubmit={handleSubmit}
         style="mb-8"
       />
