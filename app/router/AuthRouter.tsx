@@ -84,7 +84,7 @@ const AuthRouter = () => {
           <Stack.Screen
             name="FundCompleted"
             component={FundCompleted}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="FriendFundList"
@@ -114,12 +114,12 @@ const AuthRouter = () => {
           <Stack.Screen
             name="JoinFundCompleted"
             component={JoinFundCompleted}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="FinishFundCompleted"
             component={FinishFundCompleted}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="MyPageMain"
