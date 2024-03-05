@@ -9,11 +9,14 @@ import {OrderDetailItem} from '../../../types/Order';
 import {autoCurrency} from '../../../utils/regex';
 import NextButton from '../../../components/button/NextButton';
 import {useForm} from 'react-hook-form';
+import LoadingBar from '../../../components/bar/LoadingBar';
+import {throttle} from '../../../utils/device';
 
 const MyOrder = ({navigation, route}) => {
   const {orderId, imageUrl, brand, productName, price} = route.params;
-  const {orderDetailQuery} = useOrder();
+  const {orderDetailQuery, cancelOrderQuery} = useOrder();
   const [order, setOrder] = useState<OrderDetailItem | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
   const {handleSubmit} = useForm();
   useEffect(() => {
     const getDetailedInfo = async () => {
@@ -22,6 +25,15 @@ const MyOrder = ({navigation, route}) => {
     };
     getDetailedInfo();
   }, [orderId, orderDetailQuery]);
+
+  const handleCancelTicket = async () => {
+    try {
+      setIsLoading(true);
+      await cancelOrderQuery(orderId);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -31,6 +43,7 @@ const MyOrder = ({navigation, route}) => {
             <TextRegular title={`주문번호 ${orderId}`} style="text-Body-2" />
           </View>
           <View className="flex flex-row items-center bg-white px-6 py-4 mt-4">
+            {isLoading && <LoadingBar />}
             <Image
               source={{
                 uri: imageUrl,
@@ -77,6 +90,15 @@ const MyOrder = ({navigation, route}) => {
                 personalInquiry: true,
               })
             }
+            handleSubmit={handleSubmit}
+          />
+        </View>
+      )}
+      {order && order.status === 'COMPLETE_RECEIVE' && (
+        <View className="flex items-center mb-4">
+          <NextButton
+            title="쿠폰 발행 취소"
+            onSubmit={throttle(handleCancelTicket, 1000)}
             handleSubmit={handleSubmit}
           />
         </View>

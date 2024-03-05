@@ -26,7 +26,7 @@ export const getContactsInfo = async () => {
               const phoneNumber = parsePhoneNumber(
                 contact.phoneNumbers[0]?.number,
               );
-              if (name && phoneNumber) {
+              if (name && phoneNumber.match(/(\d{3})-(\d{4})-(\d{4})/)) {
                 organized.contactList.push({name, phoneNumber});
               }
             });
@@ -48,7 +48,9 @@ export const getContactsInfo = async () => {
             const phoneNumber = parsePhoneNumber(
               contact.phoneNumbers[0]?.number,
             );
-            organized.contactList.push({name, phoneNumber});
+            if (name && phoneNumber.match(/(\d{3})-(\d{4})-(\d{4})/)) {
+              organized.contactList.push({name, phoneNumber});
+            }
           }
         });
       })
