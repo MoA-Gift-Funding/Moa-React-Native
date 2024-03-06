@@ -3,10 +3,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 export const useRefetchOnFocus = (refetch = () => {}, canRefetch = true) => {
   const [isScreenFocused, setIsScreenFocused] = useState(false);
-  useFocusEffect(() => {
-    setIsScreenFocused(true);
-    return () => setIsScreenFocused(false);
-  });
+  useFocusEffect(
+    useCallback(() => {
+      setIsScreenFocused(true);
+      return () => setIsScreenFocused(false);
+    }, []),
+  );
 
   const fetchAgain = useCallback(() => {
     refetch();

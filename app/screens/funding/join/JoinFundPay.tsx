@@ -36,7 +36,7 @@ const JoinFundPay = ({route}) => {
         />
       </View>
       <PaymentWidgetProvider
-        clientKey={'test_ck_6BYq7GWPVvgR5JAOJbPwrNE5vbo1'}
+        clientKey={'test_ck_LlDJaYngro5XZQ7obwOl3ezGdRpX'}
         customerKey={user?.customerKey!}>
         <CheckoutPage
           price={price}
