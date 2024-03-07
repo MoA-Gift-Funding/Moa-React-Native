@@ -44,6 +44,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       [
         {
           text: '닫기',
+          style: 'cancel',
         },
         {
           text: '펀딩 취소',
@@ -55,8 +56,10 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
               setIsLoading(false);
             }
           },
+          style: 'destructive',
         },
       ],
+      {cancelable: true},
     );
   };
 

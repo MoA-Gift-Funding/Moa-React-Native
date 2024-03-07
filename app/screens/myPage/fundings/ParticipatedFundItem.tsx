@@ -38,6 +38,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
       [
         {
           text: '닫기',
+          style: 'cancel',
         },
         {
           text: '펀딩 취소',
@@ -52,8 +53,10 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
               setIsLoading(false);
             }
           },
+          style: 'destructive',
         },
       ],
+      {cancelable: true},
     );
   };
 
