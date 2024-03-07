@@ -4,6 +4,7 @@ import OrderItem from './OrderItem';
 import useOrder from '../../../hooks/order/useOrder';
 import {RefreshControl} from 'react-native';
 import TextRegular from '../../../components/text/TextRegular';
+import SeperatorUI from '../../funding/components/SeperatorUI';
 
 const MyOrders = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -21,6 +22,7 @@ const MyOrders = () => {
               data={orderInfiniteQuery.pages.flatMap(page =>
                 page.content.flat(),
               )}
+              ItemSeparatorComponent={SeperatorUI}
               renderItem={fund => <OrderItem item={fund.item} />}
               keyExtractor={fund => fund.orderId + ''}
               showsVerticalScrollIndicator={false}

@@ -4,6 +4,7 @@ import MessageItem from './MessageItem';
 import useFunding from '../../../hooks/fundings/useFunding';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 import TextRegular from '../../../components/text/TextRegular';
+import SeperatorUI from '../../funding/components/SeperatorUI';
 
 const MyMessages = () => {
   const {
@@ -21,8 +22,9 @@ const MyMessages = () => {
             data={recievedMessagesInfiniteQuery.pages.flatMap(page =>
               page.content.flat(),
             )}
+            ItemSeparatorComponent={SeperatorUI}
             renderItem={message => <MessageItem item={message.item} />}
-            keyExtractor={message => message.messageId}
+            keyExtractor={message => message.messageId.toString()}
             showsVerticalScrollIndicator={false}
             onEndReached={async () => await recievedMessagesNextPageQuery()}
             onEndReachedThreshold={0.6}

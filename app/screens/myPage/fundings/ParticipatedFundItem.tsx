@@ -58,7 +58,7 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
   };
 
   return (
-    <View className="py-5 flex items-center border-b-2 border-Gray-02">
+    <View className="py-5 flex items-center">
       {isLoading && <LoadingBar />}
       <Pressable
         className="w-[314px]"

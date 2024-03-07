@@ -20,7 +20,7 @@ const OrderItem = ({item}: {item: Order}) => {
     });
   };
   return (
-    <View className="border-b-2 border-Gray-02 py-4">
+    <View className="py-4">
       <Pressable
         onPress={() =>
           navigation.navigate('MyOrder', {

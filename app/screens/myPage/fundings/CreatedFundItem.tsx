@@ -70,7 +70,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
     }
   }, [fundDetailQuery, status, id]);
   return (
-    <View className="py-5 border-b-2 border-Gray-02 flex items-center">
+    <View className="py-4 flex items-center">
       {isLoading && <LoadingBar />}
       <Pressable
         className="mb-1 w-[314px]"

@@ -146,7 +146,7 @@ export interface FundMessageItem {
 }
 
 export interface FundMessagesResponse {
-  content: FundDetailItem[];
+  content: FundMessageItem[];
   hasNext: boolean;
   currentPage: number;
   pageSize: number;

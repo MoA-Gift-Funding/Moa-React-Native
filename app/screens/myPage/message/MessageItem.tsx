@@ -13,7 +13,7 @@ dayjs.locale(ko);
 const MessageItem = ({item}: {item: Partial<FundMessageItem>}) => {
   const {message, nickName, createdDate, profileImageUrl} = item;
   return (
-    <View className="flex flex-row py-4 border-b-2  border-Gray-01">
+    <View className="flex flex-row py-4">
       <Image
         source={{
           uri: httpsUrlCorrector(profileImageUrl),

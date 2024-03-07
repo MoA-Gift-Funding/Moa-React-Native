@@ -14,6 +14,7 @@ import useFunding from '../../../hooks/fundings/useFunding';
 import {useRefetchOnFocus} from '../../../hooks/handlers/useRefetchOnFocus';
 import TextRegular from '../../../components/text/TextRegular';
 import ParticipatedFund from './ParticipatedFundItem';
+import SeperatorUI from '../../funding/components/SeperatorUI';
 
 const MyFunding = () => {
   const [createdFunds, setCreatedFunds] = useState(true);
@@ -66,6 +67,7 @@ const MyFunding = () => {
                     page.content.flat(),
                   )}
                   renderItem={fund => <CreatedFundItem content={fund.item} />}
+                  ItemSeparatorComponent={SeperatorUI}
                   keyExtractor={fund => fund.id}
                   showsVerticalScrollIndicator={false}
                   onEndReached={async () => await myInfiteFetchNextQuery()}
@@ -97,6 +99,7 @@ const MyFunding = () => {
                   data={participatedFundsQuery.pages.flatMap(page =>
                     page.content.flat(),
                   )}
+                  ItemSeparatorComponent={SeperatorUI}
                   renderItem={fund => <ParticipatedFund item={fund.item} />}
                   keyExtractor={fund =>
                     fund.fundingId + fund.fundingParticipantId
