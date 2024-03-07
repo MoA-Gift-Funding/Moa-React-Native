@@ -25,10 +25,10 @@ export class Users {
           appName: 'MoA',
           consumerKey: Config.NAVER_CLIENT_KEY!,
           consumerSecret: Config.NAVER_SECERT_KEY!,
-          serviceUrlScheme:
-            Platform.OS === 'ios'
-              ? Config.NAVER_URL_SCHEME_IOS
-              : Config.NAVER_URL_SCHEME_AOS,
+          serviceUrlScheme: Platform.select({
+            ios: Config.NAVER_URL_SCHEME_IOS,
+            android: Config.NAVER_URL_SCHEME_AOS,
+          }),
         });
         if (isSuccess && successResponse) {
           await this.loginMoA(successResponse?.accessToken, platform);
@@ -223,10 +223,10 @@ export class Users {
           appName: 'MoA',
           consumerKey: Config.NAVER_CLIENT_KEY!,
           consumerSecret: Config.NAVER_SECERT_KEY!,
-          serviceUrlScheme:
-            Platform.OS === 'ios'
-              ? Config.NAVER_URL_SCHEME_IOS
-              : Config.NAVER_URL_SCHEME_AOS,
+          serviceUrlScheme: Platform.select({
+            ios: Config.NAVER_URL_SCHEME_IOS,
+            android: Config.NAVER_URL_SCHEME_AOS,
+          }),
         });
         if (isSuccess && successResponse) {
           await this.deactivateMoaUser(successResponse?.accessToken);

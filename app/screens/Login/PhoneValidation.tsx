@@ -76,7 +76,7 @@ const PhoneValidation = () => {
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full flex flex-col justify-between"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      behavior={Platform.select({ios: 'padding'})}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProgressBar progress={'w-2/5'} />
         {isLoading && <LoadingBar />}

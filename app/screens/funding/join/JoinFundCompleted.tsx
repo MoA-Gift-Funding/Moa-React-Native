@@ -49,15 +49,16 @@ const JoinFundCompleted = ({navigation, route}) => {
             className="bg-white rounded-full w-[149px] h-[38px] flex justify-center items-center mt-6"
             onPress={throttle(async () => {
               const dynamicUrl = await makeDynamicLink('Home');
-              Platform.OS === 'ios'
-                ? Share.share({
-                    url: dynamicUrl,
-                    message: `${nickName}님의 선물 펀딩이예요!`,
-                  })
-                : Share.share({
-                    title: `${nickName}님의 선물 펀딩이예요!`,
-                    message: dynamicUrl,
-                  });
+              Platform.select({
+                ios: Share.share({
+                  url: dynamicUrl,
+                  message: `${nickName}님의 선물 펀딩이예요!`,
+                }),
+                android: Share.share({
+                  title: `${nickName}님의 선물 펀딩이예요!`,
+                  message: dynamicUrl,
+                }),
+              });
             }, 1000)}>
             <TextSemiBold
               title="친구에게 참여소식 알리기"

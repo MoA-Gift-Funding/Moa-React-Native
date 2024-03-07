@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import TextBold from '../../../components/text/TextBold';
 import {useForm} from 'react-hook-form';
@@ -59,7 +59,7 @@ const NewFund = ({navigation, route}) => {
     <KeyboardAvoidingView
       className="px-6 bg-white mx-auto"
       keyboardVerticalOffset={70}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      behavior={Platform.select({ios: 'padding'})}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{justifyContent: 'center'}}>

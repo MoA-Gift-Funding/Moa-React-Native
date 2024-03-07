@@ -54,14 +54,16 @@ export default function Login({navigation}) {
           />
         </View>
         <View>
-          {Platform.OS === 'ios' && (
-            <LoginButton
-              buttonStyle="bg-white border-Gray-03 border-2"
-              textStyle="text-Gray-08"
-              title="Apple로 계속하기"
-              onPressFn={() => handleLogin('APPLE')}
-            />
-          )}
+          {Platform.select({
+            ios: (
+              <LoginButton
+                buttonStyle="bg-white border-Gray-03 border-2"
+                textStyle="text-Gray-08"
+                title="Apple로 계속하기"
+                onPressFn={() => handleLogin('APPLE')}
+              />
+            ),
+          })}
         </View>
       </View>
     </View>

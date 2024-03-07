@@ -42,7 +42,7 @@ const JoinFundMSG = ({navigation, route}) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         className="px-6 bg-white h-full flex flex-col justify-between"
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        behavior={Platform.select({ios: 'padding'})}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="mt-8">
             <TextBold

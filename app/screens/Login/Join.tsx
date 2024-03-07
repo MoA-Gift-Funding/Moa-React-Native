@@ -76,7 +76,7 @@ export default function Join({navigation}) {
   return (
     <KeyboardAvoidingView
       className="px-6 bg-white h-full"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      behavior={Platform.select({ios: 'padding'})}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProgressBar progress={'w-1/5'} />
         {isLoading && <LoadingBar />}

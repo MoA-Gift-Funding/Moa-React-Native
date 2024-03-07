@@ -194,15 +194,16 @@ const FundDetail = ({navigation, route}) => {
             className="bg-Gray-08 w-[70px] h-[56px] flex items-center justify-center rounded-lg"
             onPress={throttle(async () => {
               const dynamicUrl = await makeDynamicLink('FundDetail', id);
-              Platform.OS === 'ios'
-                ? Share.share({
-                    url: dynamicUrl,
-                    message: `${nickName}님의 선물 펀딩이예요!`,
-                  })
-                : Share.share({
-                    title: `${nickName}님의 선물 펀딩이예요!`,
-                    message: dynamicUrl,
-                  });
+              Platform.select({
+                ios: Share.share({
+                  url: dynamicUrl,
+                  message: `${nickName}님의 선물 펀딩이예요!`,
+                }),
+                android: Share.share({
+                  title: `${nickName}님의 선물 펀딩이예요!`,
+                  message: dynamicUrl,
+                }),
+              });
             }, 1000)}>
             <TextSemiBold title="공유" style="text-white text-Body-1" />
           </Pressable>

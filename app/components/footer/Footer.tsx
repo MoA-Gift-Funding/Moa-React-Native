@@ -8,11 +8,11 @@ const Footer = ({screen}: {screen: 'MyPage' | 'Home' | 'Store'}) => {
   const navigation = useNavigation();
   return (
     <View
-      className={
-        Platform.OS === 'ios'
-          ? 'sticky bottom-0 bg-white w-full h-[85px] pb-2 flex flex-row items-center justify-around'
-          : 'sticky bottom-0 bg-white w-full h-[70px] flex flex-row items-center justify-around'
-      }>
+      className={Platform.select({
+        ios: 'sticky bottom-0 bg-white w-full h-[90px] pb-2 flex flex-row items-center justify-around',
+        android:
+          'sticky bottom-0 bg-white w-full h-[70px] flex flex-row items-center justify-around',
+      })}>
       <Pressable
         className="flex flex-col items-center w-[72px]"
         onPress={() => navigation.navigate('Home')}>

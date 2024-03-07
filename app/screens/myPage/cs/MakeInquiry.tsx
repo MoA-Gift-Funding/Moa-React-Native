@@ -41,7 +41,7 @@ const MakeInquiry = ({
       onPress={Keyboard.dismiss}
       className="flex justify-between">
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.select({ios: 'padding'})}
         className="h-full px-4 flex items-center bg-white">
         <ScrollView
           showsVerticalScrollIndicator={false}

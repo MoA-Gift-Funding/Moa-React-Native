@@ -34,7 +34,7 @@ const JoinFund = ({navigation, route}) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.select({ios: 'padding'})}
         className="h-full bg-white px-6 flex justify-between">
         <View className="mt-4">
           <View className="flex flex-row">

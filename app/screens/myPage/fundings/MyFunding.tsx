@@ -33,7 +33,7 @@ const MyFunding = () => {
   return (
     <KeyboardAvoidingView
       className="bg-white h-full"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      behavior={Platform.select({ios: 'padding'})}>
       <View className="flex flex-row items-center h-[48px] border-b-2 border-Gray-02 px-6">
         <Pressable
           className={cls('h-[48px] flex justify-center items-center flex-1', {

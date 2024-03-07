@@ -19,7 +19,7 @@ const MyFriends = () => {
   return (
     <KeyboardAvoidingView
       className="bg-white h-full"
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      behavior={Platform.select({ios: 'padding'})}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex flex-row items-center h-[48px] border-b-2 border-Gray-02 px-6">
           <Pressable

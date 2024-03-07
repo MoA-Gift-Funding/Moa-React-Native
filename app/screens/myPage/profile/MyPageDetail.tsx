@@ -101,7 +101,7 @@ const MyPageDetail = ({navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.select({ios: 'padding'})}
         className="h-full flex flex-col bg-white justify-between">
         <ScrollView
           className="border-t-2 border-Gray-01"

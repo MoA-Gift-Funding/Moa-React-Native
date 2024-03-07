@@ -83,7 +83,7 @@ const UpdateAddress = ({
   }, [addrsQuery, updatedAddress]);
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.select({ios: 'padding'})}
       className="h-full bg-white flex items-center">
       {isLoading && <LoadingBar />}
       <ScrollView

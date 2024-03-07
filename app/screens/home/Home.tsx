@@ -232,15 +232,16 @@ export default function Home({navigation}) {
               className="pt-10 bg-white "
               onPress={throttle(async () => {
                 const dynamicUrl = await makeDynamicLink('Home');
-                Platform.OS === 'ios'
-                  ? Share.share({
-                      url: dynamicUrl,
-                      message: '모두가 행복한 새로운 선물 경험, 기프트모아',
-                    })
-                  : Share.share({
-                      title: '모두가 행복한 새로운 선물 경험, 기프트모아',
-                      message: dynamicUrl,
-                    });
+                Platform.select({
+                  ios: Share.share({
+                    url: dynamicUrl,
+                    message: '모두가 행복한 새로운 선물 경험, 기프트모아',
+                  }),
+                  android: Share.share({
+                    title: '모두가 행복한 새로운 선물 경험, 기프트모아',
+                    message: dynamicUrl,
+                  }),
+                });
               }, 1000)}>
               <Image
                 className="w-full h-[150px] bg-white"
