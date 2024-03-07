@@ -67,7 +67,11 @@ const ParticipatedFund = ({item}: {item: ParticipatedFundItem}) => {
         className="w-[314px]"
         onPress={throttle(
           () =>
-            navigation.navigate('FundDetail', {id: fundingId, title, endDate}),
+            navigation.navigate('FundDetailScreen', {
+              id: fundingId,
+              title,
+              endDate,
+            }),
           1000,
         )}>
         {participantStatus === 'PARTICIPATING' ? (

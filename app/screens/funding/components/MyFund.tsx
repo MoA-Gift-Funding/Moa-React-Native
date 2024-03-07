@@ -21,7 +21,7 @@ const MyFund = ({item}: {item: MyFundItem}) => {
       className="w-[285px] rounded-2xl mr-4 mb-2"
       style={{elevation: 3, backgroundColor: 'transparent'}}
       onPress={throttle(
-        () => navigation.navigate('FundDetail', {id, title, endDate}),
+        () => navigation.navigate('FundDetailScreen', {id, title, endDate}),
         1000,
       )}>
       <View className="bg-Gray-03 h-[89px] rounded-t-xl shadow-lg flex flex-row px-4 justify-between items-center">

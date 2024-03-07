@@ -93,10 +93,10 @@ export const App = () => {
   // const deepLinksConfig = {
   //   initialRouteName: 'Home',
   //   screens: {
-  //     // FundDetail: 'FundDetail/:id',
-  //     // MyFunding: 'MyFunding',
+  //     // FundDetailScreen: 'FundDetail/:id',
+  //     // MyFundingScreen: 'MyFunding',
   //     // MyInquiries: 'MyInquiries',
-  //     // MyOrder: 'MyOrder/:id',
+  //     // MyOrderDetailScreen: 'MyOrder/:id',
   //   },
   // };
 

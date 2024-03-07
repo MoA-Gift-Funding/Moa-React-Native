@@ -77,7 +77,7 @@ const useFunding = (
     mutationFn: (data: NewFundItem) => funding.createFunding(data),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['myfunds', user?.id]});
-      navigation.navigate('FundCompleted');
+      navigation.navigate('FundCompletedScreen');
     },
   });
 
@@ -221,14 +221,14 @@ const useFunding = (
   const {mutateAsync: joinFundQuery} = useMutation({
     mutationFn: (data: JoinFundItem) => funding.joinFund(data),
     onSuccess: async (data, {nickName}) => {
-      navigation.navigate('JoinFundCompleted', {nickName});
+      navigation.navigate('JoinFundCompletedScreen', {nickName});
     },
   });
 
   const {mutateAsync: finishFundQuery} = useMutation({
     mutationFn: (data: FinishFundItem) => funding.finishFunding(data),
     onSuccess: async (data, {nickName}) => {
-      navigation.navigate('FinishFundCompleted', {nickName});
+      navigation.navigate('FinishFundCompletedScreen', {nickName});
     },
   });
 

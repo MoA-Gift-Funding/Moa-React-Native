@@ -2,9 +2,9 @@ import {MessageStatus} from './Funding';
 import {Categories} from './Store';
 
 export type RootStackParamList = {
-  Home: undefined;
-  StoreMain: undefined;
-  ItemDetail: {
+  HomeScreen: undefined;
+  StoreMainScreen: undefined;
+  ProductDetailScreen: {
     id: number;
     imageUrl: string;
     brand: string;
@@ -12,32 +12,32 @@ export type RootStackParamList = {
     price: number;
     discountRate: number;
   };
-  ItemList: {category: Categories};
-  NewFund: {id: number; price: number};
-  NewFundShipping: {
+  ProductCategorizedListScreen: {category: Categories};
+  NewFundScreen: {id: number; price: number};
+  NewFundShippingScreen: {
     productId: number;
     title: string;
     description: string;
     endDate: string;
     maximumAmount: number;
   };
-  FundCompleted: undefined;
-  FriendFundList: undefined;
-  FundDetail: {id: number; title?: string; endDate?: string};
-  JoinFund: {
+  FundCompletedScreen: undefined;
+  FriendFundListScreen: undefined;
+  FundDetailScreen: {id: number; title?: string; endDate?: string};
+  JoinFundScreen: {
     maximumAmount: number;
     remainAmount: number;
     id: number;
     title: string;
     nickName: string;
   };
-  JoinFundMSG: {
+  JoinFundMSGScreen: {
     price: number;
     id: number;
     title: string;
     nickName: string;
   };
-  JoinFundPay: {
+  JoinFundPayScreen: {
     price: number;
     id: number;
     title: string;
@@ -46,29 +46,30 @@ export type RootStackParamList = {
     nickName: string;
     isFundOwner: boolean;
   };
-  JoinFundCompleted: {nickName: string};
-  FinishFundCompleted: {nickName: string};
-  MyPageMain: undefined;
-  MyPageDetail: undefined;
-  MyFunding: undefined;
-  MyFriends: undefined;
-  MyMessages: undefined;
-  MyNotification: undefined;
-  MyOrders: undefined;
-  MyOrder: {
+  JoinFundCompletedScreen: {nickName: string};
+  FinishFundCompletedScreen: {nickName: string};
+  MyPageMainScreen: undefined;
+  MyPageDetailScreen: undefined;
+  MyFundingScreen: undefined;
+  MyFriendsScreen: undefined;
+  MyMessagesScreen: undefined;
+  MyNotificationScreen: undefined;
+  MyOrdersScreen: undefined;
+  MyOrderDetailScreen: {
     orderId: number;
     imageUrl: string;
     brand: string;
     productName: string;
     price: number;
   };
-  Announces: undefined;
-  CustomerCenter: {personalInquiry: boolean};
-  AppConfig: undefined;
-  MoA: undefined;
-  Login: undefined;
-  Join: undefined;
-  PhoneValidation: undefined;
-  Contact: undefined;
-  JoinCompleted: undefined;
+  AnnouncesScreen: undefined;
+  CustomerCenterScreen: {personalInquiry: boolean};
+  AppConfigScreen: undefined;
+  MoATermsAndUsagesScreen: undefined;
+  LoginScreen: undefined;
+  JoinMoAScreen: undefined;
+  PhoneValidationScreen: undefined;
+  ProfilePhotoScreen: undefined;
+  ContactScreen: undefined;
+  JoinCompletedScreen: undefined;
 };

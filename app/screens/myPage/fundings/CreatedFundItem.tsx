@@ -77,7 +77,9 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
       {isLoading && <LoadingBar />}
       <Pressable
         className="mb-1 w-[314px]"
-        onPress={() => navigation.navigate('FundDetail', {id, title, endDate})}>
+        onPress={() =>
+          navigation.navigate('FundDetailScreen', {id, title, endDate})
+        }>
         <View className="flex flex-row justify-between items-center">
           <TextSemiBold title={endDate} style="text-Body-2" />
           {status === 'PROCESSING' && <ColoredFundLabel label="펀딩중" />}
@@ -123,7 +125,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
         <Pressable
           className="w-[314px] h-[44px] flex justify-center items-center bg-Sub-01 rounded-lg"
           onPress={() => {
-            navigation.navigate('CustomerCenter', {
+            navigation.navigate('CustomerCenterScreen', {
               headerTitle: '고객센터',
               personalInquiry: true,
             });
@@ -138,7 +140,7 @@ const CreatedFundItem = ({content}: {content: Partial<MyFundItem>}) => {
         <NextButton
           title="펀딩 채우기"
           onSubmit={() =>
-            navigation.navigate('JoinFundPay', {
+            navigation.navigate('JoinFundPayScreen', {
               price: detailFund.remainAmount,
               id: detailFund.id,
               title: detailFund.title,

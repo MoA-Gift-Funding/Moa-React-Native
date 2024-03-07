@@ -33,7 +33,7 @@ export default function useUser() {
       useUserApi.requestVerification(phoneNumber),
     onError: err => {
       if (err.message === 'Request failed with status code 409') {
-        navigation.navigate('Login');
+        navigation.navigate('LoginScreen');
         Toast.show({
           type: 'error',
           text1: '이미 가입된 번호예요. 가입하신 플랫폼으로 로그인해주세요🙏🏻',
@@ -53,7 +53,7 @@ export default function useUser() {
   const navigation = useNavigation();
   const {mutate: signUpQuery} = useMutation({
     mutationFn: (data: Partial<User>) => useUserApi.joinMoA(data),
-    onSuccess: () => navigation.navigate('Profile'),
+    onSuccess: () => navigation.navigate('ProfilePhotoScreen'),
   });
 
   const {mutateAsync: updateProfileImageQuery} = useMutation({

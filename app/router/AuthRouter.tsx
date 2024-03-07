@@ -1,43 +1,43 @@
 import React from 'react';
 import {useUserContext} from '../contexts/UserContext';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Home from '../screens/home/Home';
-import Login from '../screens/Login/Login';
+import HomeScreen from '../screens/home/HomeScreen';
 import BackHeader from '../components/header/BackHeader';
-import PhoneValidation from '../screens/Login/PhoneValidation';
-import Profile from '../screens/Login/Profile';
-import Contact from '../screens/Login/Contact';
-import JoinCompleted from '../screens/Login/JoinCompleted';
-import Join from '../screens/Login/Join';
+import PhoneValidationScreen from '../screens/Login/PhoneValidationScreen';
+import ProfilePhotoScreen from '../screens/Login/ProfilePhotoScreen';
+import ContactScreen from '../screens/Login/ContactScreen';
+import JoinCompletedScreen from '../screens/Login/JoinCompletedScreen';
+import JoinMoAScreen from '../screens/Login/JoinMoAScreen';
 import BlankHeader from '../components/header/BlankHeader';
-import StoreMain from '../screens/products/StoreMain';
+import StoreMainScreen from '../screens/products/StoreMainScreen';
 import StoreHeader from '../components/header/StoreHeader';
-import ItemDetail from '../screens/products/ItemDetail';
-import ItemList from '../screens/products/ItemList';
+import ProductDetailScreen from '../screens/products/ProductDetailScreen';
+import ProductCategorizedListScreen from '../screens/products/ProductCategorizedListScreen';
 import TitleHeader from '../components/header/TitleHeader';
-import NewFund from '../screens/funding/new/NewFund';
-import NewFundShipping from '../screens/funding/new/NewFundShipping';
-import FundCompleted from '../screens/funding/new/FundCompleted';
-import FundDetail from '../screens/funding/components/FundDetail';
-import JoinFund from '../screens/funding/join/JoinFund';
-import JoinFundMSG from '../screens/funding/join/JoinFundMSG';
-import JoinFundPay from '../screens/funding/join/JoinFundPay';
-import JoinFundCompleted from '../screens/funding/join/JoinFundCompleted';
-import MyPageMain from '../screens/myPage/MyPageMain';
-import MyPageDetail from '../screens/myPage/profile/MyPageDetail';
-import MyFunding from '../screens/myPage/fundings/MyFunding';
-import MyFriends from '../screens/myPage/friends/MyFriends';
-import MyMessages from '../screens/myPage/message/MyMessages';
-import MyOrders from '../screens/myPage/order/MyOrders';
-import MyOrder from '../screens/myPage/order/MyOrder';
-import CustomerCenter from '../screens/myPage/cs/CustomerCenter';
-import FriendFundList from '../screens/funding/FriendFundList';
-import MyNotification from '../screens/myPage/notification/MyNotification';
-import AppConfig from '../screens/myPage/appConfig/AppConfig';
-import FinishFundCompleted from '../screens/funding/join/FinishFundCompleted';
-import Announces from '../screens/myPage/cs/Announces';
-import MoA from '../screens/myPage/moa/MoA';
+import NewFundScreen from '../screens/funding/new/NewFundScreen';
+import NewFundShippingScreen from '../screens/funding/new/NewFundShippingScreen';
+import FundCompletedScreen from '../screens/funding/new/FundCompletedScreen';
+import FundDetailScreen from '../screens/funding/components/FundDetailScreen';
+import JoinFundScreen from '../screens/funding/join/JoinFundScreen';
+import JoinFundMSGScreen from '../screens/funding/join/JoinFundMSGScreen';
+import JoinFundPayScreen from '../screens/funding/join/JoinFundPayScreen';
+import JoinFundCompletedScreen from '../screens/funding/join/JoinFundCompletedScreen';
+import MyPageMainScreen from '../screens/myPage/MyPageMainScreen';
+import MyPageDetailScreen from '../screens/myPage/profile/MyPageDetailScreen';
+import MyFundingScreen from '../screens/myPage/fundings/MyFundingScreen';
+import MyFriendsScreen from '../screens/myPage/friends/MyFriendsScreen';
+import MyMessagesScreen from '../screens/myPage/message/MyMessagesScreen';
+import MyOrdersScreen from '../screens/myPage/order/MyOrdersScreen';
+import MyOrderDetailScreen from '../screens/myPage/order/MyOrderDetailScreen';
+import CustomerCenterScreen from '../screens/myPage/cs/CustomerCenterScreen';
+import FriendFundListScreen from '../screens/funding/FriendFundListScreen';
+import MyNotificationScreen from '../screens/myPage/notification/MyNotificationScreen';
+import AppConfigScreen from '../screens/myPage/appConfig/AppConfigScreen';
+import FinishFundCompletedScreen from '../screens/funding/join/FinishFundCompletedScreen';
+import AnnouncesScreen from '../screens/myPage/cs/AnnouncesScreen';
+import MoATermsAndUsagesScreen from '../screens/myPage/moa/MoATermsAndUsagesScreen';
 import {RootStackParamList} from '../types/router';
+import LoginScreen from '../screens/Login/LoginScreen';
 
 const AuthRouter = () => {
   const {
@@ -50,181 +50,181 @@ const AuthRouter = () => {
       {user?.status === 'SIGNED_UP' ? (
         <>
           <Stack.Screen
-            name="Home"
-            component={Home}
+            name="HomeScreen"
+            component={HomeScreen}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name="StoreMain"
-            component={StoreMain}
-            options={{header: () => <StoreHeader />}}
+            name="StoreMainScreen"
+            component={StoreMainScreen}
+            options={{header: StoreHeader}}
           />
           <Stack.Screen
-            name="ItemDetail"
-            component={ItemDetail}
-            options={{header: () => <BackHeader />}}
+            name="ProductDetailScreen"
+            component={ProductDetailScreen}
+            options={{header: BackHeader}}
           />
           <Stack.Screen
-            name="ItemList"
-            component={ItemList}
+            name="ProductCategorizedListScreen"
+            component={ProductCategorizedListScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="NewFund"
-            component={NewFund}
+            name="NewFundScreen"
+            component={NewFundScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="NewFundShipping"
-            component={NewFundShipping}
+            name="NewFundShippingScreen"
+            component={NewFundShippingScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="FundCompleted"
-            component={FundCompleted}
+            name="FundCompletedScreen"
+            component={FundCompletedScreen}
             options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
-            name="FriendFundList"
-            component={FriendFundList}
+            name="FriendFundListScreen"
+            component={FriendFundListScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="FundDetail"
-            component={FundDetail}
-            options={{header: () => <StoreHeader />}}
+            name="FundDetailScreen"
+            component={FundDetailScreen}
+            options={{header: StoreHeader}}
           />
           <Stack.Screen
-            name="JoinFund"
-            component={JoinFund}
-            options={{header: () => <BackHeader />}}
+            name="JoinFundScreen"
+            component={JoinFundScreen}
+            options={{header: BackHeader}}
           />
           <Stack.Screen
-            name="JoinFundMSG"
-            component={JoinFundMSG}
-            options={{header: () => <BackHeader />}}
+            name="JoinFundMSGScreen"
+            component={JoinFundMSGScreen}
+            options={{header: BackHeader}}
           />
           <Stack.Screen
-            name="JoinFundPay"
-            component={JoinFundPay}
-            options={{header: () => <BackHeader />}}
+            name="JoinFundPayScreen"
+            component={JoinFundPayScreen}
+            options={{header: BackHeader}}
           />
           <Stack.Screen
-            name="JoinFundCompleted"
-            component={JoinFundCompleted}
+            name="JoinFundCompletedScreen"
+            component={JoinFundCompletedScreen}
             options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
-            name="FinishFundCompleted"
-            component={FinishFundCompleted}
+            name="FinishFundCompletedScreen"
+            component={FinishFundCompletedScreen}
             options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
-            name="MyPageMain"
-            component={MyPageMain}
+            name="MyPageMainScreen"
+            component={MyPageMainScreen}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="MyPageDetail"
-            component={MyPageDetail}
+            name="MyPageDetailScreen"
+            component={MyPageDetailScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyFunding"
-            component={MyFunding}
+            name="MyFundingScreen"
+            component={MyFundingScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyFriends"
-            component={MyFriends}
+            name="MyFriendsScreen"
+            component={MyFriendsScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyMessages"
-            component={MyMessages}
+            name="MyMessagesScreen"
+            component={MyMessagesScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyNotification"
-            component={MyNotification}
+            name="MyNotificationScreen"
+            component={MyNotificationScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyOrders"
-            component={MyOrders}
+            name="MyOrdersScreen"
+            component={MyOrdersScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MyOrder"
-            component={MyOrder}
+            name="MyOrderDetailScreen"
+            component={MyOrderDetailScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="Announces"
-            component={Announces}
+            name="AnnouncesScreen"
+            component={AnnouncesScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="CustomerCenter"
-            component={CustomerCenter}
+            name="CustomerCenterScreen"
+            component={CustomerCenterScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="AppConfig"
-            component={AppConfig}
+            name="AppConfigScreen"
+            component={AppConfigScreen}
             options={{header: () => <TitleHeader />}}
           />
           <Stack.Screen
-            name="MoA"
-            component={MoA}
+            name="MoATermsAndUsagesScreen"
+            component={MoATermsAndUsagesScreen}
             options={{header: () => <TitleHeader />}}
           />
         </>
       ) : (
         <>
           <Stack.Screen
-            name="Login"
-            component={Login}
+            name="LoginScreen"
+            component={LoginScreen}
             options={{
-              header: () => <BackHeader />,
+              header: BackHeader,
             }}
           />
           <Stack.Screen
-            name="Join"
-            component={Join}
+            name="JoinMoAScreen"
+            component={JoinMoAScreen}
             options={{
-              header: () => <BackHeader />,
+              header: BackHeader,
             }}
           />
           <Stack.Screen
-            name="PhoneValidation"
-            component={PhoneValidation}
+            name="PhoneValidationScreen"
+            component={PhoneValidationScreen}
             options={{
-              header: () => <BackHeader />,
+              header: BackHeader,
             }}
           />
           <Stack.Screen
-            name="Profile"
-            component={Profile}
+            name="ProfilePhotoScreen"
+            component={ProfilePhotoScreen}
             options={{
-              header: () => <BlankHeader />,
+              header: BlankHeader,
               gestureEnabled: false,
             }}
           />
           <Stack.Screen
-            name="Contact"
-            component={Contact}
+            name="ContactScreen"
+            component={ContactScreen}
             options={{
-              header: () => <BackHeader />,
+              header: BackHeader,
             }}
           />
           <Stack.Screen
-            name="JoinCompleted"
-            component={JoinCompleted}
+            name="JoinCompletedScreen"
+            component={JoinCompletedScreen}
             options={{
-              header: () => <BlankHeader />,
+              header: BlankHeader,
               gestureEnabled: false,
             }}
           />

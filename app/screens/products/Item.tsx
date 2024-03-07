@@ -28,7 +28,7 @@ const Item = ({
           ? 'flex w-[152px] mb-[30px] ml-1'
           : 'flex w-[152px] mb-[30px] mr-1'
       }
-      onPress={() => navigation.navigate('ItemDetail', item)}>
+      onPress={() => navigation.navigate('ProductDetailScreen', item)}>
       <Image
         className="w-[152px] h-[152px]"
         source={{

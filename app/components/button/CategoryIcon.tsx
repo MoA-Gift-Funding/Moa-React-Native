@@ -25,7 +25,7 @@ const CategoryIcon = ({
     <Pressable
       className="flex flex-col justify-center items-center"
       onPress={() =>
-        navigation.navigate('ItemList', {
+        navigation.navigate('ProductCategorizedListScreen', {
           headerTitle: title,
           category,
         })

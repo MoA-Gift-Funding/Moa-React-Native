@@ -23,7 +23,7 @@ const FundItem = ({item}: {item: Partial<FriendFundItem>}) => {
     <Pressable
       className="flex flex-col my-4 ml-1"
       onPress={() =>
-        navigation.navigate('FundDetail', {id: fundingId, title, endDate})
+        navigation.navigate('FundDetailScreen', {id: fundingId, title, endDate})
       }>
       <View className="relative rounded-lg mr-2">
         <Image

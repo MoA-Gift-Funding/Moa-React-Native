@@ -26,7 +26,10 @@ const HomeBanner = ({navigation}) => {
         <Pressable
           className="mb-2 w-[40px] h-[40px]"
           onPress={throttle(
-            () => navigation.navigate('MyNotification', {headerTitle: '알림'}),
+            () =>
+              navigation.navigate('MyNotificationScreen', {
+                headerTitle: '알림',
+              }),
             1000,
           )}>
           <Notification hasUnRead={hasUnReadQuery} color="white" />
@@ -45,7 +48,7 @@ const HomeBanner = ({navigation}) => {
         />
         <Pressable
           className="h-[34px] w-[87px] bg-white flex items-center justify-center rounded-3xl mt-6 ml-2"
-          onPress={() => navigation.navigate('StoreMain')}>
+          onPress={() => navigation.navigate('StoreMainScreen')}>
           <TextRegular title="바로가기" style="text-Body-1" />
         </Pressable>
       </View>

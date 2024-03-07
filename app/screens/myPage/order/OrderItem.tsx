@@ -14,7 +14,7 @@ const OrderItem = ({item}: {item: Order}) => {
   const navigation = useNavigation();
   const {handleSubmit} = useForm();
   const onReissueSubmit = () => {
-    navigation.navigate('CustomerCenter', {
+    navigation.navigate('CustomerCenterScreen', {
       headerTitle: '고객 센터',
       personalInquiry: true,
     });
@@ -23,7 +23,7 @@ const OrderItem = ({item}: {item: Order}) => {
     <View className="py-4">
       <Pressable
         onPress={() =>
-          navigation.navigate('MyOrder', {
+          navigation.navigate('MyOrderDetailScreen', {
             headerTitle: '주문 · 배송',
             ...item,
           })
